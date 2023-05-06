@@ -1,0 +1,393 @@
+﻿@inject ILayoutService layoutService
+
+@{
+    IDictionary<string, string> settings = await layoutService.GetSettings();
+    IEnumerable<Category> categories = await layoutService.GetCategories();
+    List<BasketVM> basketVMs = await layoutService.GetBaskets();
+    List<WishlistVM> wishlistVMs = await layoutService.GetWishLists();
+    List<CompareVM> compareVMs = await layoutService.GetCompares();
+}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" integrity="sha512-iecdLmaskl7CVkqkXNQ/ZH/XLlvWZOJyj7Yy7tcenmpD1ypASozpmT/E0iPtmFIB46ZmdtAc9eNBvH0H/ZpiBw==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <link rel="stylesheet" href="assets/css/bootstrap.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/assets/owl.carousel.css" integrity="sha512-UTNP5BXLIptsaj5WdKFrkFov94lDx+eBvbKyoe1YAfjeRPC+gT5kyZ10kOHCfNZqEui1sxmqvodNUx3KbuYI/A==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <link rel="stylesheet" href="~/assets/css/style.css">
+    <title>Document</title>
+</head>
+<body>
+
+    <header>
+        <div class="header1">
+            <div class="container">
+                <div class="header-top">
+                    <div class="left">
+                        <ul class="header-nav">
+                            <li>Filiallar</li>
+                            <li>Kampaniyalar</li>
+                            <li>Əlaqə</li>
+                            <li>Outlet</li>
+                        </ul>
+                        <ul class="header-social-links">
+                            <li><i class="fa-brands fa-facebook"></i></li>
+                            <li><i class="fa-brands fa-instagram"></i></li>
+                            <li><i class="fa-brands fa-twitter"></i></li>
+                            <li><i class="fa-brands fa-youtube"></i></li>
+                            <li><i class="fa-brands fa-linkedin"></i></li>
+                            <li><i class="fa-brands fa-whatsapp"></i></li>
+                        </ul>
+                    </div>
+                    <div class="right">
+                        <div class="profile-drop-div">
+                            <div class="profile-list">
+                                <i class="fa-solid fa-circle-user"></i>
+                                <span>Fərid Qarayev</span>
+                                <i class="fa-solid fa-chevron-down"></i>
+                            </div>
+                            <ul id="profile-drop">
+                                <li>Profil səhifəm</li>
+                                <li>Sifarişlərim</li>
+                                <li>Məhsullarım</li>
+                                <li>Tənzimləmələr</li>
+                                <li>Hesabdan çıxış</li>
+                            </ul>
+                        </div>
+                        <div class="lang-drop-div">
+                            <div class="lang-list">
+                                <span>AZ</span>
+                                <i class="fa-solid fa-chevron-down"></i>
+                            </div>
+                            <ul id="lang-drop">
+                                <li>Azərbaycanca</li>
+                                <li>English</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="header2">
+            <div class="container">
+                <div class="header-bottom">
+                    <div class="left">
+                        <div class="menu-btn-div">
+                            <button class="menu-btn">
+                                <i class="fa-solid fa-bars"></i>
+                            </button>
+                        </div>
+                        <a href="" class="logo-link">
+                            <div class="logo-div">
+                                <img src="~/assets/images/@settings.FirstOrDefault(s=>s.Key == "Logo").Value" alt="">
+                            </div>
+                        </a>
+                    </div>
+                    <div class="middle">
+                        <div class="search-input-div">
+                            <input type="text" class="search-input" placeholder="Axtarış">
+                            <button class="search-btn">
+                                <i class="fa-solid fa-magnifying-glass"></i>
+                            </button>
+                        </div>
+                    </div>
+                    <div class="right">
+                        <ul class="header-right-nav">
+                            <li class="call-box">
+                                <i class="fa-solid fa-phone"></i>
+                                <span>*@settings.FirstOrDefault(s=>s.Key == "Hotline").Value</span>
+                            </li>
+                            <li class="user-box">
+                                <a href="#" class="user-drop">
+                                    <svg style="pointer-events:none" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns:svgjs="http://svgjs.com/svgjs" version="1.1" width="512" height="512" x="0" y="0" viewBox="0 0 513.323 513.323" xml:space="preserve" style="enable-background: new 0 0 512 512;"><title _ngcontent-serverApp-c47="">Şəxsi Kabinet</title><g _ngcontent-serverApp-c47="" transform="matrix(1,0,0,1,0,0)"><g _ngcontent-serverApp-c47="" xmlns="http://www.w3.org/2000/svg"><g _ngcontent-serverApp-c47=""><path _ngcontent-serverApp-c47="" d="M256.661,257.323c-135.275,0-245.333,110.059-245.333,245.333c0,5.888,4.779,10.667,10.667,10.667    s10.667-4.779,10.667-10.667c0-123.52,100.48-224,224-224s224,100.48,224,224c0,5.888,4.779,10.667,10.667,10.667    c5.888,0,10.667-4.779,10.667-10.667C501.995,367.36,391.936,257.323,256.661,257.323z" fill="#555970" data-original="#000000"></path></g></g><g _ngcontent-serverApp-c47="" xmlns="http://www.w3.org/2000/svg"><g _ngcontent-serverApp-c47=""><path _ngcontent-serverApp-c47="" d="M256.661,0c-64.683,0-117.333,52.629-117.333,117.333s52.651,117.333,117.333,117.333s117.333-52.629,117.333-117.333    S321.344,0,256.661,0z M256.661,213.333c-52.928,0-96-43.072-96-96s43.072-96,96-96c52.928,0,96,43.072,96,96    S309.589,213.333,256.661,213.333z" fill="#555970" data-original="#000000"></path></g></g><g _ngcontent-serverApp-c47="" xmlns="http://www.w3.org/2000/svg"></g><g _ngcontent-serverApp-c47="" xmlns="http://www.w3.org/2000/svg"></g><g _ngcontent-serverApp-c47="" xmlns="http://www.w3.org/2000/svg"></g><g _ngcontent-serverApp-c47="" xmlns="http://www.w3.org/2000/svg"></g><g _ngcontent-serverApp-c47="" xmlns="http://www.w3.org/2000/svg"></g><g _ngcontent-serverApp-c47="" xmlns="http://www.w3.org/2000/svg"></g><g _ngcontent-serverApp-c47="" xmlns="http://www.w3.org/2000/svg"></g><g _ngcontent-serverApp-c47="" xmlns="http://www.w3.org/2000/svg"></g><g _ngcontent-serverApp-c47="" xmlns="http://www.w3.org/2000/svg"></g><g _ngcontent-serverApp-c47="" xmlns="http://www.w3.org/2000/svg"></g><g _ngcontent-serverApp-c47="" xmlns="http://www.w3.org/2000/svg"></g><g _ngcontent-serverApp-c47="" xmlns="http://www.w3.org/2000/svg"></g><g _ngcontent-serverApp-c47="" xmlns="http://www.w3.org/2000/svg"></g><g _ngcontent-serverApp-c47="" xmlns="http://www.w3.org/2000/svg"></g><g _ngcontent-serverApp-c47="" xmlns="http://www.w3.org/2000/svg"></g></g></svg>
+                                </a>
+                                <div id="login-register-div">
+                                    <div class="login-div">
+                                        @await Html.PartialAsync("_LoginPartial")
+                                    </div>
+                                </div>
+                            </li>
+                            <li class="compare-box">
+                                <a href="#">
+                                    <svg style="pointer-events:none" version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" viewBox="0 0 512 512" xml:space="preserve" style="enable-background: new 0 0 512 512;"><title _ngcontent-serverApp-c47="">Müqayisə</title><style _ngcontent-serverApp-c47="" type="text/css">
+                                                                                                                                                                                                                                                                                                                                            .st0 {
+                                                                                                                                                                                                                                                                                                                                                fill: none;
+                                                                                                                                                                                                                                                                                                                                                stroke: #4D4D4D;
+                                                                                                                                                                                                                                                                                                                                                stroke-width: 24;
+                                                                                                                                                                                                                                                                                                                                                stroke-linecap: round;
+                                                                                                                                                                                                                                                                                                                                                stroke-miterlimit: 10;
+                                                                                                                                                                                                                                                                                                                                            }
+</style><line _ngcontent-serverApp-c47="" x1="104.1" y1="44.7" x2="104.1" y2="209.5" class="st0"></line><line _ngcontent-serverApp-c47="" x1="104.1" y1="259.9" x2="104.1" y2="426.6" class="st0"></line><line _ngcontent-serverApp-c47="" x1="178.7" y1="256" x2="29.5" y2="256" class="st0"></line><g _ngcontent-serverApp-c47=""><line _ngcontent-serverApp-c47="" x1="406.9" y1="318" x2="406.9" y2="461.4" class="st0"></line><line _ngcontent-serverApp-c47="" x1="482.5" y1="312.2" x2="333.3" y2="312.2" class="st0"></line><line _ngcontent-serverApp-c47="" x1="406.9" y1="44.7" x2="406.9" y2="256" class="st0"></line></g><g _ngcontent-serverApp-c47=""><line _ngcontent-serverApp-c47="" x1="256" y1="44.7" x2="256" y2="184.3" class="st0"></line><line _ngcontent-serverApp-c47="" x1="330.6" y1="184.3" x2="181.4" y2="184.3" class="st0"></line><line _ngcontent-serverApp-c47="" x1="256" y1="256" x2="256" y2="467.3" class="st0"></line></g></svg>
+                                    <span>@compareVMs.Count</span>
+                                </a>
+                            </li>
+                            <li class="wishlist-box">
+                                @if(wishlistVMs != null && wishlistVMs.Count() > 0)
+                                {
+                                    @await Html.PartialAsync("_WishlistCartPartial", wishlistVMs)
+                                }
+                            </li>
+                            <li class="basket-box">
+                                @if(basketVMs != null && basketVMs.Count() > 0)
+                                {
+                                    @await Html.PartialAsync("_BasketCartPartial", basketVMs)
+                                }
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="header-bottom-m">
+                    <div class="middle-m">
+                        <div class="search-input-div">
+                            <input type="text" class="search-input" placeholder="Axtarış">
+                            <button class="search-btn">
+                                <i class="fa-solid fa-magnifying-glass"></i>
+                            </button>
+                        </div>
+                    </div>
+                    <div class="mobile-menu">
+                        <ul class="menu-list">
+                            @foreach (Category category in categories)
+                            {
+                                <li class="menu-item">
+                                    <a class="menu-link">
+                                        <div class="icon-div"><i class="fa-solid fa-mobile-screen"></i></div>
+                                        <p>@category.Name</p>
+                                    </a>
+                                    <div class="menu-content">
+                                        <button class="btn-prev"><i class="fa-solid fa-chevron-left"></i> Geri qayıt</button>
+                                        <ul>
+                                            @if (category.Children != null && category.Children.Count() > 0)
+                                            {
+                                                @foreach (Category child in category.Children)
+                                                {
+                                                    <li class="sub-menu-link">
+                                                        <div class="link-wrapper">
+                                                            <a class="sub-menu">
+                                                                <p>@child.Name</p>
+                                                                <div class="arrow-div"><i class="fa-solid fa-chevron-right"></i></div>
+                                                            </a>
+                                                        </div>
+                                                        <div class="sub-content d-none">
+                                                            @if (child.Brands != null && child.Brands.Count() > 0)
+                                                            {
+                                                                @foreach (Brand brand in child.Brands)
+                                                                {
+                                                                    <a href="" class="link">@brand.Name</a>
+                                                                }
+                                                            }
+                                                            
+                                                        </div>
+                                                    </li>
+                                                }
+                                            }
+
+                                        </ul>
+                                    </div>
+                                </li>
+                            }
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </header>
+    @RenderBody()
+    <footer>
+        <div class="brands">
+            <div class="owl-carousel owl-two">
+                <a target="_blank" class="brand" href="https://birkart.az/" style=""><img alt="" src="https://api.smartelectronics.az/uploads/settings/qnw1heeizjcapg00crrg.png"></a>
+
+                <a target="_blank" class="brand" href="https://tamkart.az/" style=""><img alt="" src="https://api.smartelectronics.az/uploads/settings/gdxgyp30rs7tk2jklvby.png"></a>
+
+                <a target="_blank" class="brand" href="https://albali.az/az/smart-electr" style=""><img alt="" src="https://api.smartelectronics.az/uploads/settings/ftfiqncgig0pwl7msoau.png"></a>
+
+                <a target="_blank" class="brand" href="https://smartelectronics.az/app/search/1?keyword=apple" style=""><img alt="" src="https://api.smartelectronics.az/uploads/settings/l8y1zeazrxlyeoxz6svq.png"></a>
+
+                <a target="_blank" class="brand" href="https://smartelectronics.az/app/search/1?keyword=samsung" style=""><img alt="" src="https://api.smartelectronics.az/uploads/settings/kc9jlajbgo34kpojhina.png"></a>
+
+                <a target="_blank" class="brand" href="https://smartelectronics.az/app/search/1?keyword=xiaomi" style=""><img alt="" src="https://api.smartelectronics.az/uploads/settings/uotzunlmki2ivrqu6xdq.png"></a>
+
+                <a target="_blank" class="brand" href="https://smartelectronics.az/app/search/1?keyword=acer" style=""><img alt="" src="https://api.smartelectronics.az/uploads/settings/fo66hoy2whj2iqjktomp.png"></a>
+
+                <a target="_blank" class="brand" href="https://smartelectronics.az/app/search/1?keyword=bosch" style=""><img alt="" src="https://api.smartelectronics.az/uploads/settings/jnddvcxky4tuyvz8yszr.png"></a>
+
+                <a target="_blank" class="brand" href="https://smartelectronics.az/app/search/1?keyword=asus" style=""><img alt="" src="https://api.smartelectronics.az/uploads/settings/ci0e7n3ccyzaowfghvyp.png"></a>
+
+                <a target="_blank" class="brand" href="https://smartelectronics.az/app/search/1?keyword=kitchenaid" style=""><img alt="" src="https://api.smartelectronics.az/uploads/settings/jluwsftqrf7drnm0osbm.png"></a>
+
+                <a target="_blank" class="brand" href="https://smartelectronics.az/app/search/1?keyword=philips" style=""><img alt="" src="https://api.smartelectronics.az/uploads/settings/li00uymwnh8zdlfpmqwq.png"></a>
+
+                <a target="_blank" class="brand" href="https://smartelectronics.az/app/search/1?keyword=braun" style=""><img alt="" src="https://api.smartelectronics.az/uploads/settings/yarbnhkekoj5hexbkwjm.png"></a>
+
+                <a target="_blank" class="brand" href="https://smartelectronics.az/app/search/1?keyword=lenovo" style=""><img alt="" src="https://api.smartelectronics.az/uploads/settings/sqwy52ssic2bnrnuqtpi.png"></a>
+
+                <a target="_blank" class="brand" href="https://smartelectronics.az/app/search/1?keyword=baseus" style=""><img alt="" src="https://api.smartelectronics.az/uploads/settings/uofipdmavpdh1mhhy72g.png"></a>
+
+                <a target="_blank" class="brand" href="https://smartelectronics.az/app/search/1?keyword=indesit" style=""><img alt="" src="https://api.smartelectronics.az/uploads/settings/vl63yvuscjrfufupbdku.png"></a>
+
+                <a target="_blank" class="brand" href="https://smartelectronics.az/app/search/1?keyword=jbl" style=""><img alt="" src="https://api.smartelectronics.az/uploads/settings/btsphtowgdtijlowhuza.png"></a>
+
+                <a target="_blank" class="brand" href="https://smartelectronics.az/app/search/1?keyword=epson" style=""><img alt="" src="https://api.smartelectronics.az/uploads/settings/sm7ffkmx7dh9owr2jsf5.png"></a>
+
+                <a target="_blank" class="brand" href="https://smartelectronics.az/app/search/1?keyword=lg" style=""><img alt="" src="https://api.smartelectronics.az/uploads/settings/unwhdiu3p81w6hrr6kmx.png"></a>
+
+                <a target="_blank" class="brand" href="https://smartelectronics.az/app/search/1?keyword=canon" style=""><img alt="" src="https://api.smartelectronics.az/uploads/settings/tdz6q3qbtgl8nyx5amnx.png"></a>
+            </div>
+        </div>
+
+        <section id="footer" class="footer footermain">
+            <div class="blue-container">
+                <div class="section-wrapper-sm">
+                    <div class="sos-media">
+                        <a target="_blank" class="icon" href="https://www.facebook.com/smartelectronicsazerbaijan">
+                            <img alt="" src="https://api.smartelectronics.az/uploads/settings/65bc69e75387429295195407439cdd8dfacebook-circular-logo.svg">
+                        </a>
+                        <a target="_blank" class="icon" href="https://www.instagram.com/smartelectronics.azerbaijan/">
+                            <img alt="" src="https://api.smartelectronics.az/uploads/settings/69d6f415c47945a6b65fc88bf9379fd2instagram.svg">
+                        </a>
+                        <a target="_blank" class="icon" href="https://twitter.com/SmartElectroAze">
+                            <img alt="" src="https://api.smartelectronics.az/uploads/settings/ed247fef96f34e529990afbcc48a2ec1twitter.svg">
+                        </a>
+                        <a target="_blank" class="icon" href="https://www.youtube.com/channel/UCr5ZZBPLvB8p2TrmCcJa8dw">
+                            <img alt="" src="https://api.smartelectronics.az/uploads/settings/05fecbb65f394eaba2874bc4332d69b9youtube.svg">
+                        </a>
+                        <a target="_blank" class="icon" href="https://www.linkedin.com/company/smart-telecom-azerbaijan/">
+                            <img alt="" src="https://api.smartelectronics.az/uploads/settings/12784984916e46ca904cc735539d0699linkedin.svg">
+                        </a>
+                        <a target="_blank" class="icon" href="https://api.whatsapp.com/send?phone=994705982323">
+                            <img alt="" src="https://api.smartelectronics.az/uploads/settings/310c2ab50eb64e1c94a7403f9d3c6ed2whatsapp.svg">
+                        </a>
+                    </div>
+                    <div class="footer-nav">
+                        <div class="footer-list-wrapper">
+                            <div class="nav-list">
+                                <p class="ft-menu-btn">Məlumat</p>
+                                <ul class="ft-menu-content">
+                                    <li>
+                                        <a href="/az/haqqimizda">Haqqımızda</a>
+                                    </li>
+                                    <li>
+                                        <a href="/az/bizimle-elaqe/filiallar">Filiallar</a>
+                                    </li>
+                                    <li>
+                                        <a href="/az/bizimle-elaqe/elaqe-melumatlari">Əlaqə</a>
+                                    </li>
+                                </ul>
+                            </div>
+                            <div class="nav-list">
+                                <p class="ft-menu-btn">FƏALİYYƏT</p>
+                                <ul class="ft-menu-content">
+                                    <li>
+                                        <a href="/az/kampanyalar">Kampaniyalar</a>
+                                    </li>
+                                    <li>
+                                        <a href="/az/catdirilma">Çatdırılma</a>
+                                    </li>
+                                    <li>
+                                        <a href="/az/zemanet">Zəmanət</a>
+                                    </li>
+                                </ul>
+                            </div>
+                            <div class="nav-list">
+                                <p class="ft-menu-btn">DƏSTƏK</p>
+                                <ul class="ft-menu-content">
+                                    <li>
+                                        <a href="/az/vakansiyalar">Vakansiya</a>
+                                    </li>
+                                    <li>
+                                        <a href="/az/tez-tez-verilen-suallar">FAQ</a>
+                                    </li>
+                                    <li>
+                                        <a href="/az/smart-servis">Servis</a>
+                                    </li>
+                                </ul>
+                            </div>
+                            <div class="nav-list">
+                                <p class="ft-menu-btn">SOSİAL ŞƏBƏKƏLƏR</p>
+                                <ul class="ft-menu-content">
+                                    <li>
+                                        <a target="_blank" href="https://www.facebook.com/smartelectronicsazerbaijan">Facebook</a>
+                                    </li>
+                                    <li>
+                                        <a target="_blank" href="https://www.instagram.com/smartelectronics.azerbaijan/">Instagram</a>
+                                    </li>
+                                    <li>
+                                        <a target="_blank" href="https://twitter.com/SmartElectroAze">Twitter</a>
+                                    </li>
+                                    <li>
+                                        <a target="_blank" href="https://www.youtube.com/channel/UCr5ZZBPLvB8p2TrmCcJa8dw">Youtube</a>
+                                    </li>
+                                    <li>
+                                        <a target="_blank" href="https://www.linkedin.com/company/smart-telecom-azerbaijan/">Linkedin</a>
+                                    </li>
+                                    <li>
+                                        <a target="_blank" href="https://api.whatsapp.com/send?phone=994705982323">WhatsApp</a>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="footer-contact">
+                        <a href="callto:#" class="contact">
+                            <div class="contact-img">
+                                <img src="~/assets/images/phone-f.png" alt="">
+                            </div>
+                            <div class="cnt">
+                                <h4>*2999</h4>
+                            </div>
+                        </a>
+                        <a href="mailto:#" class="contact">
+                            <div class="contact-img">
+                                <img src="~/assets/images/mail-f.png" alt="">
+                            </div>
+                            <p class="cnt">office@smartelectronics.az</p>
+                        </a>
+                        <div class="contact">
+                            <div class="contact-img">
+                                <img src="~/assets/images/location-f.png" alt="">
+                            </div>
+                            <div class="cnt">
+                                <p>Bakı şəhər.,</p>
+                                <p>28 May ray., Dilarə Əliyeva 212 küçəsi</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="footer-logo">
+                        <a class="logo" href="/app/home">
+                            <img alt="" src="https://api.smartelectronics.az/uploads/settings/b41e1627ca8f46739bcefa7d863c8025242x52sayt.png">
+                        </a>
+                        <div class="mail-content">
+                            <form>
+                                <div class="form-group">
+                                    <button>Abunə ol</button>
+                                    <input type="email" formcontrolname="email" name="email" class="form-control" placeholder="E-poçt">
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="footer-lang">
+                <div class="section-wrapper">
+                    <div class="lang-content">
+                        <a class="lang link active">az</a>
+                        <a class="lang link">ru</a>
+                    </div>
+                    <div class="owner">
+                        <p>© 2023 Smart Electronics</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </footer>
+
+    <script src="~/assets/js/jquery.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/owl.carousel.min.js" integrity="sha512-bPs7Ae6pVvhOSiIcyUClR7/q2OAsRiovw4vAkX+zJbw3ShAeeqezq50RIIcIURq7Oa20rW2n2q+fyXBNcU9lrw==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <script src="~/assets/js/script.js"></script>
+</body>
+</html>

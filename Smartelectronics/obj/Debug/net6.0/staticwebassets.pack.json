@@ -1,0 +1,169 @@
+{
+  "Files": [
+    {
+      "Id": "C:\\Users\\Farid\\Desktop\\Smartelectronics\\Smartelectronics\\wwwroot\\assets\\css\\_fonts.scss",
+      "PackagePath": "staticwebassets\\assets\\css\\_fonts.scss"
+    },
+    {
+      "Id": "C:\\Users\\Farid\\Desktop\\Smartelectronics\\Smartelectronics\\wwwroot\\assets\\css\\bootstrap.css",
+      "PackagePath": "staticwebassets\\assets\\css\\bootstrap.css"
+    },
+    {
+      "Id": "C:\\Users\\Farid\\Desktop\\Smartelectronics\\Smartelectronics\\wwwroot\\assets\\css\\style.css",
+      "PackagePath": "staticwebassets\\assets\\css\\style.css"
+    },
+    {
+      "Id": "C:\\Users\\Farid\\Desktop\\Smartelectronics\\Smartelectronics\\wwwroot\\assets\\css\\style.css.map",
+      "PackagePath": "staticwebassets\\assets\\css\\style.css.map"
+    },
+    {
+      "Id": "C:\\Users\\Farid\\Desktop\\Smartelectronics\\Smartelectronics\\wwwroot\\assets\\css\\style.scss",
+      "PackagePath": "staticwebassets\\assets\\css\\style.scss"
+    },
+    {
+      "Id": "C:\\Users\\Farid\\Desktop\\Smartelectronics\\Smartelectronics\\wwwroot\\assets\\font\\Gilroy-Bold.950170aa8587b547d1d1.woff2",
+      "PackagePath": "staticwebassets\\assets\\font\\Gilroy-Bold.950170aa8587b547d1d1.woff2"
+    },
+    {
+      "Id": "C:\\Users\\Farid\\Desktop\\Smartelectronics\\Smartelectronics\\wwwroot\\assets\\font\\Gilroy-ExtraBold.ttf",
+      "PackagePath": "staticwebassets\\assets\\font\\Gilroy-ExtraBold.ttf"
+    },
+    {
+      "Id": "C:\\Users\\Farid\\Desktop\\Smartelectronics\\Smartelectronics\\wwwroot\\assets\\font\\Gilroy-Medium.d863c38fdfdfddda8a38.woff2",
+      "PackagePath": "staticwebassets\\assets\\font\\Gilroy-Medium.d863c38fdfdfddda8a38.woff2"
+    },
+    {
+      "Id": "C:\\Users\\Farid\\Desktop\\Smartelectronics\\Smartelectronics\\wwwroot\\assets\\font\\Gilroy-Regular.e91c08629c0684fd5ec1.woff2",
+      "PackagePath": "staticwebassets\\assets\\font\\Gilroy-Regular.e91c08629c0684fd5ec1.woff2"
+    },
+    {
+      "Id": "C:\\Users\\Farid\\Desktop\\Smartelectronics\\Smartelectronics\\wwwroot\\assets\\font\\Gilroy-RegularItalic.56d767435a55c77a3be4.woff2",
+      "PackagePath": "staticwebassets\\assets\\font\\Gilroy-RegularItalic.56d767435a55c77a3be4.woff2"
+    },
+    {
+      "Id": "C:\\Users\\Farid\\Desktop\\Smartelectronics\\Smartelectronics\\wwwroot\\assets\\font\\Gilroy-Semibold.f2884d073178030a6f83.woff2",
+      "PackagePath": "staticwebassets\\assets\\font\\Gilroy-Semibold.f2884d073178030a6f83.woff2"
+    },
+    {
+      "Id": "C:\\Users\\Farid\\Desktop\\Smartelectronics\\Smartelectronics\\wwwroot\\assets\\font\\fa-solid-900.1551f4f60c37af51121f.woff2",
+      "PackagePath": "staticwebassets\\assets\\font\\fa-solid-900.1551f4f60c37af51121f.woff2"
+    },
+    {
+      "Id": "C:\\Users\\Farid\\Desktop\\Smartelectronics\\Smartelectronics\\wwwroot\\assets\\images\\iphone-14-pro-max.jpeg",
+      "PackagePath": "staticwebassets\\assets\\images\\iphone-14-pro-max.jpeg"
+    },
+    {
+      "Id": "C:\\Users\\Farid\\Desktop\\Smartelectronics\\Smartelectronics\\wwwroot\\assets\\images\\kampaniyalar\\wish-card-1.png",
+      "PackagePath": "staticwebassets\\assets\\images\\kampaniyalar\\wish-card-1.png"
+    },
+    {
+      "Id": "C:\\Users\\Farid\\Desktop\\Smartelectronics\\Smartelectronics\\wwwroot\\assets\\images\\kampaniyalar\\wish-card-2.png",
+      "PackagePath": "staticwebassets\\assets\\images\\kampaniyalar\\wish-card-2.png"
+    },
+    {
+      "Id": "C:\\Users\\Farid\\Desktop\\Smartelectronics\\Smartelectronics\\wwwroot\\assets\\images\\label-blue.svg",
+      "PackagePath": "staticwebassets\\assets\\images\\label-blue.svg"
+    },
+    {
+      "Id": "C:\\Users\\Farid\\Desktop\\Smartelectronics\\Smartelectronics\\wwwroot\\assets\\images\\label-red.svg",
+      "PackagePath": "staticwebassets\\assets\\images\\label-red.svg"
+    },
+    {
+      "Id": "C:\\Users\\Farid\\Desktop\\Smartelectronics\\Smartelectronics\\wwwroot\\assets\\images\\location-f.png",
+      "PackagePath": "staticwebassets\\assets\\images\\location-f.png"
+    },
+    {
+      "Id": "C:\\Users\\Farid\\Desktop\\Smartelectronics\\Smartelectronics\\wwwroot\\assets\\images\\logo.svg",
+      "PackagePath": "staticwebassets\\assets\\images\\logo.svg"
+    },
+    {
+      "Id": "C:\\Users\\Farid\\Desktop\\Smartelectronics\\Smartelectronics\\wwwroot\\assets\\images\\mail-f.png",
+      "PackagePath": "staticwebassets\\assets\\images\\mail-f.png"
+    },
+    {
+      "Id": "C:\\Users\\Farid\\Desktop\\Smartelectronics\\Smartelectronics\\wwwroot\\assets\\images\\more.png",
+      "PackagePath": "staticwebassets\\assets\\images\\more.png"
+    },
+    {
+      "Id": "C:\\Users\\Farid\\Desktop\\Smartelectronics\\Smartelectronics\\wwwroot\\assets\\images\\phone-f.png",
+      "PackagePath": "staticwebassets\\assets\\images\\phone-f.png"
+    },
+    {
+      "Id": "C:\\Users\\Farid\\Desktop\\Smartelectronics\\Smartelectronics\\wwwroot\\assets\\images\\product-types\\badge-blue.png",
+      "PackagePath": "staticwebassets\\assets\\images\\product-types\\badge-blue.png"
+    },
+    {
+      "Id": "C:\\Users\\Farid\\Desktop\\Smartelectronics\\Smartelectronics\\wwwroot\\assets\\images\\product-types\\bulb-blue.png",
+      "PackagePath": "staticwebassets\\assets\\images\\product-types\\bulb-blue.png"
+    },
+    {
+      "Id": "C:\\Users\\Farid\\Desktop\\Smartelectronics\\Smartelectronics\\wwwroot\\assets\\images\\product-types\\discount-blue.png",
+      "PackagePath": "staticwebassets\\assets\\images\\product-types\\discount-blue.png"
+    },
+    {
+      "Id": "C:\\Users\\Farid\\Desktop\\Smartelectronics\\Smartelectronics\\wwwroot\\assets\\images\\product-types\\new-blue.png",
+      "PackagePath": "staticwebassets\\assets\\images\\product-types\\new-blue.png"
+    },
+    {
+      "Id": "C:\\Users\\Farid\\Desktop\\Smartelectronics\\Smartelectronics\\wwwroot\\assets\\images\\sliders\\1card.png",
+      "PackagePath": "staticwebassets\\assets\\images\\sliders\\1card.png"
+    },
+    {
+      "Id": "C:\\Users\\Farid\\Desktop\\Smartelectronics\\Smartelectronics\\wwwroot\\assets\\images\\sliders\\slider-1.jpg",
+      "PackagePath": "staticwebassets\\assets\\images\\sliders\\slider-1.jpg"
+    },
+    {
+      "Id": "C:\\Users\\Farid\\Desktop\\Smartelectronics\\Smartelectronics\\wwwroot\\assets\\images\\sliders\\slider-2.jpg",
+      "PackagePath": "staticwebassets\\assets\\images\\sliders\\slider-2.jpg"
+    },
+    {
+      "Id": "C:\\Users\\Farid\\Desktop\\Smartelectronics\\Smartelectronics\\wwwroot\\assets\\images\\sliders\\tam.png",
+      "PackagePath": "staticwebassets\\assets\\images\\sliders\\tam.png"
+    },
+    {
+      "Id": "C:\\Users\\Farid\\Desktop\\Smartelectronics\\Smartelectronics\\wwwroot\\assets\\images\\sliders\\ucard-logo.png",
+      "PackagePath": "staticwebassets\\assets\\images\\sliders\\ucard-logo.png"
+    },
+    {
+      "Id": "C:\\Users\\Farid\\Desktop\\Smartelectronics\\Smartelectronics\\wwwroot\\assets\\images\\soon.gif",
+      "PackagePath": "staticwebassets\\assets\\images\\soon.gif"
+    },
+    {
+      "Id": "C:\\Users\\Farid\\Desktop\\Smartelectronics\\Smartelectronics\\wwwroot\\assets\\images\\truck-white.svg",
+      "PackagePath": "staticwebassets\\assets\\images\\truck-white.svg"
+    },
+    {
+      "Id": "C:\\Users\\Farid\\Desktop\\Smartelectronics\\Smartelectronics\\wwwroot\\assets\\images\\truck.svg",
+      "PackagePath": "staticwebassets\\assets\\images\\truck.svg"
+    },
+    {
+      "Id": "C:\\Users\\Farid\\Desktop\\Smartelectronics\\Smartelectronics\\wwwroot\\assets\\images\\ucard-sticker.png",
+      "PackagePath": "staticwebassets\\assets\\images\\ucard-sticker.png"
+    },
+    {
+      "Id": "C:\\Users\\Farid\\Desktop\\Smartelectronics\\Smartelectronics\\wwwroot\\assets\\js\\jquery.js",
+      "PackagePath": "staticwebassets\\assets\\js\\jquery.js"
+    },
+    {
+      "Id": "C:\\Users\\Farid\\Desktop\\Smartelectronics\\Smartelectronics\\wwwroot\\assets\\js\\script.js",
+      "PackagePath": "staticwebassets\\assets\\js\\script.js"
+    },
+    {
+      "Id": "obj\\Debug\\net6.0\\staticwebassets\\msbuild.Smartelectronics.Microsoft.AspNetCore.StaticWebAssets.props",
+      "PackagePath": "build\\Microsoft.AspNetCore.StaticWebAssets.props"
+    },
+    {
+      "Id": "obj\\Debug\\net6.0\\staticwebassets\\msbuild.build.Smartelectronics.props",
+      "PackagePath": "build\\Smartelectronics.props"
+    },
+    {
+      "Id": "obj\\Debug\\net6.0\\staticwebassets\\msbuild.buildMultiTargeting.Smartelectronics.props",
+      "PackagePath": "buildMultiTargeting\\Smartelectronics.props"
+    },
+    {
+      "Id": "obj\\Debug\\net6.0\\staticwebassets\\msbuild.buildTransitive.Smartelectronics.props",
+      "PackagePath": "buildTransitive\\Smartelectronics.props"
+    }
+  ],
+  "ElementsToRemove": []
+}
