@@ -1,0 +1,19 @@
+﻿@model LoginVM
+
+<form class="login-form" method="post" asp-controller="account" asp-action="UpdateProfile">
+    <div class="login-email-div">
+        <input id="login-email-input" type="text" placeholder="E-Poçt">
+        <span></span>
+    </div>
+    <div class="login-password-div">
+        <input id="login-password-input" type="password" placeholder="Şifrə">
+        <span></span>
+    </div>
+    <div class="login-submit-div">
+        <button type="submit">Daxil ol</button>
+    </div>
+    <div class="login-links">
+        <span>Hesabınız yoxdur?</span>
+        <button id="gotoregister">Qeydiyyatdan keç</button>
+    </div>
+</form>

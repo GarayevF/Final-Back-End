@@ -1,6 +1,6 @@
 {
   "Version": 1,
-  "Hash": "az057SndfcNxT3Qt58zPoMM36wySr2DK0FfSjN3jJzg=",
+  "Hash": "QHcmqvOWulh4sTIT/9pZt0ivhjAVK2nzfP3QE0TzoEY=",
   "Source": "Smartelectronics",
   "BasePath": "_content/Smartelectronics",
   "Mode": "Default",
@@ -593,6 +593,23 @@
       "CopyToOutputDirectory": "Never",
       "CopyToPublishDirectory": "PreserveNewest",
       "OriginalItemSpec": "wwwroot\\assets\\images\\truck-white.svg"
+    },
+    {
+      "Identity": "C:\\Users\\Farid\\Desktop\\Smartelectronics\\Smartelectronics\\wwwroot\\assets\\images\\ucard-logo.png",
+      "SourceId": "Smartelectronics",
+      "SourceType": "Discovered",
+      "ContentRoot": "C:\\Users\\Farid\\Desktop\\Smartelectronics\\Smartelectronics\\wwwroot\\",
+      "BasePath": "_content/Smartelectronics",
+      "RelativePath": "assets/images/ucard-logo.png",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot\\assets\\images\\ucard-logo.png"
     },
     {
       "Identity": "C:\\Users\\Farid\\Desktop\\Smartelectronics\\Smartelectronics\\wwwroot\\assets\\images\\ucard-sticker.png",

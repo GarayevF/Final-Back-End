@@ -1,0 +1,325 @@
+﻿@model DetailVM
+@{
+    ViewData["Title"] = "Detail";
+}
+
+<section class="breadcrumb-section">
+    <h2 class="sr-only">Site Breadcrumb</h2>
+    <div class="container">
+        <div class="breadcrumb-contents">
+            <nav aria-label="breadcrumb">
+                <ol class="breadcrumb">
+                    <li class="breadcrumb-item">
+                        <a href="index.html">Smart Electronics</a>
+                    </li>
+                    <li class="breadcrumb-item">
+                        <a href="index.html">
+                            @Model.Product.Category?.Parent?.Name
+                        </a>
+                    </li>
+                    <li class="breadcrumb-item">
+                        <a href="index.html">@Model.Product?.Category?.Name</a>
+                    </li>
+                    <li class="breadcrumb-item">
+                        <a href="index.html">@Model.Product?.Brand?.Name</a>
+                    </li>
+                    <li class="breadcrumb-item active">
+                        @Model.Product?.Title
+                    </li>
+                </ol>
+            </nav>
+        </div>
+    </div>
+</section>
+
+<main class="main-detail">
+    <div class="head">
+        <div class="container">
+            <div class="title">
+                <div class="title-head">
+                    <h1>@Model.Product?.Brand?.Name</h1>
+                    <h1>@Model.Product?.Category?.Name - @Model.Product?.Title</h1>
+                </div>
+                <div class="title-label">
+                    <div class="owl-carousel owl-three">
+                        @foreach (LoanTerm loanTerm in Model.Product.LoanTerms)
+                        {
+                            <div class="owl-three-item" style="width: 450px;">
+                            <div class="item">
+                                <div class="icon">
+                                    <img src="~/assets/images/@loanTerm.LoanCompany?.Logo" alt="">
+                                </div>
+                                <div class="content">
+                                        <p>@loanTerm.LoanTermLoanRanges.Max(a => a.LoanRange) ay x @((Model.Product.Price / (double)@loanTerm.LoanTermLoanRanges?.Max(a => a.LoanRange).Range).ToString("N2")) AZN</p>
+                                    <span>@loanTerm.Title</span>
+                                </div>
+                            </div>
+                        </div>
+                        }
+                        
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="item-info">
+        <div class="container">
+            <div class="content">
+                <div class="buttons-div">
+                    <a href="#" class="addtocompare">
+                        <svg style="pointer-events:none" version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" viewBox="0 0 512 512" xml:space="preserve" style="enable-background: new 0 0 512 512;"><title _ngcontent-serverApp-c47="">Müqayisə</title><style _ngcontent-serverApp-c47="" type="text/css">
+                                                                                                                                                                                                                                                                                                                                .st0 {
+                                                                                                                                                                                                                                                                                                                                    fill: none;
+                                                                                                                                                                                                                                                                                                                                    stroke: #4D4D4D;
+                                                                                                                                                                                                                                                                                                                                    stroke-width: 24;
+                                                                                                                                                                                                                                                                                                                                    stroke-linecap: round;
+                                                                                                                                                                                                                                                                                                                                    stroke-miterlimit: 10;
+                                                                                                                                                                                                                                                                                                                                }
+</style><line _ngcontent-serverApp-c47="" x1="104.1" y1="44.7" x2="104.1" y2="209.5" class="st0"></line><line _ngcontent-serverApp-c47="" x1="104.1" y1="259.9" x2="104.1" y2="426.6" class="st0"></line><line _ngcontent-serverApp-c47="" x1="178.7" y1="256" x2="29.5" y2="256" class="st0"></line><g _ngcontent-serverApp-c47=""><line _ngcontent-serverApp-c47="" x1="406.9" y1="318" x2="406.9" y2="461.4" class="st0"></line><line _ngcontent-serverApp-c47="" x1="482.5" y1="312.2" x2="333.3" y2="312.2" class="st0"></line><line _ngcontent-serverApp-c47="" x1="406.9" y1="44.7" x2="406.9" y2="256" class="st0"></line></g><g _ngcontent-serverApp-c47=""><line _ngcontent-serverApp-c47="" x1="256" y1="44.7" x2="256" y2="184.3" class="st0"></line><line _ngcontent-serverApp-c47="" x1="330.6" y1="184.3" x2="181.4" y2="184.3" class="st0"></line><line _ngcontent-serverApp-c47="" x1="256" y1="256" x2="256" y2="467.3" class="st0"></line></g></svg>
+                    </a>
+                    <a href="#" class="addtowish">
+                        <svg style="pointer-events:none" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns:svgjs="http://svgjs.com/svgjs" version="1.1" width="512" height="512" x="0" y="0" viewBox="0 0 512 512" xml:space="preserve" style="enable-background: new 0 0 512 512;"><title _ngcontent-serverApp-c47="">Seçilmişlər</title><g _ngcontent-serverApp-c47=""><g _ngcontent-serverApp-c47="" xmlns="http://www.w3.org/2000/svg"><g _ngcontent-serverApp-c47=""><path _ngcontent-serverApp-c47="" d="M378.667,21.333c-56.792,0-103.698,52.75-122.667,77.646c-18.969-24.896-65.875-77.646-122.667-77.646    C59.813,21.333,0,88.927,0,172c0,45.323,17.99,87.562,49.479,116.469c0.458,0.792,1.021,1.521,1.677,2.177l197.313,196.906    c2.083,2.073,4.802,3.115,7.531,3.115s5.458-1.042,7.542-3.125L467.417,283.74l2.104-2.042c1.667-1.573,3.313-3.167,5.156-5.208    c0.771-0.76,1.406-1.615,1.896-2.542C499.438,245.948,512,209.833,512,172C512,88.927,452.188,21.333,378.667,21.333z     M458.823,261.948c-0.292,0.344-0.563,0.708-0.802,1.083c-1,1.146-2.094,2.156-3.177,3.188L255.99,464.927L68.667,277.979    c-0.604-1.188-1.448-2.271-2.479-3.177C37.677,249.906,21.333,212.437,21.333,172c0-71.313,50.24-129.333,112-129.333    c61.063,0,113.177,79.646,113.698,80.448c3.938,6.083,14,6.083,17.938,0c0.521-0.802,52.635-80.448,113.698-80.448    c61.76,0,112,58.021,112,129.333C490.667,205.604,479.354,237.552,458.823,261.948z" fill="#555970" data-original="#000000"></path></g></g><g _ngcontent-serverApp-c47="" xmlns="http://www.w3.org/2000/svg"></g><g _ngcontent-serverApp-c47="" xmlns="http://www.w3.org/2000/svg"></g><g _ngcontent-serverApp-c47="" xmlns="http://www.w3.org/2000/svg"></g><g _ngcontent-serverApp-c47="" xmlns="http://www.w3.org/2000/svg"></g><g _ngcontent-serverApp-c47="" xmlns="http://www.w3.org/2000/svg"></g><g _ngcontent-serverApp-c47="" xmlns="http://www.w3.org/2000/svg"></g><g _ngcontent-serverApp-c47="" xmlns="http://www.w3.org/2000/svg"></g><g _ngcontent-serverApp-c47="" xmlns="http://www.w3.org/2000/svg"></g><g _ngcontent-serverApp-c47="" xmlns="http://www.w3.org/2000/svg"></g><g _ngcontent-serverApp-c47="" xmlns="http://www.w3.org/2000/svg"></g><g _ngcontent-serverApp-c47="" xmlns="http://www.w3.org/2000/svg"></g><g _ngcontent-serverApp-c47="" xmlns="http://www.w3.org/2000/svg"></g><g _ngcontent-serverApp-c47="" xmlns="http://www.w3.org/2000/svg"></g><g _ngcontent-serverApp-c47="" xmlns="http://www.w3.org/2000/svg"></g><g _ngcontent-serverApp-c47="" xmlns="http://www.w3.org/2000/svg"></g></g></svg>
+                    </a>
+                    <a href="#" class="addtobasket">
+                        <svg style="pointer-events:none" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns:svgjs="http://svgjs.com/svgjs" version="1.1" width="512" height="512" x="0" y="0" viewBox="0 0 321.2 321.2" xml:space="preserve" style="enable-background: new 0 0 512 512;"><title _ngcontent-serverApp-c47="">Səbət</title><g _ngcontent-serverApp-c47=""><g _ngcontent-serverApp-c47="" xmlns="http://www.w3.org/2000/svg"><g _ngcontent-serverApp-c47=""><path _ngcontent-serverApp-c47="" d="M306.4,313.2l-24-223.6c-0.4-3.6-3.6-6.4-7.2-6.4h-44.4V69.6c0-38.4-31.2-69.6-69.6-69.6c-38.4,0-69.6,31.2-69.6,69.6    v13.6H46c-3.6,0-6.8,2.8-7.2,6.4l-24,223.6c-0.4,2,0.4,4,1.6,5.6c1.2,1.6,3.2,2.4,5.2,2.4h278c2,0,4-0.8,5.2-2.4    C306,317.2,306.8,315.2,306.4,313.2z M223.6,123.6c3.6,0,6.4,2.8,6.4,6.4c0,3.6-2.8,6.4-6.4,6.4c-3.6,0-6.4-2.8-6.4-6.4    C217.2,126.4,220,123.6,223.6,123.6z M106,69.6c0-30.4,24.8-55.2,55.2-55.2c30.4,0,55.2,24.8,55.2,55.2v13.6H106V69.6z     M98.8,123.6c3.6,0,6.4,2.8,6.4,6.4c0,3.6-2.8,6.4-6.4,6.4c-3.6,0-6.4-2.8-6.4-6.4C92.4,126.4,95.2,123.6,98.8,123.6z M30,306.4    L52.4,97.2h39.2v13.2c-8,2.8-13.6,10.4-13.6,19.2c0,11.2,9.2,20.4,20.4,20.4c11.2,0,20.4-9.2,20.4-20.4c0-8.8-5.6-16.4-13.6-19.2    V97.2h110.4v13.2c-8,2.8-13.6,10.4-13.6,19.2c0,11.2,9.2,20.4,20.4,20.4c11.2,0,20.4-9.2,20.4-20.4c0-8.8-5.6-16.4-13.6-19.2V97.2    H270l22.4,209.2H30z" fill="#555970" data-original="#000000"></path></g></g><g _ngcontent-serverApp-c47="" xmlns="http://www.w3.org/2000/svg"></g><g _ngcontent-serverApp-c47="" xmlns="http://www.w3.org/2000/svg"></g><g _ngcontent-serverApp-c47="" xmlns="http://www.w3.org/2000/svg"></g><g _ngcontent-serverApp-c47="" xmlns="http://www.w3.org/2000/svg"></g><g _ngcontent-serverApp-c47="" xmlns="http://www.w3.org/2000/svg"></g><g _ngcontent-serverApp-c47="" xmlns="http://www.w3.org/2000/svg"></g><g _ngcontent-serverApp-c47="" xmlns="http://www.w3.org/2000/svg"></g><g _ngcontent-serverApp-c47="" xmlns="http://www.w3.org/2000/svg"></g><g _ngcontent-serverApp-c47="" xmlns="http://www.w3.org/2000/svg"></g><g _ngcontent-serverApp-c47="" xmlns="http://www.w3.org/2000/svg"></g><g _ngcontent-serverApp-c47="" xmlns="http://www.w3.org/2000/svg"></g><g _ngcontent-serverApp-c47="" xmlns="http://www.w3.org/2000/svg"></g><g _ngcontent-serverApp-c47="" xmlns="http://www.w3.org/2000/svg"></g><g _ngcontent-serverApp-c47="" xmlns="http://www.w3.org/2000/svg"></g><g _ngcontent-serverApp-c47="" xmlns="http://www.w3.org/2000/svg"></g></g></svg>
+                    </a>
+                </div>
+                <div class="item-content">
+                    <div class="left">
+                        <div class="product-card">
+                            <ul class="label-set">
+                                <li class="circle label-blue">
+                                    <div class="label">
+                                        <p>Nağd alışlarda</p>
+                                        <h6>Endirim</h6>
+                                        <div class="price">
+                                            <p>
+                                                <span>200</span>AZN
+                                            </p>
+                                        </div>
+                                    </div>
+                                </li>
+                                <li class="circle label-red">
+                                    <div class="label">
+                                        <p class="text-lg">24 ay</p>
+                                        <p class="text-sm">Faizsiz Kredit</p>
+                                    </div>
+                                </li>
+                                <li class="circle label-orange">
+                                    <div class="label">
+                                        <p class="text-lg">24 ay</p>
+                                        <p class="text-sm">Faizsiz Kredit</p>
+                                    </div>
+                                </li>
+                            </ul>
+                            <div class="image-link-slider">
+                                <div class="owl-carousel product-detail-slider">
+                                    <div class="product-slider-image">
+                                        <img src="https://api.smartelectronics.az/uploads/products/d36b3c6d48e44ba48096c62001ebc83f%C3%BCe6fg4%C3%BCe6f4%C3%BC6.jpg" alt="">
+                                    </div>
+                                    <div class="product-slider-image">
+                                        <img src="https://api.smartelectronics.az/uploads/products/d36b3c6d48e44ba48096c62001ebc83f%C3%BCe6fg4%C3%BCe6f4%C3%BC6.jpg" alt="">
+                                    </div>
+                                </div>
+
+                            </div>
+                            <div class="color-and-credit">
+                                <h3 class="product-price">4699<small>AZN</small></h3>
+                                <div class="color-div">
+                                    <div class="item-colors">
+                                        <div class="color active " style="background-color: rgb(236, 215, 99);"></div>
+                                        <div class="color " style="background-color: rgb(75, 0, 130);"></div>
+                                        <div class="color " style="background-color: rgb(0, 0, 0);"></div>
+                                        <div class="color " style="background-color: rgb(226, 219, 219);"></div>
+                                    </div>
+                                </div>
+                            </div>
+                            <a href="" class="buy buyoneclick">1 kliklə al</a>
+                        </div>
+                    </div>
+                    <div class="right">
+                        <div class="title-wrapper">
+                            <h6>Faizsiz Kredit Təklifi</h6>
+                            <div class="delivery-label">
+                                <div class="icon">
+                                    <img src="/assets/images/truck.svg" alt="">
+                                </div>
+                                <p>Çatdırılma pulsuz</p>
+                            </div>
+                        </div>
+                        <div class="credit-suggestion">
+                            <ul class="wrapper">
+                                <li class="li-title">
+                                    <p class="title">Müddət</p>
+                                    <p class="title">İlkin Ödəniş</p>
+                                    <p class="title">Aylıq Ödəniş</p>
+                                    <p class="title">Toplam Ödəniş</p>
+                                </li>
+                                <li style="position: relative;">
+                                    <div class="block radio-wrapper">
+                                        <input type="radio" name="creditCondition" id="creditCondition-1">
+                                        <label for="creditCondition-1"></label>
+                                    </div>
+                                    <div class="price outline">
+                                        <p style="padding-left: 24px;">6 ay</p>
+                                    </div>
+                                    <div class="price">
+                                        <p>0 azn</p>
+                                    </div>
+                                    <div class="price">
+                                        <p>700 azn</p>
+                                    </div>
+                                    <div class="price">
+                                        <p>4200 azn</p>
+                                    </div>
+                                </li>
+                                <li style="position: relative;">
+                                    <div class="block radio-wrapper">
+                                        <input type="radio" name="creditCondition" id="creditCondition-2">
+                                        <label for="creditCondition-2"></label>
+                                    </div>
+                                    <div class="price outline">
+                                        <p style="padding-left: 24px;">18 ay</p>
+                                    </div>
+                                    <div class="price">
+                                        <p>1320 azn</p>
+                                    </div>
+                                    <div class="price">
+                                        <p>172 azn</p>
+                                    </div>
+                                    <div class="price">
+                                        <p>4416 azn</p>
+                                    </div>
+                                </li>
+                                <li style="position: relative;">
+                                    <div class="block radio-wrapper">
+                                        <input type="radio" name="creditCondition" id="creditCondition-3">
+                                        <label for="creditCondition-3"></label>
+                                    </div>
+                                    <div class="price outline">
+                                        <p style="padding-left: 24px;">12 ay</p>
+                                    </div>
+                                    <div class="price">
+                                        <p>0 azn</p>
+                                    </div>
+                                    <div class="price">
+                                        <p>367 azn</p>
+                                    </div>
+                                    <div class="price">
+                                        <p>4404 azn</p>
+                                    </div>
+                                </li>
+                            </ul>
+                        </div>
+                        <div class="credit-calculator">
+                            <div class="title-wrapper">
+                                <h6>KREDİT HESABLAYICI</h6>
+                                <div class="toggle-checkbox">
+                                    <input type="checkbox" id="edit_work_place">
+                                    <label for="edit_work_place">
+                                        <span class="on">VIP  MÜŞTƏRİ</span>
+                                        <span class="off">STANDART MÜŞTƏRİ</span>
+                                    </label>
+                                </div>
+                            </div>
+                            <ul class="wrapper">
+                                <li class="li-title">
+                                    <p class="title">Müddət</p>
+                                    <p class="title">İlkin Ödəniş</p>
+                                    <p class="title">Aylıq Ödəniş</p>
+                                    <p class="title">Toplam Ödəniş</p>
+                                </li>
+                                <li class="li-body">
+                                    <div class="block radio-wrapper">
+                                        <input type="radio" name="creditCondition" id="creditCondition-0">
+                                        <label for="creditCondition-0"></label>
+                                    </div>
+                                    <div class="price d-block">
+                                        <div class="credit-month-select">
+                                            <div class="dropdown">
+                                                <button class="dropbtn"><span>12</span> <i class="fa-solid fa-chevron-left"></i></button>
+                                                <div id="credit-dropdown" class="dropdown-content">
+                                                    <a href="#">24</a>
+                                                    <a href="#">18</a>
+                                                    <a href="#">15</a>
+                                                    <a href="#">12</a>
+                                                    <a href="#">9</a>
+                                                    <a href="#">6</a>
+                                                    <a href="#">3</a>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="price">
+                                        <input type="number" class="pristine" value="0">
+                                    </div>
+                                    <div class="price outline">
+                                        <p>394 azn</p>
+                                    </div>
+                                    <div class="price outline">
+                                        <span class="mob-title">Toplam Ödəniş</span>
+                                        <p>4728 azn</p>
+                                    </div>
+                                </li>
+                            </ul>
+                        </div>
+                        <div class="payment-btns">
+                            <button class="payment-btn buy-cash-btn">Nağd al</button>
+                            <button class="payment-btn buy-taksit-btn">Taksitlə al</button>
+                            <button class="payment-btn buy-credit-btn">Kreditlə al</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="specifications">
+                <h4>TEXNİKİ XÜSUSİYYƏTLƏR</h4>
+                <div class="specifications-main">
+                    <div class="elements">
+                        <div class="feature">
+                            <div class="feature-title">
+                                <div class="icon">
+                                    <i class="fa-solid fa-mobile-screen"></i>
+                                </div>
+                                <h6>Displey</h6>
+                            </div>
+                            <div class="feature-body">
+                                <p>Displey tipi</p>
+                                <p>LTPO Super Retina XDR OLED, 120Hz, HDR10, Dolby Vision, 1000 nits (typ), 2000 nits (HBM)</p>
+                            </div>
+                            <div class="feature-body">
+                                <p>Displey ölçüsü</p>
+                                <p>6.1 inches, 91.7 cm2 (~87.0% screen-to-body ratio)</p>
+                            </div>
+                            <div class="feature-body">
+                                <p>Görüntü imkanları</p>
+                                <p>1179 x 2556 pixels, 19.5:9 ratio (~460 ppi density)</p>
+                            </div>
+                        </div>
+                        <div class="feature">
+                            <div class="feature-title">
+                                <div class="icon">
+                                    <i class="fa-solid fa-mobile-screen"></i>
+                                </div>
+                                <h6>Displey</h6>
+                            </div>
+                            <div class="feature-body">
+                                <p>Displey tipi</p>
+                                <p>LTPO Super Retina XDR OLED, 120Hz, HDR10, Dolby Vision, 1000 nits (typ), 2000 nits (HBM)</p>
+                            </div>
+                            <div class="feature-body">
+                                <p>Displey ölçüsü</p>
+                                <p>6.1 inches, 91.7 cm2 (~87.0% screen-to-body ratio)</p>
+                            </div>
+                            <div class="feature-body">
+                                <p>Görüntü imkanları</p>
+                                <p>1179 x 2556 pixels, 19.5:9 ratio (~460 ppi density)</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</main>
+

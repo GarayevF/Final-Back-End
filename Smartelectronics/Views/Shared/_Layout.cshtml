@@ -106,7 +106,8 @@
                                 </a>
                                 <div id="login-register-div">
                                     <div class="login-div">
-                                        @await Html.PartialAsync("_LoginPartial")
+                                        @await Component.InvokeAsync("Login")
+                                        @*@await Html.PartialAsync("_LoginPartial")*@
                                     </div>
                                 </div>
                             </li>

@@ -23,6 +23,8 @@ namespace Smartelectronics.Models
         public List<LoanTerm>? LoanTerms { get; set; }
         public int? CategoryId { get; set; }
         public Category? Category { get; set; }
+        public int? BrandId { get; set; }
+        public Brand? Brand { get; set; }
         public List<ProductImage>? ProductImages { get; set; }
         public IEnumerable<Basket>? Baskets { get; set; }
         public IEnumerable<OrderItem>? OrderItems { get; set; }
@@ -33,5 +35,8 @@ namespace Smartelectronics.Models
         public List<ProductColor>? ProductColors { get; set; }
         [NotMapped]
         public IEnumerable<int>? ColorIds { get; set; }
+        public List<ProductCategorySpecification>? ProductCategorySpecifications { get; set; }
+        [NotMapped]
+        public IEnumerable<int>? CategorySpecificationIds { get; set; }
     }
 }

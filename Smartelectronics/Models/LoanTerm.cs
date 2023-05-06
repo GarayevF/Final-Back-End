@@ -11,5 +11,6 @@ namespace Smartelectronics.Models
         public LoanCompany? LoanCompany { get; set; }
         public int? ProductId { get; set; }
         public Product? Product { get; set; }
+        public string? Title { get; set; }
     }
 }
