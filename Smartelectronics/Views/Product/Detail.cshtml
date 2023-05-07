@@ -50,7 +50,7 @@
                                     <img src="~/assets/images/@loanTerm.LoanCompany?.Logo" alt="">
                                 </div>
                                 <div class="content">
-                                        <p>@loanTerm.LoanTermLoanRanges.Max(a => a.LoanRange) ay x @((Model.Product.Price / (double)@loanTerm.LoanTermLoanRanges?.Max(a => a.LoanRange).Range).ToString("N2")) AZN</p>
+                                        <p>@loanTerm.LoanTermLoanRanges.Max(a => a.LoanRange).Range ay x @((Model.Product.Price / (double)@loanTerm.LoanTermLoanRanges?.Max(a => a.LoanRange).Range).ToString("N2")) AZN</p>
                                     <span>@loanTerm.Title</span>
                                 </div>
                             </div>
@@ -276,46 +276,47 @@
                 <h4>TEXNİKİ XÜSUSİYYƏTLƏR</h4>
                 <div class="specifications-main">
                     <div class="elements">
-                        <div class="feature">
-                            <div class="feature-title">
-                                <div class="icon">
-                                    <i class="fa-solid fa-mobile-screen"></i>
+                        @foreach (GroupedSpecificationsVM groupedSpecificationsVM in Model.GroupedSpecificationsVMs)
+                        {
+                            <div class="feature">
+                                <div class="feature-title">
+                                    <div class="icon">
+                                        @Html.Raw(groupedSpecificationsVM.GroupIcon)
+                                    </div>
+                                    <h6>@groupedSpecificationsVM.GroupName</h6>
                                 </div>
-                                <h6>Displey</h6>
+                                @foreach (SpecificationVM specification in groupedSpecificationsVM.Specifications)
+                                {
+                                    <div class="feature-body">
+                                        <p>@specification.Name</p>
+                                        <p>@specification.Value</p>
+                                    </div>
+                                }
+
+
                             </div>
-                            <div class="feature-body">
-                                <p>Displey tipi</p>
-                                <p>LTPO Super Retina XDR OLED, 120Hz, HDR10, Dolby Vision, 1000 nits (typ), 2000 nits (HBM)</p>
-                            </div>
-                            <div class="feature-body">
-                                <p>Displey ölçüsü</p>
-                                <p>6.1 inches, 91.7 cm2 (~87.0% screen-to-body ratio)</p>
-                            </div>
-                            <div class="feature-body">
-                                <p>Görüntü imkanları</p>
-                                <p>1179 x 2556 pixels, 19.5:9 ratio (~460 ppi density)</p>
-                            </div>
-                        </div>
-                        <div class="feature">
-                            <div class="feature-title">
-                                <div class="icon">
-                                    <i class="fa-solid fa-mobile-screen"></i>
+                        }
+                        @*@foreach (ProductCategorySpecification productCategorySpecification in Model.Product.ProductCategorySpecifications)
+                        {
+                            <div class="feature">
+                                <div class="feature-title">
+                                    <div class="icon">
+                                        @productCategorySpecification.CategorySpecification?.Specification?.SpecificationGroup?.Icon
+                                    </div>
+                                    <h6>@productCategorySpecification.CategorySpecification?.Specification?.SpecificationGroup?.Name</h6>
                                 </div>
-                                <h6>Displey</h6>
+                                @foreach (var item in productCategorySpecification.)
+                                {
+                                    <div class="feature-body">
+                                    <p>@productCategorySpecification.CategorySpecification?.Specification?.Name</p>
+                                    <p>@productCategorySpecification.Value</p>
+                                </div>
+                                }
+                                
+                                
                             </div>
-                            <div class="feature-body">
-                                <p>Displey tipi</p>
-                                <p>LTPO Super Retina XDR OLED, 120Hz, HDR10, Dolby Vision, 1000 nits (typ), 2000 nits (HBM)</p>
-                            </div>
-                            <div class="feature-body">
-                                <p>Displey ölçüsü</p>
-                                <p>6.1 inches, 91.7 cm2 (~87.0% screen-to-body ratio)</p>
-                            </div>
-                            <div class="feature-body">
-                                <p>Görüntü imkanları</p>
-                                <p>1179 x 2556 pixels, 19.5:9 ratio (~460 ppi density)</p>
-                            </div>
-                        </div>
+                        }*@
+                        
                     </div>
                 </div>
             </div>

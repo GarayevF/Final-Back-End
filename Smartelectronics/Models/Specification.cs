@@ -6,5 +6,7 @@ namespace Smartelectronics.Models
     {
         [StringLength(100)]
         public string Name { get; set; }
+        public int? SpecificationGroupId { get; set; }
+        public SpecificationGroup? SpecificationGroup { get; set; }
     }
 }

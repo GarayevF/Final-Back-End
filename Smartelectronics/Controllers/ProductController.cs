@@ -39,14 +39,32 @@ namespace Smartelectronics.Controllers
                 .ThenInclude(lt => lt.LoanTermLoanRanges).ThenInclude(ltlr => ltlr.LoanRange)
                 .Include(p => p.LoanTerms).ThenInclude(lt => lt.LoanCompany).Where(p => p.IsDeleted == false)
                 .Include(p => p.ProductCategorySpecifications.Where(p => p.IsDeleted == false && p.ProductId == id))
-                .ThenInclude(pcs => pcs.CategorySpecification).Where(a => a.IsDeleted == false && a.CategoryId == productTemp.CategoryId)
+                .ThenInclude(pcs => pcs.CategorySpecification).ThenInclude(cs => cs.Specification).ThenInclude(s => s.SpecificationGroup)
+                .Include(p => p.ProductCategorySpecifications).ThenInclude(pcs => pcs.CategorySpecification)
+                .ThenInclude(cs => cs.Category)
                 .FirstOrDefaultAsync(p => p.IsDeleted == false && p.Id == id);
 
             if (product == null) return NotFound();
 
+            List<ProductCategorySpecification> productCategorySpecifications = await _context.ProductCategorySpecifications
+            .Include(pcs => pcs.CategorySpecification).ThenInclude(cs => cs.Specification).ThenInclude(s => s.SpecificationGroup)
+            .Where(pcs => pcs.ProductId == id).ToListAsync();
+            
+
+            List<GroupedSpecificationsVM> groupedSpecifications = productCategorySpecifications
+                .GroupBy(s => s.CategorySpecification?.Specification?.SpecificationGroup)
+                .Select(g => new GroupedSpecificationsVM
+                {
+                    GroupName = g.Key.Name,
+                    GroupIcon = g.Key.Icon,
+                    Specifications = g.Select(spec => SpecificationViewModelMapper.Map(spec)).ToList()
+                })
+                .ToList();
+
             DetailVM detailVM = new DetailVM
             {
                 Product = product,
+                GroupedSpecificationsVMs = groupedSpecifications,
             };
 
             return View(detailVM);
