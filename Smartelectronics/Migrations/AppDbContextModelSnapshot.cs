@@ -293,7 +293,7 @@ namespace Smartelectronics.Migrations
 
                     b.HasIndex("ProductId");
 
-                    b.ToTable("Baskets", (string)null);
+                    b.ToTable("Baskets");
                 });
 
             modelBuilder.Entity("Smartelectronics.Models.Brand", b =>
@@ -303,9 +303,6 @@ namespace Smartelectronics.Migrations
                         .HasColumnType("int");
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
-
-                    b.Property<int?>("CategoryId")
-                        .HasColumnType("int");
 
                     b.Property<DateTime?>("CreatedAt")
                         .HasColumnType("datetime2");
@@ -338,9 +335,7 @@ namespace Smartelectronics.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("CategoryId");
-
-                    b.ToTable("Brands", (string)null);
+                    b.ToTable("Brands");
                 });
 
             modelBuilder.Entity("Smartelectronics.Models.Category", b =>
@@ -394,7 +389,54 @@ namespace Smartelectronics.Migrations
 
                     b.HasIndex("ParentId");
 
-                    b.ToTable("Categories", (string)null);
+                    b.ToTable("Categories");
+                });
+
+            modelBuilder.Entity("Smartelectronics.Models.CategoryBrand", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
+
+                    b.Property<int?>("BrandId")
+                        .HasColumnType("int");
+
+                    b.Property<int?>("CategoryId")
+                        .HasColumnType("int");
+
+                    b.Property<DateTime?>("CreatedAt")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("CreatedBy")
+                        .HasMaxLength(255)
+                        .HasColumnType("nvarchar(255)");
+
+                    b.Property<DateTime?>("DeletedAt")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("DeletedBy")
+                        .HasMaxLength(255)
+                        .HasColumnType("nvarchar(255)");
+
+                    b.Property<bool>("IsDeleted")
+                        .HasColumnType("bit");
+
+                    b.Property<DateTime?>("UpdatedAt")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("UpdatedBy")
+                        .HasMaxLength(255)
+                        .HasColumnType("nvarchar(255)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("BrandId");
+
+                    b.HasIndex("CategoryId");
+
+                    b.ToTable("CategoryBrands");
                 });
 
             modelBuilder.Entity("Smartelectronics.Models.CategorySpecification", b =>
@@ -441,7 +483,7 @@ namespace Smartelectronics.Migrations
 
                     b.HasIndex("SpecificationId");
 
-                    b.ToTable("CategorySpecifications", (string)null);
+                    b.ToTable("CategorySpecifications");
                 });
 
             modelBuilder.Entity("Smartelectronics.Models.Color", b =>
@@ -483,7 +525,7 @@ namespace Smartelectronics.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Colors", (string)null);
+                    b.ToTable("Colors");
                 });
 
             modelBuilder.Entity("Smartelectronics.Models.LoanCompany", b =>
@@ -535,7 +577,7 @@ namespace Smartelectronics.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("LoanCompanies", (string)null);
+                    b.ToTable("LoanCompanies");
                 });
 
             modelBuilder.Entity("Smartelectronics.Models.LoanRange", b =>
@@ -575,7 +617,7 @@ namespace Smartelectronics.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("LoanRanges", (string)null);
+                    b.ToTable("LoanRanges");
                 });
 
             modelBuilder.Entity("Smartelectronics.Models.LoanTerm", b =>
@@ -625,7 +667,7 @@ namespace Smartelectronics.Migrations
 
                     b.HasIndex("ProductId");
 
-                    b.ToTable("LoanTerms", (string)null);
+                    b.ToTable("LoanTerms");
                 });
 
             modelBuilder.Entity("Smartelectronics.Models.LoanTermLoanRange", b =>
@@ -672,7 +714,7 @@ namespace Smartelectronics.Migrations
 
                     b.HasIndex("LoanTermId");
 
-                    b.ToTable("LoanTermLoanRanges", (string)null);
+                    b.ToTable("LoanTermLoanRanges");
                 });
 
             modelBuilder.Entity("Smartelectronics.Models.Order", b =>
@@ -752,7 +794,7 @@ namespace Smartelectronics.Migrations
 
                     b.HasIndex("UserId");
 
-                    b.ToTable("Orders", (string)null);
+                    b.ToTable("Orders");
                 });
 
             modelBuilder.Entity("Smartelectronics.Models.OrderItem", b =>
@@ -805,7 +847,7 @@ namespace Smartelectronics.Migrations
 
                     b.HasIndex("ProductId");
 
-                    b.ToTable("OrderItems", (string)null);
+                    b.ToTable("OrderItems");
                 });
 
             modelBuilder.Entity("Smartelectronics.Models.Product", b =>
@@ -816,10 +858,7 @@ namespace Smartelectronics.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
 
-                    b.Property<int?>("BrandId")
-                        .HasColumnType("int");
-
-                    b.Property<int?>("CategoryId")
+                    b.Property<int?>("CategoryBrandId")
                         .HasColumnType("int");
 
                     b.Property<int?>("Code")
@@ -879,11 +918,9 @@ namespace Smartelectronics.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("BrandId");
+                    b.HasIndex("CategoryBrandId");
 
-                    b.HasIndex("CategoryId");
-
-                    b.ToTable("Products", (string)null);
+                    b.ToTable("Products");
                 });
 
             modelBuilder.Entity("Smartelectronics.Models.ProductCategorySpecification", b =>
@@ -935,7 +972,7 @@ namespace Smartelectronics.Migrations
 
                     b.HasIndex("ProductId");
 
-                    b.ToTable("ProductCategorySpecifications", (string)null);
+                    b.ToTable("ProductCategorySpecifications");
                 });
 
             modelBuilder.Entity("Smartelectronics.Models.ProductColor", b =>
@@ -985,7 +1022,63 @@ namespace Smartelectronics.Migrations
 
                     b.HasIndex("ProductId");
 
-                    b.ToTable("ProductColors", (string)null);
+                    b.ToTable("ProductColors");
+                });
+
+            modelBuilder.Entity("Smartelectronics.Models.ProductIFLoanRange", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
+
+                    b.Property<DateTime?>("CreatedAt")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("CreatedBy")
+                        .HasMaxLength(255)
+                        .HasColumnType("nvarchar(255)");
+
+                    b.Property<DateTime?>("DeletedAt")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("DeletedBy")
+                        .HasMaxLength(255)
+                        .HasColumnType("nvarchar(255)");
+
+                    b.Property<decimal?>("InitialPayment")
+                        .HasColumnType("money");
+
+                    b.Property<bool>("IsDeleted")
+                        .HasColumnType("bit");
+
+                    b.Property<int>("LoanRangeId")
+                        .HasColumnType("int");
+
+                    b.Property<decimal?>("MonthlyPayment")
+                        .HasColumnType("money");
+
+                    b.Property<int>("ProductId")
+                        .HasColumnType("int");
+
+                    b.Property<decimal?>("TotalPayment")
+                        .HasColumnType("money");
+
+                    b.Property<DateTime?>("UpdatedAt")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("UpdatedBy")
+                        .HasMaxLength(255)
+                        .HasColumnType("nvarchar(255)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("LoanRangeId");
+
+                    b.HasIndex("ProductId");
+
+                    b.ToTable("ProductIFLoanRanges");
                 });
 
             modelBuilder.Entity("Smartelectronics.Models.ProductImage", b =>
@@ -1031,7 +1124,60 @@ namespace Smartelectronics.Migrations
 
                     b.HasIndex("ProductId");
 
-                    b.ToTable("ProductImages", (string)null);
+                    b.ToTable("ProductImages");
+                });
+
+            modelBuilder.Entity("Smartelectronics.Models.ProductLoanRange", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
+
+                    b.Property<DateTime?>("CreatedAt")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("CreatedBy")
+                        .HasMaxLength(255)
+                        .HasColumnType("nvarchar(255)");
+
+                    b.Property<DateTime?>("DeletedAt")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("DeletedBy")
+                        .HasMaxLength(255)
+                        .HasColumnType("nvarchar(255)");
+
+                    b.Property<double>("InterestForStandartUsers")
+                        .HasColumnType("float");
+
+                    b.Property<double>("InterestForVipUsers")
+                        .HasColumnType("float");
+
+                    b.Property<bool>("IsDeleted")
+                        .HasColumnType("bit");
+
+                    b.Property<int>("LoanRangeId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("ProductId")
+                        .HasColumnType("int");
+
+                    b.Property<DateTime?>("UpdatedAt")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("UpdatedBy")
+                        .HasMaxLength(255)
+                        .HasColumnType("nvarchar(255)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("LoanRangeId");
+
+                    b.HasIndex("ProductId");
+
+                    b.ToTable("ProductLoanRanges");
                 });
 
             modelBuilder.Entity("Smartelectronics.Models.Setting", b =>
@@ -1054,7 +1200,7 @@ namespace Smartelectronics.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Settings", (string)null);
+                    b.ToTable("Settings");
                 });
 
             modelBuilder.Entity("Smartelectronics.Models.Slider", b =>
@@ -1101,7 +1247,7 @@ namespace Smartelectronics.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Sliders", (string)null);
+                    b.ToTable("Sliders");
                 });
 
             modelBuilder.Entity("Smartelectronics.Models.Specification", b =>
@@ -1148,7 +1294,7 @@ namespace Smartelectronics.Migrations
 
                     b.HasIndex("SpecificationGroupId");
 
-                    b.ToTable("Specifications", (string)null);
+                    b.ToTable("Specifications");
                 });
 
             modelBuilder.Entity("Smartelectronics.Models.SpecificationGroup", b =>
@@ -1195,7 +1341,7 @@ namespace Smartelectronics.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("SpecificationGroups", (string)null);
+                    b.ToTable("SpecificationGroups");
                 });
 
             modelBuilder.Entity("Smartelectronics.Models.Wishlist", b =>
@@ -1254,7 +1400,7 @@ namespace Smartelectronics.Migrations
 
                     b.HasIndex("ProductId");
 
-                    b.ToTable("Wishlists", (string)null);
+                    b.ToTable("Wishlists");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
@@ -1323,13 +1469,6 @@ namespace Smartelectronics.Migrations
                     b.Navigation("Product");
                 });
 
-            modelBuilder.Entity("Smartelectronics.Models.Brand", b =>
-                {
-                    b.HasOne("Smartelectronics.Models.Category", null)
-                        .WithMany("Brands")
-                        .HasForeignKey("CategoryId");
-                });
-
             modelBuilder.Entity("Smartelectronics.Models.Category", b =>
                 {
                     b.HasOne("Smartelectronics.Models.Category", "Parent")
@@ -1337,6 +1476,21 @@ namespace Smartelectronics.Migrations
                         .HasForeignKey("ParentId");
 
                     b.Navigation("Parent");
+                });
+
+            modelBuilder.Entity("Smartelectronics.Models.CategoryBrand", b =>
+                {
+                    b.HasOne("Smartelectronics.Models.Brand", "Brand")
+                        .WithMany()
+                        .HasForeignKey("BrandId");
+
+                    b.HasOne("Smartelectronics.Models.Category", "Category")
+                        .WithMany("CategoryBrands")
+                        .HasForeignKey("CategoryId");
+
+                    b.Navigation("Brand");
+
+                    b.Navigation("Category");
                 });
 
             modelBuilder.Entity("Smartelectronics.Models.CategorySpecification", b =>
@@ -1412,17 +1566,11 @@ namespace Smartelectronics.Migrations
 
             modelBuilder.Entity("Smartelectronics.Models.Product", b =>
                 {
-                    b.HasOne("Smartelectronics.Models.Brand", "Brand")
+                    b.HasOne("Smartelectronics.Models.CategoryBrand", "CategoryBrand")
                         .WithMany("Products")
-                        .HasForeignKey("BrandId");
+                        .HasForeignKey("CategoryBrandId");
 
-                    b.HasOne("Smartelectronics.Models.Category", "Category")
-                        .WithMany("Products")
-                        .HasForeignKey("CategoryId");
-
-                    b.Navigation("Brand");
-
-                    b.Navigation("Category");
+                    b.Navigation("CategoryBrand");
                 });
 
             modelBuilder.Entity("Smartelectronics.Models.ProductCategorySpecification", b =>
@@ -1455,6 +1603,25 @@ namespace Smartelectronics.Migrations
                     b.Navigation("Product");
                 });
 
+            modelBuilder.Entity("Smartelectronics.Models.ProductIFLoanRange", b =>
+                {
+                    b.HasOne("Smartelectronics.Models.LoanRange", "LoanRange")
+                        .WithMany()
+                        .HasForeignKey("LoanRangeId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("Smartelectronics.Models.Product", "Product")
+                        .WithMany("ProductIFLoanRanges")
+                        .HasForeignKey("ProductId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("LoanRange");
+
+                    b.Navigation("Product");
+                });
+
             modelBuilder.Entity("Smartelectronics.Models.ProductImage", b =>
                 {
                     b.HasOne("Smartelectronics.Models.Product", "Product")
@@ -1462,6 +1629,25 @@ namespace Smartelectronics.Migrations
                         .HasForeignKey("ProductId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
+
+                    b.Navigation("Product");
+                });
+
+            modelBuilder.Entity("Smartelectronics.Models.ProductLoanRange", b =>
+                {
+                    b.HasOne("Smartelectronics.Models.LoanRange", "LoanRange")
+                        .WithMany()
+                        .HasForeignKey("LoanRangeId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("Smartelectronics.Models.Product", "Product")
+                        .WithMany("ProductLoanRanges")
+                        .HasForeignKey("ProductId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("LoanRange");
 
                     b.Navigation("Product");
                 });
@@ -1499,17 +1685,15 @@ namespace Smartelectronics.Migrations
                     b.Navigation("Wishlists");
                 });
 
-            modelBuilder.Entity("Smartelectronics.Models.Brand", b =>
-                {
-                    b.Navigation("Products");
-                });
-
             modelBuilder.Entity("Smartelectronics.Models.Category", b =>
                 {
-                    b.Navigation("Brands");
+                    b.Navigation("CategoryBrands");
 
                     b.Navigation("Children");
+                });
 
+            modelBuilder.Entity("Smartelectronics.Models.CategoryBrand", b =>
+                {
                     b.Navigation("Products");
                 });
 
@@ -1535,7 +1719,11 @@ namespace Smartelectronics.Migrations
 
                     b.Navigation("ProductColors");
 
+                    b.Navigation("ProductIFLoanRanges");
+
                     b.Navigation("ProductImages");
+
+                    b.Navigation("ProductLoanRanges");
                 });
 #pragma warning restore 612, 618
         }

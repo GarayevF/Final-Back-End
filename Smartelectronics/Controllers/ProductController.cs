@@ -31,8 +31,8 @@ namespace Smartelectronics.Controllers
             if (productTemp == null) return NotFound();
 
             Product product = await _context.Products
-                .Include(p => p.Category).ThenInclude(ct => ct.Parent).Where(b => b.IsDeleted == false)
-                .Include(p => p.Brand)
+                .Include(p => p.CategoryBrand).ThenInclude(cb => cb.Category).ThenInclude(ct => ct.Parent).Where(b => b.IsDeleted == false)
+                .Include(p => p.CategoryBrand).ThenInclude(cb => cb.Brand)
                 .Include(p => p.ProductColors.Where(a => a.IsDeleted == false && a.ProductId == id))
                  .ThenInclude(pa => pa.Color).Where(a => a.IsDeleted == false)
                 .Include(p => p.LoanTerms.Where(p => p.IsDeleted == false))
@@ -42,6 +42,8 @@ namespace Smartelectronics.Controllers
                 .ThenInclude(pcs => pcs.CategorySpecification).ThenInclude(cs => cs.Specification).ThenInclude(s => s.SpecificationGroup)
                 .Include(p => p.ProductCategorySpecifications).ThenInclude(pcs => pcs.CategorySpecification)
                 .ThenInclude(cs => cs.Category)
+                .Include(p => p.ProductLoanRanges.Where(pl => pl.IsDeleted == false)).ThenInclude(plr => plr.LoanRange)
+                .Include(p => p.ProductIFLoanRanges.Where(pl => pl.IsDeleted == false)).ThenInclude(plr => plr.LoanRange)
                 .FirstOrDefaultAsync(p => p.IsDeleted == false && p.Id == id);
 
             if (product == null) return NotFound();
@@ -65,6 +67,8 @@ namespace Smartelectronics.Controllers
             {
                 Product = product,
                 GroupedSpecificationsVMs = groupedSpecifications,
+                LoanRanges = product.ProductLoanRanges,
+                IFLoanRanges = product.ProductIFLoanRanges
             };
 
             return View(detailVM);

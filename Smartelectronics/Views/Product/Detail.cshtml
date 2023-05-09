@@ -1,5 +1,6 @@
 ﻿@model DetailVM
 @{
+    int count = 1;
     ViewData["Title"] = "Detail";
 }
 
@@ -14,14 +15,14 @@
                     </li>
                     <li class="breadcrumb-item">
                         <a href="index.html">
-                            @Model.Product.Category?.Parent?.Name
+                            @Model.Product.CategoryBrand?.Category?.Parent?.Name
                         </a>
                     </li>
                     <li class="breadcrumb-item">
-                        <a href="index.html">@Model.Product?.Category?.Name</a>
+                        <a href="index.html">@Model.Product?.CategoryBrand?.Category?.Name</a>
                     </li>
                     <li class="breadcrumb-item">
-                        <a href="index.html">@Model.Product?.Brand?.Name</a>
+                        <a href="index.html">@Model.Product?.CategoryBrand?.Brand?.Name</a>
                     </li>
                     <li class="breadcrumb-item active">
                         @Model.Product?.Title
@@ -37,8 +38,8 @@
         <div class="container">
             <div class="title">
                 <div class="title-head">
-                    <h1>@Model.Product?.Brand?.Name</h1>
-                    <h1>@Model.Product?.Category?.Name - @Model.Product?.Title</h1>
+                    <h1>@Model.Product?.CategoryBrand?.Brand?.Name</h1>
+                    <h1>@Model.Product?.CategoryBrand?.Category.Name - @Model.Product?.Title</h1>
                 </div>
                 <div class="title-label">
                     <div class="owl-carousel owl-three">
@@ -148,70 +149,43 @@
                                 <p>Çatdırılma pulsuz</p>
                             </div>
                         </div>
-                        <div class="credit-suggestion">
-                            <ul class="wrapper">
-                                <li class="li-title">
-                                    <p class="title">Müddət</p>
-                                    <p class="title">İlkin Ödəniş</p>
-                                    <p class="title">Aylıq Ödəniş</p>
-                                    <p class="title">Toplam Ödəniş</p>
-                                </li>
-                                <li style="position: relative;">
-                                    <div class="block radio-wrapper">
-                                        <input type="radio" name="creditCondition" id="creditCondition-1">
-                                        <label for="creditCondition-1"></label>
-                                    </div>
-                                    <div class="price outline">
-                                        <p style="padding-left: 24px;">6 ay</p>
-                                    </div>
-                                    <div class="price">
-                                        <p>0 azn</p>
-                                    </div>
-                                    <div class="price">
-                                        <p>700 azn</p>
-                                    </div>
-                                    <div class="price">
-                                        <p>4200 azn</p>
-                                    </div>
-                                </li>
-                                <li style="position: relative;">
-                                    <div class="block radio-wrapper">
-                                        <input type="radio" name="creditCondition" id="creditCondition-2">
-                                        <label for="creditCondition-2"></label>
-                                    </div>
-                                    <div class="price outline">
-                                        <p style="padding-left: 24px;">18 ay</p>
-                                    </div>
-                                    <div class="price">
-                                        <p>1320 azn</p>
-                                    </div>
-                                    <div class="price">
-                                        <p>172 azn</p>
-                                    </div>
-                                    <div class="price">
-                                        <p>4416 azn</p>
-                                    </div>
-                                </li>
-                                <li style="position: relative;">
-                                    <div class="block radio-wrapper">
-                                        <input type="radio" name="creditCondition" id="creditCondition-3">
-                                        <label for="creditCondition-3"></label>
-                                    </div>
-                                    <div class="price outline">
-                                        <p style="padding-left: 24px;">12 ay</p>
-                                    </div>
-                                    <div class="price">
-                                        <p>0 azn</p>
-                                    </div>
-                                    <div class="price">
-                                        <p>367 azn</p>
-                                    </div>
-                                    <div class="price">
-                                        <p>4404 azn</p>
-                                    </div>
-                                </li>
-                            </ul>
-                        </div>
+                        @if(Model.LoanRanges != null && Model.LoanRanges.Count() > 0)
+                        {
+                            <div class="credit-suggestion">
+                                <ul class="wrapper">
+                                    <li class="li-title">
+                                        <p class="title">Müddət</p>
+                                        <p class="title">İlkin Ödəniş</p>
+                                        <p class="title">Aylıq Ödəniş</p>
+                                        <p class="title">Toplam Ödəniş</p>
+                                    </li>
+                                    @foreach (ProductIFLoanRange productLoanRange in Model?.IFLoanRanges?.OrderByDescending(a => a.LoanRange))
+                                    {
+                                        <li style="position: relative;">
+                                            <div class="block radio-wrapper">
+                                                <input type="radio" name="creditCondition" id="creditCondition-@count">
+                                                <label for="creditCondition-@count"></label>
+                                            </div>
+                                            <div class="price outline">
+                                                <p style="padding-left: 24px;">@productLoanRange.LoanRange.Range ay</p>
+                                            </div>
+                                            <div class="price">
+                                                <p>@productLoanRange.InitialPayment azn</p>
+                                            </div>
+                                            <div class="price">
+                                                <p>@productLoanRange.MonthlyPayment azn</p>
+                                            </div>
+                                            <div class="price">
+                                                <p>@productLoanRange.TotalPayment azn</p>
+                                            </div>
+                                        </li>
+                                        count++;
+                                    }
+                                    
+                                </ul>
+                            </div>
+                        }
+                        
                         <div class="credit-calculator">
                             <div class="title-wrapper">
                                 <h6>KREDİT HESABLAYICI</h6>
@@ -235,39 +209,51 @@
                                         <input type="radio" name="creditCondition" id="creditCondition-0">
                                         <label for="creditCondition-0"></label>
                                     </div>
-                                    <div class="price d-block">
-                                        <div class="credit-month-select">
-                                            <div class="dropdown">
-                                                <button class="dropbtn"><span>12</span> <i class="fa-solid fa-chevron-left"></i></button>
-                                                <div id="credit-dropdown" class="dropdown-content">
-                                                    <a href="#">24</a>
-                                                    <a href="#">18</a>
-                                                    <a href="#">15</a>
-                                                    <a href="#">12</a>
-                                                    <a href="#">9</a>
-                                                    <a href="#">6</a>
-                                                    <a href="#">3</a>
+                                    @if (Model.LoanRanges != null && Model.LoanRanges.Count() > 0)
+                                    {
+                                        <div class="price d-block">
+                                            <div class="credit-month-select">
+                                                <div class="dropdown">
+                                                    <button class="dropbtn"><span>@Model?.LoanRanges?.Max(a => a.LoanRange).Range</span> <i class="fa-solid fa-chevron-left"></i></button>
+                                                    <div id="credit-dropdown" class="dropdown-content">
+                                                        @foreach (ProductLoanRange productLoanRange in Model?.LoanRanges?.OrderByDescending(a => a.LoanRange))
+                                                        {
+                                                            <a href="#">@productLoanRange.LoanRange.Range</a>
+                                                        }
+                                                    </div>
                                                 </div>
                                             </div>
                                         </div>
-                                    </div>
-                                    <div class="price">
-                                        <input type="number" class="pristine" value="0">
-                                    </div>
-                                    <div class="price outline">
-                                        <p>394 azn</p>
-                                    </div>
-                                    <div class="price outline">
-                                        <span class="mob-title">Toplam Ödəniş</span>
-                                        <p>4728 azn</p>
-                                    </div>
+
+
+                                        <div class="price">
+                                            <input type="number" class="pristine" value="0">
+                                        </div>
+                                        
+                                            {
+                                                double price = Model.Product.DiscountedPrice > 0 ? Model.Product.DiscountedPrice : Model.Product.Price;
+                                            <div class="price outline">
+                                                <p>
+                                                    @(
+                                                    (price / Model?.LoanRanges?.Max(a => a.LoanRange).Range) + (price * Model?.Product?.ProductLoanRanges?.FirstOrDefault(a => a.ProductId == Model.Product.Id).LoanRange.Range) / Model?.LoanRanges?.Max(a => a.LoanRange).Range) azn
+                                                </p>
+                                            </div>
+                                            <div class="price outline">
+                                                <span class="mob-title">Toplam Ödəniş</span>
+                                                <p>@(price*Model?.LoanRanges?.Max(a => a.LoanRange).Range) azn</p>
+                                            </div>
+                                            }
+                                    }
                                 </li>
                             </ul>
                         </div>
                         <div class="payment-btns">
                             <button class="payment-btn buy-cash-btn">Nağd al</button>
                             <button class="payment-btn buy-taksit-btn">Taksitlə al</button>
-                            <button class="payment-btn buy-credit-btn">Kreditlə al</button>
+                            @if( (Model.Product.DiscountedPrice > 0 ? Model.Product.DiscountedPrice : Model.Product.Price) > 50)
+                            {
+                                <button class="payment-btn buy-credit-btn">Kreditlə al</button>
+                            }
                         </div>
                     </div>
                 </div>
@@ -276,46 +262,29 @@
                 <h4>TEXNİKİ XÜSUSİYYƏTLƏR</h4>
                 <div class="specifications-main">
                     <div class="elements">
-                        @foreach (GroupedSpecificationsVM groupedSpecificationsVM in Model.GroupedSpecificationsVMs)
+                        @if(Model.GroupedSpecificationsVMs != null && Model.GroupedSpecificationsVMs.Count() > 0)
                         {
-                            <div class="feature">
-                                <div class="feature-title">
-                                    <div class="icon">
-                                        @Html.Raw(groupedSpecificationsVM.GroupIcon)
+                            @foreach (GroupedSpecificationsVM groupedSpecificationsVM in Model.GroupedSpecificationsVMs)
+                            {
+                                <div class="feature">
+                                    <div class="feature-title">
+                                        <div class="icon">
+                                            @Html.Raw(groupedSpecificationsVM.GroupIcon)
+                                        </div>
+                                        <h6>@groupedSpecificationsVM.GroupName</h6>
                                     </div>
-                                    <h6>@groupedSpecificationsVM.GroupName</h6>
-                                </div>
-                                @foreach (SpecificationVM specification in groupedSpecificationsVM.Specifications)
-                                {
-                                    <div class="feature-body">
-                                        <p>@specification.Name</p>
-                                        <p>@specification.Value</p>
-                                    </div>
-                                }
+                                    @foreach (SpecificationVM specification in groupedSpecificationsVM?.Specifications)
+                                    {
+                                        <div class="feature-body">
+                                            <p>@specification.Name</p>
+                                            <p>@specification.Value</p>
+                                        </div>
+                                    }
 
 
-                            </div>
-                        }
-                        @*@foreach (ProductCategorySpecification productCategorySpecification in Model.Product.ProductCategorySpecifications)
-                        {
-                            <div class="feature">
-                                <div class="feature-title">
-                                    <div class="icon">
-                                        @productCategorySpecification.CategorySpecification?.Specification?.SpecificationGroup?.Icon
-                                    </div>
-                                    <h6>@productCategorySpecification.CategorySpecification?.Specification?.SpecificationGroup?.Name</h6>
                                 </div>
-                                @foreach (var item in productCategorySpecification.)
-                                {
-                                    <div class="feature-body">
-                                    <p>@productCategorySpecification.CategorySpecification?.Specification?.Name</p>
-                                    <p>@productCategorySpecification.Value</p>
-                                </div>
-                                }
-                                
-                                
-                            </div>
-                        }*@
+                            }
+                        }                    
                         
                     </div>
                 </div>

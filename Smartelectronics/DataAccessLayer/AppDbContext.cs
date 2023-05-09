@@ -15,6 +15,7 @@ namespace Smartelectronics.DataAccessLayer
         public DbSet<Slider> Sliders { get; set; }
         public DbSet<Category> Categories { get; set; }
         public DbSet<Brand> Brands { get; set; }
+        public DbSet<CategoryBrand> CategoryBrands { get; set; }
         public DbSet<Product> Products { get; set; }
         public DbSet<ProductImage> ProductImages { get; set; }
         public DbSet<Basket> Baskets { get; set; }
@@ -29,6 +30,8 @@ namespace Smartelectronics.DataAccessLayer
         public DbSet<LoanCompany> LoanCompanies { get; set; }
         public DbSet<LoanTerm> LoanTerms { get; set; }
         public DbSet<LoanTermLoanRange> LoanTermLoanRanges { get; set; }
+        public DbSet<ProductIFLoanRange> ProductIFLoanRanges { get; set; }
+        public DbSet<ProductLoanRange> ProductLoanRanges { get; set; }
         public DbSet<Color> Colors { get; set; }
         public DbSet<ProductColor> ProductColors { get; set; }
         

@@ -173,11 +173,11 @@
                                                             </a>
                                                         </div>
                                                         <div class="sub-content d-none">
-                                                            @if (child.Brands != null && child.Brands.Count() > 0)
+                                                            @if (child.CategoryBrands != null && child.CategoryBrands.Count() > 0)
                                                             {
-                                                                @foreach (Brand brand in child.Brands)
+                                                                @foreach (CategoryBrand categoryBrand in child.CategoryBrands)
                                                                 {
-                                                                    <a href="" class="link">@brand.Name</a>
+                                                                    <a href="" class="link">@categoryBrand.Brand.Name</a>
                                                                 }
                                                             }
                                                             

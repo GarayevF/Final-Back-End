@@ -34,11 +34,11 @@
                                             {
                                                 <ul class="content-product-list">
                                                     <a class="content-header">@child.Name</a>
-                                                    @if (child.Brands != null && child.Brands.Count() > 0)
+                                                    @if (child.CategoryBrands != null && child.CategoryBrands.Count() > 0)
                                                     {
-                                                        @foreach (Brand brand in child.Brands)
+                                                        @foreach (CategoryBrand categoryBrand in child.CategoryBrands)
                                                         {
-                                                            <li class="content-body"><a class="content-body-link">@brand.Name</a></li>
+                                                            <li class="content-body"><a class="content-body-link">@categoryBrand.Brand.Name</a></li>
                                                         }
                                                     }
 

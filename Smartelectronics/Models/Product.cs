@@ -12,7 +12,7 @@ namespace Smartelectronics.Models
         [Column(TypeName = "money")]
         public double DiscountedPrice { get; set; }
         public int Count { get; set; }
-        
+
         [StringLength(4)]
         public string? Seria { get; set; }
         public int? Code { get; set; }
@@ -21,10 +21,10 @@ namespace Smartelectronics.Models
         [StringLength(255)]
         public string? MainImage { get; set; }
         public List<LoanTerm>? LoanTerms { get; set; }
-        public int? CategoryId { get; set; }
-        public Category? Category { get; set; }
-        public int? BrandId { get; set; }
-        public Brand? Brand { get; set; }
+        public List<ProductIFLoanRange>? ProductIFLoanRanges { get; set; }
+        public List<ProductLoanRange>? ProductLoanRanges { get; set; }
+        public int? CategoryBrandId { get; set; }
+        public CategoryBrand? CategoryBrand { get; set; }
         public List<ProductImage>? ProductImages { get; set; }
         public IEnumerable<Basket>? Baskets { get; set; }
         public IEnumerable<OrderItem>? OrderItems { get; set; }
@@ -38,5 +38,10 @@ namespace Smartelectronics.Models
         public List<ProductCategorySpecification>? ProductCategorySpecifications { get; set; }
         [NotMapped]
         public IEnumerable<int>? CategorySpecificationIds { get; set; }
+        [NotMapped]
+        public IEnumerable<int>? IFLoanRangeIds { get; set; }
+        [NotMapped]
+        public IEnumerable<int>? LoanRangeIds { get; set; }
+
     }
 }
