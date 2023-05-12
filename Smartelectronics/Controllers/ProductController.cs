@@ -73,5 +73,16 @@ namespace Smartelectronics.Controllers
 
             return View(detailVM);
         }
+
+        //public async List<Specification> getSpecifications(int? id)
+        //{
+        //    if (id == null) return BadRequest();
+
+        //    Category category = await _context.Categories.FirstOrDefaultAsync(c => c.IsDeleted == false && c.Id == id);
+
+        //    List<Specification> specifications = category..Specifications.Where(s => s.IsDeleted == false && s.);
+        //}
+
+        
     }
 }

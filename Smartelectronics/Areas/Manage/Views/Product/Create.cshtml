@@ -1,0 +1,356 @@
+﻿@model ProductVM
+@{
+    ViewData["Title"] = "Create";
+    IEnumerable<Category> categories = ViewBag.MainCategories;
+    IEnumerable<Color> colors = ViewBag.Colors;
+    IEnumerable<LoanRange> loanRanges = ViewBag.LaonRanges;
+    IEnumerable<LoanCompany> loanCompanies = ViewBag.LoanCompanies;
+    //IEnumerable<Specification> specifications = ViewBag.Specifications;
+
+    SelectList categorySelectList = new SelectList(categories, nameof(Category.Id), nameof(Category.Name));
+    SelectList colorSelectList = new SelectList(colors, nameof(Color.Id), nameof(Color.Code));
+    SelectList loanRangeSelectList = new SelectList(loanRanges, nameof(LoanRange.Id), nameof(LoanRange.Range));
+    SelectList loanCompanySelectList = new SelectList(loanCompanies, nameof(LoanCompany.Id), nameof(LoanCompany.Name));
+}
+
+<div class="row">
+    <div class="col-lg-12">
+        <div class="row justify-content-lg-between">
+            <div class="col-lg-12">
+                <h1 class="h3 mb-4 text-gray-800">Product Create Page</h1>
+            </div>
+        </div>
+    </div>
+    <div class="col-lg-12">
+        <form method="post" enctype="multipart/form-data" id="product-form">
+
+            <div class="form-group">
+                <label asp-for="@Model.Product.Title"></label>
+                <input asp-for="@Model.Product.Title" class="form-control title-input" />
+                <span asp-validation-for="@Model.Product.Title" class="text text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="@Model.Product.Price"></label>
+                <input asp-for="@Model.Product.Price" class="form-control" />
+                <span asp-validation-for="@Model.Product.Price" class="text text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="@Model.Product.DiscountedPrice"></label>
+                <input asp-for="@Model.Product.DiscountedPrice" class="form-control" />
+                <span asp-validation-for="@Model.Product.DiscountedPrice" class="text text-danger"></span>
+            </div>
+
+            <div class="form-group">
+                <label asp-for="CategoryId"></label>
+                <select asp-for="CategoryId" class="form-control" id="category" asp-items="@categorySelectList">
+                </select>
+                <span asp-validation-for="CategoryId" class="text text-danger"></span>
+            </div>
+            <div id="specification-inputs">
+                @if (Model?.SpecificationVMs != null && Model?.SpecificationVMs.Count() > 0)
+                {
+                    int count = 0;
+                    foreach (SpecificationVM specificationVM in Model.SpecificationVMs)
+                    {
+                        <div class="form-group">
+                            <label for="spec-@specificationVM.SpecificationId">@specificationVM.Name</label>
+                            <input type="hidden" id="specName-@specificationVM.SpecificationId" name="SpecificationVMs[@count].Name" value="@specificationVM.Name" />
+                            <input type="hidden" id="specId-@specificationVM.SpecificationId" name="SpecificationVMs[@count].SpecificationId" value="@specificationVM.SpecificationId" />
+                            <input type="text" class="form-control spec-input" id="specValue-@specificationVM.SpecificationId" name="SpecificationVMs[@count].Value" value="@specificationVM.Value">
+                        </div>
+                    }
+                }
+            </div>
+
+            <div class="form-group">
+                <label asp-for="ColorIds"></label>
+                <select asp-for="ColorIds" class="form-control" id="color" asp-items="@colorSelectList">
+                </select>
+                <span asp-validation-for="ColorIds" class="text text-danger"></span>
+            </div>
+            <div id="color-inputs">
+                @if (Model?.ColorImageVMs != null && Model?.ColorImageVMs.Count() > 0)
+                {
+                    int count = 0;
+                    foreach (ColorImageVM colorImageVM in Model.ColorImageVMs)
+                    {
+                        <div class="form-group">
+                            <label for="colorImage-@colorImageVM.ColorId">@colorImageVM.Name</label>
+                            <input type="hidden" id="colorImageName-@colorImageVM.ColorId" name="ColorImageVMs[@count].Name" value="@colorImageVM.Name" />
+                            <input type="hidden" id="colorImageId-@colorImageVM.ColorId" name="ColorImageVMs[@count].ColorImageId" value="@colorImageVM.ColorId" />
+                            <input type="file" accept="image/jpeg" multiple class="form-control color-input" id="colorImageValue-@colorImageVM.ColorId" name="ColorImageVMs[@count].Files" value="@colorImageVM.Files">
+                        </div>
+                    }
+                }
+            </div>
+            <div class="form-group">
+                <label asp-for="ColorIds"></label>
+                <select asp-for="ColorIds" class="form-control" id="color" asp-items="@colorSelectList">
+                </select>
+                <span asp-validation-for="ColorIds" class="text text-danger"></span>
+            </div>
+
+            <button type="button" class="btn btn-primary" id="add-installment-btn">Taksit Planı Əlavə et</button>
+
+            <div id="loanTermsDiv">
+                <div class="form-group">
+                    <select asp-items="@loanCompanySelectList" class="form-control" name="LoanCompanies">
+                    </select>
+                    <select asp-items="@loanRangeSelectList" class="form-control" name="LoanRanges">
+                    </select>
+                </div>
+            </div>
+
+            <button type="submit" class="btn btn-primary">Submit</button>
+        </form>
+
+    </div>
+</div>
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+<script>
+
+    //let errors = ModelState["SpecificationVMs[" + count + "].Value"];
+    //if (errors !== undefined) {
+    //    let errorHtml = "<ul>";
+    //    errors.forEach(function (error) {
+    //        errorHtml += "<li>" + error + "</li>";
+    //    });
+    //    errorHtml += "</ul>";
+    //    document.querySelector("#spec-errors").innerHTML = errorHtml;
+    //}
+
+    let specificationInputsDiv = document.querySelector('#specification-inputs');
+    let categorySelect = document.querySelector('#category');
+    categorySelect.addEventListener('change', function () {
+        let categoryId = categorySelect.value;
+        if (categoryId) {
+            fetch(`/manage/product/GetSpecifications/${categoryId}`)
+                .then(response => response.json())
+                .then(specifications => {
+                    let html = "";
+                    let count = 0;
+                    specifications.forEach(spec => {
+                        html += `
+                                <div class="form-group">
+                                    <label for="spec-${spec.id}" value="SpecificationVMs[${count}].Name">${spec.name}</label>
+                                <input type="hidden" id="specName-${spec.id}" name="SpecificationVMs[${count}].Name" value="${spec.name}"/>
+                                <input type="hidden" id="specId-${spec.id}" name="SpecificationVMs[${count}].SpecificationId" value="${spec.id}"/>
+                                <input type="text" class="form-control spec-input" id="specValue-${spec.id}" name="SpecificationVMs[${count}].Value">
+                                </div>`;
+                    });
+                    specificationInputsDiv.innerHTML = html;
+                    let form = document.querySelector('#product-form');
+                    count++;
+                });
+
+        } else {
+            specificationInputsDiv.innerHTML = "";
+        }
+    })
+
+
+    let colorInputsDiv = document.querySelector('#color-inputs');
+    let colorSelect = document.querySelector('#color');
+    colorSelect.addEventListener('change', function () {
+        var options = colorSelect.options;
+        var selectedValues = [];
+        for (var i = 0; i < options.length; i++) {
+            if (options[i].selected) {
+                selectedValues.push({ id: options[i].value, code: options[i].innerHTML });
+            }
+        }
+        if (selectedValues.length > 0) {
+            console.log(selectedValues)
+            let html = "";
+            let count = 0;
+            selectedValues.forEach(color => {
+                html += `
+                    <div class="form-group">
+                                    <label for="color-${color.id}" value="ColorImageVMs[${count}].Name">${color.code}</label>
+                                    <input type="hidden" id="colorName-${color.id}" name="ColorImageVMs[${count}].Name" value="${color.code}"/>
+                                        <input type="hidden" id="colorId-${color.id}" name="ColorImageVMs[${count}].ColorId" value="${color.id}"/>
+                                    <input type="file" accept="image/jpeg" multiple class="form-control color-input" id="colorValue-${color.id}" name="ColorImageVMs[${count}].Files">
+                    </div>`;
+                count++;
+            });
+            colorInputsDiv.innerHTML = html;
+        } else {
+            colorInputsDiv.innerHTML = "";
+        }
+    })
+
+        //let form = document.querySelector('#product-form');
+        //let submitBtn = document.querySelector('#submit-btn');
+
+        //form.addEventListener('submit', async function (e) {
+        //    e.preventDefault();
+        //    let productVM = {
+        //        Product: {
+        //            "Title": document.getElementsByName('Product.Title')[0].value,
+        //            "Price": document.getElementsByName('Product.Price')[0].value,
+        //            "DiscountedPrice": document.getElementsByName('Product.DiscountedPrice')[0].value,
+        //        },
+        //        CategoryId: document.getElementsByName('CategoryId')[0].value,
+        //        SpecificationVMs: [],
+        //    };
+
+        //    let specInputs = form.querySelectorAll('.spec-input');
+        //    specInputs.forEach(function (specInput) {
+        //        let specId = parseInt(specInput.id.split('-')[1]);
+        //        let specValue = specInput.value;
+        //        console.log(specId + "---" + specValue)
+        //        let newSpec =
+        //            productVM.SpecificationVMs.push({
+        //                SpecificationId: specId,
+        //                Value: specValue
+        //            })
+        //    })
+
+
+        //    var group = JSON.stringify(productVM);
+        //    console.log(group);
+        //    $.ajax({
+        //        contentType: "application/json",
+        //        dataType: 'json',
+        //        type: "POST",
+        //        url: "/manage/product/Create",
+        //        data: JSON.stringify(productVM),
+        //        success: function (data) {
+        //            console.log("output : " + JSON.stringify(data));
+        //        },
+        //        error: function (xhr, textStatus, errorThrown) {
+        //            console.log("error : " + errorThrown);
+        //        }
+        //    });
+
+        //})
+
+                //var listofusers = [
+                //    { id: 1, name: 'aaa' },
+                //    { id: 2, name: 'bbb' },
+                //    { id: 3, name: 'ccc' }
+                //];
+                //var group = JSON.stringify(listofusers);
+                //console.log(group);
+                //$.ajax({
+                //    contentType: "application/json",
+                //    dataType: 'json',
+                //    type: "POST",
+                //    url: "/manage/product/GetMesssage",
+                //    data: group,
+                //    success: function (data) {
+                //        console.log("output : " + JSON.stringify(data));
+                //    },
+                //    error: function (data) {
+                //        console.log("error : " + JSON.stringify(data));
+                //    },
+                //});
+</script>
+
+@*<script>
+    let categorySelect = document.querySelector('#category');
+
+
+    categorySelect.addEventListener('change', function(){
+        let categoryId = categorySelect.value;
+        //fetch(`/product/GetSpecifications/${categoryId}`)
+        //.then(res => res.json())
+        //.then(data => {
+        //    let specificationInputsDiv = document.querySelector('#specification-inputs');
+        //    specificationInputsDiv.innerHTML = '';
+        //    for (let specification of data.properties) {
+        //        let input = document.createElement('input');
+        //        input.setAttribute('type', 'text');
+        //        input.setAttribute('name', `Properties[${property.id}]`);
+        //        input.setAttribute('placeholder', property.name)
+        //        specificationInputsDiv.appendChild(input)
+        //    }
+        //})
+        let specificationInputsDiv = document.querySelector('#specification-inputs');
+         if (categoryId) {
+            fetch(`/product/GetSpecifications/${categoryId}`)
+            .then(response => response.json())
+            .then(specifications => {
+              let html = "";
+              specifications.forEach(spec => {
+                html += `
+                  <div class="form-group">
+                    <label for="spec-${spec.id}">${spec.name}</label>
+                    <input type="text" class="form-control spec-input" id="spec-${spec.id}" name="Specifications[${spec.id}]">
+                  </div>
+                `;
+              });
+              specificationInputsDiv.innerHTML = html;
+                    let form = document.querySelector('#product-form');
+                    let ProductVM = {
+                    };
+
+                    //viewModel.Product.Title = document.querySelector('.title-input').value;
+                    //viewModel.Product.Price = form.elements.namedItem('Price').value;
+                    //viewModel.Category.Id = form.elements.namedItem('CategoryId').value;
+
+                    //let specInputs = form.querySelectorAll('.spec-input');
+                    //specInputs.forEach(function (specInput) {
+                    //    let specId = specInput.dataset.specId;
+                    //    let value = specInput.value;
+                    //    viewModel.SpecificationIds.push(1)
+                    //})
+
+                    console.log(ProductVM);
+                     fetch('/manage/product/create', {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json'
+                        },
+                        body: JSON.stringify(ProductVM)
+                    })
+                        .then(response => {
+                            if (response.ok) {
+                                console.log('Kitap başarıyla eklendi');
+                            } else {
+                                console.error('Bir hata oluştu:', response.statusText);
+                            }
+                        })
+                        .catch(error => {
+                            console.error('Bir hata oluştu:', error);
+                        });
+            });
+
+        } else {
+           specificationInputsDiv.innerHTML = "";
+        }
+
+        //let form = document.querySelector('#product-form');
+        //let submitBtn = document.querySelector('#submit-btn');
+
+        //form.addEventListener('submit', function(){
+        //    let viewModel = {
+        //        Product: {},
+        //        Category: {},
+        //        Specifications: {}
+        //    };
+
+        //    viewModel.Product.Title = form.elements.namedItem('Title').value;
+        //    viewModel.Product.Price = form.elements.namedItem('Price').value;
+        //    viewModel.Category.Id = form.elements.namedItem('CategoryId').value;
+
+        //    let specInputs = form.querySelectorAll('.spec-input');
+        //    specInputs.forEach(function(specInput){
+        //        let specId = specInput.dataset.specId;
+        //        let value = specInput.value;
+        //        viewModel.Specifications.push({
+        //            Name: specId
+        //        })
+        //    })
+
+        //    console.log(viewModel);
+        //    fetch('/manage/product/create', {
+        //        method: 'POST',
+        //        headers: {'Content-type' : 'application/json'},
+        //        body: JSON.stringify(viewModel)
+        //    })
+
+        //})
+    })
+</script>*@

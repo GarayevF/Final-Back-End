@@ -293,7 +293,7 @@ namespace Smartelectronics.Migrations
 
                     b.HasIndex("ProductId");
 
-                    b.ToTable("Baskets");
+                    b.ToTable("Baskets", (string)null);
                 });
 
             modelBuilder.Entity("Smartelectronics.Models.Brand", b =>
@@ -335,7 +335,7 @@ namespace Smartelectronics.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Brands");
+                    b.ToTable("Brands", (string)null);
                 });
 
             modelBuilder.Entity("Smartelectronics.Models.Category", b =>
@@ -389,7 +389,7 @@ namespace Smartelectronics.Migrations
 
                     b.HasIndex("ParentId");
 
-                    b.ToTable("Categories");
+                    b.ToTable("Categories", (string)null);
                 });
 
             modelBuilder.Entity("Smartelectronics.Models.CategoryBrand", b =>
@@ -436,7 +436,7 @@ namespace Smartelectronics.Migrations
 
                     b.HasIndex("CategoryId");
 
-                    b.ToTable("CategoryBrands");
+                    b.ToTable("CategoryBrands", (string)null);
                 });
 
             modelBuilder.Entity("Smartelectronics.Models.CategorySpecification", b =>
@@ -483,7 +483,7 @@ namespace Smartelectronics.Migrations
 
                     b.HasIndex("SpecificationId");
 
-                    b.ToTable("CategorySpecifications");
+                    b.ToTable("CategorySpecifications", (string)null);
                 });
 
             modelBuilder.Entity("Smartelectronics.Models.Color", b =>
@@ -525,7 +525,7 @@ namespace Smartelectronics.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Colors");
+                    b.ToTable("Colors", (string)null);
                 });
 
             modelBuilder.Entity("Smartelectronics.Models.LoanCompany", b =>
@@ -577,7 +577,7 @@ namespace Smartelectronics.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("LoanCompanies");
+                    b.ToTable("LoanCompanies", (string)null);
                 });
 
             modelBuilder.Entity("Smartelectronics.Models.LoanRange", b =>
@@ -617,7 +617,7 @@ namespace Smartelectronics.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("LoanRanges");
+                    b.ToTable("LoanRanges", (string)null);
                 });
 
             modelBuilder.Entity("Smartelectronics.Models.LoanTerm", b =>
@@ -667,7 +667,7 @@ namespace Smartelectronics.Migrations
 
                     b.HasIndex("ProductId");
 
-                    b.ToTable("LoanTerms");
+                    b.ToTable("LoanTerms", (string)null);
                 });
 
             modelBuilder.Entity("Smartelectronics.Models.LoanTermLoanRange", b =>
@@ -714,7 +714,7 @@ namespace Smartelectronics.Migrations
 
                     b.HasIndex("LoanTermId");
 
-                    b.ToTable("LoanTermLoanRanges");
+                    b.ToTable("LoanTermLoanRanges", (string)null);
                 });
 
             modelBuilder.Entity("Smartelectronics.Models.Order", b =>
@@ -794,7 +794,7 @@ namespace Smartelectronics.Migrations
 
                     b.HasIndex("UserId");
 
-                    b.ToTable("Orders");
+                    b.ToTable("Orders", (string)null);
                 });
 
             modelBuilder.Entity("Smartelectronics.Models.OrderItem", b =>
@@ -847,7 +847,7 @@ namespace Smartelectronics.Migrations
 
                     b.HasIndex("ProductId");
 
-                    b.ToTable("OrderItems");
+                    b.ToTable("OrderItems", (string)null);
                 });
 
             modelBuilder.Entity("Smartelectronics.Models.Product", b =>
@@ -920,7 +920,7 @@ namespace Smartelectronics.Migrations
 
                     b.HasIndex("CategoryBrandId");
 
-                    b.ToTable("Products");
+                    b.ToTable("Products", (string)null);
                 });
 
             modelBuilder.Entity("Smartelectronics.Models.ProductCategorySpecification", b =>
@@ -972,7 +972,7 @@ namespace Smartelectronics.Migrations
 
                     b.HasIndex("ProductId");
 
-                    b.ToTable("ProductCategorySpecifications");
+                    b.ToTable("ProductCategorySpecifications", (string)null);
                 });
 
             modelBuilder.Entity("Smartelectronics.Models.ProductColor", b =>
@@ -1022,7 +1022,7 @@ namespace Smartelectronics.Migrations
 
                     b.HasIndex("ProductId");
 
-                    b.ToTable("ProductColors");
+                    b.ToTable("ProductColors", (string)null);
                 });
 
             modelBuilder.Entity("Smartelectronics.Models.ProductIFLoanRange", b =>
@@ -1078,7 +1078,7 @@ namespace Smartelectronics.Migrations
 
                     b.HasIndex("ProductId");
 
-                    b.ToTable("ProductIFLoanRanges");
+                    b.ToTable("ProductIFLoanRanges", (string)null);
                 });
 
             modelBuilder.Entity("Smartelectronics.Models.ProductImage", b =>
@@ -1124,7 +1124,7 @@ namespace Smartelectronics.Migrations
 
                     b.HasIndex("ProductId");
 
-                    b.ToTable("ProductImages");
+                    b.ToTable("ProductImages", (string)null);
                 });
 
             modelBuilder.Entity("Smartelectronics.Models.ProductLoanRange", b =>
@@ -1177,7 +1177,7 @@ namespace Smartelectronics.Migrations
 
                     b.HasIndex("ProductId");
 
-                    b.ToTable("ProductLoanRanges");
+                    b.ToTable("ProductLoanRanges", (string)null);
                 });
 
             modelBuilder.Entity("Smartelectronics.Models.Setting", b =>
@@ -1200,7 +1200,7 @@ namespace Smartelectronics.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Settings");
+                    b.ToTable("Settings", (string)null);
                 });
 
             modelBuilder.Entity("Smartelectronics.Models.Slider", b =>
@@ -1247,7 +1247,7 @@ namespace Smartelectronics.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Sliders");
+                    b.ToTable("Sliders", (string)null);
                 });
 
             modelBuilder.Entity("Smartelectronics.Models.Specification", b =>
@@ -1294,7 +1294,7 @@ namespace Smartelectronics.Migrations
 
                     b.HasIndex("SpecificationGroupId");
 
-                    b.ToTable("Specifications");
+                    b.ToTable("Specifications", (string)null);
                 });
 
             modelBuilder.Entity("Smartelectronics.Models.SpecificationGroup", b =>
@@ -1341,7 +1341,7 @@ namespace Smartelectronics.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("SpecificationGroups");
+                    b.ToTable("SpecificationGroups", (string)null);
                 });
 
             modelBuilder.Entity("Smartelectronics.Models.Wishlist", b =>
@@ -1400,7 +1400,7 @@ namespace Smartelectronics.Migrations
 
                     b.HasIndex("ProductId");
 
-                    b.ToTable("Wishlists");
+                    b.ToTable("Wishlists", (string)null);
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
