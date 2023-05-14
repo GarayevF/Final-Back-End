@@ -51,15 +51,21 @@ namespace Smartelectronics.Areas.Manage.Controllers
         }
 
         [HttpPost]
+        [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create(ProductVM productVM)
         {
             ViewBag.MainCategories = await _context.Categories.Where(c => c.IsDeleted == false && c.IsMain == false).ToListAsync();
             ViewBag.ProductCategorySpecifications = await _context.ProductCategorySpecifications.Where(a => a.IsDeleted == false).ToListAsync();
             ViewBag.Colors = await _context.Colors.Where(c => c.IsDeleted == false).ToListAsync();
             ViewBag.LaonRanges = await _context.LoanRanges.Where(c => c.IsDeleted == false).ToListAsync();
+            ViewBag.LoanCompanies = await _context.LoanCompanies.Where(c => c.IsDeleted == false).ToListAsync();
 
             if (!ModelState.IsValid)
             {
+                ViewBag.ErrorMessages = ModelState.Values
+                .SelectMany(v => v.Errors)
+                .Select(e => e.ErrorMessage)
+                .ToList();
                 return View(productVM);
             }
 
@@ -83,7 +89,7 @@ namespace Smartelectronics.Areas.Manage.Controllers
                 {
                     if (!await _context.Specifications.AnyAsync(c => c.IsDeleted == false && specificationVM.SpecificationId == c.Id))
                     {
-                        ModelState.AddModelError($"Specifications[${specificationVM.SpecificationId}]", $"{specificationVM.SpecificationId} id deyeri yanlisdir");
+                        ModelState.AddModelError($"Specifications[{specificationVM.SpecificationId}]", $"{specificationVM.SpecificationId} id deyeri yanlisdir");
                         return View(productVM);
                     }
 
@@ -164,13 +170,88 @@ namespace Smartelectronics.Areas.Manage.Controllers
                     }
                     else
                     {
-                        ModelState.AddModelError($"ColorImageVMs[${count}].Files", "Sekil mutleq secilmelidir");
+                        ModelState.AddModelError($"ColorImageVMs[{count}].Files", "Sekil mutleq secilmelidir");
                         return View(productVM);
                     }
+                    count++;
                 }
             }
 
+            if (productVM.LoanTermVMs != null && productVM.LoanTermVMs.Count() > 0)
+            {
+                List<LoanTerm> loanTerms = new List<LoanTerm>();
 
+                foreach (LoanTermVM loanTermVM in productVM.LoanTermVMs)
+                {
+
+                    int count = 0;
+
+                    if (loanTermVM.LoanCompanyId == null)
+                    {
+                        ModelState.AddModelError("LoanCompanyIds", $"{loanTermVM.LoanCompanyId} id deyeri secilmelidir");
+                        return View(productVM);
+                    }
+
+                    LoanCompany loanCompany = await _context.LoanCompanies.FirstOrDefaultAsync(c => c.IsDeleted == false && c.Id == loanTermVM.LoanCompanyId);
+
+                    if (!await _context.LoanCompanies.AnyAsync(c => c.IsDeleted == false && c.Id == loanTermVM.LoanCompanyId))
+                    {
+                        ModelState.AddModelError("LoanCompanyIds", $"{loanTermVM.LoanCompanyId} id deyeri yanlisdir");
+                        return View(productVM);
+                    }
+
+                    LoanTerm loanTerm = new LoanTerm
+                    {
+                        ProductId = productVM.Product.Id,
+                        LoanCompanyId = loanCompany.Id,
+                        Title = loanTermVM.Title,
+                        CreatedAt = DateTime.UtcNow.AddHours(4),
+                        CreatedBy = "system",
+                    };
+
+                    if (loanTermVM.LoanRangeIds != null && loanTermVM.LoanRangeIds.Count() > 0)
+                    {
+                        List<LoanRange> loanRanges = new List<LoanRange>();
+                        List<LoanTermLoanRange> loanTermLoanRanges = new List<LoanTermLoanRange>();
+
+                        foreach (int loanRangeId in loanTermVM.LoanRangeIds)
+                        {
+
+                            if (loanRangeId == null)
+                            {
+                                ModelState.AddModelError($"LoanTermVMs[{count}].loanCompany", "id deyeri yanlisdir");
+                                return View(productVM);
+                            }
+
+                            if (!await _context.LoanRanges.AnyAsync(c => c.IsDeleted == false && c.Id == loanRangeId))
+                            {
+                                ModelState.AddModelError($"LoanTermVMs[{count}].loanCompany", "id deyeri yanlisdir");
+                                return View(productVM);
+                            }
+
+                            LoanRange loanRange = await _context.LoanRanges.FirstOrDefaultAsync(lt => lt.Id == loanRangeId && lt.IsDeleted == false);
+
+                            LoanTermLoanRange termLoanRange = new LoanTermLoanRange
+                            {
+                                LoanRangeId = loanRangeId,
+                                LoanTermId = loanTerm.Id
+                            };
+
+                            //loanRanges.Add(loanRange);
+                            loanTermLoanRanges.Add(termLoanRange);
+                        }
+
+                        loanTerm.LoanTermLoanRanges = loanTermLoanRanges;
+                    }
+
+                    count++;
+
+                    loanTerms.Add(loanTerm);
+                }
+
+                productVM.Product.LoanTerms = loanTerms;
+
+            }
 
             //if (product.IFLoanRangeIds != null && product.IFLoanRangeIds.Count() > 0)
             //{
@@ -255,6 +336,14 @@ namespace Smartelectronics.Areas.Manage.Controllers
             return Json(specifications);
         }
 
-        
+        public async Task<JsonResult> GetLoanRanges()
+        {
+            List<LoanRange> loanRanges = await _context.LoanRanges
+                .Where(cs => cs.IsDeleted == false).ToListAsync();
+
+            return Json(loanRanges);
+        }
+
+
     }
 }

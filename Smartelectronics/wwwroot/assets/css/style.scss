@@ -1357,7 +1357,7 @@ header{
                                 }
                             }
                             .label-red{
-                                background-image: url(/assets/images/label-red.svg);
+                                // background-image: url(/assets/images/label-red.svg);
                                 width: 80px!important;
                                 height: 80px!important;
                                 z-index: 5;
@@ -1396,7 +1396,7 @@ header{
                                 }
                             }
                             .label-orange{
-                                background-image: url(/assets/images/ucard-sticker.png);
+                                // // background-image: url(/assets/images/ucard-sticker.png);
                                 width: 80px!important;
                                 height: 80px!important;
                                 z-index: 5;
@@ -2300,7 +2300,7 @@ header{
                                     }
                                 }
                                 .label-red{
-                                    background-image: url(/assets/images/label-red.svg);
+                                    // background-image: url(/assets/images/label-red.svg);
                                     width: 80px!important;
                                     height: 80px!important;
                                     z-index: 5;
@@ -2339,7 +2339,7 @@ header{
                                     }
                                 }
                                 .label-orange{
-                                    background-image: url(/assets/images/ucard-sticker.png);
+                                    // background-image: url(/assets/images/ucard-sticker.png);
                                     width: 80px!important;
                                     height: 80px!important;
                                     z-index: 5;
@@ -2705,7 +2705,7 @@ header{
                                     }
                                 }
                                 .label-red{
-                                    background-image: url(/assets/images/label-red.svg);
+                                    // // background-image: url(/assets/images/label-red.svg);
                                     width: 80px!important;
                                     height: 80px!important;
                                     z-index: 5;
@@ -2745,7 +2745,7 @@ header{
                                     }
                                 }
                                 .label-orange{
-                                    background-image: url(/assets/images/ucard-sticker.png);
+                                    // background-image: url(/assets/images/ucard-sticker.png);
                                     width: 80px!important;
                                     height: 80px!important;
                                     z-index: 5;
@@ -3743,7 +3743,7 @@ header{
                                     }
                                 }
                                 .label-red{
-                                    background-image: url(/assets/images/label-red.svg);
+                                    // background-image: url(/assets/images/label-red.svg);
                                     width: 80px!important;
                                     height: 80px!important;
                                     z-index: 5;
@@ -3782,7 +3782,7 @@ header{
                                     }
                                 }
                                 .label-orange{
-                                    background-image: url(/assets/images/ucard-sticker.png);
+                                    // background-image: url(/assets/images/ucard-sticker.png);
                                     width: 80px!important;
                                     height: 80px!important;
                                     z-index: 5;
@@ -6129,7 +6129,7 @@ header{
                                         }
                                     }
                                     .label-red{
-                                        background-image: url(/assets/images/label-red.svg);
+                                        // background-image: url(/assets/images/label-red.svg);
                                         width: 80px!important;
                                         height: 80px!important;
                                         z-index: 5;
@@ -6168,7 +6168,7 @@ header{
                                         }
                                     }
                                     .label-orange{
-                                        background-image: url(/assets/images/ucard-sticker.png);
+                                        // background-image: url(/assets/images/ucard-sticker.png);
                                         width: 80px!important;
                                         height: 80px!important;
                                         z-index: 5;
@@ -6468,7 +6468,7 @@ header{
                                         }
                                     }
                                     .label-red{
-                                        background-image: url(/assets/images/label-red.svg);
+                                        // background-image: url(/assets/images/label-red.svg);
                                         width: 80px!important;
                                         height: 80px!important;
                                         z-index: 5;
@@ -6507,7 +6507,7 @@ header{
                                         }
                                     }
                                     .label-orange{
-                                        background-image: url(/assets/images/ucard-sticker.png);
+                                        // background-image: url(/assets/images/ucard-sticker.png);
                                         width: 80px!important;
                                         height: 80px!important;
                                         z-index: 5;
@@ -6695,6 +6695,32 @@ header{
                     }
                 }
             }
+        }
+    }
+}
+
+.pagination-center{
+    text-align: center;
+    font-family: monospace;
+    .pagination {
+        display: inline-block;
+        a.active {
+            background-color: #0096FF;
+            color: #FFFFFF;
+            border: 1px solid #0096FF;
+        }
+        a:hover:not(.active) {
+            background-color: #DDD;
+        }
+        a {
+            color: #000000;
+            float: left;
+            padding: 8px 16px;
+            text-decoration: none;
+            transition: background-color .5s;
+            border: 1px solid #DDD;
+            margin: 0 4px;
+            font-size: 20px;
         }
     }
 }

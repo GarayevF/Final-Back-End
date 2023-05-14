@@ -1453,7 +1453,6 @@ header .header2 .container .header-bottom-m .mobile-menu .menu-list .menu-item .
   text-align: center;
 }
 .main-home .products-main-div .container .row .col-lg-3 .product-card .label-set .label-red {
-  /*/*background-image: url(/assets/images/label-red.svg);*/*/
   width: 80px !important;
   height: 80px !important;
   z-index: 5;
@@ -1492,7 +1491,6 @@ header .header2 .container .header-bottom-m .mobile-menu .menu-list .menu-item .
   font-weight: 500;
 }
 .main-home .products-main-div .container .row .col-lg-3 .product-card .label-set .label-orange {
-  /*background-image: url(/assets/images/ucard-sticker.png);*/
   width: 80px !important;
   height: 80px !important;
   z-index: 5;
@@ -2345,7 +2343,6 @@ header .header2 .container .header-bottom-m .mobile-menu .menu-list .menu-item .
   text-align: center;
 }
 .main-shop .container .content .right .row .col-xl-4 .product-card .label-set .label-red {
-  /*background-image: url(/assets/images/label-red.svg);*/
   width: 80px !important;
   height: 80px !important;
   z-index: 5;
@@ -2384,7 +2381,6 @@ header .header2 .container .header-bottom-m .mobile-menu .menu-list .menu-item .
   font-weight: 500;
 }
 .main-shop .container .content .right .row .col-xl-4 .product-card .label-set .label-orange {
-  /*background-image: url(/assets/images/ucard-sticker.png);*/
   width: 80px !important;
   height: 80px !important;
   z-index: 5;
@@ -2730,7 +2726,6 @@ header .header2 .container .header-bottom-m .mobile-menu .menu-list .menu-item .
   text-align: center;
 }
 .main-detail .item-info .container .content .item-content .left .product-card .label-set .label-red {
-  /*background-image: url(/assets/images/label-red.svg);*/
   width: 80px !important;
   height: 80px !important;
   z-index: 5;
@@ -2770,7 +2765,6 @@ header .header2 .container .header-bottom-m .mobile-menu .menu-list .menu-item .
   font-weight: 500;
 }
 .main-detail .item-info .container .content .item-content .left .product-card .label-set .label-orange {
-  /*background-image: url(/assets/images/ucard-sticker.png);*/
   width: 80px !important;
   height: 80px !important;
   z-index: 5;
@@ -3727,7 +3721,6 @@ header .header2 .container .header-bottom-m .mobile-menu .menu-list .menu-item .
   text-align: center;
 }
 .main-compare .bottom .container .content .owl-compare .item .product-card .label-set .label-red {
-  /*background-image: url(/assets/images/label-red.svg);*/
   width: 80px !important;
   height: 80px !important;
   z-index: 5;
@@ -3766,7 +3759,6 @@ header .header2 .container .header-bottom-m .mobile-menu .menu-list .menu-item .
   font-weight: 500;
 }
 .main-compare .bottom .container .content .owl-compare .item .product-card .label-set .label-orange {
-  /*background-image: url(/assets/images/ucard-sticker.png);*/
   width: 80px !important;
   height: 80px !important;
   z-index: 5;
@@ -5905,7 +5897,6 @@ header .header2 .container .header-bottom-m .mobile-menu .menu-list .menu-item .
   text-align: center;
 }
 .main-wishlist .bottom .container .content .main .row .col-lg-3 .product-card .label-set .label-red {
-  /*background-image: url(/assets/images/label-red.svg);*/
   width: 80px !important;
   height: 80px !important;
   z-index: 5;
@@ -5944,7 +5935,6 @@ header .header2 .container .header-bottom-m .mobile-menu .menu-list .menu-item .
   font-weight: 500;
 }
 .main-wishlist .bottom .container .content .main .row .col-lg-3 .product-card .label-set .label-orange {
-  /*background-image: url(/assets/images/ucard-sticker.png);*/
   width: 80px !important;
   height: 80px !important;
   z-index: 5;
@@ -6228,7 +6218,6 @@ header .header2 .container .header-bottom-m .mobile-menu .menu-list .menu-item .
   text-align: center;
 }
 .main-outlet .bottom .container .content .main .row .col-lg-3 .product-card .label-set .label-red {
-  /*background-image: url(/assets/images/label-red.svg);*/
   width: 80px !important;
   height: 80px !important;
   z-index: 5;
@@ -6267,7 +6256,6 @@ header .header2 .container .header-bottom-m .mobile-menu .menu-list .menu-item .
   font-weight: 500;
 }
 .main-outlet .bottom .container .content .main .row .col-lg-3 .product-card .label-set .label-orange {
-  /*background-image: url(/assets/images/ucard-sticker.png);*/
   width: 80px !important;
   height: 80px !important;
   z-index: 5;
@@ -6446,6 +6434,32 @@ header .header2 .container .header-bottom-m .mobile-menu .menu-list .menu-item .
   border: 1px solid #555a70;
   color: #3b7fec;
   background-color: #fff;
+}
+
+.pagination-center {
+  text-align: center;
+  font-family: monospace;
+}
+.pagination-center .pagination {
+  display: inline-block;
+}
+.pagination-center .pagination a.active {
+  background-color: #0096FF;
+  color: #FFFFFF;
+  border: 1px solid #0096FF;
+}
+.pagination-center .pagination a:hover:not(.active) {
+  background-color: #DDD;
+}
+.pagination-center .pagination a {
+  color: #000000;
+  float: left;
+  padding: 8px 16px;
+  text-decoration: none;
+  transition: background-color 0.5s;
+  border: 1px solid #DDD;
+  margin: 0 4px;
+  font-size: 20px;
 }
 
 footer .brands {

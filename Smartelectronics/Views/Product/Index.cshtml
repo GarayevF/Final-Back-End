@@ -1,0 +1,912 @@
+﻿
+@{
+    ViewData["Title"] = "Index";
+}
+
+<section class="breadcrumb-section">
+      <h2 class="sr-only">Site Breadcrumb</h2>
+      <div class="container">
+         <div class="breadcrumb-contents">
+            <nav aria-label="breadcrumb">
+               <ol class="breadcrumb">
+                  <li class="breadcrumb-item">
+                     <a href="index.html">Smart Electronics</a>
+                  </li>
+                  <li class="breadcrumb-item active">
+                     <a href="index.html">
+                        Smartfon və Planşetlər</a>
+                  </li>
+               </ol>
+            </nav>
+         </div>
+      </div>
+   </section>
+
+    <main class="main-shop">
+        <div class="container">
+            <div class="product-filters">
+                <button class="product-filter-btn active">Yeni məhsullar</button>
+                <button class="product-filter-btn">Endirimli məhsullar</button>
+                <button class="product-filter-btn">Əvvəlcə Ucuz</button>
+                <button class="product-filter-btn">Əvvəlcə Bahalı</button>
+            </div>
+            <div class="content">
+                <button class="filter-btn-mobile"><i class="fa-solid fa-filter"></i></button>
+                <div class="left">
+                    <div class="filter-list">
+                        <div class="filter-item category">
+                            <button class="filter-button">Kateqoriya<i class="fa-solid fa-angles-down"></i></button>
+                            <div class="drop-content">
+                                <div class="content-box">
+                                    <a href="#" class="link">
+                                        <span>Qələm</span>
+                                        <span>2</span>
+                                    </a>
+                                    <a href="#" class="link">
+                                        <span>Ev və ofis telefonları</span>
+                                        <span>7</span>
+                                    </a>
+                                    <a href="#" class="link">
+                                        <span>Ekran Qoruyucuları</span>
+                                        <span>8</span>
+                                    </a>
+                                    <a href="#" class="link">
+                                        <span>Telefon qabları</span>
+                                        <span>12</span>
+                                    </a>
+                                    <a href="#" class="link">
+                                        <span>Mobil Telefonlar</span>
+                                        <span>13</span>
+                                    </a>
+                                    <a href="#" class="link">
+                                        <span>Planşet və Elektron kitab</span>
+                                        <span>15</span>
+                                    </a>
+                                    <a href="#" class="link">
+                                        <span>Powerbank</span>
+                                        <span>25</span>
+                                    </a>
+                                    <a href="#" class="link">
+                                        <span>İkinci əl smartfonlar</span>
+                                        <span>38</span>
+                                    </a>
+                                    <a href="#" class="link">
+                                        <span>Adapter</span>
+                                        <span>45</span>
+                                    </a>
+                                    <a href="#" class="link active">
+                                        <span>Smartfonlar</span>
+                                        <span>98</span>
+                                    </a>
+                                 </div>
+
+                            </div>
+                        </div>
+
+                        <div class="filter-item suggestions">
+                            <button class="filter-button">Təklif edilən<i class="fa-solid fa-angles-down"></i></button>
+                            <div class="drop-content">
+                                <div class="content-box">
+                                    <div class="radio-box">
+                                        <input type="radio" name="offer" id="sortFromNew-0">
+                                        <label for="sortFromNew-0">Ən yenilər</label>
+                                    </div>
+                                    <div class="radio-box">
+                                        <input type="radio" name="offer" id="isDiscounted-1">
+                                        <label for="isDiscounted-1">Endirimli Məhsullar</label>
+                                    </div>
+                                    <div class="radio-box">
+                                        <input type="radio" name="offer" id="sortFromPrice-2">
+                                        <label for="sortFromPrice-2">Ən aşağı qiymət</label>
+                                    </div>
+                                    <div class="radio-box">
+                                        <input type="radio" name="offer" id="sortFromPrice-3">
+                                        <label for="sortFromPrice-3">Ən yuxarı qiymət</label>
+                                    </div>
+                                    <div class="radio-box">
+                                        <input type="radio" name="offer" id="sortFromBestSeller-4">
+                                        <label for="sortFromBestSeller-4">Ən çox satılanlar</label>
+                                    </div>
+                                    <div class="radio-box">
+                                        <input type="radio" name="offer" id="sortFromBestSelected-5">
+                                        <label for="sortFromBestSelected-5">Ən çox seçilənlər</label>
+                                    </div>
+                                 </div>
+                            </div>
+                        </div>
+
+                        <div class="filter-item pricefilter">
+                            <button class="filter-button">Kateqoriya<i class="fa-solid fa-angles-down"></i></button>
+                            <div class="drop-content">
+                                <div class="content-box">
+                                    <div class="price-input">
+                                        <div class="field">
+                                           <span>Min</span>
+                                           <input type="number" class="input-min" value="0">
+                                        </div>
+                                        <div class="separator"></div>
+                                        <div class="field">
+                                           <span>Maks</span>
+                                           <input type="number" class="input-max" value="7000">
+                                        </div>
+                                     </div>
+                                     <div class="slider">
+                                        <div class="progress"></div>
+                                     </div>
+                                     <div class="range-input">
+                                        <input type="range" class="range-min" min="0" max="7000" value="0" step="10">
+                                        <input type="range" class="range-max" min="0" max="7000" value="7000" step="10">
+                                     </div>
+                                 </div>
+                            </div>
+                        </div>
+
+                        <div class="filter-item brands">
+                            <button class="filter-button">Brend<i class="fa-solid fa-angles-down"></i></button>
+                            <div class="drop-content">
+                                <div class="content-box">
+                                    <div class="radio-box">
+                                        <input type="radio" name="offer" id="isDiscounted-1">
+                                        <label for="isDiscounted-1"><span>Xiaomi</span><span>24</span></label>
+                                    </div>
+                                    <div class="radio-box">
+                                        <input type="radio" name="offer" id="sortFromPrice-2">
+                                        <label for="sortFromPrice-2"><span>Samsung</span><span>24</span></label>
+                                    </div>
+                                    <div class="radio-box">
+                                        <input type="radio" name="offer" id="sortFromPrice-3">
+                                        <label for="sortFromPrice-3"><span>Apple</span><span>24</span></label>
+                                    </div>
+                                 </div>
+                            </div>
+                        </div>
+
+                        <div class="filter-item colorfilter">
+                            <button class="filter-button">Rəng<i class="fa-solid fa-angles-down"></i></button>
+                            <div class="drop-content">
+                                <div class="content-box">
+                                    <button class="color" style="background: rgb(0, 0, 0);"></button>
+                                    <button class="color" style="background: rgb(226, 219, 219);"></button>
+                                    <button class="color" style="background: rgb(0, 128, 0);"></button>
+                                    <button class="color" style="background: rgb(0, 0, 255);"></button>
+                                    <button class="color" style="background: rgb(216, 169, 110);"></button>
+                                    <button class="color" style="background: rgba(56, 37, 37, 0.7);"></button>
+                                    <button class="color" style="background: rgba(21, 0, 19, 0.27);"></button>
+                                    <button class="color" style="background: rgb(169, 207, 204);"></button>
+                                    <button class="color" style="background: rgb(110, 157, 170);"></button>
+                                    <button class="color" style="background: rgb(148, 231, 177);"></button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="right">
+                    <div class="row">
+                        <div class="col-xl-4 col-lg-6 col-md-6 col-sm-6 col-12">
+                            <div class="product-card">
+                               <div class="buttons-div">
+                                  <a href="#" class="addtocompare">
+                                     <svg style="pointer-events:none" version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" viewBox="0 0 512 512" xml:space="preserve" style="enable-background: new 0 0 512 512;"><title _ngcontent-serverApp-c47="">Müqayisə</title><style _ngcontent-serverApp-c47="" type="text/css"> .st0 { fill: none; stroke: #4D4D4D; stroke-width: 24; stroke-linecap: round; stroke-miterlimit: 10; } </style><line _ngcontent-serverApp-c47="" x1="104.1" y1="44.7" x2="104.1" y2="209.5" class="st0"></line><line _ngcontent-serverApp-c47="" x1="104.1" y1="259.9" x2="104.1" y2="426.6" class="st0"></line><line _ngcontent-serverApp-c47="" x1="178.7" y1="256" x2="29.5" y2="256" class="st0"></line><g _ngcontent-serverApp-c47=""><line _ngcontent-serverApp-c47="" x1="406.9" y1="318" x2="406.9" y2="461.4" class="st0"></line><line _ngcontent-serverApp-c47="" x1="482.5" y1="312.2" x2="333.3" y2="312.2" class="st0"></line><line _ngcontent-serverApp-c47="" x1="406.9" y1="44.7" x2="406.9" y2="256" class="st0"></line></g><g _ngcontent-serverApp-c47=""><line _ngcontent-serverApp-c47="" x1="256" y1="44.7" x2="256" y2="184.3" class="st0"></line><line _ngcontent-serverApp-c47="" x1="330.6" y1="184.3" x2="181.4" y2="184.3" class="st0"></line><line _ngcontent-serverApp-c47="" x1="256" y1="256" x2="256" y2="467.3" class="st0"></line></g></svg>
+                                 </a>
+                                 <a href="#" class="addtowish">
+                                  <svg style="pointer-events:none" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns:svgjs="http://svgjs.com/svgjs" version="1.1" width="512" height="512" x="0" y="0" viewBox="0 0 512 512" xml:space="preserve" style="enable-background: new 0 0 512 512;"><title _ngcontent-serverApp-c47="">Seçilmişlər</title><g _ngcontent-serverApp-c47=""><g _ngcontent-serverApp-c47="" xmlns="http://www.w3.org/2000/svg"><g _ngcontent-serverApp-c47=""><path _ngcontent-serverApp-c47="" d="M378.667,21.333c-56.792,0-103.698,52.75-122.667,77.646c-18.969-24.896-65.875-77.646-122.667-77.646    C59.813,21.333,0,88.927,0,172c0,45.323,17.99,87.562,49.479,116.469c0.458,0.792,1.021,1.521,1.677,2.177l197.313,196.906    c2.083,2.073,4.802,3.115,7.531,3.115s5.458-1.042,7.542-3.125L467.417,283.74l2.104-2.042c1.667-1.573,3.313-3.167,5.156-5.208    c0.771-0.76,1.406-1.615,1.896-2.542C499.438,245.948,512,209.833,512,172C512,88.927,452.188,21.333,378.667,21.333z     M458.823,261.948c-0.292,0.344-0.563,0.708-0.802,1.083c-1,1.146-2.094,2.156-3.177,3.188L255.99,464.927L68.667,277.979    c-0.604-1.188-1.448-2.271-2.479-3.177C37.677,249.906,21.333,212.437,21.333,172c0-71.313,50.24-129.333,112-129.333    c61.063,0,113.177,79.646,113.698,80.448c3.938,6.083,14,6.083,17.938,0c0.521-0.802,52.635-80.448,113.698-80.448    c61.76,0,112,58.021,112,129.333C490.667,205.604,479.354,237.552,458.823,261.948z" fill="#555970" data-original="#000000"></path></g></g><g _ngcontent-serverApp-c47="" xmlns="http://www.w3.org/2000/svg"></g><g _ngcontent-serverApp-c47="" xmlns="http://www.w3.org/2000/svg"></g><g _ngcontent-serverApp-c47="" xmlns="http://www.w3.org/2000/svg"></g><g _ngcontent-serverApp-c47="" xmlns="http://www.w3.org/2000/svg"></g><g _ngcontent-serverApp-c47="" xmlns="http://www.w3.org/2000/svg"></g><g _ngcontent-serverApp-c47="" xmlns="http://www.w3.org/2000/svg"></g><g _ngcontent-serverApp-c47="" xmlns="http://www.w3.org/2000/svg"></g><g _ngcontent-serverApp-c47="" xmlns="http://www.w3.org/2000/svg"></g><g _ngcontent-serverApp-c47="" xmlns="http://www.w3.org/2000/svg"></g><g _ngcontent-serverApp-c47="" xmlns="http://www.w3.org/2000/svg"></g><g _ngcontent-serverApp-c47="" xmlns="http://www.w3.org/2000/svg"></g><g _ngcontent-serverApp-c47="" xmlns="http://www.w3.org/2000/svg"></g><g _ngcontent-serverApp-c47="" xmlns="http://www.w3.org/2000/svg"></g><g _ngcontent-serverApp-c47="" xmlns="http://www.w3.org/2000/svg"></g><g _ngcontent-serverApp-c47="" xmlns="http://www.w3.org/2000/svg"></g></g></svg>
+                              </a>
+                                 <a href="#" class="addtobasket">
+                                  <svg style="pointer-events:none" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns:svgjs="http://svgjs.com/svgjs" version="1.1" width="512" height="512" x="0" y="0" viewBox="0 0 321.2 321.2" xml:space="preserve" style="enable-background: new 0 0 512 512;"><title _ngcontent-serverApp-c47="">Səbət</title><g _ngcontent-serverApp-c47=""><g _ngcontent-serverApp-c47="" xmlns="http://www.w3.org/2000/svg"><g _ngcontent-serverApp-c47=""><path _ngcontent-serverApp-c47="" d="M306.4,313.2l-24-223.6c-0.4-3.6-3.6-6.4-7.2-6.4h-44.4V69.6c0-38.4-31.2-69.6-69.6-69.6c-38.4,0-69.6,31.2-69.6,69.6    v13.6H46c-3.6,0-6.8,2.8-7.2,6.4l-24,223.6c-0.4,2,0.4,4,1.6,5.6c1.2,1.6,3.2,2.4,5.2,2.4h278c2,0,4-0.8,5.2-2.4    C306,317.2,306.8,315.2,306.4,313.2z M223.6,123.6c3.6,0,6.4,2.8,6.4,6.4c0,3.6-2.8,6.4-6.4,6.4c-3.6,0-6.4-2.8-6.4-6.4    C217.2,126.4,220,123.6,223.6,123.6z M106,69.6c0-30.4,24.8-55.2,55.2-55.2c30.4,0,55.2,24.8,55.2,55.2v13.6H106V69.6z     M98.8,123.6c3.6,0,6.4,2.8,6.4,6.4c0,3.6-2.8,6.4-6.4,6.4c-3.6,0-6.4-2.8-6.4-6.4C92.4,126.4,95.2,123.6,98.8,123.6z M30,306.4    L52.4,97.2h39.2v13.2c-8,2.8-13.6,10.4-13.6,19.2c0,11.2,9.2,20.4,20.4,20.4c11.2,0,20.4-9.2,20.4-20.4c0-8.8-5.6-16.4-13.6-19.2    V97.2h110.4v13.2c-8,2.8-13.6,10.4-13.6,19.2c0,11.2,9.2,20.4,20.4,20.4c11.2,0,20.4-9.2,20.4-20.4c0-8.8-5.6-16.4-13.6-19.2V97.2    H270l22.4,209.2H30z" fill="#555970" data-original="#000000"></path></g></g><g _ngcontent-serverApp-c47="" xmlns="http://www.w3.org/2000/svg"></g><g _ngcontent-serverApp-c47="" xmlns="http://www.w3.org/2000/svg"></g><g _ngcontent-serverApp-c47="" xmlns="http://www.w3.org/2000/svg"></g><g _ngcontent-serverApp-c47="" xmlns="http://www.w3.org/2000/svg"></g><g _ngcontent-serverApp-c47="" xmlns="http://www.w3.org/2000/svg"></g><g _ngcontent-serverApp-c47="" xmlns="http://www.w3.org/2000/svg"></g><g _ngcontent-serverApp-c47="" xmlns="http://www.w3.org/2000/svg"></g><g _ngcontent-serverApp-c47="" xmlns="http://www.w3.org/2000/svg"></g><g _ngcontent-serverApp-c47="" xmlns="http://www.w3.org/2000/svg"></g><g _ngcontent-serverApp-c47="" xmlns="http://www.w3.org/2000/svg"></g><g _ngcontent-serverApp-c47="" xmlns="http://www.w3.org/2000/svg"></g><g _ngcontent-serverApp-c47="" xmlns="http://www.w3.org/2000/svg"></g><g _ngcontent-serverApp-c47="" xmlns="http://www.w3.org/2000/svg"></g><g _ngcontent-serverApp-c47="" xmlns="http://www.w3.org/2000/svg"></g><g _ngcontent-serverApp-c47="" xmlns="http://www.w3.org/2000/svg"></g></g></svg>
+                              </a>
+                               </div>
+                               <ul class="label-set">
+                                  <li class="circle label-blue">
+                                     <div class="label">
+                                        <p>Nağd alışlarda</p>
+                                        <h6>Endirim</h6>
+                                        <div class="price">
+                                           <p>
+                                              <span>200</span>AZN</p>
+                                        </div>
+                                     </div>
+                                  </li>
+                                  <li class="circle label-red">
+                                     <div class="label">
+                                        <p class="text-lg">24 ay</p>
+                                        <p class="text-sm">Faizsiz Kredit</p>
+                                     </div>
+                                  </li>
+                                  <li class="circle label-orange">
+                                     <div class="label">
+                                        <p class="text-lg">24 ay</p>
+                                        <p class="text-sm">Faizsiz Kredit</p>
+                                     </div>
+                                  </li>
+                               </ul>
+                               <a class="image-link" href="">
+                                  <img src="http://api.smartelectronics.az/uploads/products/ca7d48e3c7fd46ceb75efa1bab53f73c81975asaaa.jpg" alt="">
+                               </a>
+                               <a href="" class="product-title">Ecovacs N8 Pro White</a>
+                               <div class="color-and-credit">
+                                  <div class="color-div">
+                                     <div class="item-colors">
+                                        <div class="color active " style="background-color: rgb(236, 215, 99);"></div>
+                                        <div class="color " style="background-color: rgb(75, 0, 130);"></div>
+                                        <div class="color " style="background-color: rgb(0, 0, 0);"></div>
+                                        <div class="color " style="background-color: rgb(226, 219, 219);"></div>
+                                     </div>
+                                     <p class="product-price"><strong>4699</strong> <small>AZN</small></p>
+                                  </div>
+                                  <div class="credit-options">
+                                     <div class="months">
+                                        <ul class="d-flex">
+                                           <li class="credit-item">
+                                              <a class="p-0 m-0" id="750">6 ay</a>
+                                           </li>
+                                           <li class="credit-item selected-credit">
+                                              <a class="p-0 m-0" id="392">12 ay</a>
+                                           </li>
+                                        </ul>
+                                     </div>
+                                     <div class="prices-for-months">
+                                        <span><strong>392</strong> <small>AZN</small></span>
+                                     </div>
+                                  </div>
+                               </div>
+                               <a href="" class="buy buyoneclick">1 kliklə al</a>
+                               <a href="" class="buy buycredit">Kredit</a>
+                            </div>
+                         </div>
+                         <div class="col-xl-4 col-lg-6 col-md-6 col-sm-6 col-12">
+                            <div class="product-card">
+                               <div class="buttons-div">
+                                  <a href="#" class="addtocompare">
+                                     <svg style="pointer-events:none" version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" viewBox="0 0 512 512" xml:space="preserve" style="enable-background: new 0 0 512 512;"><title _ngcontent-serverApp-c47="">Müqayisə</title><style _ngcontent-serverApp-c47="" type="text/css"> .st0 { fill: none; stroke: #4D4D4D; stroke-width: 24; stroke-linecap: round; stroke-miterlimit: 10; } </style><line _ngcontent-serverApp-c47="" x1="104.1" y1="44.7" x2="104.1" y2="209.5" class="st0"></line><line _ngcontent-serverApp-c47="" x1="104.1" y1="259.9" x2="104.1" y2="426.6" class="st0"></line><line _ngcontent-serverApp-c47="" x1="178.7" y1="256" x2="29.5" y2="256" class="st0"></line><g _ngcontent-serverApp-c47=""><line _ngcontent-serverApp-c47="" x1="406.9" y1="318" x2="406.9" y2="461.4" class="st0"></line><line _ngcontent-serverApp-c47="" x1="482.5" y1="312.2" x2="333.3" y2="312.2" class="st0"></line><line _ngcontent-serverApp-c47="" x1="406.9" y1="44.7" x2="406.9" y2="256" class="st0"></line></g><g _ngcontent-serverApp-c47=""><line _ngcontent-serverApp-c47="" x1="256" y1="44.7" x2="256" y2="184.3" class="st0"></line><line _ngcontent-serverApp-c47="" x1="330.6" y1="184.3" x2="181.4" y2="184.3" class="st0"></line><line _ngcontent-serverApp-c47="" x1="256" y1="256" x2="256" y2="467.3" class="st0"></line></g></svg>
+                                 </a>
+                                 <a href="#" class="addtowish">
+                                  <svg style="pointer-events:none" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns:svgjs="http://svgjs.com/svgjs" version="1.1" width="512" height="512" x="0" y="0" viewBox="0 0 512 512" xml:space="preserve" style="enable-background: new 0 0 512 512;"><title _ngcontent-serverApp-c47="">Seçilmişlər</title><g _ngcontent-serverApp-c47=""><g _ngcontent-serverApp-c47="" xmlns="http://www.w3.org/2000/svg"><g _ngcontent-serverApp-c47=""><path _ngcontent-serverApp-c47="" d="M378.667,21.333c-56.792,0-103.698,52.75-122.667,77.646c-18.969-24.896-65.875-77.646-122.667-77.646    C59.813,21.333,0,88.927,0,172c0,45.323,17.99,87.562,49.479,116.469c0.458,0.792,1.021,1.521,1.677,2.177l197.313,196.906    c2.083,2.073,4.802,3.115,7.531,3.115s5.458-1.042,7.542-3.125L467.417,283.74l2.104-2.042c1.667-1.573,3.313-3.167,5.156-5.208    c0.771-0.76,1.406-1.615,1.896-2.542C499.438,245.948,512,209.833,512,172C512,88.927,452.188,21.333,378.667,21.333z     M458.823,261.948c-0.292,0.344-0.563,0.708-0.802,1.083c-1,1.146-2.094,2.156-3.177,3.188L255.99,464.927L68.667,277.979    c-0.604-1.188-1.448-2.271-2.479-3.177C37.677,249.906,21.333,212.437,21.333,172c0-71.313,50.24-129.333,112-129.333    c61.063,0,113.177,79.646,113.698,80.448c3.938,6.083,14,6.083,17.938,0c0.521-0.802,52.635-80.448,113.698-80.448    c61.76,0,112,58.021,112,129.333C490.667,205.604,479.354,237.552,458.823,261.948z" fill="#555970" data-original="#000000"></path></g></g><g _ngcontent-serverApp-c47="" xmlns="http://www.w3.org/2000/svg"></g><g _ngcontent-serverApp-c47="" xmlns="http://www.w3.org/2000/svg"></g><g _ngcontent-serverApp-c47="" xmlns="http://www.w3.org/2000/svg"></g><g _ngcontent-serverApp-c47="" xmlns="http://www.w3.org/2000/svg"></g><g _ngcontent-serverApp-c47="" xmlns="http://www.w3.org/2000/svg"></g><g _ngcontent-serverApp-c47="" xmlns="http://www.w3.org/2000/svg"></g><g _ngcontent-serverApp-c47="" xmlns="http://www.w3.org/2000/svg"></g><g _ngcontent-serverApp-c47="" xmlns="http://www.w3.org/2000/svg"></g><g _ngcontent-serverApp-c47="" xmlns="http://www.w3.org/2000/svg"></g><g _ngcontent-serverApp-c47="" xmlns="http://www.w3.org/2000/svg"></g><g _ngcontent-serverApp-c47="" xmlns="http://www.w3.org/2000/svg"></g><g _ngcontent-serverApp-c47="" xmlns="http://www.w3.org/2000/svg"></g><g _ngcontent-serverApp-c47="" xmlns="http://www.w3.org/2000/svg"></g><g _ngcontent-serverApp-c47="" xmlns="http://www.w3.org/2000/svg"></g><g _ngcontent-serverApp-c47="" xmlns="http://www.w3.org/2000/svg"></g></g></svg>
+                              </a>
+                                 <a href="#" class="addtobasket">
+                                  <svg style="pointer-events:none" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns:svgjs="http://svgjs.com/svgjs" version="1.1" width="512" height="512" x="0" y="0" viewBox="0 0 321.2 321.2" xml:space="preserve" style="enable-background: new 0 0 512 512;"><title _ngcontent-serverApp-c47="">Səbət</title><g _ngcontent-serverApp-c47=""><g _ngcontent-serverApp-c47="" xmlns="http://www.w3.org/2000/svg"><g _ngcontent-serverApp-c47=""><path _ngcontent-serverApp-c47="" d="M306.4,313.2l-24-223.6c-0.4-3.6-3.6-6.4-7.2-6.4h-44.4V69.6c0-38.4-31.2-69.6-69.6-69.6c-38.4,0-69.6,31.2-69.6,69.6    v13.6H46c-3.6,0-6.8,2.8-7.2,6.4l-24,223.6c-0.4,2,0.4,4,1.6,5.6c1.2,1.6,3.2,2.4,5.2,2.4h278c2,0,4-0.8,5.2-2.4    C306,317.2,306.8,315.2,306.4,313.2z M223.6,123.6c3.6,0,6.4,2.8,6.4,6.4c0,3.6-2.8,6.4-6.4,6.4c-3.6,0-6.4-2.8-6.4-6.4    C217.2,126.4,220,123.6,223.6,123.6z M106,69.6c0-30.4,24.8-55.2,55.2-55.2c30.4,0,55.2,24.8,55.2,55.2v13.6H106V69.6z     M98.8,123.6c3.6,0,6.4,2.8,6.4,6.4c0,3.6-2.8,6.4-6.4,6.4c-3.6,0-6.4-2.8-6.4-6.4C92.4,126.4,95.2,123.6,98.8,123.6z M30,306.4    L52.4,97.2h39.2v13.2c-8,2.8-13.6,10.4-13.6,19.2c0,11.2,9.2,20.4,20.4,20.4c11.2,0,20.4-9.2,20.4-20.4c0-8.8-5.6-16.4-13.6-19.2    V97.2h110.4v13.2c-8,2.8-13.6,10.4-13.6,19.2c0,11.2,9.2,20.4,20.4,20.4c11.2,0,20.4-9.2,20.4-20.4c0-8.8-5.6-16.4-13.6-19.2V97.2    H270l22.4,209.2H30z" fill="#555970" data-original="#000000"></path></g></g><g _ngcontent-serverApp-c47="" xmlns="http://www.w3.org/2000/svg"></g><g _ngcontent-serverApp-c47="" xmlns="http://www.w3.org/2000/svg"></g><g _ngcontent-serverApp-c47="" xmlns="http://www.w3.org/2000/svg"></g><g _ngcontent-serverApp-c47="" xmlns="http://www.w3.org/2000/svg"></g><g _ngcontent-serverApp-c47="" xmlns="http://www.w3.org/2000/svg"></g><g _ngcontent-serverApp-c47="" xmlns="http://www.w3.org/2000/svg"></g><g _ngcontent-serverApp-c47="" xmlns="http://www.w3.org/2000/svg"></g><g _ngcontent-serverApp-c47="" xmlns="http://www.w3.org/2000/svg"></g><g _ngcontent-serverApp-c47="" xmlns="http://www.w3.org/2000/svg"></g><g _ngcontent-serverApp-c47="" xmlns="http://www.w3.org/2000/svg"></g><g _ngcontent-serverApp-c47="" xmlns="http://www.w3.org/2000/svg"></g><g _ngcontent-serverApp-c47="" xmlns="http://www.w3.org/2000/svg"></g><g _ngcontent-serverApp-c47="" xmlns="http://www.w3.org/2000/svg"></g><g _ngcontent-serverApp-c47="" xmlns="http://www.w3.org/2000/svg"></g><g _ngcontent-serverApp-c47="" xmlns="http://www.w3.org/2000/svg"></g></g></svg>
+                              </a>
+                               </div>
+                               <ul class="label-set">
+                                  <li class="circle label-blue">
+                                     <div class="label">
+                                        <p>Nağd alışlarda</p>
+                                        <h6>Endirim</h6>
+                                        <div class="price">
+                                           <p>
+                                              <span>200</span>AZN</p>
+                                        </div>
+                                     </div>
+                                  </li>
+                                  <li class="circle label-red">
+                                     <div class="label">
+                                        <p class="text-lg">24 ay</p>
+                                        <p class="text-sm">Faizsiz Kredit</p>
+                                     </div>
+                                  </li>
+                                  <li class="circle label-orange">
+                                     <div class="label">
+                                        <p class="text-lg">24 ay</p>
+                                        <p class="text-sm">Faizsiz Kredit</p>
+                                     </div>
+                                  </li>
+                               </ul>
+                               <a class="image-link" href="">
+                                  <img src="http://api.smartelectronics.az/uploads/products/ca7d48e3c7fd46ceb75efa1bab53f73c81975asaaa.jpg" alt="">
+                               </a>
+                               <a href="" class="product-title">Ecovacs N8 Pro White</a>
+                               <div class="color-and-credit">
+                                  <div class="color-div">
+                                     <div class="item-colors">
+                                        <div class="color active " style="background-color: rgb(236, 215, 99);"></div>
+                                        <div class="color " style="background-color: rgb(75, 0, 130);"></div>
+                                        <div class="color " style="background-color: rgb(0, 0, 0);"></div>
+                                        <div class="color " style="background-color: rgb(226, 219, 219);"></div>
+                                     </div>
+                                     <p class="product-price"><strong>4699</strong> <small>AZN</small></p>
+                                  </div>
+                                  <div class="credit-options">
+                                     <div class="months">
+                                        <ul class="d-flex">
+                                           <li class="credit-item">
+                                              <a class="p-0 m-0" id="750">6 ay</a>
+                                           </li>
+                                           <li class="credit-item selected-credit">
+                                              <a class="p-0 m-0" id="392">12 ay</a>
+                                           </li>
+                                        </ul>
+                                     </div>
+                                     <div class="prices-for-months">
+                                        <span><strong>392</strong> <small>AZN</small></span>
+                                     </div>
+                                  </div>
+                               </div>
+                               <a href="" class="buy buyoneclick">1 kliklə al</a>
+                               <a href="" class="buy buycredit">Kredit</a>
+                            </div>
+                         </div>
+                         <div class="col-xl-4 col-lg-6 col-md-6 col-sm-6 col-12">
+                            <div class="product-card">
+                               <div class="buttons-div">
+                                  <a href="#" class="addtocompare">
+                                     <svg style="pointer-events:none" version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" viewBox="0 0 512 512" xml:space="preserve" style="enable-background: new 0 0 512 512;"><title _ngcontent-serverApp-c47="">Müqayisə</title><style _ngcontent-serverApp-c47="" type="text/css"> .st0 { fill: none; stroke: #4D4D4D; stroke-width: 24; stroke-linecap: round; stroke-miterlimit: 10; } </style><line _ngcontent-serverApp-c47="" x1="104.1" y1="44.7" x2="104.1" y2="209.5" class="st0"></line><line _ngcontent-serverApp-c47="" x1="104.1" y1="259.9" x2="104.1" y2="426.6" class="st0"></line><line _ngcontent-serverApp-c47="" x1="178.7" y1="256" x2="29.5" y2="256" class="st0"></line><g _ngcontent-serverApp-c47=""><line _ngcontent-serverApp-c47="" x1="406.9" y1="318" x2="406.9" y2="461.4" class="st0"></line><line _ngcontent-serverApp-c47="" x1="482.5" y1="312.2" x2="333.3" y2="312.2" class="st0"></line><line _ngcontent-serverApp-c47="" x1="406.9" y1="44.7" x2="406.9" y2="256" class="st0"></line></g><g _ngcontent-serverApp-c47=""><line _ngcontent-serverApp-c47="" x1="256" y1="44.7" x2="256" y2="184.3" class="st0"></line><line _ngcontent-serverApp-c47="" x1="330.6" y1="184.3" x2="181.4" y2="184.3" class="st0"></line><line _ngcontent-serverApp-c47="" x1="256" y1="256" x2="256" y2="467.3" class="st0"></line></g></svg>
+                                 </a>
+                                 <a href="#" class="addtowish">
+                                  <svg style="pointer-events:none" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns:svgjs="http://svgjs.com/svgjs" version="1.1" width="512" height="512" x="0" y="0" viewBox="0 0 512 512" xml:space="preserve" style="enable-background: new 0 0 512 512;"><title _ngcontent-serverApp-c47="">Seçilmişlər</title><g _ngcontent-serverApp-c47=""><g _ngcontent-serverApp-c47="" xmlns="http://www.w3.org/2000/svg"><g _ngcontent-serverApp-c47=""><path _ngcontent-serverApp-c47="" d="M378.667,21.333c-56.792,0-103.698,52.75-122.667,77.646c-18.969-24.896-65.875-77.646-122.667-77.646    C59.813,21.333,0,88.927,0,172c0,45.323,17.99,87.562,49.479,116.469c0.458,0.792,1.021,1.521,1.677,2.177l197.313,196.906    c2.083,2.073,4.802,3.115,7.531,3.115s5.458-1.042,7.542-3.125L467.417,283.74l2.104-2.042c1.667-1.573,3.313-3.167,5.156-5.208    c0.771-0.76,1.406-1.615,1.896-2.542C499.438,245.948,512,209.833,512,172C512,88.927,452.188,21.333,378.667,21.333z     M458.823,261.948c-0.292,0.344-0.563,0.708-0.802,1.083c-1,1.146-2.094,2.156-3.177,3.188L255.99,464.927L68.667,277.979    c-0.604-1.188-1.448-2.271-2.479-3.177C37.677,249.906,21.333,212.437,21.333,172c0-71.313,50.24-129.333,112-129.333    c61.063,0,113.177,79.646,113.698,80.448c3.938,6.083,14,6.083,17.938,0c0.521-0.802,52.635-80.448,113.698-80.448    c61.76,0,112,58.021,112,129.333C490.667,205.604,479.354,237.552,458.823,261.948z" fill="#555970" data-original="#000000"></path></g></g><g _ngcontent-serverApp-c47="" xmlns="http://www.w3.org/2000/svg"></g><g _ngcontent-serverApp-c47="" xmlns="http://www.w3.org/2000/svg"></g><g _ngcontent-serverApp-c47="" xmlns="http://www.w3.org/2000/svg"></g><g _ngcontent-serverApp-c47="" xmlns="http://www.w3.org/2000/svg"></g><g _ngcontent-serverApp-c47="" xmlns="http://www.w3.org/2000/svg"></g><g _ngcontent-serverApp-c47="" xmlns="http://www.w3.org/2000/svg"></g><g _ngcontent-serverApp-c47="" xmlns="http://www.w3.org/2000/svg"></g><g _ngcontent-serverApp-c47="" xmlns="http://www.w3.org/2000/svg"></g><g _ngcontent-serverApp-c47="" xmlns="http://www.w3.org/2000/svg"></g><g _ngcontent-serverApp-c47="" xmlns="http://www.w3.org/2000/svg"></g><g _ngcontent-serverApp-c47="" xmlns="http://www.w3.org/2000/svg"></g><g _ngcontent-serverApp-c47="" xmlns="http://www.w3.org/2000/svg"></g><g _ngcontent-serverApp-c47="" xmlns="http://www.w3.org/2000/svg"></g><g _ngcontent-serverApp-c47="" xmlns="http://www.w3.org/2000/svg"></g><g _ngcontent-serverApp-c47="" xmlns="http://www.w3.org/2000/svg"></g></g></svg>
+                              </a>
+                                 <a href="#" class="addtobasket">
+                                  <svg style="pointer-events:none" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns:svgjs="http://svgjs.com/svgjs" version="1.1" width="512" height="512" x="0" y="0" viewBox="0 0 321.2 321.2" xml:space="preserve" style="enable-background: new 0 0 512 512;"><title _ngcontent-serverApp-c47="">Səbət</title><g _ngcontent-serverApp-c47=""><g _ngcontent-serverApp-c47="" xmlns="http://www.w3.org/2000/svg"><g _ngcontent-serverApp-c47=""><path _ngcontent-serverApp-c47="" d="M306.4,313.2l-24-223.6c-0.4-3.6-3.6-6.4-7.2-6.4h-44.4V69.6c0-38.4-31.2-69.6-69.6-69.6c-38.4,0-69.6,31.2-69.6,69.6    v13.6H46c-3.6,0-6.8,2.8-7.2,6.4l-24,223.6c-0.4,2,0.4,4,1.6,5.6c1.2,1.6,3.2,2.4,5.2,2.4h278c2,0,4-0.8,5.2-2.4    C306,317.2,306.8,315.2,306.4,313.2z M223.6,123.6c3.6,0,6.4,2.8,6.4,6.4c0,3.6-2.8,6.4-6.4,6.4c-3.6,0-6.4-2.8-6.4-6.4    C217.2,126.4,220,123.6,223.6,123.6z M106,69.6c0-30.4,24.8-55.2,55.2-55.2c30.4,0,55.2,24.8,55.2,55.2v13.6H106V69.6z     M98.8,123.6c3.6,0,6.4,2.8,6.4,6.4c0,3.6-2.8,6.4-6.4,6.4c-3.6,0-6.4-2.8-6.4-6.4C92.4,126.4,95.2,123.6,98.8,123.6z M30,306.4    L52.4,97.2h39.2v13.2c-8,2.8-13.6,10.4-13.6,19.2c0,11.2,9.2,20.4,20.4,20.4c11.2,0,20.4-9.2,20.4-20.4c0-8.8-5.6-16.4-13.6-19.2    V97.2h110.4v13.2c-8,2.8-13.6,10.4-13.6,19.2c0,11.2,9.2,20.4,20.4,20.4c11.2,0,20.4-9.2,20.4-20.4c0-8.8-5.6-16.4-13.6-19.2V97.2    H270l22.4,209.2H30z" fill="#555970" data-original="#000000"></path></g></g><g _ngcontent-serverApp-c47="" xmlns="http://www.w3.org/2000/svg"></g><g _ngcontent-serverApp-c47="" xmlns="http://www.w3.org/2000/svg"></g><g _ngcontent-serverApp-c47="" xmlns="http://www.w3.org/2000/svg"></g><g _ngcontent-serverApp-c47="" xmlns="http://www.w3.org/2000/svg"></g><g _ngcontent-serverApp-c47="" xmlns="http://www.w3.org/2000/svg"></g><g _ngcontent-serverApp-c47="" xmlns="http://www.w3.org/2000/svg"></g><g _ngcontent-serverApp-c47="" xmlns="http://www.w3.org/2000/svg"></g><g _ngcontent-serverApp-c47="" xmlns="http://www.w3.org/2000/svg"></g><g _ngcontent-serverApp-c47="" xmlns="http://www.w3.org/2000/svg"></g><g _ngcontent-serverApp-c47="" xmlns="http://www.w3.org/2000/svg"></g><g _ngcontent-serverApp-c47="" xmlns="http://www.w3.org/2000/svg"></g><g _ngcontent-serverApp-c47="" xmlns="http://www.w3.org/2000/svg"></g><g _ngcontent-serverApp-c47="" xmlns="http://www.w3.org/2000/svg"></g><g _ngcontent-serverApp-c47="" xmlns="http://www.w3.org/2000/svg"></g><g _ngcontent-serverApp-c47="" xmlns="http://www.w3.org/2000/svg"></g></g></svg>
+                              </a>
+                               </div>
+                               <ul class="label-set">
+                                  <li class="circle label-blue">
+                                     <div class="label">
+                                        <p>Nağd alışlarda</p>
+                                        <h6>Endirim</h6>
+                                        <div class="price">
+                                           <p>
+                                              <span>200</span>AZN</p>
+                                        </div>
+                                     </div>
+                                  </li>
+                                  <li class="circle label-red">
+                                     <div class="label">
+                                        <p class="text-lg">24 ay</p>
+                                        <p class="text-sm">Faizsiz Kredit</p>
+                                     </div>
+                                  </li>
+                                  <li class="circle label-orange">
+                                     <div class="label">
+                                        <p class="text-lg">24 ay</p>
+                                        <p class="text-sm">Faizsiz Kredit</p>
+                                     </div>
+                                  </li>
+                               </ul>
+                               <a class="image-link" href="">
+                                  <img src="http://api.smartelectronics.az/uploads/products/ca7d48e3c7fd46ceb75efa1bab53f73c81975asaaa.jpg" alt="">
+                               </a>
+                               <a href="" class="product-title">Ecovacs N8 Pro White</a>
+                               <div class="color-and-credit">
+                                  <div class="color-div">
+                                     <div class="item-colors">
+                                        <div class="color active " style="background-color: rgb(236, 215, 99);"></div>
+                                        <div class="color " style="background-color: rgb(75, 0, 130);"></div>
+                                        <div class="color " style="background-color: rgb(0, 0, 0);"></div>
+                                        <div class="color " style="background-color: rgb(226, 219, 219);"></div>
+                                     </div>
+                                     <p class="product-price"><strong>4699</strong> <small>AZN</small></p>
+                                  </div>
+                                  <div class="credit-options">
+                                     <div class="months">
+                                        <ul class="d-flex">
+                                           <li class="credit-item">
+                                              <a class="p-0 m-0" id="750">6 ay</a>
+                                           </li>
+                                           <li class="credit-item selected-credit">
+                                              <a class="p-0 m-0" id="392">12 ay</a>
+                                           </li>
+                                        </ul>
+                                     </div>
+                                     <div class="prices-for-months">
+                                        <span><strong>392</strong> <small>AZN</small></span>
+                                     </div>
+                                  </div>
+                               </div>
+                               <a href="" class="buy buyoneclick">1 kliklə al</a>
+                               <a href="" class="buy buycredit">Kredit</a>
+                            </div>
+                         </div>
+                         <div class="col-xl-4 col-lg-6 col-md-6 col-sm-6 col-12">
+                            <div class="product-card">
+                               <div class="buttons-div">
+                                  <a href="#" class="addtocompare">
+                                     <svg style="pointer-events:none" version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" viewBox="0 0 512 512" xml:space="preserve" style="enable-background: new 0 0 512 512;"><title _ngcontent-serverApp-c47="">Müqayisə</title><style _ngcontent-serverApp-c47="" type="text/css"> .st0 { fill: none; stroke: #4D4D4D; stroke-width: 24; stroke-linecap: round; stroke-miterlimit: 10; } </style><line _ngcontent-serverApp-c47="" x1="104.1" y1="44.7" x2="104.1" y2="209.5" class="st0"></line><line _ngcontent-serverApp-c47="" x1="104.1" y1="259.9" x2="104.1" y2="426.6" class="st0"></line><line _ngcontent-serverApp-c47="" x1="178.7" y1="256" x2="29.5" y2="256" class="st0"></line><g _ngcontent-serverApp-c47=""><line _ngcontent-serverApp-c47="" x1="406.9" y1="318" x2="406.9" y2="461.4" class="st0"></line><line _ngcontent-serverApp-c47="" x1="482.5" y1="312.2" x2="333.3" y2="312.2" class="st0"></line><line _ngcontent-serverApp-c47="" x1="406.9" y1="44.7" x2="406.9" y2="256" class="st0"></line></g><g _ngcontent-serverApp-c47=""><line _ngcontent-serverApp-c47="" x1="256" y1="44.7" x2="256" y2="184.3" class="st0"></line><line _ngcontent-serverApp-c47="" x1="330.6" y1="184.3" x2="181.4" y2="184.3" class="st0"></line><line _ngcontent-serverApp-c47="" x1="256" y1="256" x2="256" y2="467.3" class="st0"></line></g></svg>
+                                 </a>
+                                 <a href="#" class="addtowish">
+                                  <svg style="pointer-events:none" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns:svgjs="http://svgjs.com/svgjs" version="1.1" width="512" height="512" x="0" y="0" viewBox="0 0 512 512" xml:space="preserve" style="enable-background: new 0 0 512 512;"><title _ngcontent-serverApp-c47="">Seçilmişlər</title><g _ngcontent-serverApp-c47=""><g _ngcontent-serverApp-c47="" xmlns="http://www.w3.org/2000/svg"><g _ngcontent-serverApp-c47=""><path _ngcontent-serverApp-c47="" d="M378.667,21.333c-56.792,0-103.698,52.75-122.667,77.646c-18.969-24.896-65.875-77.646-122.667-77.646    C59.813,21.333,0,88.927,0,172c0,45.323,17.99,87.562,49.479,116.469c0.458,0.792,1.021,1.521,1.677,2.177l197.313,196.906    c2.083,2.073,4.802,3.115,7.531,3.115s5.458-1.042,7.542-3.125L467.417,283.74l2.104-2.042c1.667-1.573,3.313-3.167,5.156-5.208    c0.771-0.76,1.406-1.615,1.896-2.542C499.438,245.948,512,209.833,512,172C512,88.927,452.188,21.333,378.667,21.333z     M458.823,261.948c-0.292,0.344-0.563,0.708-0.802,1.083c-1,1.146-2.094,2.156-3.177,3.188L255.99,464.927L68.667,277.979    c-0.604-1.188-1.448-2.271-2.479-3.177C37.677,249.906,21.333,212.437,21.333,172c0-71.313,50.24-129.333,112-129.333    c61.063,0,113.177,79.646,113.698,80.448c3.938,6.083,14,6.083,17.938,0c0.521-0.802,52.635-80.448,113.698-80.448    c61.76,0,112,58.021,112,129.333C490.667,205.604,479.354,237.552,458.823,261.948z" fill="#555970" data-original="#000000"></path></g></g><g _ngcontent-serverApp-c47="" xmlns="http://www.w3.org/2000/svg"></g><g _ngcontent-serverApp-c47="" xmlns="http://www.w3.org/2000/svg"></g><g _ngcontent-serverApp-c47="" xmlns="http://www.w3.org/2000/svg"></g><g _ngcontent-serverApp-c47="" xmlns="http://www.w3.org/2000/svg"></g><g _ngcontent-serverApp-c47="" xmlns="http://www.w3.org/2000/svg"></g><g _ngcontent-serverApp-c47="" xmlns="http://www.w3.org/2000/svg"></g><g _ngcontent-serverApp-c47="" xmlns="http://www.w3.org/2000/svg"></g><g _ngcontent-serverApp-c47="" xmlns="http://www.w3.org/2000/svg"></g><g _ngcontent-serverApp-c47="" xmlns="http://www.w3.org/2000/svg"></g><g _ngcontent-serverApp-c47="" xmlns="http://www.w3.org/2000/svg"></g><g _ngcontent-serverApp-c47="" xmlns="http://www.w3.org/2000/svg"></g><g _ngcontent-serverApp-c47="" xmlns="http://www.w3.org/2000/svg"></g><g _ngcontent-serverApp-c47="" xmlns="http://www.w3.org/2000/svg"></g><g _ngcontent-serverApp-c47="" xmlns="http://www.w3.org/2000/svg"></g><g _ngcontent-serverApp-c47="" xmlns="http://www.w3.org/2000/svg"></g></g></svg>
+                              </a>
+                                 <a href="#" class="addtobasket">
+                                  <svg style="pointer-events:none" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns:svgjs="http://svgjs.com/svgjs" version="1.1" width="512" height="512" x="0" y="0" viewBox="0 0 321.2 321.2" xml:space="preserve" style="enable-background: new 0 0 512 512;"><title _ngcontent-serverApp-c47="">Səbət</title><g _ngcontent-serverApp-c47=""><g _ngcontent-serverApp-c47="" xmlns="http://www.w3.org/2000/svg"><g _ngcontent-serverApp-c47=""><path _ngcontent-serverApp-c47="" d="M306.4,313.2l-24-223.6c-0.4-3.6-3.6-6.4-7.2-6.4h-44.4V69.6c0-38.4-31.2-69.6-69.6-69.6c-38.4,0-69.6,31.2-69.6,69.6    v13.6H46c-3.6,0-6.8,2.8-7.2,6.4l-24,223.6c-0.4,2,0.4,4,1.6,5.6c1.2,1.6,3.2,2.4,5.2,2.4h278c2,0,4-0.8,5.2-2.4    C306,317.2,306.8,315.2,306.4,313.2z M223.6,123.6c3.6,0,6.4,2.8,6.4,6.4c0,3.6-2.8,6.4-6.4,6.4c-3.6,0-6.4-2.8-6.4-6.4    C217.2,126.4,220,123.6,223.6,123.6z M106,69.6c0-30.4,24.8-55.2,55.2-55.2c30.4,0,55.2,24.8,55.2,55.2v13.6H106V69.6z     M98.8,123.6c3.6,0,6.4,2.8,6.4,6.4c0,3.6-2.8,6.4-6.4,6.4c-3.6,0-6.4-2.8-6.4-6.4C92.4,126.4,95.2,123.6,98.8,123.6z M30,306.4    L52.4,97.2h39.2v13.2c-8,2.8-13.6,10.4-13.6,19.2c0,11.2,9.2,20.4,20.4,20.4c11.2,0,20.4-9.2,20.4-20.4c0-8.8-5.6-16.4-13.6-19.2    V97.2h110.4v13.2c-8,2.8-13.6,10.4-13.6,19.2c0,11.2,9.2,20.4,20.4,20.4c11.2,0,20.4-9.2,20.4-20.4c0-8.8-5.6-16.4-13.6-19.2V97.2    H270l22.4,209.2H30z" fill="#555970" data-original="#000000"></path></g></g><g _ngcontent-serverApp-c47="" xmlns="http://www.w3.org/2000/svg"></g><g _ngcontent-serverApp-c47="" xmlns="http://www.w3.org/2000/svg"></g><g _ngcontent-serverApp-c47="" xmlns="http://www.w3.org/2000/svg"></g><g _ngcontent-serverApp-c47="" xmlns="http://www.w3.org/2000/svg"></g><g _ngcontent-serverApp-c47="" xmlns="http://www.w3.org/2000/svg"></g><g _ngcontent-serverApp-c47="" xmlns="http://www.w3.org/2000/svg"></g><g _ngcontent-serverApp-c47="" xmlns="http://www.w3.org/2000/svg"></g><g _ngcontent-serverApp-c47="" xmlns="http://www.w3.org/2000/svg"></g><g _ngcontent-serverApp-c47="" xmlns="http://www.w3.org/2000/svg"></g><g _ngcontent-serverApp-c47="" xmlns="http://www.w3.org/2000/svg"></g><g _ngcontent-serverApp-c47="" xmlns="http://www.w3.org/2000/svg"></g><g _ngcontent-serverApp-c47="" xmlns="http://www.w3.org/2000/svg"></g><g _ngcontent-serverApp-c47="" xmlns="http://www.w3.org/2000/svg"></g><g _ngcontent-serverApp-c47="" xmlns="http://www.w3.org/2000/svg"></g><g _ngcontent-serverApp-c47="" xmlns="http://www.w3.org/2000/svg"></g></g></svg>
+                              </a>
+                               </div>
+                               <ul class="label-set">
+                                  <li class="circle label-blue">
+                                     <div class="label">
+                                        <p>Nağd alışlarda</p>
+                                        <h6>Endirim</h6>
+                                        <div class="price">
+                                           <p>
+                                              <span>200</span>AZN</p>
+                                        </div>
+                                     </div>
+                                  </li>
+                                  <li class="circle label-red">
+                                     <div class="label">
+                                        <p class="text-lg">24 ay</p>
+                                        <p class="text-sm">Faizsiz Kredit</p>
+                                     </div>
+                                  </li>
+                                  <li class="circle label-orange">
+                                     <div class="label">
+                                        <p class="text-lg">24 ay</p>
+                                        <p class="text-sm">Faizsiz Kredit</p>
+                                     </div>
+                                  </li>
+                               </ul>
+                               <a class="image-link" href="">
+                                  <img src="http://api.smartelectronics.az/uploads/products/ca7d48e3c7fd46ceb75efa1bab53f73c81975asaaa.jpg" alt="">
+                               </a>
+                               <a href="" class="product-title">Ecovacs N8 Pro White</a>
+                               <div class="color-and-credit">
+                                  <div class="color-div">
+                                     <div class="item-colors">
+                                        <div class="color active " style="background-color: rgb(236, 215, 99);"></div>
+                                        <div class="color " style="background-color: rgb(75, 0, 130);"></div>
+                                        <div class="color " style="background-color: rgb(0, 0, 0);"></div>
+                                        <div class="color " style="background-color: rgb(226, 219, 219);"></div>
+                                     </div>
+                                     <p class="product-price"><strong>4699</strong> <small>AZN</small></p>
+                                  </div>
+                                  <div class="credit-options">
+                                     <div class="months">
+                                        <ul class="d-flex">
+                                           <li class="credit-item">
+                                              <a class="p-0 m-0" id="750">6 ay</a>
+                                           </li>
+                                           <li class="credit-item selected-credit">
+                                              <a class="p-0 m-0" id="392">12 ay</a>
+                                           </li>
+                                        </ul>
+                                     </div>
+                                     <div class="prices-for-months">
+                                        <span><strong>392</strong> <small>AZN</small></span>
+                                     </div>
+                                  </div>
+                               </div>
+                               <a href="" class="buy buyoneclick">1 kliklə al</a>
+                               <a href="" class="buy buycredit">Kredit</a>
+                            </div>
+                         </div>
+                         <div class="col-xl-4 col-lg-6 col-md-6 col-sm-6 col-12">
+                            <div class="product-card">
+                               <div class="buttons-div">
+                                  <a href="#" class="addtocompare">
+                                     <svg style="pointer-events:none" version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" viewBox="0 0 512 512" xml:space="preserve" style="enable-background: new 0 0 512 512;"><title _ngcontent-serverApp-c47="">Müqayisə</title><style _ngcontent-serverApp-c47="" type="text/css"> .st0 { fill: none; stroke: #4D4D4D; stroke-width: 24; stroke-linecap: round; stroke-miterlimit: 10; } </style><line _ngcontent-serverApp-c47="" x1="104.1" y1="44.7" x2="104.1" y2="209.5" class="st0"></line><line _ngcontent-serverApp-c47="" x1="104.1" y1="259.9" x2="104.1" y2="426.6" class="st0"></line><line _ngcontent-serverApp-c47="" x1="178.7" y1="256" x2="29.5" y2="256" class="st0"></line><g _ngcontent-serverApp-c47=""><line _ngcontent-serverApp-c47="" x1="406.9" y1="318" x2="406.9" y2="461.4" class="st0"></line><line _ngcontent-serverApp-c47="" x1="482.5" y1="312.2" x2="333.3" y2="312.2" class="st0"></line><line _ngcontent-serverApp-c47="" x1="406.9" y1="44.7" x2="406.9" y2="256" class="st0"></line></g><g _ngcontent-serverApp-c47=""><line _ngcontent-serverApp-c47="" x1="256" y1="44.7" x2="256" y2="184.3" class="st0"></line><line _ngcontent-serverApp-c47="" x1="330.6" y1="184.3" x2="181.4" y2="184.3" class="st0"></line><line _ngcontent-serverApp-c47="" x1="256" y1="256" x2="256" y2="467.3" class="st0"></line></g></svg>
+                                 </a>
+                                 <a href="#" class="addtowish">
+                                  <svg style="pointer-events:none" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns:svgjs="http://svgjs.com/svgjs" version="1.1" width="512" height="512" x="0" y="0" viewBox="0 0 512 512" xml:space="preserve" style="enable-background: new 0 0 512 512;"><title _ngcontent-serverApp-c47="">Seçilmişlər</title><g _ngcontent-serverApp-c47=""><g _ngcontent-serverApp-c47="" xmlns="http://www.w3.org/2000/svg"><g _ngcontent-serverApp-c47=""><path _ngcontent-serverApp-c47="" d="M378.667,21.333c-56.792,0-103.698,52.75-122.667,77.646c-18.969-24.896-65.875-77.646-122.667-77.646    C59.813,21.333,0,88.927,0,172c0,45.323,17.99,87.562,49.479,116.469c0.458,0.792,1.021,1.521,1.677,2.177l197.313,196.906    c2.083,2.073,4.802,3.115,7.531,3.115s5.458-1.042,7.542-3.125L467.417,283.74l2.104-2.042c1.667-1.573,3.313-3.167,5.156-5.208    c0.771-0.76,1.406-1.615,1.896-2.542C499.438,245.948,512,209.833,512,172C512,88.927,452.188,21.333,378.667,21.333z     M458.823,261.948c-0.292,0.344-0.563,0.708-0.802,1.083c-1,1.146-2.094,2.156-3.177,3.188L255.99,464.927L68.667,277.979    c-0.604-1.188-1.448-2.271-2.479-3.177C37.677,249.906,21.333,212.437,21.333,172c0-71.313,50.24-129.333,112-129.333    c61.063,0,113.177,79.646,113.698,80.448c3.938,6.083,14,6.083,17.938,0c0.521-0.802,52.635-80.448,113.698-80.448    c61.76,0,112,58.021,112,129.333C490.667,205.604,479.354,237.552,458.823,261.948z" fill="#555970" data-original="#000000"></path></g></g><g _ngcontent-serverApp-c47="" xmlns="http://www.w3.org/2000/svg"></g><g _ngcontent-serverApp-c47="" xmlns="http://www.w3.org/2000/svg"></g><g _ngcontent-serverApp-c47="" xmlns="http://www.w3.org/2000/svg"></g><g _ngcontent-serverApp-c47="" xmlns="http://www.w3.org/2000/svg"></g><g _ngcontent-serverApp-c47="" xmlns="http://www.w3.org/2000/svg"></g><g _ngcontent-serverApp-c47="" xmlns="http://www.w3.org/2000/svg"></g><g _ngcontent-serverApp-c47="" xmlns="http://www.w3.org/2000/svg"></g><g _ngcontent-serverApp-c47="" xmlns="http://www.w3.org/2000/svg"></g><g _ngcontent-serverApp-c47="" xmlns="http://www.w3.org/2000/svg"></g><g _ngcontent-serverApp-c47="" xmlns="http://www.w3.org/2000/svg"></g><g _ngcontent-serverApp-c47="" xmlns="http://www.w3.org/2000/svg"></g><g _ngcontent-serverApp-c47="" xmlns="http://www.w3.org/2000/svg"></g><g _ngcontent-serverApp-c47="" xmlns="http://www.w3.org/2000/svg"></g><g _ngcontent-serverApp-c47="" xmlns="http://www.w3.org/2000/svg"></g><g _ngcontent-serverApp-c47="" xmlns="http://www.w3.org/2000/svg"></g></g></svg>
+                              </a>
+                                 <a href="#" class="addtobasket">
+                                  <svg style="pointer-events:none" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns:svgjs="http://svgjs.com/svgjs" version="1.1" width="512" height="512" x="0" y="0" viewBox="0 0 321.2 321.2" xml:space="preserve" style="enable-background: new 0 0 512 512;"><title _ngcontent-serverApp-c47="">Səbət</title><g _ngcontent-serverApp-c47=""><g _ngcontent-serverApp-c47="" xmlns="http://www.w3.org/2000/svg"><g _ngcontent-serverApp-c47=""><path _ngcontent-serverApp-c47="" d="M306.4,313.2l-24-223.6c-0.4-3.6-3.6-6.4-7.2-6.4h-44.4V69.6c0-38.4-31.2-69.6-69.6-69.6c-38.4,0-69.6,31.2-69.6,69.6    v13.6H46c-3.6,0-6.8,2.8-7.2,6.4l-24,223.6c-0.4,2,0.4,4,1.6,5.6c1.2,1.6,3.2,2.4,5.2,2.4h278c2,0,4-0.8,5.2-2.4    C306,317.2,306.8,315.2,306.4,313.2z M223.6,123.6c3.6,0,6.4,2.8,6.4,6.4c0,3.6-2.8,6.4-6.4,6.4c-3.6,0-6.4-2.8-6.4-6.4    C217.2,126.4,220,123.6,223.6,123.6z M106,69.6c0-30.4,24.8-55.2,55.2-55.2c30.4,0,55.2,24.8,55.2,55.2v13.6H106V69.6z     M98.8,123.6c3.6,0,6.4,2.8,6.4,6.4c0,3.6-2.8,6.4-6.4,6.4c-3.6,0-6.4-2.8-6.4-6.4C92.4,126.4,95.2,123.6,98.8,123.6z M30,306.4    L52.4,97.2h39.2v13.2c-8,2.8-13.6,10.4-13.6,19.2c0,11.2,9.2,20.4,20.4,20.4c11.2,0,20.4-9.2,20.4-20.4c0-8.8-5.6-16.4-13.6-19.2    V97.2h110.4v13.2c-8,2.8-13.6,10.4-13.6,19.2c0,11.2,9.2,20.4,20.4,20.4c11.2,0,20.4-9.2,20.4-20.4c0-8.8-5.6-16.4-13.6-19.2V97.2    H270l22.4,209.2H30z" fill="#555970" data-original="#000000"></path></g></g><g _ngcontent-serverApp-c47="" xmlns="http://www.w3.org/2000/svg"></g><g _ngcontent-serverApp-c47="" xmlns="http://www.w3.org/2000/svg"></g><g _ngcontent-serverApp-c47="" xmlns="http://www.w3.org/2000/svg"></g><g _ngcontent-serverApp-c47="" xmlns="http://www.w3.org/2000/svg"></g><g _ngcontent-serverApp-c47="" xmlns="http://www.w3.org/2000/svg"></g><g _ngcontent-serverApp-c47="" xmlns="http://www.w3.org/2000/svg"></g><g _ngcontent-serverApp-c47="" xmlns="http://www.w3.org/2000/svg"></g><g _ngcontent-serverApp-c47="" xmlns="http://www.w3.org/2000/svg"></g><g _ngcontent-serverApp-c47="" xmlns="http://www.w3.org/2000/svg"></g><g _ngcontent-serverApp-c47="" xmlns="http://www.w3.org/2000/svg"></g><g _ngcontent-serverApp-c47="" xmlns="http://www.w3.org/2000/svg"></g><g _ngcontent-serverApp-c47="" xmlns="http://www.w3.org/2000/svg"></g><g _ngcontent-serverApp-c47="" xmlns="http://www.w3.org/2000/svg"></g><g _ngcontent-serverApp-c47="" xmlns="http://www.w3.org/2000/svg"></g><g _ngcontent-serverApp-c47="" xmlns="http://www.w3.org/2000/svg"></g></g></svg>
+                              </a>
+                               </div>
+                               <ul class="label-set">
+                                  <li class="circle label-blue">
+                                     <div class="label">
+                                        <p>Nağd alışlarda</p>
+                                        <h6>Endirim</h6>
+                                        <div class="price">
+                                           <p>
+                                              <span>200</span>AZN</p>
+                                        </div>
+                                     </div>
+                                  </li>
+                                  <li class="circle label-red">
+                                     <div class="label">
+                                        <p class="text-lg">24 ay</p>
+                                        <p class="text-sm">Faizsiz Kredit</p>
+                                     </div>
+                                  </li>
+                                  <li class="circle label-orange">
+                                     <div class="label">
+                                        <p class="text-lg">24 ay</p>
+                                        <p class="text-sm">Faizsiz Kredit</p>
+                                     </div>
+                                  </li>
+                               </ul>
+                               <a class="image-link" href="">
+                                  <img src="http://api.smartelectronics.az/uploads/products/ca7d48e3c7fd46ceb75efa1bab53f73c81975asaaa.jpg" alt="">
+                               </a>
+                               <a href="" class="product-title">Ecovacs N8 Pro White</a>
+                               <div class="color-and-credit">
+                                  <div class="color-div">
+                                     <div class="item-colors">
+                                        <div class="color active " style="background-color: rgb(236, 215, 99);"></div>
+                                        <div class="color " style="background-color: rgb(75, 0, 130);"></div>
+                                        <div class="color " style="background-color: rgb(0, 0, 0);"></div>
+                                        <div class="color " style="background-color: rgb(226, 219, 219);"></div>
+                                     </div>
+                                     <p class="product-price"><strong>4699</strong> <small>AZN</small></p>
+                                  </div>
+                                  <div class="credit-options">
+                                     <div class="months">
+                                        <ul class="d-flex">
+                                           <li class="credit-item">
+                                              <a class="p-0 m-0" id="750">6 ay</a>
+                                           </li>
+                                           <li class="credit-item selected-credit">
+                                              <a class="p-0 m-0" id="392">12 ay</a>
+                                           </li>
+                                        </ul>
+                                     </div>
+                                     <div class="prices-for-months">
+                                        <span><strong>392</strong> <small>AZN</small></span>
+                                     </div>
+                                  </div>
+                               </div>
+                               <a href="" class="buy buyoneclick">1 kliklə al</a>
+                               <a href="" class="buy buycredit">Kredit</a>
+                            </div>
+                         </div>
+                         <div class="col-xl-4 col-lg-6 col-md-6 col-sm-6 col-12">
+                            <div class="product-card">
+                               <div class="buttons-div">
+                                  <a href="#" class="addtocompare">
+                                     <svg style="pointer-events:none" version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" viewBox="0 0 512 512" xml:space="preserve" style="enable-background: new 0 0 512 512;"><title _ngcontent-serverApp-c47="">Müqayisə</title><style _ngcontent-serverApp-c47="" type="text/css"> .st0 { fill: none; stroke: #4D4D4D; stroke-width: 24; stroke-linecap: round; stroke-miterlimit: 10; } </style><line _ngcontent-serverApp-c47="" x1="104.1" y1="44.7" x2="104.1" y2="209.5" class="st0"></line><line _ngcontent-serverApp-c47="" x1="104.1" y1="259.9" x2="104.1" y2="426.6" class="st0"></line><line _ngcontent-serverApp-c47="" x1="178.7" y1="256" x2="29.5" y2="256" class="st0"></line><g _ngcontent-serverApp-c47=""><line _ngcontent-serverApp-c47="" x1="406.9" y1="318" x2="406.9" y2="461.4" class="st0"></line><line _ngcontent-serverApp-c47="" x1="482.5" y1="312.2" x2="333.3" y2="312.2" class="st0"></line><line _ngcontent-serverApp-c47="" x1="406.9" y1="44.7" x2="406.9" y2="256" class="st0"></line></g><g _ngcontent-serverApp-c47=""><line _ngcontent-serverApp-c47="" x1="256" y1="44.7" x2="256" y2="184.3" class="st0"></line><line _ngcontent-serverApp-c47="" x1="330.6" y1="184.3" x2="181.4" y2="184.3" class="st0"></line><line _ngcontent-serverApp-c47="" x1="256" y1="256" x2="256" y2="467.3" class="st0"></line></g></svg>
+                                 </a>
+                                 <a href="#" class="addtowish">
+                                  <svg style="pointer-events:none" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns:svgjs="http://svgjs.com/svgjs" version="1.1" width="512" height="512" x="0" y="0" viewBox="0 0 512 512" xml:space="preserve" style="enable-background: new 0 0 512 512;"><title _ngcontent-serverApp-c47="">Seçilmişlər</title><g _ngcontent-serverApp-c47=""><g _ngcontent-serverApp-c47="" xmlns="http://www.w3.org/2000/svg"><g _ngcontent-serverApp-c47=""><path _ngcontent-serverApp-c47="" d="M378.667,21.333c-56.792,0-103.698,52.75-122.667,77.646c-18.969-24.896-65.875-77.646-122.667-77.646    C59.813,21.333,0,88.927,0,172c0,45.323,17.99,87.562,49.479,116.469c0.458,0.792,1.021,1.521,1.677,2.177l197.313,196.906    c2.083,2.073,4.802,3.115,7.531,3.115s5.458-1.042,7.542-3.125L467.417,283.74l2.104-2.042c1.667-1.573,3.313-3.167,5.156-5.208    c0.771-0.76,1.406-1.615,1.896-2.542C499.438,245.948,512,209.833,512,172C512,88.927,452.188,21.333,378.667,21.333z     M458.823,261.948c-0.292,0.344-0.563,0.708-0.802,1.083c-1,1.146-2.094,2.156-3.177,3.188L255.99,464.927L68.667,277.979    c-0.604-1.188-1.448-2.271-2.479-3.177C37.677,249.906,21.333,212.437,21.333,172c0-71.313,50.24-129.333,112-129.333    c61.063,0,113.177,79.646,113.698,80.448c3.938,6.083,14,6.083,17.938,0c0.521-0.802,52.635-80.448,113.698-80.448    c61.76,0,112,58.021,112,129.333C490.667,205.604,479.354,237.552,458.823,261.948z" fill="#555970" data-original="#000000"></path></g></g><g _ngcontent-serverApp-c47="" xmlns="http://www.w3.org/2000/svg"></g><g _ngcontent-serverApp-c47="" xmlns="http://www.w3.org/2000/svg"></g><g _ngcontent-serverApp-c47="" xmlns="http://www.w3.org/2000/svg"></g><g _ngcontent-serverApp-c47="" xmlns="http://www.w3.org/2000/svg"></g><g _ngcontent-serverApp-c47="" xmlns="http://www.w3.org/2000/svg"></g><g _ngcontent-serverApp-c47="" xmlns="http://www.w3.org/2000/svg"></g><g _ngcontent-serverApp-c47="" xmlns="http://www.w3.org/2000/svg"></g><g _ngcontent-serverApp-c47="" xmlns="http://www.w3.org/2000/svg"></g><g _ngcontent-serverApp-c47="" xmlns="http://www.w3.org/2000/svg"></g><g _ngcontent-serverApp-c47="" xmlns="http://www.w3.org/2000/svg"></g><g _ngcontent-serverApp-c47="" xmlns="http://www.w3.org/2000/svg"></g><g _ngcontent-serverApp-c47="" xmlns="http://www.w3.org/2000/svg"></g><g _ngcontent-serverApp-c47="" xmlns="http://www.w3.org/2000/svg"></g><g _ngcontent-serverApp-c47="" xmlns="http://www.w3.org/2000/svg"></g><g _ngcontent-serverApp-c47="" xmlns="http://www.w3.org/2000/svg"></g></g></svg>
+                              </a>
+                                 <a href="#" class="addtobasket">
+                                  <svg style="pointer-events:none" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns:svgjs="http://svgjs.com/svgjs" version="1.1" width="512" height="512" x="0" y="0" viewBox="0 0 321.2 321.2" xml:space="preserve" style="enable-background: new 0 0 512 512;"><title _ngcontent-serverApp-c47="">Səbət</title><g _ngcontent-serverApp-c47=""><g _ngcontent-serverApp-c47="" xmlns="http://www.w3.org/2000/svg"><g _ngcontent-serverApp-c47=""><path _ngcontent-serverApp-c47="" d="M306.4,313.2l-24-223.6c-0.4-3.6-3.6-6.4-7.2-6.4h-44.4V69.6c0-38.4-31.2-69.6-69.6-69.6c-38.4,0-69.6,31.2-69.6,69.6    v13.6H46c-3.6,0-6.8,2.8-7.2,6.4l-24,223.6c-0.4,2,0.4,4,1.6,5.6c1.2,1.6,3.2,2.4,5.2,2.4h278c2,0,4-0.8,5.2-2.4    C306,317.2,306.8,315.2,306.4,313.2z M223.6,123.6c3.6,0,6.4,2.8,6.4,6.4c0,3.6-2.8,6.4-6.4,6.4c-3.6,0-6.4-2.8-6.4-6.4    C217.2,126.4,220,123.6,223.6,123.6z M106,69.6c0-30.4,24.8-55.2,55.2-55.2c30.4,0,55.2,24.8,55.2,55.2v13.6H106V69.6z     M98.8,123.6c3.6,0,6.4,2.8,6.4,6.4c0,3.6-2.8,6.4-6.4,6.4c-3.6,0-6.4-2.8-6.4-6.4C92.4,126.4,95.2,123.6,98.8,123.6z M30,306.4    L52.4,97.2h39.2v13.2c-8,2.8-13.6,10.4-13.6,19.2c0,11.2,9.2,20.4,20.4,20.4c11.2,0,20.4-9.2,20.4-20.4c0-8.8-5.6-16.4-13.6-19.2    V97.2h110.4v13.2c-8,2.8-13.6,10.4-13.6,19.2c0,11.2,9.2,20.4,20.4,20.4c11.2,0,20.4-9.2,20.4-20.4c0-8.8-5.6-16.4-13.6-19.2V97.2    H270l22.4,209.2H30z" fill="#555970" data-original="#000000"></path></g></g><g _ngcontent-serverApp-c47="" xmlns="http://www.w3.org/2000/svg"></g><g _ngcontent-serverApp-c47="" xmlns="http://www.w3.org/2000/svg"></g><g _ngcontent-serverApp-c47="" xmlns="http://www.w3.org/2000/svg"></g><g _ngcontent-serverApp-c47="" xmlns="http://www.w3.org/2000/svg"></g><g _ngcontent-serverApp-c47="" xmlns="http://www.w3.org/2000/svg"></g><g _ngcontent-serverApp-c47="" xmlns="http://www.w3.org/2000/svg"></g><g _ngcontent-serverApp-c47="" xmlns="http://www.w3.org/2000/svg"></g><g _ngcontent-serverApp-c47="" xmlns="http://www.w3.org/2000/svg"></g><g _ngcontent-serverApp-c47="" xmlns="http://www.w3.org/2000/svg"></g><g _ngcontent-serverApp-c47="" xmlns="http://www.w3.org/2000/svg"></g><g _ngcontent-serverApp-c47="" xmlns="http://www.w3.org/2000/svg"></g><g _ngcontent-serverApp-c47="" xmlns="http://www.w3.org/2000/svg"></g><g _ngcontent-serverApp-c47="" xmlns="http://www.w3.org/2000/svg"></g><g _ngcontent-serverApp-c47="" xmlns="http://www.w3.org/2000/svg"></g><g _ngcontent-serverApp-c47="" xmlns="http://www.w3.org/2000/svg"></g></g></svg>
+                              </a>
+                               </div>
+                               <ul class="label-set">
+                                  <li class="circle label-blue">
+                                     <div class="label">
+                                        <p>Nağd alışlarda</p>
+                                        <h6>Endirim</h6>
+                                        <div class="price">
+                                           <p>
+                                              <span>200</span>AZN</p>
+                                        </div>
+                                     </div>
+                                  </li>
+                                  <li class="circle label-red">
+                                     <div class="label">
+                                        <p class="text-lg">24 ay</p>
+                                        <p class="text-sm">Faizsiz Kredit</p>
+                                     </div>
+                                  </li>
+                                  <li class="circle label-orange">
+                                     <div class="label">
+                                        <p class="text-lg">24 ay</p>
+                                        <p class="text-sm">Faizsiz Kredit</p>
+                                     </div>
+                                  </li>
+                               </ul>
+                               <a class="image-link" href="">
+                                  <img src="http://api.smartelectronics.az/uploads/products/ca7d48e3c7fd46ceb75efa1bab53f73c81975asaaa.jpg" alt="">
+                               </a>
+                               <a href="" class="product-title">Ecovacs N8 Pro White</a>
+                               <div class="color-and-credit">
+                                  <div class="color-div">
+                                     <div class="item-colors">
+                                        <div class="color active " style="background-color: rgb(236, 215, 99);"></div>
+                                        <div class="color " style="background-color: rgb(75, 0, 130);"></div>
+                                        <div class="color " style="background-color: rgb(0, 0, 0);"></div>
+                                        <div class="color " style="background-color: rgb(226, 219, 219);"></div>
+                                     </div>
+                                     <p class="product-price"><strong>4699</strong> <small>AZN</small></p>
+                                  </div>
+                                  <div class="credit-options">
+                                     <div class="months">
+                                        <ul class="d-flex">
+                                           <li class="credit-item">
+                                              <a class="p-0 m-0" id="750">6 ay</a>
+                                           </li>
+                                           <li class="credit-item selected-credit">
+                                              <a class="p-0 m-0" id="392">12 ay</a>
+                                           </li>
+                                        </ul>
+                                     </div>
+                                     <div class="prices-for-months">
+                                        <span><strong>392</strong> <small>AZN</small></span>
+                                     </div>
+                                  </div>
+                               </div>
+                               <a href="" class="buy buyoneclick">1 kliklə al</a>
+                               <a href="" class="buy buycredit">Kredit</a>
+                            </div>
+                         </div>
+                         <div class="col-xl-4 col-lg-6 col-md-6 col-sm-6 col-12">
+                            <div class="product-card">
+                               <div class="buttons-div">
+                                  <a href="#" class="addtocompare">
+                                     <svg style="pointer-events:none" version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" viewBox="0 0 512 512" xml:space="preserve" style="enable-background: new 0 0 512 512;"><title _ngcontent-serverApp-c47="">Müqayisə</title><style _ngcontent-serverApp-c47="" type="text/css"> .st0 { fill: none; stroke: #4D4D4D; stroke-width: 24; stroke-linecap: round; stroke-miterlimit: 10; } </style><line _ngcontent-serverApp-c47="" x1="104.1" y1="44.7" x2="104.1" y2="209.5" class="st0"></line><line _ngcontent-serverApp-c47="" x1="104.1" y1="259.9" x2="104.1" y2="426.6" class="st0"></line><line _ngcontent-serverApp-c47="" x1="178.7" y1="256" x2="29.5" y2="256" class="st0"></line><g _ngcontent-serverApp-c47=""><line _ngcontent-serverApp-c47="" x1="406.9" y1="318" x2="406.9" y2="461.4" class="st0"></line><line _ngcontent-serverApp-c47="" x1="482.5" y1="312.2" x2="333.3" y2="312.2" class="st0"></line><line _ngcontent-serverApp-c47="" x1="406.9" y1="44.7" x2="406.9" y2="256" class="st0"></line></g><g _ngcontent-serverApp-c47=""><line _ngcontent-serverApp-c47="" x1="256" y1="44.7" x2="256" y2="184.3" class="st0"></line><line _ngcontent-serverApp-c47="" x1="330.6" y1="184.3" x2="181.4" y2="184.3" class="st0"></line><line _ngcontent-serverApp-c47="" x1="256" y1="256" x2="256" y2="467.3" class="st0"></line></g></svg>
+                                 </a>
+                                 <a href="#" class="addtowish">
+                                  <svg style="pointer-events:none" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns:svgjs="http://svgjs.com/svgjs" version="1.1" width="512" height="512" x="0" y="0" viewBox="0 0 512 512" xml:space="preserve" style="enable-background: new 0 0 512 512;"><title _ngcontent-serverApp-c47="">Seçilmişlər</title><g _ngcontent-serverApp-c47=""><g _ngcontent-serverApp-c47="" xmlns="http://www.w3.org/2000/svg"><g _ngcontent-serverApp-c47=""><path _ngcontent-serverApp-c47="" d="M378.667,21.333c-56.792,0-103.698,52.75-122.667,77.646c-18.969-24.896-65.875-77.646-122.667-77.646    C59.813,21.333,0,88.927,0,172c0,45.323,17.99,87.562,49.479,116.469c0.458,0.792,1.021,1.521,1.677,2.177l197.313,196.906    c2.083,2.073,4.802,3.115,7.531,3.115s5.458-1.042,7.542-3.125L467.417,283.74l2.104-2.042c1.667-1.573,3.313-3.167,5.156-5.208    c0.771-0.76,1.406-1.615,1.896-2.542C499.438,245.948,512,209.833,512,172C512,88.927,452.188,21.333,378.667,21.333z     M458.823,261.948c-0.292,0.344-0.563,0.708-0.802,1.083c-1,1.146-2.094,2.156-3.177,3.188L255.99,464.927L68.667,277.979    c-0.604-1.188-1.448-2.271-2.479-3.177C37.677,249.906,21.333,212.437,21.333,172c0-71.313,50.24-129.333,112-129.333    c61.063,0,113.177,79.646,113.698,80.448c3.938,6.083,14,6.083,17.938,0c0.521-0.802,52.635-80.448,113.698-80.448    c61.76,0,112,58.021,112,129.333C490.667,205.604,479.354,237.552,458.823,261.948z" fill="#555970" data-original="#000000"></path></g></g><g _ngcontent-serverApp-c47="" xmlns="http://www.w3.org/2000/svg"></g><g _ngcontent-serverApp-c47="" xmlns="http://www.w3.org/2000/svg"></g><g _ngcontent-serverApp-c47="" xmlns="http://www.w3.org/2000/svg"></g><g _ngcontent-serverApp-c47="" xmlns="http://www.w3.org/2000/svg"></g><g _ngcontent-serverApp-c47="" xmlns="http://www.w3.org/2000/svg"></g><g _ngcontent-serverApp-c47="" xmlns="http://www.w3.org/2000/svg"></g><g _ngcontent-serverApp-c47="" xmlns="http://www.w3.org/2000/svg"></g><g _ngcontent-serverApp-c47="" xmlns="http://www.w3.org/2000/svg"></g><g _ngcontent-serverApp-c47="" xmlns="http://www.w3.org/2000/svg"></g><g _ngcontent-serverApp-c47="" xmlns="http://www.w3.org/2000/svg"></g><g _ngcontent-serverApp-c47="" xmlns="http://www.w3.org/2000/svg"></g><g _ngcontent-serverApp-c47="" xmlns="http://www.w3.org/2000/svg"></g><g _ngcontent-serverApp-c47="" xmlns="http://www.w3.org/2000/svg"></g><g _ngcontent-serverApp-c47="" xmlns="http://www.w3.org/2000/svg"></g><g _ngcontent-serverApp-c47="" xmlns="http://www.w3.org/2000/svg"></g></g></svg>
+                              </a>
+                                 <a href="#" class="addtobasket">
+                                  <svg style="pointer-events:none" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns:svgjs="http://svgjs.com/svgjs" version="1.1" width="512" height="512" x="0" y="0" viewBox="0 0 321.2 321.2" xml:space="preserve" style="enable-background: new 0 0 512 512;"><title _ngcontent-serverApp-c47="">Səbət</title><g _ngcontent-serverApp-c47=""><g _ngcontent-serverApp-c47="" xmlns="http://www.w3.org/2000/svg"><g _ngcontent-serverApp-c47=""><path _ngcontent-serverApp-c47="" d="M306.4,313.2l-24-223.6c-0.4-3.6-3.6-6.4-7.2-6.4h-44.4V69.6c0-38.4-31.2-69.6-69.6-69.6c-38.4,0-69.6,31.2-69.6,69.6    v13.6H46c-3.6,0-6.8,2.8-7.2,6.4l-24,223.6c-0.4,2,0.4,4,1.6,5.6c1.2,1.6,3.2,2.4,5.2,2.4h278c2,0,4-0.8,5.2-2.4    C306,317.2,306.8,315.2,306.4,313.2z M223.6,123.6c3.6,0,6.4,2.8,6.4,6.4c0,3.6-2.8,6.4-6.4,6.4c-3.6,0-6.4-2.8-6.4-6.4    C217.2,126.4,220,123.6,223.6,123.6z M106,69.6c0-30.4,24.8-55.2,55.2-55.2c30.4,0,55.2,24.8,55.2,55.2v13.6H106V69.6z     M98.8,123.6c3.6,0,6.4,2.8,6.4,6.4c0,3.6-2.8,6.4-6.4,6.4c-3.6,0-6.4-2.8-6.4-6.4C92.4,126.4,95.2,123.6,98.8,123.6z M30,306.4    L52.4,97.2h39.2v13.2c-8,2.8-13.6,10.4-13.6,19.2c0,11.2,9.2,20.4,20.4,20.4c11.2,0,20.4-9.2,20.4-20.4c0-8.8-5.6-16.4-13.6-19.2    V97.2h110.4v13.2c-8,2.8-13.6,10.4-13.6,19.2c0,11.2,9.2,20.4,20.4,20.4c11.2,0,20.4-9.2,20.4-20.4c0-8.8-5.6-16.4-13.6-19.2V97.2    H270l22.4,209.2H30z" fill="#555970" data-original="#000000"></path></g></g><g _ngcontent-serverApp-c47="" xmlns="http://www.w3.org/2000/svg"></g><g _ngcontent-serverApp-c47="" xmlns="http://www.w3.org/2000/svg"></g><g _ngcontent-serverApp-c47="" xmlns="http://www.w3.org/2000/svg"></g><g _ngcontent-serverApp-c47="" xmlns="http://www.w3.org/2000/svg"></g><g _ngcontent-serverApp-c47="" xmlns="http://www.w3.org/2000/svg"></g><g _ngcontent-serverApp-c47="" xmlns="http://www.w3.org/2000/svg"></g><g _ngcontent-serverApp-c47="" xmlns="http://www.w3.org/2000/svg"></g><g _ngcontent-serverApp-c47="" xmlns="http://www.w3.org/2000/svg"></g><g _ngcontent-serverApp-c47="" xmlns="http://www.w3.org/2000/svg"></g><g _ngcontent-serverApp-c47="" xmlns="http://www.w3.org/2000/svg"></g><g _ngcontent-serverApp-c47="" xmlns="http://www.w3.org/2000/svg"></g><g _ngcontent-serverApp-c47="" xmlns="http://www.w3.org/2000/svg"></g><g _ngcontent-serverApp-c47="" xmlns="http://www.w3.org/2000/svg"></g><g _ngcontent-serverApp-c47="" xmlns="http://www.w3.org/2000/svg"></g><g _ngcontent-serverApp-c47="" xmlns="http://www.w3.org/2000/svg"></g></g></svg>
+                              </a>
+                               </div>
+                               <ul class="label-set">
+                                  <li class="circle label-blue">
+                                     <div class="label">
+                                        <p>Nağd alışlarda</p>
+                                        <h6>Endirim</h6>
+                                        <div class="price">
+                                           <p>
+                                              <span>200</span>AZN</p>
+                                        </div>
+                                     </div>
+                                  </li>
+                                  <li class="circle label-red">
+                                     <div class="label">
+                                        <p class="text-lg">24 ay</p>
+                                        <p class="text-sm">Faizsiz Kredit</p>
+                                     </div>
+                                  </li>
+                                  <li class="circle label-orange">
+                                     <div class="label">
+                                        <p class="text-lg">24 ay</p>
+                                        <p class="text-sm">Faizsiz Kredit</p>
+                                     </div>
+                                  </li>
+                               </ul>
+                               <a class="image-link" href="">
+                                  <img src="http://api.smartelectronics.az/uploads/products/ca7d48e3c7fd46ceb75efa1bab53f73c81975asaaa.jpg" alt="">
+                               </a>
+                               <a href="" class="product-title">Ecovacs N8 Pro White</a>
+                               <div class="color-and-credit">
+                                  <div class="color-div">
+                                     <div class="item-colors">
+                                        <div class="color active " style="background-color: rgb(236, 215, 99);"></div>
+                                        <div class="color " style="background-color: rgb(75, 0, 130);"></div>
+                                        <div class="color " style="background-color: rgb(0, 0, 0);"></div>
+                                        <div class="color " style="background-color: rgb(226, 219, 219);"></div>
+                                     </div>
+                                     <p class="product-price"><strong>4699</strong> <small>AZN</small></p>
+                                  </div>
+                                  <div class="credit-options">
+                                     <div class="months">
+                                        <ul class="d-flex">
+                                           <li class="credit-item">
+                                              <a class="p-0 m-0" id="750">6 ay</a>
+                                           </li>
+                                           <li class="credit-item selected-credit">
+                                              <a class="p-0 m-0" id="392">12 ay</a>
+                                           </li>
+                                        </ul>
+                                     </div>
+                                     <div class="prices-for-months">
+                                        <span><strong>392</strong> <small>AZN</small></span>
+                                     </div>
+                                  </div>
+                               </div>
+                               <a href="" class="buy buyoneclick">1 kliklə al</a>
+                               <a href="" class="buy buycredit">Kredit</a>
+                            </div>
+                         </div>
+                         <div class="col-xl-4 col-lg-6 col-md-6 col-sm-6 col-12">
+                            <div class="product-card">
+                               <div class="buttons-div">
+                                  <a href="#" class="addtocompare">
+                                     <svg style="pointer-events:none" version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" viewBox="0 0 512 512" xml:space="preserve" style="enable-background: new 0 0 512 512;"><title _ngcontent-serverApp-c47="">Müqayisə</title><style _ngcontent-serverApp-c47="" type="text/css"> .st0 { fill: none; stroke: #4D4D4D; stroke-width: 24; stroke-linecap: round; stroke-miterlimit: 10; } </style><line _ngcontent-serverApp-c47="" x1="104.1" y1="44.7" x2="104.1" y2="209.5" class="st0"></line><line _ngcontent-serverApp-c47="" x1="104.1" y1="259.9" x2="104.1" y2="426.6" class="st0"></line><line _ngcontent-serverApp-c47="" x1="178.7" y1="256" x2="29.5" y2="256" class="st0"></line><g _ngcontent-serverApp-c47=""><line _ngcontent-serverApp-c47="" x1="406.9" y1="318" x2="406.9" y2="461.4" class="st0"></line><line _ngcontent-serverApp-c47="" x1="482.5" y1="312.2" x2="333.3" y2="312.2" class="st0"></line><line _ngcontent-serverApp-c47="" x1="406.9" y1="44.7" x2="406.9" y2="256" class="st0"></line></g><g _ngcontent-serverApp-c47=""><line _ngcontent-serverApp-c47="" x1="256" y1="44.7" x2="256" y2="184.3" class="st0"></line><line _ngcontent-serverApp-c47="" x1="330.6" y1="184.3" x2="181.4" y2="184.3" class="st0"></line><line _ngcontent-serverApp-c47="" x1="256" y1="256" x2="256" y2="467.3" class="st0"></line></g></svg>
+                                 </a>
+                                 <a href="#" class="addtowish">
+                                  <svg style="pointer-events:none" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns:svgjs="http://svgjs.com/svgjs" version="1.1" width="512" height="512" x="0" y="0" viewBox="0 0 512 512" xml:space="preserve" style="enable-background: new 0 0 512 512;"><title _ngcontent-serverApp-c47="">Seçilmişlər</title><g _ngcontent-serverApp-c47=""><g _ngcontent-serverApp-c47="" xmlns="http://www.w3.org/2000/svg"><g _ngcontent-serverApp-c47=""><path _ngcontent-serverApp-c47="" d="M378.667,21.333c-56.792,0-103.698,52.75-122.667,77.646c-18.969-24.896-65.875-77.646-122.667-77.646    C59.813,21.333,0,88.927,0,172c0,45.323,17.99,87.562,49.479,116.469c0.458,0.792,1.021,1.521,1.677,2.177l197.313,196.906    c2.083,2.073,4.802,3.115,7.531,3.115s5.458-1.042,7.542-3.125L467.417,283.74l2.104-2.042c1.667-1.573,3.313-3.167,5.156-5.208    c0.771-0.76,1.406-1.615,1.896-2.542C499.438,245.948,512,209.833,512,172C512,88.927,452.188,21.333,378.667,21.333z     M458.823,261.948c-0.292,0.344-0.563,0.708-0.802,1.083c-1,1.146-2.094,2.156-3.177,3.188L255.99,464.927L68.667,277.979    c-0.604-1.188-1.448-2.271-2.479-3.177C37.677,249.906,21.333,212.437,21.333,172c0-71.313,50.24-129.333,112-129.333    c61.063,0,113.177,79.646,113.698,80.448c3.938,6.083,14,6.083,17.938,0c0.521-0.802,52.635-80.448,113.698-80.448    c61.76,0,112,58.021,112,129.333C490.667,205.604,479.354,237.552,458.823,261.948z" fill="#555970" data-original="#000000"></path></g></g><g _ngcontent-serverApp-c47="" xmlns="http://www.w3.org/2000/svg"></g><g _ngcontent-serverApp-c47="" xmlns="http://www.w3.org/2000/svg"></g><g _ngcontent-serverApp-c47="" xmlns="http://www.w3.org/2000/svg"></g><g _ngcontent-serverApp-c47="" xmlns="http://www.w3.org/2000/svg"></g><g _ngcontent-serverApp-c47="" xmlns="http://www.w3.org/2000/svg"></g><g _ngcontent-serverApp-c47="" xmlns="http://www.w3.org/2000/svg"></g><g _ngcontent-serverApp-c47="" xmlns="http://www.w3.org/2000/svg"></g><g _ngcontent-serverApp-c47="" xmlns="http://www.w3.org/2000/svg"></g><g _ngcontent-serverApp-c47="" xmlns="http://www.w3.org/2000/svg"></g><g _ngcontent-serverApp-c47="" xmlns="http://www.w3.org/2000/svg"></g><g _ngcontent-serverApp-c47="" xmlns="http://www.w3.org/2000/svg"></g><g _ngcontent-serverApp-c47="" xmlns="http://www.w3.org/2000/svg"></g><g _ngcontent-serverApp-c47="" xmlns="http://www.w3.org/2000/svg"></g><g _ngcontent-serverApp-c47="" xmlns="http://www.w3.org/2000/svg"></g><g _ngcontent-serverApp-c47="" xmlns="http://www.w3.org/2000/svg"></g></g></svg>
+                              </a>
+                                 <a href="#" class="addtobasket">
+                                  <svg style="pointer-events:none" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns:svgjs="http://svgjs.com/svgjs" version="1.1" width="512" height="512" x="0" y="0" viewBox="0 0 321.2 321.2" xml:space="preserve" style="enable-background: new 0 0 512 512;"><title _ngcontent-serverApp-c47="">Səbət</title><g _ngcontent-serverApp-c47=""><g _ngcontent-serverApp-c47="" xmlns="http://www.w3.org/2000/svg"><g _ngcontent-serverApp-c47=""><path _ngcontent-serverApp-c47="" d="M306.4,313.2l-24-223.6c-0.4-3.6-3.6-6.4-7.2-6.4h-44.4V69.6c0-38.4-31.2-69.6-69.6-69.6c-38.4,0-69.6,31.2-69.6,69.6    v13.6H46c-3.6,0-6.8,2.8-7.2,6.4l-24,223.6c-0.4,2,0.4,4,1.6,5.6c1.2,1.6,3.2,2.4,5.2,2.4h278c2,0,4-0.8,5.2-2.4    C306,317.2,306.8,315.2,306.4,313.2z M223.6,123.6c3.6,0,6.4,2.8,6.4,6.4c0,3.6-2.8,6.4-6.4,6.4c-3.6,0-6.4-2.8-6.4-6.4    C217.2,126.4,220,123.6,223.6,123.6z M106,69.6c0-30.4,24.8-55.2,55.2-55.2c30.4,0,55.2,24.8,55.2,55.2v13.6H106V69.6z     M98.8,123.6c3.6,0,6.4,2.8,6.4,6.4c0,3.6-2.8,6.4-6.4,6.4c-3.6,0-6.4-2.8-6.4-6.4C92.4,126.4,95.2,123.6,98.8,123.6z M30,306.4    L52.4,97.2h39.2v13.2c-8,2.8-13.6,10.4-13.6,19.2c0,11.2,9.2,20.4,20.4,20.4c11.2,0,20.4-9.2,20.4-20.4c0-8.8-5.6-16.4-13.6-19.2    V97.2h110.4v13.2c-8,2.8-13.6,10.4-13.6,19.2c0,11.2,9.2,20.4,20.4,20.4c11.2,0,20.4-9.2,20.4-20.4c0-8.8-5.6-16.4-13.6-19.2V97.2    H270l22.4,209.2H30z" fill="#555970" data-original="#000000"></path></g></g><g _ngcontent-serverApp-c47="" xmlns="http://www.w3.org/2000/svg"></g><g _ngcontent-serverApp-c47="" xmlns="http://www.w3.org/2000/svg"></g><g _ngcontent-serverApp-c47="" xmlns="http://www.w3.org/2000/svg"></g><g _ngcontent-serverApp-c47="" xmlns="http://www.w3.org/2000/svg"></g><g _ngcontent-serverApp-c47="" xmlns="http://www.w3.org/2000/svg"></g><g _ngcontent-serverApp-c47="" xmlns="http://www.w3.org/2000/svg"></g><g _ngcontent-serverApp-c47="" xmlns="http://www.w3.org/2000/svg"></g><g _ngcontent-serverApp-c47="" xmlns="http://www.w3.org/2000/svg"></g><g _ngcontent-serverApp-c47="" xmlns="http://www.w3.org/2000/svg"></g><g _ngcontent-serverApp-c47="" xmlns="http://www.w3.org/2000/svg"></g><g _ngcontent-serverApp-c47="" xmlns="http://www.w3.org/2000/svg"></g><g _ngcontent-serverApp-c47="" xmlns="http://www.w3.org/2000/svg"></g><g _ngcontent-serverApp-c47="" xmlns="http://www.w3.org/2000/svg"></g><g _ngcontent-serverApp-c47="" xmlns="http://www.w3.org/2000/svg"></g><g _ngcontent-serverApp-c47="" xmlns="http://www.w3.org/2000/svg"></g></g></svg>
+                              </a>
+                               </div>
+                               <ul class="label-set">
+                                  <li class="circle label-blue">
+                                     <div class="label">
+                                        <p>Nağd alışlarda</p>
+                                        <h6>Endirim</h6>
+                                        <div class="price">
+                                           <p>
+                                              <span>200</span>AZN</p>
+                                        </div>
+                                     </div>
+                                  </li>
+                                  <li class="circle label-red">
+                                     <div class="label">
+                                        <p class="text-lg">24 ay</p>
+                                        <p class="text-sm">Faizsiz Kredit</p>
+                                     </div>
+                                  </li>
+                                  <li class="circle label-orange">
+                                     <div class="label">
+                                        <p class="text-lg">24 ay</p>
+                                        <p class="text-sm">Faizsiz Kredit</p>
+                                     </div>
+                                  </li>
+                               </ul>
+                               <a class="image-link" href="">
+                                  <img src="http://api.smartelectronics.az/uploads/products/ca7d48e3c7fd46ceb75efa1bab53f73c81975asaaa.jpg" alt="">
+                               </a>
+                               <a href="" class="product-title">Ecovacs N8 Pro White</a>
+                               <div class="color-and-credit">
+                                  <div class="color-div">
+                                     <div class="item-colors">
+                                        <div class="color active " style="background-color: rgb(236, 215, 99);"></div>
+                                        <div class="color " style="background-color: rgb(75, 0, 130);"></div>
+                                        <div class="color " style="background-color: rgb(0, 0, 0);"></div>
+                                        <div class="color " style="background-color: rgb(226, 219, 219);"></div>
+                                     </div>
+                                     <p class="product-price"><strong>4699</strong> <small>AZN</small></p>
+                                  </div>
+                                  <div class="credit-options">
+                                     <div class="months">
+                                        <ul class="d-flex">
+                                           <li class="credit-item">
+                                              <a class="p-0 m-0" id="750">6 ay</a>
+                                           </li>
+                                           <li class="credit-item selected-credit">
+                                              <a class="p-0 m-0" id="392">12 ay</a>
+                                           </li>
+                                        </ul>
+                                     </div>
+                                     <div class="prices-for-months">
+                                        <span><strong>392</strong> <small>AZN</small></span>
+                                     </div>
+                                  </div>
+                               </div>
+                               <a href="" class="buy buyoneclick">1 kliklə al</a>
+                               <a href="" class="buy buycredit">Kredit</a>
+                            </div>
+                         </div>
+                         <div class="col-xl-4 col-lg-6 col-md-6 col-sm-6 col-12">
+                            <div class="product-card">
+                               <div class="buttons-div">
+                                  <a href="#" class="addtocompare">
+                                     <svg style="pointer-events:none" version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" viewBox="0 0 512 512" xml:space="preserve" style="enable-background: new 0 0 512 512;"><title _ngcontent-serverApp-c47="">Müqayisə</title><style _ngcontent-serverApp-c47="" type="text/css"> .st0 { fill: none; stroke: #4D4D4D; stroke-width: 24; stroke-linecap: round; stroke-miterlimit: 10; } </style><line _ngcontent-serverApp-c47="" x1="104.1" y1="44.7" x2="104.1" y2="209.5" class="st0"></line><line _ngcontent-serverApp-c47="" x1="104.1" y1="259.9" x2="104.1" y2="426.6" class="st0"></line><line _ngcontent-serverApp-c47="" x1="178.7" y1="256" x2="29.5" y2="256" class="st0"></line><g _ngcontent-serverApp-c47=""><line _ngcontent-serverApp-c47="" x1="406.9" y1="318" x2="406.9" y2="461.4" class="st0"></line><line _ngcontent-serverApp-c47="" x1="482.5" y1="312.2" x2="333.3" y2="312.2" class="st0"></line><line _ngcontent-serverApp-c47="" x1="406.9" y1="44.7" x2="406.9" y2="256" class="st0"></line></g><g _ngcontent-serverApp-c47=""><line _ngcontent-serverApp-c47="" x1="256" y1="44.7" x2="256" y2="184.3" class="st0"></line><line _ngcontent-serverApp-c47="" x1="330.6" y1="184.3" x2="181.4" y2="184.3" class="st0"></line><line _ngcontent-serverApp-c47="" x1="256" y1="256" x2="256" y2="467.3" class="st0"></line></g></svg>
+                                 </a>
+                                 <a href="#" class="addtowish">
+                                  <svg style="pointer-events:none" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns:svgjs="http://svgjs.com/svgjs" version="1.1" width="512" height="512" x="0" y="0" viewBox="0 0 512 512" xml:space="preserve" style="enable-background: new 0 0 512 512;"><title _ngcontent-serverApp-c47="">Seçilmişlər</title><g _ngcontent-serverApp-c47=""><g _ngcontent-serverApp-c47="" xmlns="http://www.w3.org/2000/svg"><g _ngcontent-serverApp-c47=""><path _ngcontent-serverApp-c47="" d="M378.667,21.333c-56.792,0-103.698,52.75-122.667,77.646c-18.969-24.896-65.875-77.646-122.667-77.646    C59.813,21.333,0,88.927,0,172c0,45.323,17.99,87.562,49.479,116.469c0.458,0.792,1.021,1.521,1.677,2.177l197.313,196.906    c2.083,2.073,4.802,3.115,7.531,3.115s5.458-1.042,7.542-3.125L467.417,283.74l2.104-2.042c1.667-1.573,3.313-3.167,5.156-5.208    c0.771-0.76,1.406-1.615,1.896-2.542C499.438,245.948,512,209.833,512,172C512,88.927,452.188,21.333,378.667,21.333z     M458.823,261.948c-0.292,0.344-0.563,0.708-0.802,1.083c-1,1.146-2.094,2.156-3.177,3.188L255.99,464.927L68.667,277.979    c-0.604-1.188-1.448-2.271-2.479-3.177C37.677,249.906,21.333,212.437,21.333,172c0-71.313,50.24-129.333,112-129.333    c61.063,0,113.177,79.646,113.698,80.448c3.938,6.083,14,6.083,17.938,0c0.521-0.802,52.635-80.448,113.698-80.448    c61.76,0,112,58.021,112,129.333C490.667,205.604,479.354,237.552,458.823,261.948z" fill="#555970" data-original="#000000"></path></g></g><g _ngcontent-serverApp-c47="" xmlns="http://www.w3.org/2000/svg"></g><g _ngcontent-serverApp-c47="" xmlns="http://www.w3.org/2000/svg"></g><g _ngcontent-serverApp-c47="" xmlns="http://www.w3.org/2000/svg"></g><g _ngcontent-serverApp-c47="" xmlns="http://www.w3.org/2000/svg"></g><g _ngcontent-serverApp-c47="" xmlns="http://www.w3.org/2000/svg"></g><g _ngcontent-serverApp-c47="" xmlns="http://www.w3.org/2000/svg"></g><g _ngcontent-serverApp-c47="" xmlns="http://www.w3.org/2000/svg"></g><g _ngcontent-serverApp-c47="" xmlns="http://www.w3.org/2000/svg"></g><g _ngcontent-serverApp-c47="" xmlns="http://www.w3.org/2000/svg"></g><g _ngcontent-serverApp-c47="" xmlns="http://www.w3.org/2000/svg"></g><g _ngcontent-serverApp-c47="" xmlns="http://www.w3.org/2000/svg"></g><g _ngcontent-serverApp-c47="" xmlns="http://www.w3.org/2000/svg"></g><g _ngcontent-serverApp-c47="" xmlns="http://www.w3.org/2000/svg"></g><g _ngcontent-serverApp-c47="" xmlns="http://www.w3.org/2000/svg"></g><g _ngcontent-serverApp-c47="" xmlns="http://www.w3.org/2000/svg"></g></g></svg>
+                              </a>
+                                 <a href="#" class="addtobasket">
+                                  <svg style="pointer-events:none" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns:svgjs="http://svgjs.com/svgjs" version="1.1" width="512" height="512" x="0" y="0" viewBox="0 0 321.2 321.2" xml:space="preserve" style="enable-background: new 0 0 512 512;"><title _ngcontent-serverApp-c47="">Səbət</title><g _ngcontent-serverApp-c47=""><g _ngcontent-serverApp-c47="" xmlns="http://www.w3.org/2000/svg"><g _ngcontent-serverApp-c47=""><path _ngcontent-serverApp-c47="" d="M306.4,313.2l-24-223.6c-0.4-3.6-3.6-6.4-7.2-6.4h-44.4V69.6c0-38.4-31.2-69.6-69.6-69.6c-38.4,0-69.6,31.2-69.6,69.6    v13.6H46c-3.6,0-6.8,2.8-7.2,6.4l-24,223.6c-0.4,2,0.4,4,1.6,5.6c1.2,1.6,3.2,2.4,5.2,2.4h278c2,0,4-0.8,5.2-2.4    C306,317.2,306.8,315.2,306.4,313.2z M223.6,123.6c3.6,0,6.4,2.8,6.4,6.4c0,3.6-2.8,6.4-6.4,6.4c-3.6,0-6.4-2.8-6.4-6.4    C217.2,126.4,220,123.6,223.6,123.6z M106,69.6c0-30.4,24.8-55.2,55.2-55.2c30.4,0,55.2,24.8,55.2,55.2v13.6H106V69.6z     M98.8,123.6c3.6,0,6.4,2.8,6.4,6.4c0,3.6-2.8,6.4-6.4,6.4c-3.6,0-6.4-2.8-6.4-6.4C92.4,126.4,95.2,123.6,98.8,123.6z M30,306.4    L52.4,97.2h39.2v13.2c-8,2.8-13.6,10.4-13.6,19.2c0,11.2,9.2,20.4,20.4,20.4c11.2,0,20.4-9.2,20.4-20.4c0-8.8-5.6-16.4-13.6-19.2    V97.2h110.4v13.2c-8,2.8-13.6,10.4-13.6,19.2c0,11.2,9.2,20.4,20.4,20.4c11.2,0,20.4-9.2,20.4-20.4c0-8.8-5.6-16.4-13.6-19.2V97.2    H270l22.4,209.2H30z" fill="#555970" data-original="#000000"></path></g></g><g _ngcontent-serverApp-c47="" xmlns="http://www.w3.org/2000/svg"></g><g _ngcontent-serverApp-c47="" xmlns="http://www.w3.org/2000/svg"></g><g _ngcontent-serverApp-c47="" xmlns="http://www.w3.org/2000/svg"></g><g _ngcontent-serverApp-c47="" xmlns="http://www.w3.org/2000/svg"></g><g _ngcontent-serverApp-c47="" xmlns="http://www.w3.org/2000/svg"></g><g _ngcontent-serverApp-c47="" xmlns="http://www.w3.org/2000/svg"></g><g _ngcontent-serverApp-c47="" xmlns="http://www.w3.org/2000/svg"></g><g _ngcontent-serverApp-c47="" xmlns="http://www.w3.org/2000/svg"></g><g _ngcontent-serverApp-c47="" xmlns="http://www.w3.org/2000/svg"></g><g _ngcontent-serverApp-c47="" xmlns="http://www.w3.org/2000/svg"></g><g _ngcontent-serverApp-c47="" xmlns="http://www.w3.org/2000/svg"></g><g _ngcontent-serverApp-c47="" xmlns="http://www.w3.org/2000/svg"></g><g _ngcontent-serverApp-c47="" xmlns="http://www.w3.org/2000/svg"></g><g _ngcontent-serverApp-c47="" xmlns="http://www.w3.org/2000/svg"></g><g _ngcontent-serverApp-c47="" xmlns="http://www.w3.org/2000/svg"></g></g></svg>
+                              </a>
+                               </div>
+                               <ul class="label-set">
+                                  <li class="circle label-blue">
+                                     <div class="label">
+                                        <p>Nağd alışlarda</p>
+                                        <h6>Endirim</h6>
+                                        <div class="price">
+                                           <p>
+                                              <span>200</span>AZN</p>
+                                        </div>
+                                     </div>
+                                  </li>
+                                  <li class="circle label-red">
+                                     <div class="label">
+                                        <p class="text-lg">24 ay</p>
+                                        <p class="text-sm">Faizsiz Kredit</p>
+                                     </div>
+                                  </li>
+                                  <li class="circle label-orange">
+                                     <div class="label">
+                                        <p class="text-lg">24 ay</p>
+                                        <p class="text-sm">Faizsiz Kredit</p>
+                                     </div>
+                                  </li>
+                               </ul>
+                               <a class="image-link" href="">
+                                  <img src="http://api.smartelectronics.az/uploads/products/ca7d48e3c7fd46ceb75efa1bab53f73c81975asaaa.jpg" alt="">
+                               </a>
+                               <a href="" class="product-title">Ecovacs N8 Pro White</a>
+                               <div class="color-and-credit">
+                                  <div class="color-div">
+                                     <div class="item-colors">
+                                        <div class="color active " style="background-color: rgb(236, 215, 99);"></div>
+                                        <div class="color " style="background-color: rgb(75, 0, 130);"></div>
+                                        <div class="color " style="background-color: rgb(0, 0, 0);"></div>
+                                        <div class="color " style="background-color: rgb(226, 219, 219);"></div>
+                                     </div>
+                                     <p class="product-price"><strong>4699</strong> <small>AZN</small></p>
+                                  </div>
+                                  <div class="credit-options">
+                                     <div class="months">
+                                        <ul class="d-flex">
+                                           <li class="credit-item">
+                                              <a class="p-0 m-0" id="750">6 ay</a>
+                                           </li>
+                                           <li class="credit-item selected-credit">
+                                              <a class="p-0 m-0" id="392">12 ay</a>
+                                           </li>
+                                        </ul>
+                                     </div>
+                                     <div class="prices-for-months">
+                                        <span><strong>392</strong> <small>AZN</small></span>
+                                     </div>
+                                  </div>
+                               </div>
+                               <a href="" class="buy buyoneclick">1 kliklə al</a>
+                               <a href="" class="buy buycredit">Kredit</a>
+                            </div>
+                         </div>
+                         <div class="col-xl-4 col-lg-6 col-md-6 col-sm-6 col-12">
+                            <div class="product-card">
+                               <div class="buttons-div">
+                                  <a href="#" class="addtocompare">
+                                     <svg style="pointer-events:none" version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" viewBox="0 0 512 512" xml:space="preserve" style="enable-background: new 0 0 512 512;"><title _ngcontent-serverApp-c47="">Müqayisə</title><style _ngcontent-serverApp-c47="" type="text/css"> .st0 { fill: none; stroke: #4D4D4D; stroke-width: 24; stroke-linecap: round; stroke-miterlimit: 10; } </style><line _ngcontent-serverApp-c47="" x1="104.1" y1="44.7" x2="104.1" y2="209.5" class="st0"></line><line _ngcontent-serverApp-c47="" x1="104.1" y1="259.9" x2="104.1" y2="426.6" class="st0"></line><line _ngcontent-serverApp-c47="" x1="178.7" y1="256" x2="29.5" y2="256" class="st0"></line><g _ngcontent-serverApp-c47=""><line _ngcontent-serverApp-c47="" x1="406.9" y1="318" x2="406.9" y2="461.4" class="st0"></line><line _ngcontent-serverApp-c47="" x1="482.5" y1="312.2" x2="333.3" y2="312.2" class="st0"></line><line _ngcontent-serverApp-c47="" x1="406.9" y1="44.7" x2="406.9" y2="256" class="st0"></line></g><g _ngcontent-serverApp-c47=""><line _ngcontent-serverApp-c47="" x1="256" y1="44.7" x2="256" y2="184.3" class="st0"></line><line _ngcontent-serverApp-c47="" x1="330.6" y1="184.3" x2="181.4" y2="184.3" class="st0"></line><line _ngcontent-serverApp-c47="" x1="256" y1="256" x2="256" y2="467.3" class="st0"></line></g></svg>
+                                 </a>
+                                 <a href="#" class="addtowish">
+                                  <svg style="pointer-events:none" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns:svgjs="http://svgjs.com/svgjs" version="1.1" width="512" height="512" x="0" y="0" viewBox="0 0 512 512" xml:space="preserve" style="enable-background: new 0 0 512 512;"><title _ngcontent-serverApp-c47="">Seçilmişlər</title><g _ngcontent-serverApp-c47=""><g _ngcontent-serverApp-c47="" xmlns="http://www.w3.org/2000/svg"><g _ngcontent-serverApp-c47=""><path _ngcontent-serverApp-c47="" d="M378.667,21.333c-56.792,0-103.698,52.75-122.667,77.646c-18.969-24.896-65.875-77.646-122.667-77.646    C59.813,21.333,0,88.927,0,172c0,45.323,17.99,87.562,49.479,116.469c0.458,0.792,1.021,1.521,1.677,2.177l197.313,196.906    c2.083,2.073,4.802,3.115,7.531,3.115s5.458-1.042,7.542-3.125L467.417,283.74l2.104-2.042c1.667-1.573,3.313-3.167,5.156-5.208    c0.771-0.76,1.406-1.615,1.896-2.542C499.438,245.948,512,209.833,512,172C512,88.927,452.188,21.333,378.667,21.333z     M458.823,261.948c-0.292,0.344-0.563,0.708-0.802,1.083c-1,1.146-2.094,2.156-3.177,3.188L255.99,464.927L68.667,277.979    c-0.604-1.188-1.448-2.271-2.479-3.177C37.677,249.906,21.333,212.437,21.333,172c0-71.313,50.24-129.333,112-129.333    c61.063,0,113.177,79.646,113.698,80.448c3.938,6.083,14,6.083,17.938,0c0.521-0.802,52.635-80.448,113.698-80.448    c61.76,0,112,58.021,112,129.333C490.667,205.604,479.354,237.552,458.823,261.948z" fill="#555970" data-original="#000000"></path></g></g><g _ngcontent-serverApp-c47="" xmlns="http://www.w3.org/2000/svg"></g><g _ngcontent-serverApp-c47="" xmlns="http://www.w3.org/2000/svg"></g><g _ngcontent-serverApp-c47="" xmlns="http://www.w3.org/2000/svg"></g><g _ngcontent-serverApp-c47="" xmlns="http://www.w3.org/2000/svg"></g><g _ngcontent-serverApp-c47="" xmlns="http://www.w3.org/2000/svg"></g><g _ngcontent-serverApp-c47="" xmlns="http://www.w3.org/2000/svg"></g><g _ngcontent-serverApp-c47="" xmlns="http://www.w3.org/2000/svg"></g><g _ngcontent-serverApp-c47="" xmlns="http://www.w3.org/2000/svg"></g><g _ngcontent-serverApp-c47="" xmlns="http://www.w3.org/2000/svg"></g><g _ngcontent-serverApp-c47="" xmlns="http://www.w3.org/2000/svg"></g><g _ngcontent-serverApp-c47="" xmlns="http://www.w3.org/2000/svg"></g><g _ngcontent-serverApp-c47="" xmlns="http://www.w3.org/2000/svg"></g><g _ngcontent-serverApp-c47="" xmlns="http://www.w3.org/2000/svg"></g><g _ngcontent-serverApp-c47="" xmlns="http://www.w3.org/2000/svg"></g><g _ngcontent-serverApp-c47="" xmlns="http://www.w3.org/2000/svg"></g></g></svg>
+                              </a>
+                                 <a href="#" class="addtobasket">
+                                  <svg style="pointer-events:none" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns:svgjs="http://svgjs.com/svgjs" version="1.1" width="512" height="512" x="0" y="0" viewBox="0 0 321.2 321.2" xml:space="preserve" style="enable-background: new 0 0 512 512;"><title _ngcontent-serverApp-c47="">Səbət</title><g _ngcontent-serverApp-c47=""><g _ngcontent-serverApp-c47="" xmlns="http://www.w3.org/2000/svg"><g _ngcontent-serverApp-c47=""><path _ngcontent-serverApp-c47="" d="M306.4,313.2l-24-223.6c-0.4-3.6-3.6-6.4-7.2-6.4h-44.4V69.6c0-38.4-31.2-69.6-69.6-69.6c-38.4,0-69.6,31.2-69.6,69.6    v13.6H46c-3.6,0-6.8,2.8-7.2,6.4l-24,223.6c-0.4,2,0.4,4,1.6,5.6c1.2,1.6,3.2,2.4,5.2,2.4h278c2,0,4-0.8,5.2-2.4    C306,317.2,306.8,315.2,306.4,313.2z M223.6,123.6c3.6,0,6.4,2.8,6.4,6.4c0,3.6-2.8,6.4-6.4,6.4c-3.6,0-6.4-2.8-6.4-6.4    C217.2,126.4,220,123.6,223.6,123.6z M106,69.6c0-30.4,24.8-55.2,55.2-55.2c30.4,0,55.2,24.8,55.2,55.2v13.6H106V69.6z     M98.8,123.6c3.6,0,6.4,2.8,6.4,6.4c0,3.6-2.8,6.4-6.4,6.4c-3.6,0-6.4-2.8-6.4-6.4C92.4,126.4,95.2,123.6,98.8,123.6z M30,306.4    L52.4,97.2h39.2v13.2c-8,2.8-13.6,10.4-13.6,19.2c0,11.2,9.2,20.4,20.4,20.4c11.2,0,20.4-9.2,20.4-20.4c0-8.8-5.6-16.4-13.6-19.2    V97.2h110.4v13.2c-8,2.8-13.6,10.4-13.6,19.2c0,11.2,9.2,20.4,20.4,20.4c11.2,0,20.4-9.2,20.4-20.4c0-8.8-5.6-16.4-13.6-19.2V97.2    H270l22.4,209.2H30z" fill="#555970" data-original="#000000"></path></g></g><g _ngcontent-serverApp-c47="" xmlns="http://www.w3.org/2000/svg"></g><g _ngcontent-serverApp-c47="" xmlns="http://www.w3.org/2000/svg"></g><g _ngcontent-serverApp-c47="" xmlns="http://www.w3.org/2000/svg"></g><g _ngcontent-serverApp-c47="" xmlns="http://www.w3.org/2000/svg"></g><g _ngcontent-serverApp-c47="" xmlns="http://www.w3.org/2000/svg"></g><g _ngcontent-serverApp-c47="" xmlns="http://www.w3.org/2000/svg"></g><g _ngcontent-serverApp-c47="" xmlns="http://www.w3.org/2000/svg"></g><g _ngcontent-serverApp-c47="" xmlns="http://www.w3.org/2000/svg"></g><g _ngcontent-serverApp-c47="" xmlns="http://www.w3.org/2000/svg"></g><g _ngcontent-serverApp-c47="" xmlns="http://www.w3.org/2000/svg"></g><g _ngcontent-serverApp-c47="" xmlns="http://www.w3.org/2000/svg"></g><g _ngcontent-serverApp-c47="" xmlns="http://www.w3.org/2000/svg"></g><g _ngcontent-serverApp-c47="" xmlns="http://www.w3.org/2000/svg"></g><g _ngcontent-serverApp-c47="" xmlns="http://www.w3.org/2000/svg"></g><g _ngcontent-serverApp-c47="" xmlns="http://www.w3.org/2000/svg"></g></g></svg>
+                              </a>
+                               </div>
+                               <ul class="label-set">
+                                  <li class="circle label-blue">
+                                     <div class="label">
+                                        <p>Nağd alışlarda</p>
+                                        <h6>Endirim</h6>
+                                        <div class="price">
+                                           <p>
+                                              <span>200</span>AZN</p>
+                                        </div>
+                                     </div>
+                                  </li>
+                                  <li class="circle label-red">
+                                     <div class="label">
+                                        <p class="text-lg">24 ay</p>
+                                        <p class="text-sm">Faizsiz Kredit</p>
+                                     </div>
+                                  </li>
+                                  <li class="circle label-orange">
+                                     <div class="label">
+                                        <p class="text-lg">24 ay</p>
+                                        <p class="text-sm">Faizsiz Kredit</p>
+                                     </div>
+                                  </li>
+                               </ul>
+                               <a class="image-link" href="">
+                                  <img src="http://api.smartelectronics.az/uploads/products/ca7d48e3c7fd46ceb75efa1bab53f73c81975asaaa.jpg" alt="">
+                               </a>
+                               <a href="" class="product-title">Ecovacs N8 Pro White</a>
+                               <div class="color-and-credit">
+                                  <div class="color-div">
+                                     <div class="item-colors">
+                                        <div class="color active " style="background-color: rgb(236, 215, 99);"></div>
+                                        <div class="color " style="background-color: rgb(75, 0, 130);"></div>
+                                        <div class="color " style="background-color: rgb(0, 0, 0);"></div>
+                                        <div class="color " style="background-color: rgb(226, 219, 219);"></div>
+                                     </div>
+                                     <p class="product-price"><strong>4699</strong> <small>AZN</small></p>
+                                  </div>
+                                  <div class="credit-options">
+                                     <div class="months">
+                                        <ul class="d-flex">
+                                           <li class="credit-item">
+                                              <a class="p-0 m-0" id="750">6 ay</a>
+                                           </li>
+                                           <li class="credit-item selected-credit">
+                                              <a class="p-0 m-0" id="392">12 ay</a>
+                                           </li>
+                                        </ul>
+                                     </div>
+                                     <div class="prices-for-months">
+                                        <span><strong>392</strong> <small>AZN</small></span>
+                                     </div>
+                                  </div>
+                               </div>
+                               <a href="" class="buy buyoneclick">1 kliklə al</a>
+                               <a href="" class="buy buycredit">Kredit</a>
+                            </div>
+                         </div>
+                    </div>
+                    <div class="pagination-center">
+                     <div class="pagination">
+                         <a href="#">&laquo;</a>
+                         <a href="#">1</a>
+                         <a href="#" class="active">2</a>
+                         <a href="#">3</a>
+                         <a href="#">4</a>
+                         <a href="#">5</a>
+                         <a href="#">6</a>
+                         <a href="#">&raquo;</a>
+                     </div>
+                 </div>
+                </div>
+            </div>
+        </div>
+    </main>
+

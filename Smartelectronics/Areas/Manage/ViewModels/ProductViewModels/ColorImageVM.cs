@@ -4,6 +4,6 @@
     {
         public int ColorId { get; set; }
         public string? Name { get; set; }
-        public IEnumerable<IFormFile>? Files { get; set; }
+        public IEnumerable<IFormFile> Files { get; set; }
     }
 }

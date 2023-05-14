@@ -10,5 +10,7 @@ namespace Smartelectronics.ViewModels.CompareViewModels
         public double Price { get; set; }
         public double Star { get; set; }
         public Category? Category { get; set; }
+        public Brand? Brand { get; set; }
+        public IEnumerable<ProductCategorySpecification>? ProductCategorySpecifications { get; set; }
     }
 }

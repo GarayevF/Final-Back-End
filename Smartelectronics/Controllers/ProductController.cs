@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Smartelectronics.DataAccessLayer;
 using Smartelectronics.Models;
+using Smartelectronics.ViewModels;
 using Smartelectronics.ViewModels.ProductViewModels;
 
 namespace Smartelectronics.Controllers
@@ -19,7 +20,37 @@ namespace Smartelectronics.Controllers
         }
         public async Task<IActionResult> Index()
         {
-            return View();
+            int pageIndex = 1;
+
+            IQueryable<Product> products = _context.Products.Where(c => c.IsDeleted == false)
+                .Include(p => p.LoanTerms.Where(p => p.IsDeleted == false))
+                .ThenInclude(lt => lt.LoanTermLoanRanges).ThenInclude(ltlr => ltlr.LoanRange)
+                .Include(p => p.LoanTerms).ThenInclude(lt => lt.LoanCompany).Where(p => p.IsDeleted == false)
+                .Include(p => p.ProductLoanRanges.Where(pl => pl.IsDeleted == false)).ThenInclude(plr => plr.LoanRange)
+                .Include(p => p.ProductColors.Where(a => a.IsDeleted == false)).ThenInclude(pc => pc.Color);
+
+            IEnumerable<Category> categories = await _context.Categories.Where(c => c.IsDeleted == false && c.IsMain)
+                .Include(c => c.Children.Where(ct => ct.IsDeleted == false && ct.IsMain == false))
+                .Include(c => c.CategoryBrands.Where(cb => cb.IsDeleted == false))
+                .ThenInclude(cb => cb.Products.Where(cb => cb.IsDeleted == false)).ToListAsync();
+
+            Product product = _context.Products.OrderBy(p => (p.DiscountedPrice > 0 ? p.DiscountedPrice : p.Price)).First();
+            double minValue = (product.DiscountedPrice > 0 ? product.DiscountedPrice : product.Price);
+
+            product = _context.Products.OrderByDescending(p => (p.DiscountedPrice > 0 ? p.DiscountedPrice : p.Price)).First();
+            double maxValue = (product.DiscountedPrice > 0 ? product.DiscountedPrice : product.Price);
+
+            ProductVM productVM = new ProductVM
+            {
+                Products = PageNatedList<Product>.Create(products, pageIndex, 12, 7),
+                Categories = categories,
+                AllProducts = products/*.ToList()*/,
+                SortSelect = 0,
+                MinimumPrice = minValue,
+                MaximumPrice = maxValue
+            };
+
+            return View(productVM);
         }
 
         public async Task<IActionResult> Detail(int? id)

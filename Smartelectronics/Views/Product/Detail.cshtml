@@ -116,23 +116,28 @@
                             </ul>
                             <div class="image-link-slider">
                                 <div class="owl-carousel product-detail-slider">
-                                    <div class="product-slider-image">
-                                        <img src="https://api.smartelectronics.az/uploads/products/d36b3c6d48e44ba48096c62001ebc83f%C3%BCe6fg4%C3%BCe6f4%C3%BC6.jpg" alt="">
-                                    </div>
-                                    <div class="product-slider-image">
-                                        <img src="https://api.smartelectronics.az/uploads/products/d36b3c6d48e44ba48096c62001ebc83f%C3%BCe6fg4%C3%BCe6f4%C3%BC6.jpg" alt="">
-                                    </div>
+                                    @foreach(ProductColor productColor in Model.Product.ProductColors.Where(c => c.ColorId == Model.Product.ProductColors.First().ColorId))
+                                    {
+                                        <div class="product-slider-image">
+                                            <img src="@productColor.Image" alt="">
+                                        </div>
+                                    }
+                                    
                                 </div>
 
                             </div>
                             <div class="color-and-credit">
-                                <h3 class="product-price">4699<small>AZN</small></h3>
+                                <h3 class="product-price">@Model.Product.Price<small>AZN</small></h3>
                                 <div class="color-div">
                                     <div class="item-colors">
-                                        <div class="color active " style="background-color: rgb(236, 215, 99);"></div>
-                                        <div class="color " style="background-color: rgb(75, 0, 130);"></div>
-                                        <div class="color " style="background-color: rgb(0, 0, 0);"></div>
-                                        <div class="color " style="background-color: rgb(226, 219, 219);"></div>
+                                        @{
+                                            bool checkColor = true;
+                                            @foreach (ProductColor productColor in Model.Product.ProductColors)
+                                            {
+                                                <div class="color @(checkColor ? "active" : "") " style="background-color: @productColor.Color.Code;"></div>
+                                                checkColor = false;
+                                            }
+                                        }
                                     </div>
                                 </div>
                             </div>
