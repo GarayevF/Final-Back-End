@@ -29,6 +29,7 @@ namespace Smartelectronics.Areas.Manage.Controllers
         public async Task<IActionResult> Create()
         {
             ViewBag.MainCategories = await _context.Categories.Where(c => c.IsDeleted == false && c.IsMain == false).ToListAsync();
+            ViewBag.Brands = await _context.Brands.Where(c => c.IsDeleted == false).ToListAsync();
             ViewBag.Specifications = await _context.Specifications.Where(a => a.IsDeleted == false).ToListAsync();
             ViewBag.Colors = await _context.Colors.Where(c => c.IsDeleted == false).ToListAsync();
             ViewBag.LaonRanges = await _context.LoanRanges.Where(c => c.IsDeleted == false).ToListAsync();
@@ -38,23 +39,11 @@ namespace Smartelectronics.Areas.Manage.Controllers
         }
 
         [HttpPost]
-        public IActionResult GetMesssage([FromBody] List<UserModel> listofusers)
-        {
-            List<UserModel> test = listofusers;
-            return View();
-        }
-
-        public class UserModel
-        {
-            public int Id { get; set; }
-            public string Name { get; set; }
-        }
-
-        [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create(ProductVM productVM)
         {
             ViewBag.MainCategories = await _context.Categories.Where(c => c.IsDeleted == false && c.IsMain == false).ToListAsync();
+            ViewBag.Brands = await _context.Brands.Where(c => c.IsDeleted == false).ToListAsync();
             ViewBag.ProductCategorySpecifications = await _context.ProductCategorySpecifications.Where(a => a.IsDeleted == false).ToListAsync();
             ViewBag.Colors = await _context.Colors.Where(c => c.IsDeleted == false).ToListAsync();
             ViewBag.LaonRanges = await _context.LoanRanges.Where(c => c.IsDeleted == false).ToListAsync();
@@ -62,10 +51,29 @@ namespace Smartelectronics.Areas.Manage.Controllers
 
             if (!ModelState.IsValid)
             {
-                ViewBag.ErrorMessages = ModelState.Values
-                .SelectMany(v => v.Errors)
-                .Select(e => e.ErrorMessage)
-                .ToList();
+                List<ModelStateError> modelErrors = new List<ModelStateError>();
+
+                foreach (var key in ModelState.Keys)
+                {
+                    if (ModelState[key]?.Errors.Count > 0)
+                    {
+                        foreach (var error in ModelState[key].Errors)
+                        {
+                            var errorMessage = error.ErrorMessage;
+                            var inputId = key;
+
+                            ModelStateError modelError = new ModelStateError
+                            {
+                                InputId = inputId,
+                                ErrorMessage = errorMessage
+                            };
+
+                            modelErrors.Add(modelError);
+                        }
+                    }
+                }
+
+                ViewBag.ModelErrors = modelErrors;
                 return View(productVM);
             }
 
@@ -80,6 +88,38 @@ namespace Smartelectronics.Areas.Manage.Controllers
                 ModelState.AddModelError("CategoryId", "Duzgun category secin");
                 return View(productVM);
             }
+
+            if (productVM.BrandId == null)
+            {
+                ModelState.AddModelError("BrandId", "Brand Mutleq secilmelidir");
+                return View(productVM);
+            }
+
+            if (!await _context.Brands.AnyAsync(c => c.IsDeleted == false && c.Id == productVM.BrandId))
+            {
+                ModelState.AddModelError("BrandId", "Duzgun category secin");
+                return View(productVM);
+            }
+
+            CategoryBrand categoryBrand;
+
+            if(await _context.CategoryBrands.AnyAsync(c => c.CategoryId == productVM.CategoryId && c.BrandId == productVM.BrandId))
+            {
+                categoryBrand = await _context.CategoryBrands.FirstOrDefaultAsync(c => c.CategoryId == productVM.CategoryId && c.BrandId == productVM.BrandId);
+            }
+            else
+            {
+                categoryBrand = new CategoryBrand
+                {
+                    CategoryId = productVM.CategoryId,
+                    BrandId = productVM.BrandId,
+                    IsDeleted = false,
+                    CreatedAt = DateTime.UtcNow.AddHours(4),
+                    CreatedBy = "System"
+                };
+            }
+
+            productVM.Product.CategoryBrand = categoryBrand;
 
             if (productVM.SpecificationVMs != null && productVM.SpecificationVMs.Count() > 0)
             {
@@ -112,8 +152,11 @@ namespace Smartelectronics.Areas.Manage.Controllers
                     ProductCategorySpecification productCategorySpecification = new ProductCategorySpecification
                     {
                         ProductId = productVM.Product.Id,
-                        CategorySpecificationId = categorySpecification.Id,
+                        CategorySpecificationId = categorySpecification?.Id,
                         Value = specificationVM.Value,
+                        IsDeleted = false,
+                        CreatedAt = DateTime.UtcNow.AddHours(4),
+                        CreatedBy = "System"
 
                     };
 
@@ -126,6 +169,7 @@ namespace Smartelectronics.Areas.Manage.Controllers
 
             if (productVM.ColorImageVMs != null && productVM.ColorImageVMs.Count() > 0)
             {
+                List<ProductColor> productColors = new List<ProductColor>();
 
                 foreach (ColorImageVM colorImageVM in productVM.ColorImageVMs)
                 {
@@ -139,7 +183,13 @@ namespace Smartelectronics.Areas.Manage.Controllers
 
                     if (colorImageVM.Files != null && colorImageVM.Files.Count() > 0)
                     {
-                        List<ProductColor> productColors = new List<ProductColor>();
+                        if (colorImageVM.Files != null && colorImageVM.Files.Count() > 6)
+                        {
+                            ModelState.AddModelError($"ColorImageVMs[{count}].Files", "Her reng ucun maksimum 6 sekil yukleye bilersiniz");
+                            return View(productVM);
+                        }
+
+                        
 
                         foreach (IFormFile file in colorImageVM.Files)
                         {
@@ -159,6 +209,7 @@ namespace Smartelectronics.Areas.Manage.Controllers
                             {
                                 Image = await file.CreateFileAsync(_env, "assets", "images", "products"),
                                 ColorId = colorImageVM.ColorId,
+                                IsDeleted = false,
                                 CreatedAt = DateTime.UtcNow.AddHours(4),
                                 CreatedBy = "System"
                             };
@@ -166,7 +217,7 @@ namespace Smartelectronics.Areas.Manage.Controllers
                             productColors.Add(productColor);
                         }
 
-                        productVM.Product.ProductColors = productColors;
+                        
                     }
                     else
                     {
@@ -175,6 +226,8 @@ namespace Smartelectronics.Areas.Manage.Controllers
                     }
                     count++;
                 }
+
+                productVM.Product.ProductColors = productColors;
             }
 
             if (productVM.LoanTermVMs != null && productVM.LoanTermVMs.Count() > 0)
@@ -183,7 +236,6 @@ namespace Smartelectronics.Areas.Manage.Controllers
 
                 foreach (LoanTermVM loanTermVM in productVM.LoanTermVMs)
                 {
-
                     int count = 0;
 
                     if (loanTermVM.LoanCompanyId == null)
@@ -211,7 +263,6 @@ namespace Smartelectronics.Areas.Manage.Controllers
 
                     if (loanTermVM.LoanRangeIds != null && loanTermVM.LoanRangeIds.Count() > 0)
                     {
-                        List<LoanRange> loanRanges = new List<LoanRange>();
                         List<LoanTermLoanRange> loanTermLoanRanges = new List<LoanTermLoanRange>();
 
                         foreach (int loanRangeId in loanTermVM.LoanRangeIds)
@@ -234,10 +285,12 @@ namespace Smartelectronics.Areas.Manage.Controllers
                             LoanTermLoanRange termLoanRange = new LoanTermLoanRange
                             {
                                 LoanRangeId = loanRangeId,
-                                LoanTermId = loanTerm.Id
+                                LoanTermId = loanTerm.Id,
+                                IsDeleted = false,
+                                CreatedAt = DateTime.UtcNow.AddHours(4),
+                                CreatedBy = "System"
                             };
 
-                            //loanRanges.Add(loanRange);
                             loanTermLoanRanges.Add(termLoanRange);
                         }
 
@@ -253,74 +306,118 @@ namespace Smartelectronics.Areas.Manage.Controllers
 
             }
 
-            //if (product.IFLoanRangeIds != null && product.IFLoanRangeIds.Count() > 0)
-            //{
-            //    List<ProductIFLoanRange> productIFLoanRanges = new List<ProductIFLoanRange>();
+            if (productVM.IFLoanVMs != null && productVM.IFLoanVMs.Count() > 0)
+            {
+                List <ProductIFLoanRange> ifLoanRanges = new List<ProductIFLoanRange>();
 
-            //    foreach (int loanRangeId in product.IFLoanRangeIds)
-            //    {
-            //        if (!await _context.LoanRanges.AnyAsync(c => c.IsDeleted == false && c.Id == loanRangeId))
-            //        {
-            //            ModelState.AddModelError("IFLoanRangeIds", $"{loanRangeId} id deyeri yanlisdir");
-            //            return View(product);
-            //        }
+                foreach (IFLoanVM ifloanVM in productVM.IFLoanVMs)
+                {
+                    int count = 0;
 
-            //        ProductIFLoanRange productLoanRange = new ProductIFLoanRange
-            //        {
-            //            LoanRangeId = loanRangeId,
-            //            ProductId = product.Id,
-            //            CreatedAt = DateTime.UtcNow.AddHours(4),
-            //            CreatedBy = "System"
-            //        };
+                    if (ifloanVM.LoanRangeId == null)
+                    {
+                        ModelState.AddModelError("IFLoanRangeIds", $"{ifloanVM.LoanRangeId} id deyeri secilmelidir");
+                        return View(productVM);
+                    }
 
-            //        productIFLoanRanges.Add(productLoanRange);
-            //    }
+                    LoanRange loanRange = await _context.LoanRanges.FirstOrDefaultAsync(c => c.IsDeleted == false && c.Id == ifloanVM.LoanRangeId);
 
-            //    product.ProductIFLoanRanges = productIFLoanRanges;
+                    if (!await _context.LoanRanges.AnyAsync(c => c.IsDeleted == false && c.Id == ifloanVM.LoanRangeId))
+                    {
+                        ModelState.AddModelError("IFLoanRangeIds", $"{ifloanVM.LoanRangeId} id deyeri yanlisdir");
+                        return View(productVM);
+                    }
 
-            //}
+                    if (ifloanVM.InitialPayment + (ifloanVM.MonthlyPayment * loanRange.Range) != ifloanVM.TotalPayment)
+                    {
+                        ModelState.AddModelError($"IFLoanVMs[{count}].TotalPayment", "Hesablama yanlisdir");
+                        return View(productVM);
+                    }
 
-            //if (product.LoanRangeIds != null && product.LoanRangeIds.Count() > 0)
-            //{
-            //    List<ProductLoanRange> productLoanRanges = new List<ProductLoanRange>();
+                    ProductIFLoanRange productIFLoanRange = new ProductIFLoanRange
+                    {
+                        LoanRangeId = ifloanVM.LoanRangeId,
+                        InitialPayment = ifloanVM.InitialPayment,
+                        MonthlyPayment = ifloanVM.MonthlyPayment,
+                        TotalPayment = ifloanVM.TotalPayment,
+                        IsDeleted = false,
+                        CreatedAt = DateTime.UtcNow.AddHours(4),
+                        CreatedBy = "System"
+                    };
 
-            //    foreach (int loanRangeId in product.LoanRangeIds)
-            //    {
-            //        if (!await _context.LoanRanges.AnyAsync(c => c.IsDeleted == false && c.Id == loanRangeId))
-            //        {
-            //            ModelState.AddModelError("LoanRangeIds", $"{loanRangeId} id deyeri yanlisdir");
-            //            return View(product);
-            //        }
+                    ifLoanRanges.Add(productIFLoanRange);
 
-            //        ProductLoanRange productLoanRange = new ProductLoanRange
-            //        {
-            //            LoanRangeId = loanRangeId,
-            //            ProductId = product.Id,
-            //            CreatedAt = DateTime.UtcNow.AddHours(4),
-            //            CreatedBy = "System"
-            //        };
+                    count++;
+                }
+                productVM.Product.ProductIFLoanRanges = ifLoanRanges;
+            }
 
-            //        productLoanRanges.Add(productLoanRange);
-            //    }
+            if (productVM.LoanVMs != null && productVM.LoanVMs.Count() > 0)
+            {
+                List<ProductLoanRange> loanRanges = new List<ProductLoanRange>();
 
-            //    product.ProductLoanRanges = productLoanRanges;
+                foreach (LoanVM loanVM in productVM.LoanVMs)
+                {
+                    int count = 0;
 
-            //}
+                    if (loanVM.LoanRangeId == null)
+                    {
+                        ModelState.AddModelError("LoanRangeIds", $"{loanVM.LoanRangeId} id deyeri secilmelidir");
+                        return View(productVM);
+                    }
 
-            //string seria = _context.Categories.FirstOrDefault(c => c.Id == product.CategoryBrand.CategoryId).Name.Substring(0, 2);
-            //seria += _context.Categories.FirstOrDefault(c => c.Id == product.CategoryBrand.CategoryId).Name.Substring(0, 2);
-            //seria = seria.ToLower();
+                    LoanRange loanRange = await _context.LoanRanges.FirstOrDefaultAsync(c => c.IsDeleted == false && c.Id == loanVM.LoanRangeId);
 
-            //int code = _context.Products.Where(p => p.Seria == seria).OrderByDescending(p => p.Id).FirstOrDefault() != null ?
-            //    (int)_context.Products.Where(p => p.Seria == seria).OrderByDescending(p => p.Id).FirstOrDefault().Code + 1 : 1;
+                    if (!await _context.LoanRanges.AnyAsync(c => c.IsDeleted == false && c.Id == loanVM.LoanRangeId))
+                    {
+                        ModelState.AddModelError("LoanRangeIds", $"{loanVM.LoanRangeId} id deyeri yanlisdir");
+                        return View(productVM);
+                    }
 
-            //product.Seria = seria;
-            //product.Code = code;
-            //productVM.Product.CreatedAt = DateTime.UtcNow.AddHours(4);
-            //productVM.Product.CreatedBy = "System";
+                    if (loanVM.InterestForVipUsers > 100 || loanVM.InterestForVipUsers < 0)
+                    {
+                        ModelState.AddModelError("LoanVMs[@count].InterestForVipUsers", "Faiz deyeri yanlisdir");
+                        return View(productVM);
+                    }
 
-            //await _context.Products.AddAsync(productVM.Product);
-            //await _context.SaveChangesAsync();
+                    if (loanVM.InterestForStandartUsers > 100 || loanVM.InterestForStandartUsers < 0)
+                    {
+                        ModelState.AddModelError("LoanVMs[@count].InterestForStandartUsers", "Faiz deyeri yanlisdir");
+                        return View(productVM);
+                    }
+
+                    ProductLoanRange productLoanRange = new ProductLoanRange
+                    {
+                        LoanRangeId = loanVM.LoanRangeId,
+                        InterestForVipUsers = loanVM.InterestForVipUsers,
+                        InterestForStandartUsers = loanVM.InterestForStandartUsers,
+                        IsDeleted = false,
+                        CreatedAt = DateTime.UtcNow.AddHours(4),
+                        CreatedBy = "System"
+                    };
+
+                    loanRanges.Add(productLoanRange);
+
+                    count++;
+                }
+                productVM.Product.ProductLoanRanges = loanRanges;
+            }
+
+            string seria = _context.Categories.FirstOrDefault(c => c.Id == productVM.Product.CategoryBrand.CategoryId).Name.Substring(0, 2);
+            seria += _context.Brands.FirstOrDefault(c => c.Id == productVM.Product.CategoryBrand.BrandId).Name.Substring(0, 2);
+            seria = seria.ToLower();
+
+            int code = _context.Products.Where(p => p.Seria == seria).OrderByDescending(p => p.Id).FirstOrDefault() != null ?
+                (int)_context.Products.Where(p => p.Seria == seria).OrderByDescending(p => p.Id).FirstOrDefault().Code + 1 : 1;
+
+            productVM.Product.Seria = seria;
+            productVM.Product.Code = code;
+            productVM.Product.IsDeleted = false;
+            productVM.Product.CreatedAt = DateTime.UtcNow.AddHours(4);
+            productVM.Product.CreatedBy = "System";
+
+            await _context.Products.AddAsync(productVM.Product);
+            await _context.SaveChangesAsync();
 
             return View();
         }

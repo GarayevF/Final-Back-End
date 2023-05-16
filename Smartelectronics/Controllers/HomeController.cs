@@ -25,11 +25,14 @@ namespace Smartelectronics.Controllers
                 .Include(c => c.Children.Where(ct => ct.IsDeleted == false && ct.IsMain == false))
                 .ThenInclude(c => c.CategoryBrands.Where(ctb => ctb.IsDeleted == false)).ThenInclude(e => e.Brand).ToListAsync(),
                 NewArrival = await _context.Products.Where(c => c.IsDeleted == false && c.IsNewArrival)
-                .Include(p=>p.ProductColors).ThenInclude(pc => pc.Color).Take(8).ToListAsync(),
+                .Include(p=>p.ProductColors).ThenInclude(pc => pc.Color).Take(8)
+                .Include(p => p.ProductLoanRanges.Where(pl => pl.IsDeleted == false)).ThenInclude(plr => plr.LoanRange).ToListAsync(),
                 MostViewed = await _context.Products.Where(c => c.IsDeleted == false && c.IsMostViewed)
-                .Include(p => p.ProductColors).ThenInclude(pc => pc.Color).Take(8).ToListAsync(),
+                .Include(p => p.ProductColors).ThenInclude(pc => pc.Color).Take(8)
+                .Include(p => p.ProductLoanRanges.Where(pl => pl.IsDeleted == false)).ThenInclude(plr => plr.LoanRange).ToListAsync(),
                 DiscountedProducts = await _context.Products.Where(c => c.IsDeleted == false && c.DiscountedPrice > 0)
-                .Include(p => p.ProductColors).ThenInclude(pc => pc.Color).Take(8).ToListAsync(),
+                .Include(p => p.ProductColors).ThenInclude(pc => pc.Color).Take(8)
+                .Include(p => p.ProductLoanRanges.Where(pl => pl.IsDeleted == false)).ThenInclude(plr => plr.LoanRange).ToListAsync(),
             };
 
             return View(homeVM);

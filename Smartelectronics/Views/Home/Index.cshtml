@@ -58,21 +58,21 @@
                     <div class="owl-carousel owl-one">
                         <div>
                             <a href="">
-                                <img src="/assets/images/sliders/slider-1.jpg" alt="">
+                                <img src="~/assets/images/sliders/slider-1.jpg" alt="">
                             </a>
                         </div>
                         <div>
                             <a href="">
-                                <img src="/assets/images/sliders/slider-2.jpg" alt="">
+                                <img src="~/assets/images/sliders/slider-2.jpg" alt="">
                             </a>
                         </div>
                     </div>
                     <div class="wish-container">
                         <a class="wish-box" href="">
-                            <img src="/assets/images/kampaniyalar/wish-card-1.png" alt="">
+                            <img src="~/assets/images/kampaniyalar/wish-card-1.png" alt="">
                         </a>
                         <a class="wish-box" href="">
-                            <img src="/assets/images/kampaniyalar/wish-card-2.png" alt="">
+                            <img src="~/assets/images/kampaniyalar/wish-card-2.png" alt="">
                         </a>
                     </div>
                 </div>
@@ -86,7 +86,7 @@
                 <div class="col-lg-3 col-md-3 col-6">
                     <button class="type-box selected-box" data-origin="1">
                         <div class="type-box-content">
-                            <img src="/assets/images/product-types/new-blue.png" alt="">
+                            <img src="~/assets/images/product-types/new-blue.png" alt="">
                             <span>Yeni Məhsullar</span>
                         </div>
                     </button>
@@ -94,7 +94,7 @@
                 <div class="col-lg-3 col-md-3 col-6">
                     <button class="type-box" data-origin="2">
                         <div class="type-box-content">
-                            <img src="/assets/images/product-types/badge-blue.png" alt="">
+                            <img src="~/assets/images/product-types/badge-blue.png" alt="">
                             <span>Ən Çox Baxılanlar</span>
                         </div>
                     </button>
@@ -102,7 +102,7 @@
                 <div class="col-lg-3 col-md-3 col-6">
                     <button class="type-box" data-origin="3">
                         <div class="type-box-content">
-                            <img src="/assets/images/product-types/discount-blue.png" alt="">
+                            <img src="~/assets/images/product-types/discount-blue.png" alt="">
                             <span>Endirimli Məhsullar</span>
                         </div>
                     </button>
@@ -110,7 +110,7 @@
                 <div class="col-lg-3 col-md-3 col-6">
                     <button class="type-box">
                         <div class="type-box-content">
-                            <img src="/assets/images/product-types/bulb-blue.png" alt="">
+                            <img src="~/assets/images/product-types/bulb-blue.png" alt="">
                             <span>Kampaniyalar</span>
                         </div>
                     </button>
@@ -177,7 +177,7 @@
 
                                 </ul>
                                 <a class="image-link" href="">
-                                    <img src="~/assets/images/@product.ProductColors?.FirstOrDefault()?.Image" alt="">
+                                    <img src="~/assets/images/products/@product.ProductColors?.FirstOrDefault()?.Image" alt="">
                                 </a>
                                 <a href="" class="product-title">@product.Title</a>
                                 <div class="color-and-credit">
@@ -187,9 +187,10 @@
                                                 @if (product.ProductColors != null && product.ProductColors.Count() > 0)
                                                 {
                                                     bool check = true;
-                                                    @foreach (ProductColor productColor in product.ProductColors)
+                                                    @foreach (ProductColor productColor in product.ProductColors.DistinctBy(c => c.ColorId))
                                                     {
-                                                        <div class="color @(check ? "active" : "" ) " style="background-color: @productColor?.Color?.Code;"></div>
+                                                        <a asp-controller="product" asp-action="ChangeColor" asp-route-productColorId="@productColor.Id" class="color @(check ? "active" : "" ) " style="background-color: @productColor?.Color?.Code;"></a>
+                                                        check = false;
                                                     }
                                                 }
                                             }
@@ -226,7 +227,7 @@
     <div class="products-main-div" data-target="2">
         <div class="container">
             <div class="row">
-                @if (Model.NewArrival != null && Model.MostViewed.Count() > 0)
+                @if (Model.MostViewed != null && Model.MostViewed.Count() > 0)
                 {
                     @foreach (Product product in Model.MostViewed)
                     {
@@ -281,7 +282,7 @@
 
                                 </ul>
                                 <a class="image-link" href="">
-                                    <img src="~/assets/images/@product.ProductColors?.FirstOrDefault()?.Image" alt="">
+                                    <img src="~/assets/images/products/@product.ProductColors?.FirstOrDefault()?.Image" alt="">
                                 </a>
                                 <a href="" class="product-title">@product.Title</a>
                                 <div class="color-and-credit">
@@ -291,9 +292,10 @@
                                                 @if (product.ProductColors != null && product.ProductColors.Count() > 0)
                                                 {
                                                     bool check = true;
-                                                    @foreach (ProductColor productColor in product.ProductColors)
+                                                    @foreach (ProductColor productColor in product.ProductColors.DistinctBy(c => c.ColorId))
                                                     {
-                                                        <div class="color @(check ? "active" : "" ) " style="background-color: @productColor?.Color?.Code;"></div>
+                                                        <a asp-controller="product" asp-action="ChangeColor" asp-route-productColorId="@productColor.Id" class="color @(check ? "active" : "" ) " style="background-color: @productColor?.Color?.Code;"></a>
+                                                        check = false;
                                                     }
                                                 }
                                             }
@@ -329,7 +331,7 @@
     <div class="products-main-div" data-target="3">
         <div class="container">
             <div class="row">
-                @if (Model.NewArrival != null && Model.DiscountedProducts.Count() > 0)
+                @if (Model.DiscountedProducts != null && Model.DiscountedProducts.Count() > 0)
                 {
                     @foreach (Product product in Model.DiscountedProducts)
                     {
@@ -375,7 +377,7 @@
                                         {
                                             <li class="circle label-red" style="background-image: url(/assets/images/@loanTerm.LoanCompany?.LabelImage);">
                                                 <div class="label">
-                                                    <p class="text-lg">@loanTerm.LoanTermLoanRanges?.Max(t => t.LoanRange) ay</p>
+                                                    <p class="text-lg">@loanTerm.LoanTermLoanRanges?.Max(t => t.LoanRange.Range) ay</p>
                                                     <p class="text-sm">Faizsiz Kredit</p>
                                                 </div>
                                             </li>
@@ -384,7 +386,7 @@
 
                                 </ul>
                                 <a class="image-link" href="">
-                                    <img src="~/assets/images/@product.ProductColors?.FirstOrDefault()?.Image" alt="">
+                                    <img src="~/assets/images/products/@product.ProductColors?.FirstOrDefault()?.Image" alt="">
                                 </a>
                                 <a href="" class="product-title">@product.Title</a>
                                 <div class="color-and-credit">
@@ -394,30 +396,69 @@
                                                 @if (product.ProductColors != null && product.ProductColors.Count() > 0)
                                                 {
                                                     bool check = true;
-                                                    @foreach (ProductColor productColor in product.ProductColors)
+                                                    @foreach (ProductColor productColor in product.ProductColors.DistinctBy(c => c.ColorId))
                                                     {
-                                                        <div class="color @(check ? "active" : "" ) " style="background-color: @productColor?.Color?.Code;"></div>
+                                                        <a asp-controller="product" asp-action="ChangeColor" asp-route-productColorId="@productColor.Id" class="color @(check ? "active" : "" ) " style="background-color: @productColor?.Color?.Code;"></a>
+                                                        check = false;
                                                     }
                                                 }
                                             }
                                         </div>
                                         <p class="product-price"><strong>@product.Price</strong> <small>AZN</small></p>
                                     </div>
-                                    <div class="credit-options">
-                                        <div class="months">
-                                            <ul class="d-flex">
-                                                <li class="credit-item">
-                                                    <a class="p-0 m-0" data-id="@(Math.Ceiling((product.DiscountedPrice > 0 ? product.DiscountedPrice : product.Price) / 6))">6 ay</a>
-                                                </li>
-                                                <li class="credit-item selected-credit">
-                                                    <a class="p-0 m-0" data-id="@(Math.Ceiling((product.DiscountedPrice > 0 ? product.DiscountedPrice : product.Price) / 12))">12 ay</a>
-                                                </li>
-                                            </ul>
-                                        </div>
-                                        <div class="prices-for-months">
-                                            <span><strong>@(Math.Ceiling((product.DiscountedPrice > 0 ? product.DiscountedPrice : product.Price) / 12))</strong> <small>AZN</small></span>
-                                        </div>
-                                    </div>
+                                    @if(product.ProductLoanRanges != null && product.ProductLoanRanges.Count() > 0)
+                                    {
+                                        @if(product.ProductLoanRanges.Count() > 1)
+                                        {
+                                            <div class="credit-options">
+                                                <div class="months">
+                                                    <ul class="d-flex">
+                                                        <li class="credit-item">
+                                                            @{
+                                                                double interest1 = @product.ProductLoanRanges.MinBy(p => p.LoanRange.Range).InterestForStandartUsers;
+                                                                double price1 = (product.DiscountedPrice > 0 ? product.DiscountedPrice : product.Price);
+                                                                double range1 = @product.ProductLoanRanges.Min(p => p.LoanRange.Range);
+                                                            }
+
+                                                            <a class="productLoanRange p-0 m-0" data-id="@(Math.Ceiling((price1 + (price1*interest1/100)) / range1))">@range1 ay</a>
+                                                        </li>
+                                                        <li class="credit-item selected-credit">
+                                                            @{
+                                                                double interest = @product.ProductLoanRanges.MaxBy(p => p.LoanRange.Range).InterestForStandartUsers;
+                                                                double price = (product.DiscountedPrice > 0 ? product.DiscountedPrice : product.Price);
+                                                                double range = @product.ProductLoanRanges.Max(p => p.LoanRange.Range);
+                                                            }
+                                                            <a class="productLoanRange p-0 m-0" data-id="@(Math.Ceiling((price + (price*interest/100)) / range))">@range ay</a>
+                                                        </li>
+                                                    </ul>
+                                                </div>
+                                                <div class="prices-for-months">
+                                                    <span><strong>@(Math.Ceiling((product.DiscountedPrice > 0 ? product.DiscountedPrice : product.Price) / 12))</strong> <small>AZN</small></span>
+                                                </div>
+                                            </div>
+                                        }
+                                        else
+                                        {
+                                            <div class="credit-options">
+                                                <div class="months">
+                                                    <ul class="d-flex">
+                                                        <li class="credit-item selected-credit">
+                                                            @{
+                                                                double interest2 = @product.ProductLoanRanges.First().InterestForStandartUsers;
+                                                                double price2 = (product.DiscountedPrice > 0 ? product.DiscountedPrice : product.Price);
+                                                                double range2 = @product.ProductLoanRanges.First().LoanRange.Range;
+                                                            }
+                                                            <a class="productLoanRange p-0 m-0" data-id="@(Math.Ceiling((price2 + (price2*interest2/100)) / range2))">@range2 ay</a>
+                                                        </li>
+                                                    </ul>
+                                                </div>
+                                                <div class="prices-for-months">
+                                                    <span><strong>@(Math.Ceiling((product.DiscountedPrice > 0 ? product.DiscountedPrice : product.Price) / 12))</strong> <small>AZN</small></span>
+                                                </div>
+                                            </div>
+                                        }
+                                    }
+                                    
                                 </div>
                                 <a href="" class="buy buyoneclick">1 kliklə al</a>
                                 <a href="" class="buy buycredit">Kredit</a>

@@ -115,5 +115,24 @@ namespace Smartelectronics.Controllers
         //}
 
         
+        public async Task<IActionResult> ChangeColorForSlider(int? id, int? colorId)
+        {
+            if (colorId == null) return BadRequest();
+
+            IEnumerable<ProductColor> productColors = await _context.ProductColors.Where(pc => pc.IsDeleted == false && pc.ProductId == id && pc.ColorId == colorId).ToListAsync();
+
+            return PartialView("_ProductImagesSlider", productColors);
+        }
+
+        public async Task<IActionResult> ChangeColor(int? productColorId)
+        {
+            if (productColorId == null) return BadRequest();
+
+            ProductColor productColor = await _context.ProductColors.FirstOrDefaultAsync(pc => pc.IsDeleted == false && pc.Id == productColorId);
+
+            if (productColor == null) return NotFound();
+
+            return PartialView("_ProductImage", productColor);
+        }
     }
 }

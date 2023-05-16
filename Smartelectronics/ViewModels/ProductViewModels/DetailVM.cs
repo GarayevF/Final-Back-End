@@ -6,7 +6,7 @@ namespace Smartelectronics.ViewModels.ProductViewModels
     {
         public Product Product { get; set; }
         public List<GroupedSpecificationsVM>? GroupedSpecificationsVMs { get; set; }
-        public IEnumerable<ProductLoanRange>? LoanRanges { get; set; }
-        public IEnumerable<ProductIFLoanRange>? IFLoanRanges { get; set; }
+        public List<ProductLoanRange>? LoanRanges { get; set; }
+        public List<ProductIFLoanRange>? IFLoanRanges { get; set; }
     }
 }

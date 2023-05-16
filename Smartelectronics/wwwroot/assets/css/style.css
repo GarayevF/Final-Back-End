@@ -2873,13 +2873,13 @@ header .header2 .container .header-bottom-m .mobile-menu .menu-list .menu-item .
   width: 45px !important;
   border-radius: 10px !important;
 }
-.main-detail .item-info .container .content .item-content .left .product-card .color-and-credit .color-div .item-colors .color {
-  width: 18px;
-  height: 18px;
-  display: block;
-  border-radius: 100%;
-  transition: 0.5s;
-  margin: 0 8px;
+.main-detail .item-info .container .content .item-content .left .product-card .color-and-credit .color-div .item-colors .colorSlider{
+    width: 18px;
+    height: 18px;
+    display: block;
+    border-radius: 100%;
+    transition: 0.5s;
+    margin: 0 8px;
 }
 .main-detail .item-info .container .content .item-content .left .product-card .buy {
   border: none;

@@ -43,20 +43,24 @@
                 </div>
                 <div class="title-label">
                     <div class="owl-carousel owl-three">
-                        @foreach (LoanTerm loanTerm in Model.Product.LoanTerms)
+                        @if(Model.Product.LoanTerms != null && Model.Product.LoanTerms.Count() > 0)
                         {
-                            <div class="owl-three-item" style="width: 450px;">
-                            <div class="item">
-                                <div class="icon">
-                                    <img src="~/assets/images/@loanTerm.LoanCompany?.Logo" alt="">
+                            @foreach (LoanTerm loanTerm in Model.Product.LoanTerms)
+                            {
+                                <div class="owl-three-item" style="width: 450px;">
+                                    <div class="item">
+                                        <div class="icon">
+                                            <img src="~/assets/images/@loanTerm.LoanCompany?.Logo" alt="">
+                                        </div>
+                                        <div class="content">
+                                            <p>@loanTerm.LoanTermLoanRanges.Max(a => a.LoanRange).Range ay x @((Model.Product.Price / (double)@loanTerm.LoanTermLoanRanges?.Max(a => a.LoanRange).Range).ToString("N2")) AZN</p>
+                                            <span>@loanTerm.Title</span>
+                                        </div>
+                                    </div>
                                 </div>
-                                <div class="content">
-                                        <p>@loanTerm.LoanTermLoanRanges.Max(a => a.LoanRange).Range ay x @((Model.Product.Price / (double)@loanTerm.LoanTermLoanRanges?.Max(a => a.LoanRange).Range).ToString("N2")) AZN</p>
-                                    <span>@loanTerm.Title</span>
-                                </div>
-                            </div>
-                        </div>
+                            }
                         }
+                        
                         
                     </div>
                 </div>
@@ -116,13 +120,15 @@
                             </ul>
                             <div class="image-link-slider">
                                 <div class="owl-carousel product-detail-slider">
-                                    @foreach(ProductColor productColor in Model.Product.ProductColors.Where(c => c.ColorId == Model.Product.ProductColors.First().ColorId))
+                                    @if(Model.Product.ProductColors != null && Model.Product.ProductColors.Count() > 0)
                                     {
-                                        <div class="product-slider-image">
-                                            <img src="@productColor.Image" alt="">
-                                        </div>
-                                    }
-                                    
+                                        @foreach (ProductColor productColor in Model.Product.ProductColors.Where(c => c.ColorId == Model.Product.ProductColors.First().ColorId))
+                                        {
+                                            <div class="product-slider-image">
+                                                <img src="~/assets/images/products/@productColor.Image" alt="">
+                                            </div>
+                                        }
+                                    } 
                                 </div>
 
                             </div>
@@ -132,11 +138,15 @@
                                     <div class="item-colors">
                                         @{
                                             bool checkColor = true;
-                                            @foreach (ProductColor productColor in Model.Product.ProductColors)
+                                            @if (Model.Product.ProductColors != null && Model.Product.ProductColors.Count() > 0)
                                             {
-                                                <div class="color @(checkColor ? "active" : "") " style="background-color: @productColor.Color.Code;"></div>
-                                                checkColor = false;
+                                                @foreach (ProductColor productColor in Model.Product.ProductColors.DistinctBy(c => c.ColorId))
+                                                {
+                                                    <a asp-controller="product" asp-action="ChangeColorForSlider" asp-route-id="@productColor.ProductId" asp-route-colorId="@productColor.ColorId" class="colorSlider @(checkColor ? "active" : "") " style="background-color: @productColor.Color.Code;"></a>
+                                                    checkColor = false;
+                                                }
                                             }
+                                            
                                         }
                                     </div>
                                 </div>
@@ -164,28 +174,32 @@
                                         <p class="title">Aylıq Ödəniş</p>
                                         <p class="title">Toplam Ödəniş</p>
                                     </li>
-                                    @foreach (ProductIFLoanRange productLoanRange in Model?.IFLoanRanges?.OrderByDescending(a => a.LoanRange))
+                                    @if (Model.IFLoanRanges != null && Model.IFLoanRanges.Count() > 0)
                                     {
-                                        <li style="position: relative;">
-                                            <div class="block radio-wrapper">
-                                                <input type="radio" name="creditCondition" id="creditCondition-@count">
-                                                <label for="creditCondition-@count"></label>
-                                            </div>
-                                            <div class="price outline">
-                                                <p style="padding-left: 24px;">@productLoanRange.LoanRange.Range ay</p>
-                                            </div>
-                                            <div class="price">
-                                                <p>@productLoanRange.InitialPayment azn</p>
-                                            </div>
-                                            <div class="price">
-                                                <p>@productLoanRange.MonthlyPayment azn</p>
-                                            </div>
-                                            <div class="price">
-                                                <p>@productLoanRange.TotalPayment azn</p>
-                                            </div>
-                                        </li>
-                                        count++;
+                                        @foreach (ProductIFLoanRange productLoanRange in Model.IFLoanRanges.Where(a => a.LoanRange != null).OrderByDescending(a => a.LoanRange.Range))
+                                        {
+                                            <li style="position: relative;">
+                                                <div class="block radio-wrapper">
+                                                    <input type="radio" name="creditCondition" id="creditCondition-@count">
+                                                    <label for="creditCondition-@count"></label>
+                                                </div>
+                                                <div class="price outline">
+                                                    <p style="padding-left: 24px;">@productLoanRange.LoanRange.Range ay</p>
+                                                </div>
+                                                <div class="price">
+                                                    <p>@productLoanRange.InitialPayment azn</p>
+                                                </div>
+                                                <div class="price">
+                                                    <p>@productLoanRange.MonthlyPayment azn</p>
+                                                </div>
+                                                <div class="price">
+                                                    <p>@productLoanRange.TotalPayment azn</p>
+                                                </div>
+                                            </li>
+                                            count++;
+                                        }
                                     }
+                                    
                                     
                                 </ul>
                             </div>
@@ -219,9 +233,9 @@
                                         <div class="price d-block">
                                             <div class="credit-month-select">
                                                 <div class="dropdown">
-                                                    <button class="dropbtn"><span>@Model?.LoanRanges?.Max(a => a.LoanRange).Range</span> <i class="fa-solid fa-chevron-left"></i></button>
+                                                    <button class="dropbtn"><span>@Model?.LoanRanges?.OrderByDescending(a => a.LoanRange.Range).FirstOrDefault().LoanRange.Range</span> <i class="fa-solid fa-chevron-left"></i></button>
                                                     <div id="credit-dropdown" class="dropdown-content">
-                                                        @foreach (ProductLoanRange productLoanRange in Model?.LoanRanges?.OrderByDescending(a => a.LoanRange))
+                                                        @foreach (ProductLoanRange productLoanRange in Model?.LoanRanges?.OrderByDescending(a => a.LoanRange.Range))
                                                         {
                                                             <a href="#">@productLoanRange.LoanRange.Range</a>
                                                         }
@@ -240,12 +254,12 @@
                                             <div class="price outline">
                                                 <p>
                                                     @(
-                                                    (price / Model?.LoanRanges?.Max(a => a.LoanRange).Range) + (price * Model?.Product?.ProductLoanRanges?.FirstOrDefault(a => a.ProductId == Model.Product.Id).LoanRange.Range) / Model?.LoanRanges?.Max(a => a.LoanRange).Range) azn
+                                                        (price / Model?.LoanRanges?.OrderByDescending(a => a.LoanRange.Range).FirstOrDefault().LoanRange.Range) + (price * Model?.Product?.ProductLoanRanges?.FirstOrDefault(a => a.ProductId == Model.Product.Id).LoanRange.Range) / Model?.LoanRanges?.OrderByDescending(a => a.LoanRange.Range).FirstOrDefault().LoanRange.Range) azn
                                                 </p>
                                             </div>
                                             <div class="price outline">
                                                 <span class="mob-title">Toplam Ödəniş</span>
-                                                <p>@(price*Model?.LoanRanges?.Max(a => a.LoanRange).Range) azn</p>
+                                                <p>@(price * Model?.LoanRanges?.OrderByDescending(a => a.LoanRange.Range).FirstOrDefault().LoanRange.Range) azn</p>
                                             </div>
                                             }
                                     }

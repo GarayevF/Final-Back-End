@@ -1,0 +1,13 @@
+﻿@model IEnumerable<ProductColor>
+
+<div class="owl-carousel product-detail-slider">
+    @if (Model != null && Model.Count() > 0)
+    {
+        @foreach (ProductColor productColor in Model)
+        {
+            <div class="product-slider-image">
+                <img src="~/assets/images/products/@productColor.Image" alt="">
+            </div>
+        }
+    } 
+</div>

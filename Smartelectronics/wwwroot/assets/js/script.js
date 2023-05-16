@@ -90,7 +90,7 @@ $(document).ready(function() {
         }
       });
 
-    $(document).on('click', '.sub-menu-link, .btn-prev, .menu-link, .menu-btn, .nav-list, .category-item, .color, .credit-item, .filter-button, .filter-btn-mobile, .dropbtn, .tab-btn, .product-btn, .type-box', function() {
+    $(document).on('click', '.sub-menu-link, .btn-prev, .menu-link, .menu-btn, .nav-list, .category-item, .colorSlider, .credit-item, .filter-button, .filter-btn-mobile, .dropbtn, .tab-btn, .product-btn, .type-box', function(e) {
         if ($(this).hasClass('sub-menu-link')){
             $(this).children(".sub-content").toggleClass('d-none')
             $(this).children(".link-wrapper").children(".sub-menu")
@@ -153,9 +153,11 @@ $(document).ready(function() {
             
         }
 
-        if ($(this).hasClass('color')){
-            if(!$(this).hasClass("active")){
-                $(this).siblings(".color").removeClass("active")
+
+        if ($(this).hasClass('colorSlider')) {
+            e.preventDefault();
+            if (!$(this).hasClass("active")) {
+                $(this).siblings(".colorSlider").removeClass("active")
                 $(this).addClass('active')
             }
         }

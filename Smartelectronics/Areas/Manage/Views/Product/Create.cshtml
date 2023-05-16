@@ -2,11 +2,13 @@
 @{
     ViewData["Title"] = "Create";
     IEnumerable<Category> categories = ViewBag.MainCategories;
+    IEnumerable<Brand> brands = ViewBag.Brands;
     IEnumerable<Color> colors = ViewBag.Colors;
     IEnumerable<LoanRange> loanRanges = ViewBag.LaonRanges;
     IEnumerable<LoanCompany> loanCompanies = ViewBag.LoanCompanies;
 
     SelectList categorySelectList = new SelectList(categories, nameof(Category.Id), nameof(Category.Name));
+    SelectList brandSelectList = new SelectList(brands, nameof(Brand.Id), nameof(Brand.Name));
     SelectList colorSelectList = new SelectList(colors, nameof(Color.Id), nameof(Color.Code));
     SelectList loanRangeSelectList = new SelectList(loanRanges, nameof(LoanRange.Id), nameof(LoanRange.Range));
     SelectList loanCompanySelectList = new SelectList(loanCompanies, nameof(LoanCompany.Id), nameof(LoanCompany.Name));
@@ -38,13 +40,19 @@
                 <input asp-for="@Model.Product.DiscountedPrice" class="form-control" />
                 <span asp-validation-for="@Model.Product.DiscountedPrice" class="text text-danger"></span>
             </div>
-
+            <div class="form-group">
+                <label asp-for="BrandId"></label>
+                <select asp-for="BrandId" class="form-control" id="brand" asp-items="@brandSelectList">
+                </select>
+                <span asp-validation-for="BrandId" class="text text-danger"></span>
+            </div>
             <div class="form-group">
                 <label asp-for="CategoryId"></label>
                 <select asp-for="CategoryId" class="form-control" id="category" asp-items="@categorySelectList">
                 </select>
                 <span asp-validation-for="CategoryId" class="text text-danger"></span>
             </div>
+
             <div id="specification-inputs">
                 @if (Model?.SpecificationVMs != null && Model?.SpecificationVMs.Count() > 0)
                 {
@@ -102,21 +110,29 @@
                             <div class="form-group">
                                 <label asp-for="LoanTermVMs[@count].LoanRangeIds">@loanTermVM.Title</label>
                                 <select name="LoanTermVMs[@count].LoanRangeIds" class="form-control" id="LoanTermVMs[@count].loanCompany" multiple>
-                                    @foreach (LoanRange loanRange in loanRanges)
+                                    @if (loanRanges != null && loanRanges.Count() > 0)
                                     {
-                                        if (loanTermVM.LoanRangeIds.Contains(loanRange.Id))
+                                        @foreach (LoanRange loanRange in loanRanges)
                                         {
-                                            <option value="@loanRange.Id)">@loanRange.Range</option>
+                                            if (loanTermVM.LoanRangeIds != null && loanTermVM.LoanRangeIds.Count() > 0 && loanTermVM.LoanRangeIds.Contains(loanRange.Id))
+                                            {
+                                                <option selected="selected" value="@loanRange.Id">@loanRange.Range</option>
+                                            }
+                                            else
+                                            {
+                                                <option value="@loanRange.Id">@loanRange.Range</option>
+                                            }
+
                                         }
-                                        
                                     }
+
                                 </select>
                                 <span asp-validation-for="LoanTermVMs[@count].LoanRangeIds" class="text text-danger"></span>
                             </div>
                             <div class="form-group">
                                 <label for="loanTerm-@loanTermVM.LoanCompanyId" value="LoanTermVMs[@count].LoanRangeIds">Title</label>
                                 <input type="hidden" id="loanCompanyId-@loanTermVM.LoanCompanyId" name="LoanTermVMs[@count].LoanCompanyId" value="@loanTermVM.LoanCompanyId" />
-                                <input type="text" class="form-control loanTerm-input" id="loanTermValue-@loanTermVM.LoanCompanyId" name="LoanTermVMs[@count].Title">
+                                <input type="text" class="form-control loanTerm-input" id="loanTermValue-@loanTermVM.LoanCompanyId" name="LoanTermVMs[@count].Title" value="@loanTermVM.Title">
                             </div>
                         </div>
                         count++;
@@ -124,7 +140,7 @@
                 }
             </div>
 
-            
+
 
             <div class="form-group">
                 <label asp-for="IFLoanRangeIds"></label>
@@ -188,13 +204,43 @@
 
             <button type="submit" class="btn btn-primary">Submit</button>
         </form>
-        
+        @*@if (ViewBag.ErrorMessages != null)
+        {
+        foreach (var errorMessage in ViewBag.ErrorMessages)
+        {
+        <div class="alert alert-danger">
+        @errorMessage
+        </div>
+        }
+        }*@
+
+        @if (ViewBag.ModelErrors != null)
+        {
+            foreach (var modelError in ViewBag.ModelErrors)
+            {
+                <div class="alert alert-danger">
+                    Input ID: @modelError.InputId <br />
+                    Error Message: @modelError.ErrorMessage
+                </div>
+
+
+                <script>
+                    var inputId = '@modelError.InputId';
+                    var errorMessage = '@modelError.ErrorMessage';
+                    var inputElement = document.getElementsByName(inputId)[0];
+                    if (inputElement) {
+                        var spanElement = document.createElement("span");
+                        spanElement.innerHTML = errorMessage;
+                        inputElement.parentNode.appendChild(spanElement);
+                    }
+                </script>
+            }
+        }
     </div>
 </div>
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 
 <script type="text/javascript">
-
 
     //let errors = ModelState["SpecificationVMs[" + count + "].Value"];
     //if (errors !== undefined) {
@@ -218,12 +264,12 @@
                     let count = 0;
                     specifications.forEach(spec => {
                         html += `
-                                            <div class="form-group">
-                                                <label for="spec-${spec.id}" value="SpecificationVMs[${count}].Name">${spec.name}</label>
-                                            <input type="hidden" id="specName-${spec.id}" name="SpecificationVMs[${count}].Name" value="${spec.name}"/>
-                                            <input type="hidden" id="specId-${spec.id}" name="SpecificationVMs[${count}].SpecificationId" value="${spec.id}"/>
-                                            <input type="text" class="form-control spec-input" id="specValue-${spec.id}" name="SpecificationVMs[${count}].Value">
-                                            </div>`;
+                                                <div class="form-group">
+                                                    <label for="spec-${spec.id}" value="SpecificationVMs[${count}].Name">${spec.name}</label>
+                                                <input type="hidden" id="specName-${spec.id}" name="SpecificationVMs[${count}].Name" value="${spec.name}"/>
+                                                <input type="hidden" id="specId-${spec.id}" name="SpecificationVMs[${count}].SpecificationId" value="${spec.id}"/>
+                                                <input type="text" class="form-control spec-input" id="specValue-${spec.id}" name="SpecificationVMs[${count}].Value">
+                                                </div>`;
                     });
                     specificationInputsDiv.innerHTML = html;
                     let form = document.querySelector('#product-form');
@@ -253,12 +299,12 @@
             let count = 0;
             selectedValues.forEach(color => {
                 html += `
-                                <div class="form-group">
-                                                <label for="color-${color.id}" value="ColorImageVMs[${count}].Name">${color.code}</label>
-                                                <input type="hidden" id="colorName-${color.id}" name="ColorImageVMs[${count}].Name" value="${color.code}"/>
-                                                    <input type="hidden" id="colorId-${color.id}" name="ColorImageVMs[${count}].ColorId" value="${color.id}"/>
-                                                <input type="file" accept="image/jpeg" multiple class="form-control color-input" id="colorValue-${color.id}" name="ColorImageVMs[${count}].Files">
-                                </div>`;
+                                    <div class="form-group">
+                                                    <label for="color-${color.id}" value="ColorImageVMs[${count}].Name">${color.code}</label>
+                                                    <input type="hidden" id="colorName-${color.id}" name="ColorImageVMs[${count}].Name" value="${color.code}"/>
+                                                        <input type="hidden" id="colorId-${color.id}" name="ColorImageVMs[${count}].ColorId" value="${color.id}"/>
+                                                    <input type="file" accept="image/jpeg" multiple class="form-control color-input" id="colorValue-${color.id}" name="ColorImageVMs[${count}].Files">
+                                    </div>`;
                 count++;
             });
             colorInputsDiv.innerHTML = html;
@@ -295,24 +341,24 @@
             let count = 0;
             selectedValues.forEach(loan => {
                 html += `
-                            <div class="outer-form-group d-flex">
-                                    <div class="form-group">
-                                        <label asp-for="LoanTermVMs[${count}].LoanRangeIds">${loan.name}</label>
-                                            <select name="LoanTermVMs[${count}].LoanRangeIds" class="form-control" id="LoanTermVMs[${count}].loanCompany" multiple>
-                                            `;
+                                <div class="outer-form-group d-flex">
+                                        <div class="form-group">
+                                            <label asp-for="LoanTermVMs[${count}].LoanRangeIds">${loan.name}</label>
+                                                <select name="LoanTermVMs[${count}].LoanRangeIds" class="form-control" id="LoanTermVMs[${count}].loanCompany" multiple>
+                                                `;
                 LoanRanges.forEach(lr => {
                     html += `<option value="${lr.id}">${lr.value}</option>`
                 })
                 html += `
-                                    </select>
-                                        <span asp-validation-for="LoanTermVMs[${count}].LoanRangeIds" class="text text-danger"></span>
-                                                            </div>
-                                                                <div class="form-group">
-                                                        <label for="loanTerm-${loan.id}" value="LoanTermVMs[${count}].LoanRangeIds">Title</label>
-                                                        <input type="hidden" id="loanCompanyId-${loan.id}" name="LoanTermVMs[${count}].LoanCompanyId" value="${loan.id}"/>
-                                                    <input type="text" class="form-control loanTerm-input" id="loanTermValue-${loan.id}" name="LoanTermVMs[${count}].Title">
-                                                </div>
-                                                            </div>`;
+                                        </select>
+                                            <span asp-validation-for="LoanTermVMs[${count}].LoanRangeIds" class="text text-danger"></span>
+                                                                </div>
+                                                                    <div class="form-group">
+                                                            <label for="loanTerm-${loan.id}" value="LoanTermVMs[${count}].LoanRangeIds">Title</label>
+                                                            <input type="hidden" id="loanCompanyId-${loan.id}" name="LoanTermVMs[${count}].LoanCompanyId" value="${loan.id}"/>
+                                                        <input type="text" class="form-control loanTerm-input" id="loanTermValue-${loan.id}" name="LoanTermVMs[${count}].Title">
+                                                    </div>
+                                                                </div>`;
                 count++;
             });
             loanCompanyInputsDiv.innerHTML = html;
@@ -339,21 +385,21 @@
             let count = 0;
             selectedValues.forEach(ifloan => {
                 html += `
-                    <div class="outer-form-group d-flex">
-                        <div class="form-group">
-                                <label for="IFLoanVMs[${count}].InitialPayment" value="IFLoanVMs[${count}].InitialPayment">${ifloan.value}</label>
-                            <input type="hidden" id="IFLoanId-${ifloan.id}" name="IFLoanVMs[${count}].LoanRangeId" value="${ifloan.id}"/>
-                            <input type="number" class="form-control IFLoan-input" id="IFLoanVMs[${count}].InitialPayment" name="IFLoanVMs[${count}].InitialPayment">
-                        </div>
-                        <div class="form-group">
-                                <label for="IFLoanVMs[${count}].MonthlyPayment" value="IFLoanVMs[${count}].MonthlyPayment">${ifloan.value}</label>
-                            <input type="number" class="form-control IFLoan-input" id="IFLoanVMs[${count}].MonthlyPayment" name="IFLoanVMs[${count}].MonthlyPayment">
-                        </div>
-                        <div class="form-group">
-                                <label for="IFLoanVMs[${count}].TotalPayment" value="IFLoanVMs[${count}].TotalPayment">${ifloan.value}</label>
-                                    <input type="number" class="form-control IFLoan-input" id="IFLoanVMs[${count}].TotalPayment" name="IFLoanVMs[${count}].TotalPayment">
-                        </div>
-                    </div>`;
+                        <div class="outer-form-group d-flex">
+                            <div class="form-group">
+                                    <label for="IFLoanVMs[${count}].InitialPayment" value="IFLoanVMs[${count}].InitialPayment">${ifloan.value}</label>
+                                <input type="hidden" id="IFLoanId-${ifloan.id}" name="IFLoanVMs[${count}].LoanRangeId" value="${ifloan.id}"/>
+                                <input type="number" class="form-control IFLoan-input" id="IFLoanVMs[${count}].InitialPayment" name="IFLoanVMs[${count}].InitialPayment">
+                            </div>
+                            <div class="form-group">
+                                    <label for="IFLoanVMs[${count}].MonthlyPayment" value="IFLoanVMs[${count}].MonthlyPayment">${ifloan.value}</label>
+                                <input type="number" class="form-control IFLoan-input" id="IFLoanVMs[${count}].MonthlyPayment" name="IFLoanVMs[${count}].MonthlyPayment">
+                            </div>
+                            <div class="form-group">
+                                    <label for="IFLoanVMs[${count}].TotalPayment" value="IFLoanVMs[${count}].TotalPayment">${ifloan.value}</label>
+                                        <input type="number" class="form-control IFLoan-input" id="IFLoanVMs[${count}].TotalPayment" name="IFLoanVMs[${count}].TotalPayment">
+                            </div>
+                        </div>`;
                 count++;
             });
             IFLoanInputsDiv.innerHTML = html;
@@ -381,17 +427,17 @@
             let count = 0;
             selectedValues.forEach(loan => {
                 html += `
-                        <div class="outer-form-group d-flex">
-                            <div class="form-group">
-                                        <label for="LoanVMs[${count}].InterestForVipUsers" value="LoanVMs[${count}].InterestForVipUsers">${loan.value}</label>
-                                <input type="hidden" id="LoanId-${loan.id}" name="LoanVMs[${count}].LoanRangeId" value="${loan.id}"/>
-                                <input type="number" class="form-control Loan-input" id="LoanVMs[${count}].InterestForVipUsers" name="LoanVMs[${count}].InterestForVipUsers">
-                            </div>
-                            <div class="form-group">
-                                        <label for="LoanVMs[${count}].InterestForStandartUsers" value="LoanVMs[${count}].InterestForStandartUsers">${loan.value}</label>
-                                <input type="number" class="form-control Loan-input" id="LoanVMs[${count}].InterestForStandartUsers" name="LoanVMs[${count}].InterestForStandartUsers">
-                            </div>
-                        </div>`;
+                            <div class="outer-form-group d-flex">
+                                <div class="form-group">
+                                            <label for="LoanVMs[${count}].InterestForVipUsers" value="LoanVMs[${count}].InterestForVipUsers">${loan.value}</label>
+                                    <input type="hidden" id="LoanId-${loan.id}" name="LoanVMs[${count}].LoanRangeId" value="${loan.id}"/>
+                                    <input type="number" class="form-control Loan-input" id="LoanVMs[${count}].InterestForVipUsers" name="LoanVMs[${count}].InterestForVipUsers">
+                                </div>
+                                <div class="form-group">
+                                            <label for="LoanVMs[${count}].InterestForStandartUsers" value="LoanVMs[${count}].InterestForStandartUsers">${loan.value}</label>
+                                    <input type="number" class="form-control Loan-input" id="LoanVMs[${count}].InterestForStandartUsers" name="LoanVMs[${count}].InterestForStandartUsers">
+                                </div>
+                            </div>`;
                 count++;
             });
             LoanInputsDiv.innerHTML = html;
@@ -402,72 +448,72 @@
 
 
 
-                    //let form = document.querySelector('#product-form');
-                    //let submitBtn = document.querySelector('#submit-btn');
+                        //let form = document.querySelector('#product-form');
+                        //let submitBtn = document.querySelector('#submit-btn');
 
-                    //form.addEventListener('submit', async function (e) {
-                    //    e.preventDefault();
-                    //    let productVM = {
-                    //        Product: {
-                    //            "Title": document.getElementsByName('Product.Title')[0].value,
-                    //            "Price": document.getElementsByName('Product.Price')[0].value,
-                    //            "DiscountedPrice": document.getElementsByName('Product.DiscountedPrice')[0].value,
-                    //        },
-                    //        CategoryId: document.getElementsByName('CategoryId')[0].value,
-                    //        SpecificationVMs: [],
-                    //    };
+                        //form.addEventListener('submit', async function (e) {
+                        //    e.preventDefault();
+                        //    let productVM = {
+                        //        Product: {
+                        //            "Title": document.getElementsByName('Product.Title')[0].value,
+                        //            "Price": document.getElementsByName('Product.Price')[0].value,
+                        //            "DiscountedPrice": document.getElementsByName('Product.DiscountedPrice')[0].value,
+                        //        },
+                        //        CategoryId: document.getElementsByName('CategoryId')[0].value,
+                        //        SpecificationVMs: [],
+                        //    };
 
-                    //    let specInputs = form.querySelectorAll('.spec-input');
-                    //    specInputs.forEach(function (specInput) {
-                    //        let specId = parseInt(specInput.id.split('-')[1]);
-                    //        let specValue = specInput.value;
-                    //        console.log(specId + "---" + specValue)
-                    //        let newSpec =
-                    //            productVM.SpecificationVMs.push({
-                    //                SpecificationId: specId,
-                    //                Value: specValue
-                    //            })
-                    //    })
+                        //    let specInputs = form.querySelectorAll('.spec-input');
+                        //    specInputs.forEach(function (specInput) {
+                        //        let specId = parseInt(specInput.id.split('-')[1]);
+                        //        let specValue = specInput.value;
+                        //        console.log(specId + "---" + specValue)
+                        //        let newSpec =
+                        //            productVM.SpecificationVMs.push({
+                        //                SpecificationId: specId,
+                        //                Value: specValue
+                        //            })
+                        //    })
 
 
-                    //    var group = JSON.stringify(productVM);
-                    //    console.log(group);
-                    //    $.ajax({
-                    //        contentType: "application/json",
-                    //        dataType: 'json',
-                    //        type: "POST",
-                    //        url: "/manage/product/Create",
-                    //        data: JSON.stringify(productVM),
-                    //        success: function (data) {
-                    //            console.log("output : " + JSON.stringify(data));
-                    //        },
-                    //        error: function (xhr, textStatus, errorThrown) {
-                    //            console.log("error : " + errorThrown);
-                    //        }
-                    //    });
+                        //    var group = JSON.stringify(productVM);
+                        //    console.log(group);
+                        //    $.ajax({
+                        //        contentType: "application/json",
+                        //        dataType: 'json',
+                        //        type: "POST",
+                        //        url: "/manage/product/Create",
+                        //        data: JSON.stringify(productVM),
+                        //        success: function (data) {
+                        //            console.log("output : " + JSON.stringify(data));
+                        //        },
+                        //        error: function (xhr, textStatus, errorThrown) {
+                        //            console.log("error : " + errorThrown);
+                        //        }
+                        //    });
 
-                    //})
+                        //})
 
-                            //var listofusers = [
-                            //    { id: 1, name: 'aaa' },
-                            //    { id: 2, name: 'bbb' },
-                            //    { id: 3, name: 'ccc' }
-                            //];
-                            //var group = JSON.stringify(listofusers);
-                            //console.log(group);
-                            //$.ajax({
-                            //    contentType: "application/json",
-                            //    dataType: 'json',
-                            //    type: "POST",
-                            //    url: "/manage/product/GetMesssage",
-                            //    data: group,
-                            //    success: function (data) {
-                            //        console.log("output : " + JSON.stringify(data));
-                            //    },
-                            //    error: function (data) {
-                            //        console.log("error : " + JSON.stringify(data));
-                            //    },
-                            //});
+                                //var listofusers = [
+                                //    { id: 1, name: 'aaa' },
+                                //    { id: 2, name: 'bbb' },
+                                //    { id: 3, name: 'ccc' }
+                                //];
+                                //var group = JSON.stringify(listofusers);
+                                //console.log(group);
+                                //$.ajax({
+                                //    contentType: "application/json",
+                                //    dataType: 'json',
+                                //    type: "POST",
+                                //    url: "/manage/product/GetMesssage",
+                                //    data: group,
+                                //    success: function (data) {
+                                //        console.log("output : " + JSON.stringify(data));
+                                //    },
+                                //    error: function (data) {
+                                //        console.log("error : " + JSON.stringify(data));
+                                //    },
+                                //});
 </script>
 
 @*<script>
