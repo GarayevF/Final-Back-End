@@ -6,6 +6,7 @@ using Smartelectronics.DataAccessLayer;
 using Smartelectronics.Extensions;
 using Smartelectronics.Models;
 using System.Data;
+using System.Drawing;
 
 namespace Smartelectronics.Areas.Manage.Controllers
 {
@@ -98,6 +99,12 @@ namespace Smartelectronics.Areas.Manage.Controllers
             if (!await _context.Brands.AnyAsync(c => c.IsDeleted == false && c.Id == productVM.BrandId))
             {
                 ModelState.AddModelError("BrandId", "Duzgun category secin");
+                return View(productVM);
+            }
+
+            if(productVM.Product.DiscountedPrice > productVM.Product.Price)
+            {
+                ModelState.AddModelError("DiscountedPrice", "Endirimli qiymət əsl qiymətdən yuxarı ola bilməz");
                 return View(productVM);
             }
 
@@ -328,18 +335,12 @@ namespace Smartelectronics.Areas.Manage.Controllers
                         return View(productVM);
                     }
 
-                    if (ifloanVM.InitialPayment + (ifloanVM.MonthlyPayment * loanRange.Range) != ifloanVM.TotalPayment)
-                    {
-                        ModelState.AddModelError($"IFLoanVMs[{count}].TotalPayment", "Hesablama yanlisdir");
-                        return View(productVM);
-                    }
-
                     ProductIFLoanRange productIFLoanRange = new ProductIFLoanRange
                     {
                         LoanRangeId = ifloanVM.LoanRangeId,
                         InitialPayment = ifloanVM.InitialPayment,
                         MonthlyPayment = ifloanVM.MonthlyPayment,
-                        TotalPayment = ifloanVM.TotalPayment,
+                        TotalPayment = ifloanVM.InitialPayment + (ifloanVM.MonthlyPayment * loanRange.Range),
                         IsDeleted = false,
                         CreatedAt = DateTime.UtcNow.AddHours(4),
                         CreatedBy = "System"
@@ -422,6 +423,110 @@ namespace Smartelectronics.Areas.Manage.Controllers
             return View();
         }
 
+        [HttpGet]
+        public async Task<IActionResult> Update(int? id)
+        {
+            ViewBag.MainCategories = await _context.Categories.Where(c => c.IsDeleted == false && c.IsMain == false).ToListAsync();
+            ViewBag.Brands = await _context.Brands.Where(c => c.IsDeleted == false).ToListAsync();
+            ViewBag.ProductCategorySpecifications = await _context.ProductCategorySpecifications.Where(a => a.IsDeleted == false).ToListAsync();
+            ViewBag.Colors = await _context.Colors.Where(c => c.IsDeleted == false).ToListAsync();
+            ViewBag.LaonRanges = await _context.LoanRanges.Where(c => c.IsDeleted == false).ToListAsync();
+            ViewBag.LoanCompanies = await _context.LoanCompanies.Where(c => c.IsDeleted == false).ToListAsync();
+
+            if (id == null) return BadRequest();
+
+            Product product = await _context.Products
+                .Include(p => p.CategoryBrand).ThenInclude(cb => cb.Category).ThenInclude(ct => ct.Parent).Where(b => b.IsDeleted == false)
+                .Include(p => p.CategoryBrand).ThenInclude(cb => cb.Brand)
+                .Include(p => p.ProductColors.Where(a => a.IsDeleted == false && a.ProductId == id))
+                 .ThenInclude(pa => pa.Color).Where(a => a.IsDeleted == false)
+                .Include(p => p.LoanTerms.Where(p => p.IsDeleted == false))
+                .ThenInclude(lt => lt.LoanTermLoanRanges).ThenInclude(ltlr => ltlr.LoanRange)
+                .Include(p => p.LoanTerms).ThenInclude(lt => lt.LoanCompany).Where(p => p.IsDeleted == false)
+                .Include(p => p.ProductCategorySpecifications.Where(p => p.IsDeleted == false && p.ProductId == id))
+                .ThenInclude(pcs => pcs.CategorySpecification).ThenInclude(cs => cs.Specification).ThenInclude(s => s.SpecificationGroup)
+                .Include(p => p.ProductCategorySpecifications).ThenInclude(pcs => pcs.CategorySpecification)
+                .ThenInclude(cs => cs.Category)
+                .Include(p => p.ProductLoanRanges.Where(pl => pl.IsDeleted == false)).ThenInclude(plr => plr.LoanRange)
+                .Include(p => p.ProductIFLoanRanges.Where(pl => pl.IsDeleted == false)).ThenInclude(plr => plr.LoanRange)
+                .FirstOrDefaultAsync(p => p.Id == id && p.IsDeleted == false);
+
+            if (product == null) return NotFound();
+
+            List<ProductCategorySpecification> productCategorySpecifications = await _context.ProductCategorySpecifications
+            .Include(pcs => pcs.CategorySpecification).ThenInclude(cs => cs.Specification).ThenInclude(s => s.SpecificationGroup)
+            .Where(pcs => pcs.ProductId == id).ToListAsync();
+
+            List<SpecificationVM> specifications = productCategorySpecifications
+                .Select(spec => new SpecificationVM
+                {
+                    SpecificationId = spec.CategorySpecification.Specification.Id,
+                    Name = spec.CategorySpecification.Specification.Name,
+                    Value = spec.Value
+                }).ToList();
+
+            List<LoanTermVM> loanTermVMs = product.LoanTerms
+                .Select(loan => new LoanTermVM
+                {
+                    LoanCompanyId = loan.LoanCompanyId,
+                    LoanRangeIds = loan.LoanRangeIds,
+                    Title = loan.Title
+                }).ToList();
+
+            List<IFLoanVM> iFLoanVMs = product.ProductIFLoanRanges
+                .Select(loan => new IFLoanVM
+                {
+                    InitialPayment = loan.InitialPayment,
+                    MonthlyPayment = loan.MonthlyPayment,
+                    LoanRangeId = loan.LoanRangeId,
+                }).ToList();
+
+            List<LoanVM> loanVMs = product.ProductLoanRanges
+                .Select(loan => new LoanVM
+                {
+                    LoanRangeId = loan.LoanRangeId,
+                    InterestForStandartUsers = loan.InterestForStandartUsers,
+                    InterestForVipUsers = loan.InterestForVipUsers
+                }).ToList();
+
+            IEnumerable<ColorVM> colorVMs = _context.ProductColors
+            .Include(pc => pc.Product)
+            .Include(pc => pc.Color)
+            .GroupBy(pc => new { pc.ProductId, pc.ColorId })
+            .Select(pc => new ColorVM
+            {
+                ProductId = pc.Key.ProductId,
+                ColorId = pc.Key.ColorId,
+                ProductColorImageVMs = _context.ProductColors
+                .Where(pci => pci.ProductId == pc.Key.ProductId && pci.ColorId == pc.Key.ColorId)
+                .Select(pci => new ProductColorImageVM
+                {
+                    ProductColorId = pci.Id,
+                    Image = pci.Image
+                })
+                .ToList()
+        })
+            .ToList();
+
+            ProductVM productVM = new ProductVM
+            {
+                Product = product,
+                SpecificationVMs = specifications,
+                LoanTermVMs = loanTermVMs,
+                IFLoanVMs = iFLoanVMs,
+                LoanVMs = loanVMs,
+                ColorIds = product.ColorIds,
+                BrandId = product.CategoryBrand.BrandId,
+                CategoryId = product.CategoryBrand.CategoryId,
+                IFLoanRangeIds = product.IFLoanRangeIds,
+                LoanRangeIds = product.LoanRangeIds,
+                LoanCompanyIds = product.LoanTerms.Select(a => a.LoanCompanyId).ToList(),
+                ColorVMs = colorVMs,
+            };
+
+            return View(productVM);
+        }
+
         public async Task<JsonResult> GetSpecifications(int? id)
         {
             List<Specification> specifications = await _context.CategorySpecifications
@@ -441,6 +546,18 @@ namespace Smartelectronics.Areas.Manage.Controllers
             return Json(loanRanges);
         }
 
+        private IEnumerable<ProductColorImageVM> GetImagesForProductColor(int? productId, int? colorId)
+        {
+            IEnumerable<ProductColorImageVM> images = _context.ProductColors
+                .Where(pci => pci.ProductId == productId && pci.ColorId == colorId)
+                .Select(pci => new ProductColorImageVM
+                {
+                    ProductColorId = pci.Id,
+                    Image = pci.Image
+                })
+                .ToList();
 
+            return images;
+        }
     }
 }

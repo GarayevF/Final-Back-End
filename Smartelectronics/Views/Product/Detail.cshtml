@@ -53,7 +53,7 @@
                                             <img src="~/assets/images/@loanTerm.LoanCompany?.Logo" alt="">
                                         </div>
                                         <div class="content">
-                                            <p>@loanTerm.LoanTermLoanRanges.Max(a => a.LoanRange).Range ay x @((Model.Product.Price / (double)@loanTerm.LoanTermLoanRanges?.Max(a => a.LoanRange).Range).ToString("N2")) AZN</p>
+                                            <p>@loanTerm.LoanTermLoanRanges?.MaxBy(a => a.LoanRange.Range)?.LoanRange.Range ay x @((Model.Product.Price / (double)@loanTerm?.LoanTermLoanRanges?.MaxBy(a => a.LoanRange.Range)?.LoanRange.Range).ToString("N2")) AZN</p>
                                             <span>@loanTerm.Title</span>
                                         </div>
                                     </div>

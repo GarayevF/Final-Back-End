@@ -16,5 +16,6 @@ namespace Smartelectronics.Areas.Manage.ViewModels.ProductViewModels
         public List<LoanTermVM>? LoanTermVMs { get; set; }
         public List<IFLoanVM>? IFLoanVMs { get; set; }
         public List<LoanVM>? LoanVMs { get; set; }
+        public IEnumerable<ColorVM> ColorVMs { get; set; }
     }
 }

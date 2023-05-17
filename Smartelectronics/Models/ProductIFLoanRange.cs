@@ -9,10 +9,10 @@ namespace Smartelectronics.Models
         public int LoanRangeId { get; set; }
         public LoanRange LoanRange { get; set; }
         [Column(TypeName = "money")]
-        public double? InitialPayment { get; set; }
+        public double InitialPayment { get; set; }
         [Column(TypeName = "money")]
-        public double? MonthlyPayment { get; set; }
+        public double MonthlyPayment { get; set; }
         [Column(TypeName = "money")]
-        public double? TotalPayment { get; set; }
+        public double TotalPayment { get; set; }
     }
 }

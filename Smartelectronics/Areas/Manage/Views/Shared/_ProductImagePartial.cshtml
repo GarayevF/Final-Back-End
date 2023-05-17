@@ -1,0 +1,16 @@
+﻿@model ColorVM
+
+@foreach (ProductColorImageVM image in Model.ProductColorImageVMs)
+{
+    <div>
+        <div>
+            <img style="width: 100px" src="~/assets/image/products/@image.Image" />
+        </div>
+        @if (Model.ProductColorImageVMs.Count() > 1)
+        {
+            <div>
+                <a asp-area="manage" asp-controller="product" asp-action="deleteimage" asp-route-id="@Model.ProductId" asp-route-imageId="@image.ProductColorId" class="btn btn-danger deleteImage">Delete</a>
+            </div>
+        }
+    </div>
+}
