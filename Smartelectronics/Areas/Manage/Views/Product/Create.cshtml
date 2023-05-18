@@ -93,15 +93,9 @@
                         <div class="form-group">
                             <label for="colorImage-@colorImageVM.ColorId"><span style="color: @colorImageVM.Name">@colorImageVM.Name</span> rəngi üçün şəkil(lər) seçin</label>
                             <input type="hidden" id="colorImageName-@colorImageVM.ColorId" name="ColorImageVMs[@count].Name" value="@colorImageVM.Name" />
-                            <input type="hidden" id="colorImageId-@colorImageVM.ColorId" name="ColorImageVMs[@count].ColorImageId" value="@colorImageVM.ColorId" />
+                            <input type="hidden" id="colorImageId-@colorImageVM.ColorId" name="ColorImageVMs[@count].ColorId" value="@colorImageVM.ColorId" />
                             <input type="file" accept="image/jpeg" multiple class="form-control color-input" id="colorImageValue-@colorImageVM.ColorId" name="ColorImageVMs[@count].Files" value="@colorImageVM.Files">
                             <span class="text text-danger">@ViewData.ModelState[$"ColorImageVMs[${@count}].Files"]?.Errors.First().ErrorMessage</span>
-                        </div>
-                        <div class="imageContainer d-flex">
-                            @if (Model?.ColorVMs?.FirstOrDefault(a => a.ColorId == colorImageVM.ColorId)?.ProductColorImageVMs != null && Model?.ColorVMs?.FirstOrDefault(a => a.ColorId == colorImageVM.ColorId).ProductColorImageVMs.Count() > 0)
-                            {
-                                @await Html.PartialAsync("_ProductImagePartial", Model.ColorVMs.FirstOrDefault(a => a.ColorId == colorImageVM.ColorId))
-                            }
                         </div>
                         count++;
                     }

@@ -1,6 +1,6 @@
 {
   "Version": 1,
-  "Hash": "z0gQfHX0MNZuM1W3hbZlguLEAibYa5HIWP6nretB0nk=",
+  "Hash": "08VxDL4oBgcxwKKqfmiImlHqZ9nBbXj3gQb3VTmMgsk=",
   "Source": "Smartelectronics",
   "BasePath": "_content/Smartelectronics",
   "Mode": "Default",
@@ -1088,23 +1088,6 @@
       "OriginalItemSpec": "wwwroot\\assets\\images\\products\\20230516184035714_3c56a82e-b8ee-4fe3-a619-936f222f9192.jpg"
     },
     {
-      "Identity": "C:\\Users\\Farid\\Desktop\\Smartelectronics\\Smartelectronics\\wwwroot\\assets\\images\\products\\20230516184035858_d81ed326-7c51-4d17-bd2f-7f87896db3f7.jpg",
-      "SourceId": "Smartelectronics",
-      "SourceType": "Discovered",
-      "ContentRoot": "C:\\Users\\Farid\\Desktop\\Smartelectronics\\Smartelectronics\\wwwroot\\",
-      "BasePath": "_content/Smartelectronics",
-      "RelativePath": "assets/images/products/20230516184035858_d81ed326-7c51-4d17-bd2f-7f87896db3f7.jpg",
-      "AssetKind": "All",
-      "AssetMode": "All",
-      "AssetRole": "Primary",
-      "RelatedAsset": "",
-      "AssetTraitName": "",
-      "AssetTraitValue": "",
-      "CopyToOutputDirectory": "Never",
-      "CopyToPublishDirectory": "PreserveNewest",
-      "OriginalItemSpec": "wwwroot\\assets\\images\\products\\20230516184035858_d81ed326-7c51-4d17-bd2f-7f87896db3f7.jpg"
-    },
-    {
       "Identity": "C:\\Users\\Farid\\Desktop\\Smartelectronics\\Smartelectronics\\wwwroot\\assets\\images\\products\\20230516184035864_a77d1230-a986-48d0-8407-b34007e9d24a.jpg",
       "SourceId": "Smartelectronics",
       "SourceType": "Discovered",
@@ -1154,6 +1137,23 @@
       "CopyToOutputDirectory": "Never",
       "CopyToPublishDirectory": "PreserveNewest",
       "OriginalItemSpec": "wwwroot\\assets\\images\\products\\20230516185234132_2fa36683-4393-4c2b-a0d7-6fa19cebb0b8.jpg"
+    },
+    {
+      "Identity": "C:\\Users\\Farid\\Desktop\\Smartelectronics\\Smartelectronics\\wwwroot\\assets\\images\\products\\20230518030516384_204dac93-1a2b-44f1-bcd1-ee0b76d5e16d.jpeg",
+      "SourceId": "Smartelectronics",
+      "SourceType": "Discovered",
+      "ContentRoot": "C:\\Users\\Farid\\Desktop\\Smartelectronics\\Smartelectronics\\wwwroot\\",
+      "BasePath": "_content/Smartelectronics",
+      "RelativePath": "assets/images/products/20230518030516384_204dac93-1a2b-44f1-bcd1-ee0b76d5e16d.jpeg",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot\\assets\\images\\products\\20230518030516384_204dac93-1a2b-44f1-bcd1-ee0b76d5e16d.jpeg"
     },
     {
       "Identity": "C:\\Users\\Farid\\Desktop\\Smartelectronics\\Smartelectronics\\wwwroot\\assets\\images\\product-types\\badge-blue.png",
@@ -1443,6 +1443,23 @@
       "CopyToOutputDirectory": "Never",
       "CopyToPublishDirectory": "PreserveNewest",
       "OriginalItemSpec": "wwwroot\\manage\\assets\\.DS_Store"
+    },
+    {
+      "Identity": "C:\\Users\\Farid\\Desktop\\Smartelectronics\\Smartelectronics\\wwwroot\\manage\\assets\\custom.js",
+      "SourceId": "Smartelectronics",
+      "SourceType": "Discovered",
+      "ContentRoot": "C:\\Users\\Farid\\Desktop\\Smartelectronics\\Smartelectronics\\wwwroot\\",
+      "BasePath": "_content/Smartelectronics",
+      "RelativePath": "manage/assets/custom.js",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot\\manage\\assets\\custom.js"
     },
     {
       "Identity": "C:\\Users\\Farid\\Desktop\\Smartelectronics\\Smartelectronics\\wwwroot\\manage\\assets\\images\\custom-select.png",

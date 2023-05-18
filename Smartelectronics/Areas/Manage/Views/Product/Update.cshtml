@@ -6,6 +6,7 @@
     IEnumerable<Color> colors = ViewBag.Colors;
     IEnumerable<LoanRange> loanRanges = ViewBag.LaonRanges;
     IEnumerable<LoanCompany> loanCompanies = ViewBag.LoanCompanies;
+    List<ProductColor> productColors = ViewBag.ProductColors;
 
     SelectList categorySelectList = new SelectList(categories, nameof(Category.Id), nameof(Category.Name));
     SelectList brandSelectList = new SelectList(brands, nameof(Brand.Id), nameof(Brand.Name));
@@ -36,6 +37,7 @@
                 <label asp-for="@Model.Product.Title">Məhsul adı</label>
                 <input asp-for="@Model.Product.Title" class="form-control title-input" />
             </div>
+            <input type="hidden" asp-for="@Model.Product.Id" class="form-control title-input" />
             <div class="form-group">
                 <label asp-for="@Model.Product.Count">Say</label>
                 <input asp-for="@Model.Product.Count" class="form-control" />
@@ -88,14 +90,20 @@
                 @if (Model?.ColorImageVMs != null && Model?.ColorImageVMs.Count() > 0)
                 {
                     int count = 0;
-                    foreach (ColorImageVM colorImageVM in Model.ColorImageVMs)
+                    foreach (ColorImageVM colorImageVM in Model.ColorImageVMs.DistinctBy(a => a.ColorId))
                     {
                         <div class="form-group">
                             <label for="colorImage-@colorImageVM.ColorId"><span style="color: @colorImageVM.Name">@colorImageVM.Name</span> rəngi üçün şəkil(lər) seçin</label>
                             <input type="hidden" id="colorImageName-@colorImageVM.ColorId" name="ColorImageVMs[@count].Name" value="@colorImageVM.Name" />
-                            <input type="hidden" id="colorImageId-@colorImageVM.ColorId" name="ColorImageVMs[@count].ColorImageId" value="@colorImageVM.ColorId" />
+                            <input type="hidden" id="colorImageId-@colorImageVM.ColorId" name="ColorImageVMs[@count].ColorId" value="@colorImageVM.ColorId" />
                             <input type="file" accept="image/jpeg" multiple class="form-control color-input" id="colorImageValue-@colorImageVM.ColorId" name="ColorImageVMs[@count].Files" value="@colorImageVM.Files">
                             <span class="text text-danger">@ViewData.ModelState[$"ColorImageVMs[${@count}].Files"]?.Errors.First().ErrorMessage</span>
+                        </div>
+                        <div class="imageContainer d-flex">
+                            @if (productColors.Select(p => p.ProductId == Model.Product.Id && p.ColorId == colorImageVM.ColorId) != null && productColors.Select(p => p.ProductId == Model.Product.Id && p.ColorId == colorImageVM.ColorId).Count() > 0)
+                            {
+                                @await Html.PartialAsync("_ProductImagePartial", productColors.Where(p => p.ProductId == Model.Product.Id && p.ColorId == colorImageVM.ColorId).ToList())
+                            }
                         </div>
                         count++;
                     }
