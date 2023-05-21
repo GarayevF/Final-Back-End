@@ -887,7 +887,9 @@
                 <div class="content">
                     <div class="main">
                         <div class="row">
-                        @await Html.PartialAsync("_WishlistMainPartial", Model);
+                        <div class="wishlist-main-div">
+                            @await Html.PartialAsync("_WishlistMainPartial", Model);
+                        </div>
                         </div>
                     </div>
                 </div>

@@ -4,6 +4,7 @@ using Microsoft.EntityFrameworkCore;
 using Newtonsoft.Json;
 using Smartelectronics.DataAccessLayer;
 using Smartelectronics.Models;
+using Smartelectronics.ViewModels.BasketViewModels;
 using Smartelectronics.ViewModels.WishlistViewModels;
 
 namespace Smartelectronics.Controllers
@@ -29,13 +30,24 @@ namespace Smartelectronics.Controllers
 
                 foreach (WishlistVM wishlistVM in wishlistVMs)
                 {
-                    Product product = await _context.Products.FirstOrDefaultAsync(p => p.IsDeleted == false && p.Id == wishlistVM.Id);
+                    Product product = await _context.Products
+                        .Include(p => p.ProductColors.Where(a => a.IsDeleted == false))
+                         .ThenInclude(pa => pa.Color).Where(a => a.IsDeleted == false)
+                         .Include(p => p.LoanTerms.Where(p => p.IsDeleted == false))
+                        .ThenInclude(lt => lt.LoanTermLoanRanges).ThenInclude(ltlr => ltlr.LoanRange)
+                        .Include(p => p.LoanTerms).ThenInclude(lt => lt.LoanCompany).Where(p => p.IsDeleted == false)
+                        .Include(p => p.ProductLoanRanges.Where(pl => pl.IsDeleted == false)).ThenInclude(plr => plr.LoanRange)
+                        .FirstOrDefaultAsync(p => p.IsDeleted == false && p.Id == wishlistVM.Id);
 
                     if (product != null)
                     {
                         wishlistVM.Title = product.Title;
-                        wishlistVM.Price = product.DiscountedPrice > 0 ? product.DiscountedPrice : product.Price;
-                        wishlistVM.Image = product.ProductColors.FirstOrDefault().Image;
+                        wishlistVM.BrandName = product?.Brand?.Name;
+                        wishlistVM.LoanTerms = product.LoanTerms.Where(a => a.IsDeleted == false).ToList();
+                        wishlistVM.ProductLoanRanges = product.ProductLoanRanges.Where(a => a.IsDeleted == false && a.ProductId == product.Id).ToList();
+                        wishlistVM.ProductColors = product.ProductColors.Where(a => a.IsDeleted == false && a.ProductId == product.Id).ToList();
+                        wishlistVM.Price = product.Price;
+                        wishlistVM.DiscountedPrice = product.DiscountedPrice;
                     }
                 }
             }
@@ -70,20 +82,31 @@ namespace Smartelectronics.Controllers
 
             foreach (WishlistVM wishlistVM in wishlistVMs)
             {
-                Product product = await _context.Products.FirstOrDefaultAsync(p => p.IsDeleted == false && p.Id == wishlistVM.Id);
+                Product product = await _context.Products
+                        .Include(p => p.ProductColors.Where(a => a.IsDeleted == false))
+                         .ThenInclude(pa => pa.Color).Where(a => a.IsDeleted == false)
+                         .Include(p => p.LoanTerms.Where(p => p.IsDeleted == false))
+                        .ThenInclude(lt => lt.LoanTermLoanRanges).ThenInclude(ltlr => ltlr.LoanRange)
+                        .Include(p => p.LoanTerms).ThenInclude(lt => lt.LoanCompany).Where(p => p.IsDeleted == false)
+                        .Include(p => p.ProductLoanRanges.Where(pl => pl.IsDeleted == false)).ThenInclude(plr => plr.LoanRange)
+                        .FirstOrDefaultAsync(p => p.IsDeleted == false && p.Id == wishlistVM.Id);
 
                 if (product != null)
                 {
                     wishlistVM.Title = product.Title;
-                    wishlistVM.Price = product.DiscountedPrice > 0 ? product.DiscountedPrice : product.Price;
-                    wishlistVM.Image = product.MainImage;
+                    wishlistVM.BrandName = product?.Brand?.Name;
+                    wishlistVM.LoanTerms = product.LoanTerms.Where(a => a.IsDeleted == false).ToList();
+                    wishlistVM.ProductLoanRanges = product.ProductLoanRanges.Where(a => a.IsDeleted == false && a.ProductId == product.Id).ToList();
+                    wishlistVM.ProductColors = product.ProductColors.Where(a => a.IsDeleted == false && a.ProductId == product.Id).ToList();
+                    wishlistVM.Price = product.Price;
+                    wishlistVM.DiscountedPrice = product.DiscountedPrice;
                 }
             }
 
             cookie = JsonConvert.SerializeObject(wishlistVMs);
             HttpContext.Response.Cookies.Append("wishlist", cookie);
 
-            return PartialView("_WishlistMainPartial", wishlistVMs);
+            return PartialView("_WishlistCartPartial", wishlistVMs);
         }
 
         public async Task<IActionResult> AddWishlist(int? id)
@@ -152,20 +175,62 @@ namespace Smartelectronics.Controllers
             cookie = JsonConvert.SerializeObject(wishlistVMs);
             HttpContext.Response.Cookies.Append("wishlist", cookie);
 
-            //foreach (WishlistVM wishlistVM in wishlistVMs)
-            //{
-            //    Product product = await _context.Products.FirstOrDefaultAsync(p => p.IsDeleted == false && p.Id == wishlistVM.Id);
+            foreach (WishlistVM wishlistVM in wishlistVMs)
+            {
+                Product product = await _context.Products
+                        .Include(p => p.ProductColors.Where(a => a.IsDeleted == false))
+                         .ThenInclude(pa => pa.Color).Where(a => a.IsDeleted == false)
+                         .Include(p => p.LoanTerms.Where(p => p.IsDeleted == false))
+                        .ThenInclude(lt => lt.LoanTermLoanRanges).ThenInclude(ltlr => ltlr.LoanRange)
+                        .Include(p => p.LoanTerms).ThenInclude(lt => lt.LoanCompany).Where(p => p.IsDeleted == false)
+                        .Include(p => p.ProductLoanRanges.Where(pl => pl.IsDeleted == false)).ThenInclude(plr => plr.LoanRange)
+                        .FirstOrDefaultAsync(p => p.IsDeleted == false && p.Id == wishlistVM.Id);
 
-            //    if (product != null)
-            //    {
-            //        wishlistVM.Title = product.Title;
-            //        wishlistVM.Price = product.DiscountedPrice > 0 ? product.DiscountedPrice : product.Price;
-            //        wishlistVM.Image = product.MainImage;
-            //        wishlistVM.ExTax = product.ExTax;
-            //    }
-            //}
+                if (product != null)
+                {
+                    wishlistVM.Title = product.Title;
+                    wishlistVM.BrandName = product?.Brand?.Name;
+                    wishlistVM.LoanTerms = product.LoanTerms.Where(a => a.IsDeleted == false).ToList();
+                    wishlistVM.ProductLoanRanges = product.ProductLoanRanges.Where(a => a.IsDeleted == false && a.ProductId == product.Id).ToList();
+                    wishlistVM.ProductColors = product.ProductColors.Where(a => a.IsDeleted == false && a.ProductId == product.Id).ToList();
+                    wishlistVM.Price = product.Price;
+                    wishlistVM.DiscountedPrice = product.DiscountedPrice;
+                }
+            }
 
-            return Ok();
+            return PartialView("_WishlistCartPartial", wishlistVMs);
+        }
+
+        public async Task<IActionResult> MainWishlist()
+        {
+            string wish = HttpContext.Request.Cookies["wishlist"];
+
+            List<WishlistVM> wishlistVMs = JsonConvert.DeserializeObject<List<WishlistVM>>(wish);
+
+            foreach (WishlistVM wishlistVM in wishlistVMs)
+            {
+                Product product = await _context.Products
+                        .Include(p => p.ProductColors.Where(a => a.IsDeleted == false))
+                         .ThenInclude(pa => pa.Color).Where(a => a.IsDeleted == false)
+                         .Include(p => p.LoanTerms.Where(p => p.IsDeleted == false))
+                        .ThenInclude(lt => lt.LoanTermLoanRanges).ThenInclude(ltlr => ltlr.LoanRange)
+                        .Include(p => p.LoanTerms).ThenInclude(lt => lt.LoanCompany).Where(p => p.IsDeleted == false)
+                        .Include(p => p.ProductLoanRanges.Where(pl => pl.IsDeleted == false)).ThenInclude(plr => plr.LoanRange)
+                        .FirstOrDefaultAsync(p => p.IsDeleted == false && p.Id == wishlistVM.Id);
+
+                if (product != null)
+                {
+                    wishlistVM.Title = product.Title;
+                    wishlistVM.BrandName = product?.Brand?.Name;
+                    wishlistVM.LoanTerms = product.LoanTerms.Where(a => a.IsDeleted == false).ToList();
+                    wishlistVM.ProductLoanRanges = product.ProductLoanRanges.Where(a => a.IsDeleted == false && a.ProductId == product.Id).ToList();
+                    wishlistVM.ProductColors = product.ProductColors.Where(a => a.IsDeleted == false && a.ProductId == product.Id).ToList();
+                    wishlistVM.Price = product.Price;
+                    wishlistVM.DiscountedPrice = product.DiscountedPrice;
+                }
+            }
+
+            return PartialView("_WishlistMainPartial", wishlistVMs);
         }
     }
 }

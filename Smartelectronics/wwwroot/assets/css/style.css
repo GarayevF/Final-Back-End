@@ -4077,7 +4077,7 @@ header .header2 .container .header-bottom-m .mobile-menu .menu-list .menu-item .
   display: flex;
   align-items: center;
 }
-.main-basket .bottom .container .content .main .row .left .content-cards-div .basket-card .basket-card-info .basket-card-bottom .count-input button {
+.main-basket .bottom .container .content .main .row .left .content-cards-div .basket-card .basket-card-info .basket-card-bottom .count-input a {
   width: 20px;
   height: 20px;
   border: 1px solid gray;

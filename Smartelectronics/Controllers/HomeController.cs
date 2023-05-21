@@ -23,7 +23,7 @@ namespace Smartelectronics.Controllers
                 Sliders = await _context.Sliders.Where(s => s.IsDeleted == false).ToListAsync(),
                 Categories = await _context.Categories.Where(c => c.IsDeleted == false && c.IsMain)
                 .Include(c => c.Children.Where(ct => ct.IsDeleted == false && ct.IsMain == false))
-                .ThenInclude(c => c.CategoryBrands.Where(ctb => ctb.IsDeleted == false)).ThenInclude(e => e.Brand).ToListAsync(),
+                .ThenInclude(c => c.Products.Where(ctb => ctb.IsDeleted == false)).ThenInclude(e => e.Brand).ToListAsync(),
                 NewArrival = await _context.Products.Where(c => c.IsDeleted == false && c.IsNewArrival)
                 .Include(p=>p.ProductColors).ThenInclude(pc => pc.Color).Take(8)
                 .Include(p => p.ProductLoanRanges.Where(pl => pl.IsDeleted == false)).ThenInclude(plr => plr.LoanRange).ToListAsync(),

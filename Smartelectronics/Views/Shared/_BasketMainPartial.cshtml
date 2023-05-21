@@ -12,27 +12,27 @@
                             {
                                 <div class="basket-card">
                                     <div class="basket-image-div">
-                                        <img class="basket-image" src="~/assets/images/@basketVM.Image" alt="">
+                                        <img class="basket-image" src="~/assets/images/products/@basketVM.Image" alt="">
                                     </div>
                                     <div class="basket-card-info">
                                         <div class="basket-card-top">
                                             <div class="basket-card-title">
-                                                <p>@basketVM.Brand</p>
+                                                <p>@basketVM.Brand.Name</p>
                                                 <span>@basketVM.Title</span>
                                             </div>
-                                            <div class="basket-card-delete-btn">
+                                            <a asp-action="deletebasket" asp-controller="basket" asp-route-id="@basketVM.Id" class="basket-card-delete-btn">
                                                 <i class="fa-regular fa-trash-can"></i>
-                                            </div>
+                                            </a>
                                         </div>
                                         <div class="basket-card-bottom">
                                             <div class="count-input">
-                                                <button class="btn_decrease">
+                                                <a asp-controller="basket" asp-action="removebasket" asp-route-id="@basketVM.Id" class="btn_decrease subbasket">
                                                     <i class="fa-solid fa-minus"></i>
-                                                </button>
+                                                </a>
                                                 <input disabled="" value="@basketVM.Count" type="text" class="item_count ng-untouched ng-pristine">
-                                                <button class="btn_increase">
+                                                <a asp-controller="basket" asp-action="addbasket" asp-route-id="@basketVM.Id" class="btn_increase addtobasket">
                                                     <i class="fa-solid fa-plus"></i>
-                                                </button>
+                                                </a>
                                             </div>
                                             <span>@basketVM.Price <small>AZN</small></span>
                                         </div>

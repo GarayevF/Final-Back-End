@@ -6,6 +6,7 @@ using Smartelectronics.DataAccessLayer;
 using Smartelectronics.Extensions;
 using Smartelectronics.Helpers;
 using Smartelectronics.Models;
+using Smartelectronics.ViewModels;
 using System.Data;
 using System.Drawing;
 
@@ -22,9 +23,14 @@ namespace Smartelectronics.Areas.Manage.Controllers
             _context = context;
             _env = env;
         }
-        public IActionResult Index()
+        public IActionResult Index(int pageIndex = 1)
         {
-            return View();
+            IQueryable<Product> queries = _context.Products
+                .Include(p => p.ProductColors.Where(a => a.IsDeleted == false))
+                .Include(p => p.Category)
+                .Where(p => p.IsDeleted == false);
+
+            return View(PageNatedList<Product>.Create(queries, pageIndex, 3, 5));
         }
 
         [HttpGet]
@@ -79,55 +85,55 @@ namespace Smartelectronics.Areas.Manage.Controllers
                 return View(productVM);
             }
 
-            if (productVM.CategoryId == null)
+            if (productVM.Product.CategoryId == null)
             {
-                ModelState.AddModelError("CategoryId", "Category Mutleq secilmelidir");
+                ModelState.AddModelError("Product.CategoryId", "Category Mutleq secilmelidir");
                 return View(productVM);
             }
 
-            if (!await _context.Categories.AnyAsync(c => c.IsDeleted == false && c.Id == productVM.CategoryId))
+            if (!await _context.Categories.AnyAsync(c => c.IsDeleted == false && c.Id == productVM.Product.CategoryId))
             {
-                ModelState.AddModelError("CategoryId", "Duzgun category secin");
+                ModelState.AddModelError("Product.CategoryId", "Duzgun category secin");
                 return View(productVM);
             }
 
-            if (productVM.BrandId == null)
+            if (productVM.Product.BrandId == null)
             {
-                ModelState.AddModelError("BrandId", "Brand Mutleq secilmelidir");
+                ModelState.AddModelError("Product.BrandId", "Brand Mutleq secilmelidir");
                 return View(productVM);
             }
 
-            if (!await _context.Brands.AnyAsync(c => c.IsDeleted == false && c.Id == productVM.BrandId))
+            if (!await _context.Brands.AnyAsync(c => c.IsDeleted == false && c.Id == productVM.Product.BrandId))
             {
-                ModelState.AddModelError("BrandId", "Duzgun category secin");
+                ModelState.AddModelError("Product.BrandId", "Duzgun category secin");
                 return View(productVM);
             }
 
             if(productVM.Product.DiscountedPrice > productVM.Product.Price)
             {
-                ModelState.AddModelError("DiscountedPrice", "Endirimli qiymət əsl qiymətdən yuxarı ola bilməz");
+                ModelState.AddModelError("Product.DiscountedPrice", "Endirimli qiymət əsl qiymətdən yuxarı ola bilməz");
                 return View(productVM);
             }
 
-            CategoryBrand categoryBrand;
+            //CategoryBrand categoryBrand;
 
-            if(await _context.CategoryBrands.AnyAsync(c => c.CategoryId == productVM.CategoryId && c.BrandId == productVM.BrandId))
-            {
-                categoryBrand = await _context.CategoryBrands.FirstOrDefaultAsync(c => c.CategoryId == productVM.CategoryId && c.BrandId == productVM.BrandId);
-            }
-            else
-            {
-                categoryBrand = new CategoryBrand
-                {
-                    CategoryId = productVM.CategoryId,
-                    BrandId = productVM.BrandId,
-                    IsDeleted = false,
-                    CreatedAt = DateTime.UtcNow.AddHours(4),
-                    CreatedBy = "System"
-                };
-            }
+            //if(await _context.CategoryBrands.AnyAsync(c => c.CategoryId == productVM.CategoryId && c.BrandId == productVM.BrandId))
+            //{
+            //    categoryBrand = await _context.CategoryBrands.FirstOrDefaultAsync(c => c.CategoryId == productVM.CategoryId && c.BrandId == productVM.BrandId);
+            //}
+            //else
+            //{
+            //    categoryBrand = new CategoryBrand
+            //    {
+            //        CategoryId = productVM.CategoryId,
+            //        BrandId = productVM.BrandId,
+            //        IsDeleted = false,
+            //        CreatedAt = DateTime.UtcNow.AddHours(4),
+            //        CreatedBy = "System"
+            //    };
+            //}
 
-            productVM.Product.CategoryBrand = categoryBrand;
+            //productVM.Product.CategoryBrand = categoryBrand;
 
             if (productVM.SpecificationVMs != null && productVM.SpecificationVMs.Count() > 0)
             {
@@ -145,7 +151,7 @@ namespace Smartelectronics.Areas.Manage.Controllers
                         .Include(s => s.SpecificationGroup).FirstOrDefaultAsync(a => a.Id == specificationVM.SpecificationId);
 
                     CategorySpecification categorySpecification = await _context.CategorySpecifications.Where(c => c.IsDeleted == false)
-                        .FirstOrDefaultAsync(c => c.CategoryId == productVM.CategoryId && c.SpecificationId == specificationVM.SpecificationId);
+                        .FirstOrDefaultAsync(c => c.CategoryId == productVM.Product.CategoryId && c.SpecificationId == specificationVM.SpecificationId);
 
                     ProductCategorySpecification productCategorySpecification = new ProductCategorySpecification
                     {
@@ -395,8 +401,8 @@ namespace Smartelectronics.Areas.Manage.Controllers
                 productVM.Product.ProductLoanRanges = loanRanges;
             }
 
-            string seria = _context.Categories.FirstOrDefault(c => c.Id == productVM.Product.CategoryBrand.CategoryId).Name.Substring(0, 2);
-            seria += _context.Brands.FirstOrDefault(c => c.Id == productVM.Product.CategoryBrand.BrandId).Name.Substring(0, 2);
+            string seria = _context.Categories.FirstOrDefault(c => c.Id == productVM.Product.CategoryId).Name.Substring(0, 2);
+            seria += _context.Brands.FirstOrDefault(c => c.Id == productVM.Product.BrandId).Name.Substring(0, 2);
             seria = seria.ToLower();
 
             int code = _context.Products.Where(p => p.Seria == seria).OrderByDescending(p => p.Id).FirstOrDefault() != null ?
@@ -428,8 +434,8 @@ namespace Smartelectronics.Areas.Manage.Controllers
             if (id == null) return BadRequest();
 
             Product product = await _context.Products
-                .Include(p => p.CategoryBrand).ThenInclude(cb => cb.Category).ThenInclude(ct => ct.Parent).Where(b => b.IsDeleted == false)
-                .Include(p => p.CategoryBrand).ThenInclude(cb => cb.Brand)
+                .Include(cb => cb.Category).ThenInclude(ct => ct.Parent).Where(b => b.IsDeleted == false)
+                .Include(cb => cb.Brand)
                 .Include(p => p.ProductColors.Where(a => a.IsDeleted == false && a.ProductId == id))
                  .ThenInclude(pa => pa.Color).Where(a => a.IsDeleted == false)
                 .Include(p => p.LoanTerms.Where(p => p.IsDeleted == false))
@@ -496,8 +502,6 @@ namespace Smartelectronics.Areas.Manage.Controllers
                 IFLoanVMs = iFLoanVMs,
                 LoanVMs = loanVMs,
                 ColorIds = product.ProductColors.Where(p => p.IsDeleted == false).Select(p => p.Color.Id).ToList(),
-                BrandId = product.CategoryBrand.BrandId,
-                CategoryId = product.CategoryBrand.CategoryId,
                 IFLoanRangeIds = product.ProductIFLoanRanges.Where(p => p.IsDeleted == false).Select(p => p.LoanRangeId).ToList(),
                 LoanRangeIds = product.ProductLoanRanges.Where(p => p.IsDeleted == false).Select(p => p.LoanRangeId).ToList(),
                 LoanCompanyIds = product.LoanTerms.Select(a => a.LoanCompanyId).ToList(),
@@ -552,8 +556,8 @@ namespace Smartelectronics.Areas.Manage.Controllers
             if (id != productVM.Product.Id) return BadRequest();
 
             Product dbproduct = await _context.Products
-                .Include(p => p.CategoryBrand).ThenInclude(cb => cb.Category).ThenInclude(ct => ct.Parent).Where(b => b.IsDeleted == false)
-                .Include(p => p.CategoryBrand).ThenInclude(cb => cb.Brand)
+                .Include(cb => cb.Category).ThenInclude(ct => ct.Parent).Where(b => b.IsDeleted == false)
+                .Include(cb => cb.Brand)
                 .Include(p => p.ProductColors.Where(a => a.IsDeleted == false && a.ProductId == id))
                  .ThenInclude(pa => pa.Color).Where(a => a.IsDeleted == false)
                 .Include(p => p.LoanTerms.Where(p => p.IsDeleted == false))
@@ -569,70 +573,70 @@ namespace Smartelectronics.Areas.Manage.Controllers
 
             if (dbproduct == null) return NotFound();
 
-            if (productVM.CategoryId == null)
+            if (productVM.Product.CategoryId == null)
             {
-                ModelState.AddModelError("CategoryId", "Category Mutleq secilmelidir");
+                ModelState.AddModelError("Product.CategoryId", "Category Mutleq secilmelidir");
                 return View(productVM);
             }
 
-            if (!await _context.Categories.AnyAsync(c => c.IsDeleted == false && c.Id == productVM.CategoryId))
+            if (!await _context.Categories.AnyAsync(c => c.IsDeleted == false && c.Id == productVM.Product.CategoryId))
             {
-                ModelState.AddModelError("CategoryId", "Duzgun category secin");
+                ModelState.AddModelError("Product.CategoryId", "Duzgun category secin");
                 return View(productVM);
             }
 
-            if (productVM.BrandId == null)
+            if (productVM.Product.BrandId == null)
             {
-                ModelState.AddModelError("BrandId", "Brand Mutleq secilmelidir");
+                ModelState.AddModelError("Product.BrandId", "Brand Mutleq secilmelidir");
                 return View(productVM);
             }
 
-            if (!await _context.Brands.AnyAsync(c => c.IsDeleted == false && c.Id == productVM.BrandId))
+            if (!await _context.Brands.AnyAsync(c => c.IsDeleted == false && c.Id == productVM.Product.BrandId))
             {
-                ModelState.AddModelError("BrandId", "Duzgun category secin");
+                ModelState.AddModelError("Product.BrandId", "Duzgun category secin");
                 return View(productVM);
             }
 
             if (productVM.Product.DiscountedPrice > productVM.Product.Price)
             {
-                ModelState.AddModelError("DiscountedPrice", "Endirimli qiymət əsl qiymətdən yuxarı ola bilməz");
+                ModelState.AddModelError("Product.DiscountedPrice", "Endirimli qiymət əsl qiymətdən yuxarı ola bilməz");
                 return View(productVM);
             }
 
-            CategoryBrand categoryBrand;
+            //CategoryBrand categoryBrand;
 
-            if (await _context.CategoryBrands.AnyAsync(c => c.CategoryId == productVM.CategoryId && c.BrandId == productVM.BrandId))
-            {
-                categoryBrand = await _context.CategoryBrands.FirstOrDefaultAsync(c => c.CategoryId == productVM.CategoryId && c.BrandId == productVM.BrandId);
+            //if (await _context.CategoryBrands.AnyAsync(c => c.CategoryId == productVM.CategoryId && c.BrandId == productVM.BrandId))
+            //{
+            //    categoryBrand = await _context.CategoryBrands.FirstOrDefaultAsync(c => c.CategoryId == productVM.CategoryId && c.BrandId == productVM.BrandId);
 
-                if(dbproduct.CategoryBrand.Id != categoryBrand.Id)
-                {
-                    dbproduct.CategoryBrand.IsDeleted = true;
-                    dbproduct.CategoryBrand.DeletedAt = DateTime.UtcNow.AddHours(4);
-                    dbproduct.CategoryBrand.DeletedBy = "System";
-                }
+            //    if(dbproduct.CategoryBrand.Id != categoryBrand.Id)
+            //    {
+            //        dbproduct.CategoryBrand.IsDeleted = true;
+            //        dbproduct.CategoryBrand.DeletedAt = DateTime.UtcNow.AddHours(4);
+            //        dbproduct.CategoryBrand.DeletedBy = "System";
+            //    }
 
-                ////teze ile kohnenin idleri tutusmursa kohnenin isdeleted true
-            }
-            else
-            {
-                categoryBrand = new CategoryBrand
-                {
-                    CategoryId = productVM.CategoryId,
-                    BrandId = productVM.BrandId,
-                    IsDeleted = false,
-                    CreatedAt = DateTime.UtcNow.AddHours(4),
-                    CreatedBy = "System"
-                };
+            //    ////teze ile kohnenin idleri tutusmursa kohnenin isdeleted true
+            //}
+            //else
+            //{
+            //    categoryBrand = new CategoryBrand
+            //    {
+            //        CategoryId = productVM.CategoryId,
+            //        BrandId = productVM.BrandId,
+            //        IsDeleted = false,
+            //        CreatedAt = DateTime.UtcNow.AddHours(4),
+            //        CreatedBy = "System"
+            //    };
 
-                dbproduct.CategoryBrand.IsDeleted = true;
-                dbproduct.CategoryBrand.DeletedAt = DateTime.UtcNow.AddHours(4);
-                dbproduct.CategoryBrand.DeletedBy = "System";
+            //    dbproduct.CategoryBrand.IsDeleted = true;
+            //    dbproduct.CategoryBrand.DeletedAt = DateTime.UtcNow.AddHours(4);
+            //    dbproduct.CategoryBrand.DeletedBy = "System";
 
-                ////kohnenin isdeleted true
-            }
+            //    ////kohnenin isdeleted true
+            //}
 
-            productVM.Product.CategoryBrand = categoryBrand;
+            //productVM.Product.Category = categoryBrand;
 
 
 
@@ -653,7 +657,7 @@ namespace Smartelectronics.Areas.Manage.Controllers
                         .Include(s => s.SpecificationGroup).FirstOrDefaultAsync(a => a.Id == specificationVM.SpecificationId);
 
                     CategorySpecification categorySpecification = await _context.CategorySpecifications.Where(c => c.IsDeleted == false)
-                        .FirstOrDefaultAsync(c => c.CategoryId == productVM.CategoryId && c.SpecificationId == specificationVM.SpecificationId);
+                        .FirstOrDefaultAsync(c => c.CategoryId == productVM.Product.CategoryId && c.SpecificationId == specificationVM.SpecificationId);
 
                     ////kohneni product id ile tap isdeleted true ele
 
@@ -968,6 +972,28 @@ namespace Smartelectronics.Areas.Manage.Controllers
 
             return View();
 
+        }
+
+        [HttpGet]
+        public async Task<IActionResult> Delete(int? id)
+        {
+            if (id == null) return BadRequest();
+
+            if (!await _context.Products.AnyAsync(p => p.Id == id && p.IsDeleted == false)) return BadRequest();
+
+            Product dbproduct = await _context.Products
+                .FirstOrDefaultAsync(p => p.Id == id && p.IsDeleted == false);
+
+            if (dbproduct == null)
+            {
+                return NotFound();
+            }
+
+            dbproduct.IsDeleted = true;
+
+            await _context.SaveChangesAsync();
+
+            return RedirectToAction(nameof(Index));
         }
 
         public async Task<JsonResult> GetSpecifications(int? id)

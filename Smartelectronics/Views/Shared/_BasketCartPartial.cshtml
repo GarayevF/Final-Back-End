@@ -21,12 +21,12 @@
                         <div class="basket-card-info">
                             <div class="basket-card-top">
                                 <div class="basket-card-title">
-                                    <p>@basketVM.Brand.Name</p>
-                                    <span>@basketVM.Title</span>
+                                    <p>@basketVM?.Brand?.Name</p>
+                                    <span>@basketVM?.Title</span>
                                 </div>
-                                <div class="basket-card-delete-btn">
+                                <a asp-action="deletebasket" asp-controller="basket" asp-route-id="@basketVM.Id" class="basket-card-delete-btn">
                                     <i class="fa-regular fa-trash-can"></i>
-                                </div>
+                                </a>
                             </div>
                             <div class="basket-card-bottom">
                                 <p>Say : <small>@basketVM.Count</small></p>

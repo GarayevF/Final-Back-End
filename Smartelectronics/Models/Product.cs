@@ -11,6 +11,10 @@ namespace Smartelectronics.Models
         public double Price { get; set; }
         [Column(TypeName = "money")]
         public double DiscountedPrice { get; set; }
+        public int? CategoryId { get; set; }
+        public Category? Category { get; set; }
+        public int? BrandId { get; set; }
+        public Brand? Brand { get; set; }
         public int Count { get; set; }
 
         [StringLength(4)]
@@ -23,8 +27,6 @@ namespace Smartelectronics.Models
         public List<LoanTerm>? LoanTerms { get; set; }
         public List<ProductIFLoanRange>? ProductIFLoanRanges { get; set; }
         public List<ProductLoanRange>? ProductLoanRanges { get; set; }
-        public int? CategoryBrandId { get; set; }
-        public CategoryBrand? CategoryBrand { get; set; }
         public List<ProductImage>? ProductImages { get; set; }
         public IEnumerable<Basket>? Baskets { get; set; }
         public IEnumerable<OrderItem>? OrderItems { get; set; }

@@ -6,11 +6,16 @@ namespace Smartelectronics.ViewModels.ProductViewModels
     {
         public static SpecificationVM Map(ProductCategorySpecification spec)
         {
-            return new SpecificationVM
+            if (spec != null && spec.CategorySpecification != null && spec.CategorySpecification.Specification != null)
             {
-                Name = spec.CategorySpecification.Specification.Name,
-                Value = spec.Value
-            };
+                return new SpecificationVM
+                {
+                    Name = spec.CategorySpecification.Specification.Name,
+                    Value = spec.Value
+                };
+            }
+
+            return null; // Ya da varsayılan bir değer döndürebilirsiniz
         }
     }
     

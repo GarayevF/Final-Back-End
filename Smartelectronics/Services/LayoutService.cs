@@ -116,9 +116,7 @@ namespace Smartelectronics.Services
                             WishlistVM wishlistVM = new WishlistVM();
 
                             wishlistVM.Id = product.Id;
-                            wishlistVM.Title = product.Title;
-                            wishlistVM.Price = product.DiscountedPrice > 0 ? product.DiscountedPrice : product.Price;
-                            wishlistVM.Image = product.MainImage;
+                            wishlistVM.Product = product;
 
                             wishlistVMs.Add(wishlistVM);
                         }
@@ -129,13 +127,24 @@ namespace Smartelectronics.Services
                     wishlistVMs = JsonConvert.DeserializeObject<List<WishlistVM>>(cookie);
                     foreach (WishlistVM wishlistVM in wishlistVMs)
                     {
-                        Product product = await _context.Products.FirstOrDefaultAsync(p => p.Id == wishlistVM.Id);
+                        Product product = await _context.Products
+                        .Include(p => p.ProductColors.Where(a => a.IsDeleted == false))
+                         .ThenInclude(pa => pa.Color).Where(a => a.IsDeleted == false)
+                         .Include(p => p.LoanTerms.Where(p => p.IsDeleted == false))
+                        .ThenInclude(lt => lt.LoanTermLoanRanges).ThenInclude(ltlr => ltlr.LoanRange)
+                        .Include(p => p.LoanTerms).ThenInclude(lt => lt.LoanCompany).Where(p => p.IsDeleted == false)
+                        .Include(p => p.ProductLoanRanges.Where(pl => pl.IsDeleted == false)).ThenInclude(plr => plr.LoanRange)
+                        .FirstOrDefaultAsync(p => p.IsDeleted == false && p.Id == wishlistVM.Id);
 
                         if (product != null)
                         {
                             wishlistVM.Title = product.Title;
-                            wishlistVM.Price = product.DiscountedPrice > 0 ? product.DiscountedPrice : product.Price;
-                            wishlistVM.Image = product.MainImage;
+                            wishlistVM.BrandName = product?.Brand?.Name;
+                            wishlistVM.LoanTerms = product.LoanTerms.Where(a => a.IsDeleted == false).ToList();
+                            wishlistVM.ProductLoanRanges = product.ProductLoanRanges.Where(a => a.IsDeleted == false && a.ProductId == product.Id).ToList();
+                            wishlistVM.ProductColors = product.ProductColors.Where(a => a.IsDeleted == false && a.ProductId == product.Id).ToList();
+                            wishlistVM.Price = product.Price;
+                            wishlistVM.DiscountedPrice = product.DiscountedPrice;
                         }
                     }
                 }
@@ -166,10 +175,13 @@ namespace Smartelectronics.Services
                         {
                             CompareVM compareVM = new CompareVM();
 
-                            compareVM.Id = product.Id;
                             compareVM.Title = product.Title;
-                            compareVM.Price = product.DiscountedPrice > 0 ? product.DiscountedPrice : product.Price;
-                            compareVM.Image = product.MainImage;
+                            compareVM.Price = product.Price;
+                            compareVM.DiscountedPrice = product.DiscountedPrice;
+                            compareVM.Image = product?.ProductColors?.FirstOrDefault()?.Image;
+                            compareVM.ProductCategorySpecifications = product?.ProductCategorySpecifications;
+                            compareVM.Category = product?.Category;
+                            compareVM.LoanTerms = product?.LoanTerms;
 
                             compareVMs.Add(compareVM);
                         }
@@ -180,13 +192,24 @@ namespace Smartelectronics.Services
                     compareVMs = JsonConvert.DeserializeObject<List<CompareVM>>(cookie);
                     foreach (CompareVM compareVM in compareVMs)
                     {
-                        Product product = await _context.Products.FirstOrDefaultAsync(p => p.Id == compareVM.Id);
+                        Product product = await _context.Products
+                        .Include(p => p.Category)
+                        .Include(p => p.ProductColors.Where(a => a.IsDeleted == false && a.ProductId == compareVM.Id))
+                        .Include(p => p.LoanTerms).ThenInclude(lt => lt.LoanCompany).Where(p => p.IsDeleted == false)
+                        .Include(p => p.ProductCategorySpecifications.Where(p => p.IsDeleted == false && p.ProductId == compareVM.Id))
+                        .ThenInclude(pcs => pcs.CategorySpecification).ThenInclude(cs => cs.Specification).ThenInclude(s => s.SpecificationGroup)
+                        .Include(p => p.ProductCategorySpecifications).ThenInclude(pcs => pcs.CategorySpecification)
+                        .FirstOrDefaultAsync(p => p.IsDeleted == false && p.Id == compareVM.Id);
 
                         if (product != null)
                         {
                             compareVM.Title = product.Title;
-                            compareVM.Price = product.DiscountedPrice > 0 ? product.DiscountedPrice : product.Price;
-                            compareVM.Image = product.MainImage;
+                            compareVM.Price = product.Price;
+                            compareVM.DiscountedPrice = product.DiscountedPrice;
+                            compareVM.Image = product?.ProductColors?.FirstOrDefault()?.Image;
+                            compareVM.ProductCategorySpecifications = product?.ProductCategorySpecifications;
+                            compareVM.Category = product?.Category;
+                            compareVM.LoanTerms = product?.LoanTerms;
                         }
                     }
                 }

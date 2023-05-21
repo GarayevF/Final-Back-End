@@ -3,7 +3,9 @@ using Microsoft.EntityFrameworkCore;
 using Newtonsoft.Json;
 using Smartelectronics.DataAccessLayer;
 using Smartelectronics.Models;
+using Smartelectronics.ViewModels.BasketViewModels;
 using Smartelectronics.ViewModels.CompareViewModels;
+using Smartelectronics.ViewModels.WishlistViewModels;
 
 namespace Smartelectronics.Controllers
 {
@@ -28,6 +30,8 @@ namespace Smartelectronics.Controllers
                 foreach (CompareVM compareVM in compareVMs)
                 {
                     Product product = await _context.Products
+                        .Include(p => p.Category)
+                        .Include(p => p.ProductColors.Where(a => a.IsDeleted == false && a.ProductId == compareVM.Id))
                         .Include(p => p.LoanTerms).ThenInclude(lt => lt.LoanCompany).Where(p => p.IsDeleted == false)
                         .Include(p => p.ProductCategorySpecifications.Where(p => p.IsDeleted == false && p.ProductId == compareVM.Id))
                         .ThenInclude(pcs => pcs.CategorySpecification).ThenInclude(cs => cs.Specification).ThenInclude(s => s.SpecificationGroup)
@@ -37,16 +41,16 @@ namespace Smartelectronics.Controllers
                     if (product != null)
                     {
                         compareVM.Title = product.Title;
-                        compareVM.Price = product.DiscountedPrice > 0 ? product.DiscountedPrice : product.Price;
-                        compareVM.Image = product.ProductColors.FirstOrDefault().Image;
-
-                        compareVM.ProductCategorySpecifications = product.ProductCategorySpecifications;
-                        compareVM.Category = product.CategoryBrand.Category;
-                        compareVM.Brand = product.CategoryBrand.Brand;
+                        compareVM.Price = product.Price;
+                        compareVM.DiscountedPrice = product.DiscountedPrice;
+                        compareVM.Image = product?.ProductColors?.FirstOrDefault()?.Image;
+                        compareVM.ProductCategorySpecifications = product?.ProductCategorySpecifications;
+                        compareVM.Category = product?.Category;
+                        compareVM.LoanTerms = product?.LoanTerms;
                     }
                 }
             }
-
+            ViewBag.CategoryFilter = compareVMs?.FirstOrDefault()?.Category.Id;
             return View(compareVMs);
         }
 
@@ -74,15 +78,13 @@ namespace Smartelectronics.Controllers
             {
                 compareVMs = JsonConvert.DeserializeObject<List<CompareVM>>(cookie);
 
-                if (!(compareVMs.Count() < 3))
-                {
-                    //toastr error mesaji elave ele ki 3 dene mehsul var uje comparede
-                    return Ok();
-                }
-
                 if (!compareVMs.Exists(p => p.Id == id))
                 {
                     compareVMs.Add(new CompareVM { Id = (int)id });
+                }
+                else
+                {
+                    compareVMs.Remove(compareVMs.FirstOrDefault(b => b.Id == id));
                 }
 
             }
@@ -90,27 +92,100 @@ namespace Smartelectronics.Controllers
             cookie = JsonConvert.SerializeObject(compareVMs);
             HttpContext.Response.Cookies.Append("compare", cookie);
 
-            //foreach (CompareVM compareVM in compareVMs)
-            //{
-            //    Product product = await _context.Products.FirstOrDefaultAsync(p => p.IsDeleted == false && p.Id == compareVM.Id);
+            foreach (CompareVM compareVM in compareVMs)
+            {
+                Product product = await _context.Products
+                    .Include(cb => cb.Category)
+                    .Include(p => p.ProductColors.Where(a => a.IsDeleted == false && a.ProductId == compareVM.Id))
+                    .Include(p => p.LoanTerms).ThenInclude(lt => lt.LoanCompany).Where(p => p.IsDeleted == false)
+                    .Include(p => p.ProductCategorySpecifications.Where(p => p.IsDeleted == false && p.ProductId == compareVM.Id))
+                    .ThenInclude(pcs => pcs.CategorySpecification).ThenInclude(cs => cs.Specification).ThenInclude(s => s.SpecificationGroup)
+                    .Include(p => p.ProductCategorySpecifications).ThenInclude(pcs => pcs.CategorySpecification)
+                    .FirstOrDefaultAsync(p => p.IsDeleted == false && p.Id == compareVM.Id);
 
-            //    if (product != null)
-            //    {
-            //        compareVM.Title = product.Title;
-            //        compareVM.Price = product.DiscountedPrice > 0 ? product.DiscountedPrice : product.Price;
-            //        compareVM.Image = product.MainImage;
-            //        compareVM.ExTax = product.ExTax;
-            //        compareVM.IsAvailable = (product.Count > 0);
-            //    }
-            //}
-
+                if (product != null)
+                {
+                    compareVM.Title = product.Title;
+                    compareVM.Price = product.Price;
+                    compareVM.DiscountedPrice = product.DiscountedPrice;
+                    compareVM.Image = product?.ProductColors?.FirstOrDefault()?.Image;
+                    compareVM.ProductCategorySpecifications = product?.ProductCategorySpecifications;
+                    compareVM.Category = product?.Category;
+                    compareVM.LoanTerms = product?.LoanTerms;
+                }
+            }
+            ViewBag.CategoryFilter = compareVMs?.FirstOrDefault()?.Category.Id;
             //succes toastr mesaji elave et
-            return Ok();
+            return PartialView("_CompareMainPartial", compareVMs);
         }
 
-        public async Task<IActionResult> DeleteCompare(int? id)
+        public async Task<IActionResult> GetCompareByCategory(int? id)
         {
-            return Ok();
+
+            if (id == null) return BadRequest();
+
+            Category category = await _context.Categories.FirstOrDefaultAsync(c => c.IsDeleted == false && c.Id == id);
+
+            if (category == null) return NotFound();
+
+            string cookie = HttpContext.Request.Cookies["compare"];
+
+            List<CompareVM> compareVMs = null;
+
+            if (!string.IsNullOrWhiteSpace(cookie))
+            {
+                compareVMs = JsonConvert.DeserializeObject<List<CompareVM>>(cookie);
+
+                foreach (CompareVM compareVM in compareVMs)
+                {
+                    Product product = await _context.Products
+                        .Include(p => p.Category)
+                        .Include(p => p.ProductColors.Where(a => a.IsDeleted == false && a.ProductId == compareVM.Id))
+                        .Include(p => p.LoanTerms).ThenInclude(lt => lt.LoanCompany).Where(p => p.IsDeleted == false)
+                        .Include(p => p.ProductCategorySpecifications.Where(p => p.IsDeleted == false && p.ProductId == compareVM.Id))
+                        .ThenInclude(pcs => pcs.CategorySpecification).ThenInclude(cs => cs.Specification).ThenInclude(s => s.SpecificationGroup)
+                        .Include(p => p.ProductCategorySpecifications).ThenInclude(pcs => pcs.CategorySpecification)
+                        .FirstOrDefaultAsync(p => p.IsDeleted == false && p.Id == compareVM.Id);
+
+                    if (product != null)
+                    {
+                        compareVM.Title = product.Title;
+                        compareVM.Price = product.Price;
+                        compareVM.DiscountedPrice = product.DiscountedPrice;
+                        compareVM.Image = product?.ProductColors?.FirstOrDefault()?.Image;
+                        compareVM.ProductCategorySpecifications = product?.ProductCategorySpecifications;
+                        compareVM.Category = product?.Category;
+                        compareVM.LoanTerms = product?.LoanTerms;
+                    }
+                }
+            }
+            ViewBag.CategoryFilter = compareVMs?.FirstOrDefault(p => p.Category.Id == id)?.Category?.Id;
+
+            return PartialView("_CompareMainPartial", compareVMs);
+        }
+
+        public int GetBasketCount()
+        {
+            string cookie = HttpContext.Request.Cookies["compare"];
+
+            List<CompareVM> compareVMs = null;
+
+            if (string.IsNullOrWhiteSpace(cookie))
+            {
+                return 0;
+            }
+            else
+            {
+                compareVMs = JsonConvert.DeserializeObject<List<CompareVM>>(cookie);
+
+                if(compareVMs != null && compareVMs.Count() > 0)
+                {
+                    return compareVMs.Count();
+                }
+
+                return 0;
+
+            }
         }
     }
 }

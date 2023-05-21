@@ -6,8 +6,8 @@ namespace Smartelectronics.Areas.Manage.ViewModels.ProductViewModels
     {
         public Product Product { get; set; }
         public List<SpecificationVM>? SpecificationVMs { get; set; }
-        public int CategoryId { get; set; }
-        public int BrandId { get; set; }
+        public int? CategoryId { get; set; }
+        public int? BrandId { get; set; }
         public IEnumerable<int> ColorIds { get; set; }
         public IEnumerable<int>? IFLoanRangeIds { get; set; }
         public IEnumerable<int>? LoanRangeIds { get; set; }

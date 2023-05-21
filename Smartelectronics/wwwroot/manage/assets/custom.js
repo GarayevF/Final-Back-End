@@ -32,7 +32,6 @@
 
     $('#IsMain').click(function () {
         let isMain = $(this).is(':checked');
-
         if (isMain) {
             $('.fileInput').removeClass('d-none');
             $('.parentInput').addClass('d-none');

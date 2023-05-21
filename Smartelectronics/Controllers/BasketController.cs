@@ -30,15 +30,18 @@ namespace Smartelectronics.Controllers
 
                 foreach (BasketVM basketVM in basketVMs)
                 {
-                    Product product = await _context.Products.FirstOrDefaultAsync(p => p.IsDeleted == false && p.Id == basketVM.Id);
+                    Product product = await _context.Products
+                        .Include(p => p.ProductColors).ThenInclude(pc => pc.Color)
+                        .Include(p => p.Category)
+                        .Include(p => p.Brand).FirstOrDefaultAsync(p => p.IsDeleted == false && p.Id == basketVM.Id);
 
                     if (product != null)
                     {
                         basketVM.Title = product.Title;
                         basketVM.Price = product.DiscountedPrice > 0 ? product.DiscountedPrice : product.Price;
                         basketVM.Image = product.ProductColors.FirstOrDefault().Image;
-                        basketVM.Category = product.CategoryBrand.Category;
-                        basketVM.Brand = product.CategoryBrand.Brand;
+                        basketVM.Category = product.Category;
+                        basketVM.Brand = product.Brand;
                     }
                 }
             }
@@ -125,15 +128,19 @@ namespace Smartelectronics.Controllers
 
             foreach (BasketVM basketVM in basketVMs)
             {
-                Product product = await _context.Products.FirstOrDefaultAsync(p => p.IsDeleted == false && p.Id == basketVM.Id);
+                Product product = await _context.Products
+                    .Include(p => p.ProductColors.Where(p => p.IsDeleted == false))
+                    .Include(p => p.Category)
+                    .Include(p => p.Brand)
+                    .FirstOrDefaultAsync(p => p.IsDeleted == false && p.Id == basketVM.Id);
 
                 if (product != null)
                 {
                     basketVM.Title = product.Title;
                     basketVM.Price = product.DiscountedPrice > 0 ? product.DiscountedPrice : product.Price;
                     basketVM.Image = product.ProductColors.FirstOrDefault().Image;
-                    basketVM.Category = product.CategoryBrand.Category;
-                    basketVM.Brand = product.CategoryBrand.Brand;
+                    basketVM.Category = product.Category;
+                    basketVM.Brand = product.Brand;
                 }
             }
 
@@ -149,15 +156,19 @@ namespace Smartelectronics.Controllers
 
             foreach (BasketVM basketVM in basketVMs)
             {
-                Product product = await _context.Products.FirstOrDefaultAsync(p => p.IsDeleted == false && p.Id == basketVM.Id);
+                Product product = await _context.Products
+                    .Include(p => p.ProductColors).ThenInclude(pc => pc.Color)
+                    .Include(p => p.Category)
+                    .Include(p => p.Brand)
+                    .FirstOrDefaultAsync(p => p.IsDeleted == false && p.Id == basketVM.Id);
 
                 if (product != null)
                 {
                     basketVM.Title = product.Title;
                     basketVM.Price = product.DiscountedPrice > 0 ? product.DiscountedPrice : product.Price;
                     basketVM.Image = product.ProductColors.FirstOrDefault().Image;
-                    basketVM.Category = product.CategoryBrand.Category;
-                    basketVM.Brand = product.CategoryBrand.Brand;
+                    basketVM.Category = product.Category;
+                    basketVM.Brand = product.Brand;
                 }
             }
 
@@ -196,8 +207,8 @@ namespace Smartelectronics.Controllers
                     basketVM.Title = product.Title;
                     basketVM.Price = product.DiscountedPrice > 0 ? product.DiscountedPrice : product.Price;
                     basketVM.Image = product.ProductColors.FirstOrDefault().Image;
-                    basketVM.Category = product.CategoryBrand.Category;
-                    basketVM.Brand = product.CategoryBrand.Brand;
+                    basketVM.Category = product.Category;
+                    basketVM.Brand = product.Brand;
                 }
             }
 
@@ -236,22 +247,28 @@ namespace Smartelectronics.Controllers
                 }
             }
 
+            cookie = JsonConvert.SerializeObject(basketVMs);
+            HttpContext.Response.Cookies.Append("basket", cookie);
+
             foreach (BasketVM basketVM in basketVMs)
             {
-                Product product = await _context.Products.FirstOrDefaultAsync(p => p.IsDeleted == false && p.Id == basketVM.Id);
+                Product product = await _context.Products
+                    .Include(p => p.ProductColors).ThenInclude(pc => pc.Color)
+                    .Include(p => p.Category)
+                    .Include(p => p.Brand)
+                    .FirstOrDefaultAsync(p => p.IsDeleted == false && p.Id == basketVM.Id);
 
                 if (product != null)
                 {
                     basketVM.Title = product.Title;
                     basketVM.Price = product.DiscountedPrice > 0 ? product.DiscountedPrice : product.Price;
                     basketVM.Image = product.ProductColors.FirstOrDefault().Image;
-                    basketVM.Category = product.CategoryBrand.Category;
-                    basketVM.Brand = product.CategoryBrand.Brand;
+                    basketVM.Category = product.Category;
+                    basketVM.Brand = product.Brand;
                 }
             }
 
-            cookie = JsonConvert.SerializeObject(basketVMs);
-            HttpContext.Response.Cookies.Append("basket", cookie);
+            
 
             return PartialView("_BasketCartPartial", basketVMs);
         }
@@ -283,15 +300,18 @@ namespace Smartelectronics.Controllers
 
             foreach (BasketVM basketVM in basketVMs)
             {
-                Product product = await _context.Products.FirstOrDefaultAsync(p => p.IsDeleted == false && p.Id == basketVM.Id);
+                Product product = await _context.Products
+                    .Include(p => p.Category)
+                    .Include(p => p.Brand)
+                    .FirstOrDefaultAsync(p => p.IsDeleted == false && p.Id == basketVM.Id);
 
                 if (product != null)
                 {
                     basketVM.Title = product.Title;
                     basketVM.Price = product.DiscountedPrice > 0 ? product.DiscountedPrice : product.Price;
                     basketVM.Image = product.ProductColors.FirstOrDefault().Image;
-                    basketVM.Category = product.CategoryBrand.Category;
-                    basketVM.Brand = product.CategoryBrand.Brand;
+                    basketVM.Category = product.Category;
+                    basketVM.Brand = product.Brand;
                 }
             }
 

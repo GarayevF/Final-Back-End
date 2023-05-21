@@ -15,14 +15,14 @@
                     </li>
                     <li class="breadcrumb-item">
                         <a href="index.html">
-                            @Model.Product.CategoryBrand?.Category?.Parent?.Name
+                            @Model.Product.Category?.Parent?.Name
                         </a>
                     </li>
                     <li class="breadcrumb-item">
-                        <a href="index.html">@Model.Product?.CategoryBrand?.Category?.Name</a>
+                        <a href="index.html">@Model.Product?.Category?.Name</a>
                     </li>
                     <li class="breadcrumb-item">
-                        <a href="index.html">@Model.Product?.CategoryBrand?.Brand?.Name</a>
+                        <a href="index.html">@Model.Product?.Brand?.Name</a>
                     </li>
                     <li class="breadcrumb-item active">
                         @Model.Product?.Title
@@ -38,8 +38,8 @@
         <div class="container">
             <div class="title">
                 <div class="title-head">
-                    <h1>@Model.Product?.CategoryBrand?.Brand?.Name</h1>
-                    <h1>@Model.Product?.CategoryBrand?.Category.Name - @Model.Product?.Title</h1>
+                    <h1>@Model.Product?.Brand?.Name</h1>
+                    <h1>@Model.Product?.Category.Name - @Model.Product?.Title</h1>
                 </div>
                 <div class="title-label">
                     <div class="owl-carousel owl-three">
@@ -292,12 +292,15 @@
                                         </div>
                                         <h6>@groupedSpecificationsVM.GroupName</h6>
                                     </div>
-                                    @foreach (SpecificationVM specification in groupedSpecificationsVM?.Specifications)
+                                    @if(groupedSpecificationsVM?.Specifications != null && groupedSpecificationsVM?.Specifications.Count() > 0)
                                     {
-                                        <div class="feature-body">
-                                            <p>@specification.Name</p>
-                                            <p>@specification.Value</p>
-                                        </div>
+                                        @foreach (SpecificationVM specification in groupedSpecificationsVM?.Specifications)
+                                        {
+                                            <div class="feature-body">
+                                                <p>@specification?.Name</p>
+                                                <p>@specification?.Value</p>
+                                            </div>
+                                        }
                                     }
 
 

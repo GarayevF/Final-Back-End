@@ -45,12 +45,13 @@ $(document).ready(function() {
     })
 
     $('.owl-compare').owlCarousel({
-        loop:true,
-        margin:10,
+        loop:false,
+        margin: 10,
+        infinity: false,
         nav:true,
         navText: ["<img src='/assets/images/more.png'>","<img src='/assets/images/more.png'>"],
         items: 3,
-        autoplay: true,
+        autoplay: false,
         responsive : {
             0 : {
                 items : 1
@@ -215,9 +216,9 @@ $(document).ready(function() {
         
     })
 
-    $('#gotoregister').click(function(e){
-        e.preventDefault();
-    })
+    //$('#gotoregister').click(function(e){
+    //    e.preventDefault();
+    //})
 
 
     $(window).click(function(e) {
