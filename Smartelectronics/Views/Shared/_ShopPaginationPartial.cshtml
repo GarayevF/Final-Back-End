@@ -1,5 +1,11 @@
 ﻿@model ProductVM
 
+<style>
+    .shop-pagination-partial{
+        width: 100%;
+    }
+</style>
+
 <div class="row">
     @if (Model.Products != null && Model.Products.Count() > 0)
     {
@@ -141,26 +147,27 @@
 </div>
 <div class="pagination-center">
     <div class="pagination">
-        @if (Model.Products.HasPrev)
-        {
-            <li>
-                <a asp-controller="product" asp-action="filter" asp-route-pageIndex="@(Model.Products.PageIndex - 1)" class="single-btn prev-btn paginated-btn">
-                    <i class="zmdi zmdi-chevron-left"></i>
-                </a>
-            </li>
-        }
-        @for (int i = Model.Products.StartPage; i <= Model.Products.EndPage; i++)
-        {
-            <li class="@(i == Model.Products.PageIndex ? "active" : "")"><a asp-controller="product" asp-action="filter" asp-route-pageIndex="@i" class="single-btn middle-btn paginated-btn">@i</a></li>
-        }
-        @if (Model.Products.HasNext)
-        {
-            <li>
-                <a asp-controller="product" asp-action="filter" asp-route-pageIndex="@(Model.Products.PageIndex + 1)" class="single-btn next-btn paginated-btn">
-                    <i class="zmdi zmdi-chevron-right"></i>
-                </a>
-            </li>
-        }
-
+        <ul>
+            @if (Model.Products.HasPrev)
+            {
+                <li>
+                    <a asp-controller="product" asp-action="filter" asp-route-pageIndex="@(Model.Products.PageIndex - 1)" class="single-btn prev-btn paginated-btn">
+                        <i class="zmdi zmdi-chevron-left"></i>
+                    </a>
+                </li>
+            }
+            @for (int i = Model.Products.StartPage; i <= Model.Products.EndPage; i++)
+            {
+                <li class="@(i == Model.Products.PageIndex ? "active" : "")"><a asp-controller="product" asp-action="filter" asp-route-pageIndex="@i" class="single-btn middle-btn paginated-btn">@i</a></li>
+            }
+            @if (Model.Products.HasNext)
+            {
+                <li>
+                    <a asp-controller="product" asp-action="filter" asp-route-pageIndex="@(Model.Products.PageIndex + 1)" class="single-btn next-btn paginated-btn">
+                        <i class="zmdi zmdi-chevron-right"></i>
+                    </a>
+                </li>
+            }
+        </ul>
     </div>
 </div>

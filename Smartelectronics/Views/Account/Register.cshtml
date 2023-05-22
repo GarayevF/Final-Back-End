@@ -1,0 +1,56 @@
+﻿@model RegisterVM
+@{
+    ViewData["Title"] = "Register";
+}
+
+<div class="main-register">
+    <div class="content">
+        <div class="container">
+            <div class="main">
+
+                <div class="register-div">
+                    <h1>Qeydiyyatdan Keç</h1>
+                    <form class="register-form" method="post">
+                        <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                        <div class="register-name-surname-div">
+                            <div class="register-name-div">
+                                <input asp-for="Name" type="text" id="register-name-input" placeholder="Ad">
+                                <span></span>
+                            </div>
+                            <div class="register-surname-div">
+                                <input asp-for="SurName" type="text" id="register-surname-input" placeholder="Soyad">
+                                <span></span>
+                            </div>
+                        </div>
+                        <div class="register-email-div">
+                            <input asp-for="Email" id="register-email-input" type="text" placeholder="E-Poçt">
+                            <span></span>
+                        </div>
+                        <div class="register-username-div">
+                            <input asp-for="UserName" id="register-username-input" type="text" placeholder="İstifadəçi adı">
+                            <span></span>
+                        </div>
+                        <div class="register-pass-cpass-div">
+                            <div class="register-password-div">
+                                <input asp-for="Password" id="register-password-input" type="password" placeholder="Şifrə">
+                                <span></span>
+                            </div>
+                            <div class="register-confirmpass-div">
+                                <input asp-for="ConfirmPassword" id="register-confirmpass-input" type="password" placeholder="Şifrə Yenidən">
+                                <span></span>
+                            </div>
+                        </div>
+                        <div class="register-submit-div">
+                            <button type="submit">Qeydiyyatdan keç</button>
+                        </div>
+                        <div class="register-links">
+                            <span>Hesabınız var?</span>
+                            <a asp-controller="account" asp-action="login" id="gotologin">Daxil ol</a>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+

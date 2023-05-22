@@ -1,0 +1,69 @@
+﻿@model Order
+
+<form id="checkoutform" method="post" asp-controller="Order" asp-action="checkout">
+    <div class="personal-info">
+        <div class="form-group">
+            <input asp-for="Name" type="text" placeholder="Ad">
+        </div>
+        <div class="form-group">
+            <div class="radio-wrapper">
+                <div class="radio-box">
+                    @Html.RadioButtonFor(m => m.Gender, GenderType.Male)
+                    <label for="Male">Kişi</label>
+                </div>
+                <div class="radio-box">
+                    @Html.RadioButtonFor(m => m.Gender, GenderType.Female)
+                    <label for="Female">Qadın</label>
+                </div>
+            </div>
+        </div>
+        <div class="form-group">
+            <input asp-for="SurName" type="text" placeholder="Soyad">
+        </div>
+        <div class="form-group"></div>
+        <div class="form-group">
+            <input asp-for="Patronymic" type="text" placeholder="Ata adi">
+        </div>
+        <div class="form-group">
+            <div class="form-align">
+                <span>Doğum tarixi</span>
+            </div>
+        </div>
+        <div class="form-group">
+            <input asp-for="IdSeria" type="text" placeholder="Şəxsiyyət vəsiqəsinin seriyası">
+        </div>
+        <div class="form-group">
+            <div class="date">
+                <input asp-for="BirthDate" type="date" id="birthday" name="birthday">
+            </div>
+        </div>
+        <div class="form-group">
+            <input asp-for="Fin" type="text" placeholder="FİN">
+        </div>
+        <div class="form-group">
+            <input asp-for="Number" type="tel" id="phone3" formcontrolname="mobilePhone" class="form-control" placeholder="+994 (__) ___ __ __">
+        </div>
+        <div class="personal-info">
+            <h5 class="section_label">Çatdırılma ünvanı</h5>
+            <div class="form-group">
+                <input asp-for="City" type="text" placeholder="Çatdırılma Şəhəri" name="deliveryCityName">
+            </div>
+            <div class="form-group">
+                <input asp-for="OrderAddress" type="text" placeholder="Çatdırılma ünvanı" name="deliveryAddress">
+            </div>
+            <div class="userAddresses">
+                <div class="address-info">
+                    <div class="form-group">
+                        <div class="delivery_lbl">
+                            <img src="/assets/images/truck-white.svg" alt="">
+                            <p>Çatdırılma Pulsuz</p>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <textarea asp-for="AdditionalComment" id="" cols="30" placeholder="Əlavə qeydlər"></textarea>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</form>

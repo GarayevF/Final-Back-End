@@ -1,0 +1,60 @@
+﻿@model Order
+@{
+    ViewData["Title"] = "OrderCompleted";
+}
+
+<div class="main-order-completed">
+	<div class="content">
+		<div class="container">
+			<div class="row">
+				<div class="col-12">
+					<div class="order-complete-message text-center">
+						<h1>Təşəkkürlər !</h1>
+						<p>Sifarişiniz qeydə alındı. Qısa müddət ərzində sizinlə əlaqə saxlanılacaq</p>
+					</div>
+					<ul class="order-details-list">
+						<li>Sifariş nömrəsi: <strong>@Model.No</strong></li>
+						<li>Tarix: <strong>@Model.CreatedAt</strong></li>
+						<li>Qiymət: <strong>@(Model.OrderItems.Sum(a => (a.Product.DiscountedPrice > 0 ? a.Product.DiscountedPrice : a.Product.Price) * a.Count)) AZN</strong></li>
+					</ul>
+					<h3 class="order-table-title">Sifariş detalları</h3>
+					<div class="table-responsive">
+						<table class="table order-details-table">
+							<thead>
+								<tr>
+									<th>Məhsul</th>
+									<th>Qiymət</th>
+								</tr>
+							</thead>
+							<tbody>
+							<tbody>
+									@foreach (OrderItem item in Model.OrderItems)
+									{
+									<tr>
+										<td><a href="#">@item.Product.Title</a> <strong>× @item.Count</strong></td>
+										<td><span>@item.Product.Price AZN</span></td>
+									</tr>
+									}
+							</tbody>
+							<tfoot>
+								<tr>
+									<th>Total:</th>
+									<td><span>$@(Model.OrderItems.Sum(a => (a.Product.DiscountedPrice > 0 ? a.Product.DiscountedPrice : a.Product.Price) * a.Count))</span></td>
+								</tr>
+							</tfoot>
+							</tbody>
+							<tfoot>
+								<tr>
+									<th>Ümumi Qiymət:</th>
+									<td><span>$117.00</span></td>
+								</tr>
+							</tfoot>
+						</table>
+					</div>
+					<a href="#" class="save-changes">Ana səhifəyə qayıt</a>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+

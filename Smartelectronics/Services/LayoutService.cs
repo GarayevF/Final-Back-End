@@ -194,6 +194,7 @@ namespace Smartelectronics.Services
                     {
                         Product product = await _context.Products
                         .Include(p => p.Category)
+                        .Include(p => p.Brand)
                         .Include(p => p.ProductColors.Where(a => a.IsDeleted == false && a.ProductId == compareVM.Id))
                         .Include(p => p.LoanTerms).ThenInclude(lt => lt.LoanCompany).Where(p => p.IsDeleted == false)
                         .Include(p => p.ProductCategorySpecifications.Where(p => p.IsDeleted == false && p.ProductId == compareVM.Id))
@@ -209,6 +210,7 @@ namespace Smartelectronics.Services
                             compareVM.Image = product?.ProductColors?.FirstOrDefault()?.Image;
                             compareVM.ProductCategorySpecifications = product?.ProductCategorySpecifications;
                             compareVM.Category = product?.Category;
+                            compareVM.Brand = product?.Brand;
                             compareVM.LoanTerms = product?.LoanTerms;
                         }
                     }
@@ -222,9 +224,9 @@ namespace Smartelectronics.Services
 
         public async Task<IEnumerable<Category>> GetCategories()
         {
-            return await _context.Categories
-                .Include(c => c.Children).Where(c => c.IsDeleted == false)
-                .Where(c => c.IsDeleted == false && c.IsMain).ToListAsync();
+            return await _context.Categories.Where(c => c.IsDeleted == false && c.IsMain)
+                .Include(c => c.Children.Where(ct => ct.IsDeleted == false && ct.IsMain == false))
+                .ThenInclude(c => c.Products.Where(ctb => ctb.IsDeleted == false)).ThenInclude(e => e.Brand).ToListAsync();
         }
 
         public async Task<IDictionary<string, string>> GetSettings()

@@ -26,10 +26,10 @@
 <main class="main-shop">
     <div class="container">
         <div class="product-filters">
-            <button class="product-filter-btn active">Yeni məhsullar</button>
-            <button class="product-filter-btn">Endirimli məhsullar</button>
-            <button class="product-filter-btn">Əvvəlcə Ucuz</button>
-            <button class="product-filter-btn">Əvvəlcə Bahalı</button>
+            <button class="product-filter-btn active data-0">Yeni məhsullar</button>
+            <button class="product-filter-btn data-1">Endirimli məhsullar</button>
+            <button class="product-filter-btn data-2">Əvvəlcə Ucuz</button>
+            <button class="product-filter-btn data-3">Əvvəlcə Bahalı</button>
         </div>
         <div class="content">
             <button class="filter-btn-mobile"><i class="fa-solid fa-filter"></i></button>
@@ -43,7 +43,7 @@
                                 {
                                     @foreach (Category category in Model?.Categories)
                                     {
-                                        <a href="#" class="link">
+                                        <a asp-controller="product" asp-action="filter" asp-route-id="@category.Id" class="link categorybtn">
                                             <span>@category.Name</span>
                                             <span>@category?.Products?.Count()</span>
                                         </a>
@@ -59,35 +59,27 @@
                         <div class="drop-content">
                             <div class="content-box">
                                 <div class="radio-box">
-                                    <input type="radio" name="offer" id="sortFromNew-0">
+                                    <input type="radio" name="sortoffer" data-id="0" id="sortFromNew-0" class="nice-select">
                                     <label for="sortFromNew-0">Ən yenilər</label>
                                 </div>
                                 <div class="radio-box">
-                                    <input type="radio" name="offer" id="isDiscounted-1">
+                                    <input type="radio" name="sortoffer" data-id="1" id="isDiscounted-1" class="nice-select">
                                     <label for="isDiscounted-1">Endirimli Məhsullar</label>
                                 </div>
                                 <div class="radio-box">
-                                    <input type="radio" name="offer" id="sortFromPrice-2">
+                                    <input type="radio" name="sortoffer" data-id="2" id="sortFromPrice-2" class="nice-select">
                                     <label for="sortFromPrice-2">Ən aşağı qiymət</label>
                                 </div>
                                 <div class="radio-box">
-                                    <input type="radio" name="offer" id="sortFromPrice-3">
+                                    <input type="radio" name="sortoffer" data-id="3" id="sortFromPrice-3" class="nice-select">
                                     <label for="sortFromPrice-3">Ən yuxarı qiymət</label>
-                                </div>
-                                <div class="radio-box">
-                                    <input type="radio" name="offer" id="sortFromBestSeller-4">
-                                    <label for="sortFromBestSeller-4">Ən çox satılanlar</label>
-                                </div>
-                                <div class="radio-box">
-                                    <input type="radio" name="offer" id="sortFromBestSelected-5">
-                                    <label for="sortFromBestSelected-5">Ən çox seçilənlər</label>
                                 </div>
                             </div>
                         </div>
                     </div>
 
                     <div class="filter-item pricefilter">
-                        <button class="filter-button">Kateqoriya<i class="fa-solid fa-angles-down"></i></button>
+                        <button class="filter-button">Qiymət<i class="fa-solid fa-angles-down"></i></button>
                         <div class="drop-content">
                             <div class="content-box">
                                 <div class="price-input">
@@ -118,11 +110,15 @@
                             <div class="content-box">
                                 @if (Model.Brands != null && Model.Brands.Count() > 0)
                                 {
+                                    int count = 0;
                                     @foreach (Brand brand in Model?.Brands)
                                     {
+                                        count++;
                                         <div class="radio-box">
-                                            <input type="radio" name="offer" id="isDiscounted-1">
-                                            <label for="isDiscounted-1"><span>@brand.Name</span><span>@brand?.Products?.Count()</span></label>
+                                            <a class="brandbtn" asp-controller="product" asp-action="filter" asp-route-id="@brand.Id">
+                                                <input type="radio" name="offer" id="isDiscounted-@count">
+                                                <label for="isDiscounted-@count"><span>@brand.Name</span><span>@brand?.Products?.Count()</span></label>
+                                            </a>
                                         </div>
                                     }
                                 }
@@ -134,15 +130,12 @@
                         <button class="filter-button">Rəng<i class="fa-solid fa-angles-down"></i></button>
                         <div class="drop-content">
                             <div class="content-box">
-                                @if (Model?.AllProducts?.Select(p => p.ProductColors?.Select(c => c.Color).Distinct()).ToList() != null &&
-                                Model?.AllProducts?.Select(p => p.ProductColors?.Select(c => c.Color).Distinct()).ToList().Count() > 0)
+                                @if (Model.Colors != null &&
+                                Model?.Colors.Count() > 0)
                                 {
-                                    @foreach (Color color in Model?.AllProducts?
-                                   .SelectMany(p => p.ProductColors?.Select(c => c.Color))
-                                   .Distinct()
-                                   .ToList())
+                                    @foreach (Color color in Model?.Colors)
                                     {
-                                        <button class="color" style="background: @color.Code;"></button>
+                                        <a asp-action="filter" asp-route-id="@color.Id" class="color colorbtn" style="background: @color.Code;"></a>
                                     }
                                 }
 
@@ -151,10 +144,447 @@
                     </div>
                 </div>
             </div>
-            <div class="right">
+            <div class="right shop-pagination-partial">
                 @await Html.PartialAsync("_ShopPaginationPartial", Model)
             </div>
         </div>
     </div>
 </main>
+
+<link rel="stylesheet" href="//code.jquery.com/ui/1.11.4/themes/base/jquery-ui.css" />
+<script src="//code.jquery.com/jquery-1.10.2.js"></script>
+<script src="//code.jquery.com/ui/1.11.4/jquery-ui.js"></script>
+<script type="text/javascript">
+
+    $(document).ready(function (e) {
+
+        let categoryId = -1;
+        let brandId = -1;
+        let colorId = -1;
+        let min = -1;
+        let max = -1;
+        let sortby = -1;
+
+
+        const rangeInput = document.querySelectorAll(".range-input input");
+        const priceInput = document.querySelectorAll(".price-input input");
+        const range = document.querySelector(".slider .progress");
+        let priceGap = 100;
+
+        priceInput.forEach(input => {
+            input.addEventListener("input", e => {
+                let minPrice = parseInt(priceInput[0].value);
+                let maxPrice = parseInt(priceInput[1].value);
+
+                if ((maxPrice - minPrice >= priceGap) && maxPrice <= rangeInput[1].max) {
+                    if (e.target.className === "input-min") {
+                        rangeInput[0].value = minPrice;
+                        range.style.left = ((minPrice / rangeInput[0].max) * 100) + "%";
+                    } else {
+                        rangeInput[1].value = maxPrice;
+                        range.style.right = 100 - (maxPrice / rangeInput[1].max) * 100 + "%";
+                    }
+                }
+                min = minPrice;
+                max = maxPrice;
+            });
+
+            input.addEventListener('change', function () {
+                let path = [];
+
+                if (categoryId > 0) {
+                    path.push(`categoryId=${categoryId}`);
+                }
+
+                if (brandId > 0) {
+                    path.push(`brandId=${brandId}`);
+                }
+
+                if (colorId > 0) {
+                    path.push(`colorId=${colorId}`);
+                }
+
+                if (min > -1) {
+                    path.push(`min=${min}`)
+                }
+
+                if (max > -1) {
+                    path.push(`max=${max}`)
+                }
+
+
+                var radios = document.querySelectorAll('input[name="sortoffer"]');
+                for (var i = 0; i < radios.length; i++) {
+                    if (radios[i].checked) {
+                        sortby = radios[i].getAttribute('data-id');
+                        break;
+                    }
+                }
+                console.log('sortoffer - ' + sortby)
+
+                if (sortby > -1) {
+                    path.push(`sortby=${sortby}`)
+                }
+
+                fetch(`product/filter?${path.join('&')}`)
+                    .then(res => {
+                        
+                        return res.text()
+                    })
+                    .then(data => {
+                        $('.shop-pagination-partial').html(data)
+                        console.log('data geldi')
+                    })
+            
+                })
+            })
+
+        rangeInput.forEach(input => {
+            input.addEventListener("input", e => {
+                let minVal = parseInt(rangeInput[0].value);
+                let maxVal = parseInt(rangeInput[1].value);
+                console.log(minVal + '---' + maxVal)
+                if ((maxVal - minVal) < priceGap) {
+                    if (e.target.className === "range-min") {
+                        rangeInput[0].value = maxVal - priceGap;
+                        priceInput[0].value = maxVal - priceGap;
+                        range.style.left = (((maxVal - priceGap) / rangeInput[0].max) * 100) + "%";
+                    } else {
+                        rangeInput[1].value = minVal + priceGap;
+                        priceInput[1].value = minVal + priceGap;
+                        range.style.right = 100 - ((minVal + priceGap) / rangeInput[1].max) * 100 + "%";
+                    }
+                } else {
+                    priceInput[0].value = minVal;
+                    priceInput[1].value = maxVal;
+                    range.style.left = ((minVal / rangeInput[0].max) * 100) + "%";
+                    range.style.right = 100 - (maxVal / rangeInput[1].max) * 100 + "%";
+                }
+
+                min = minVal;
+                max = maxVal;
+            });
+
+            input.addEventListener("change", e => {
+                let path = [];
+
+                if (categoryId > 0) {
+                    path.push(`categoryId=${categoryId}`);
+                }
+
+                if (brandId > 0) {
+                    path.push(`brandId=${brandId}`);
+                }
+
+                if (colorId > 0) {
+                    path.push(`colorId=${colorId}`);
+                }
+
+                if (min > -1) {
+                    path.push(`min=${min}`)
+                }
+
+                if (max > -1) {
+                    path.push(`max=${max}`)
+                }
+
+
+                var radios = document.querySelectorAll('input[name="sortoffer"]');
+                for (var i = 0; i < radios.length; i++) {
+                    if (radios[i].checked) {
+                        sortby = radios[i].getAttribute('data-id');
+                        break;
+                    }
+                }
+                console.log('offer - ' + sortby)
+
+                if (sortby > -1) {
+                    path.push(`sortby=${sortby}`)
+                }
+
+                fetch(`product/filter?${path.join('&')}`)
+                    .then(res => {
+                        console.log(`product/filter?${path.join('&')}`)
+                        return res.text()
+                    })
+                    .then(data => {
+                        $('.shop-pagination-partial').html(data)
+                        console.log('data geldi')
+                    })
+            })
+        });
+            
+
+        $(document).on('click', '.paginated-btn, .categorybtn, .brandbtn, .colorbtn, .product-filter-btn', function (e) {
+            if ($(this).hasClass('paginated-btn')) {
+                e.preventDefault();
+
+                let url = $(this).attr('href');
+
+
+                let path = [];
+
+                if (categoryId > 0) {
+                    path.push(`categoryId=${categoryId}`);
+                }
+
+                if (brandId > 0) {
+                    path.push(`brandId=${brandId}`);
+                }
+
+                if (colorId > 0) {
+                    path.push(`colorId=${colorId}`);
+                }
+
+                if (min > -1) {
+                    path.push(`min=${min}`)
+                }
+
+                if (max > -1) {
+                    path.push(`max=${max}`)
+                }
+
+                    var radios = document.querySelectorAll('input[name="sortoffer"]');
+                for (var i = 0; i < radios.length; i++) {
+                    if (radios[i].checked) {
+                        sortby = radios[i].getAttribute('data-id');
+                        break;
+                    }
+                }
+
+                if (sortby > -1) {
+                    path.push(`sortby=${sortby}`)
+                }
+
+                fetch(`${url}&${path.join('&')}`)
+                    .then(res => {
+                        return res.text();
+                    })
+                    .then(data => {
+                        $('.shop-pagination-partial').html(data)
+                    })
+
+            }
+            else if ($(this).hasClass('categorybtn')) {
+                e.preventDefault();
+
+                let url = $(this).attr('href');
+                let ctId = url.split('/')[url.split('/').length - 1];
+                categoryId = ctId;
+
+                let path = [];
+
+                if (categoryId > 0) {
+                    path.push(`categoryId=${categoryId}`);
+                }
+
+                if (brandId > 0) {
+                    path.push(`brandId=${brandId}`);
+                }
+
+                if (colorId > 0) {
+                    path.push(`colorId=${colorId}`);
+                }
+
+                if (min > -1) {
+                    path.push(`min=${min}`)
+                }
+
+                if (max > -1) {
+                    path.push(`max=${max}`)
+                }
+
+                    var radios = document.querySelectorAll('input[name="sortoffer"]');
+                    for (var i = 0; i < radios.length; i++) {
+                        if (radios[i].checked) {
+                            sortby = radios[i].getAttribute('data-id');
+                            break;
+                        }
+                    }
+
+                if (sortby > -1) {
+                    path.push(`sortby=${sortby}`)
+                }
+
+                fetch(`${url}?${path.join('&')}`)
+                    .then(res => {
+                        return res.text()
+                    })
+                    .then(data => {
+                        $('.shop-pagination-partial').html(data)
+                    })
+            }
+            else if ($(this).hasClass('brandbtn')) {
+                e.preventDefault();
+
+                let url = $(this).attr('href');
+                let brnd = url.split('/')[url.split('/').length - 1];
+
+                brandId = brnd;
+
+                let path = [];
+
+                if (categoryId > 0) {
+                    path.push(`categoryId=${categoryId}`);
+                }
+
+                if (brandId > 0) {
+                    path.push(`brandId=${brandId}`);
+                }
+
+                if (colorId > 0) {
+                    path.push(`colorId=${colorId}`);
+                }
+
+                if (min > -1) {
+                    path.push(`min=${min}`)
+                }
+
+                if (max > -1) {
+                    path.push(`max=${max}`)
+                }
+
+                    var radios = document.querySelectorAll('input[name="sortoffer"]');
+                for (var i = 0; i < radios.length; i++) {
+                    if (radios[i].checked) {
+                        sortby = radios[i].getAttribute('data-id');
+                        break;
+                    }
+                }
+
+                if (sortby > -1) {
+                    path.push(`sortby=${sortby}`)
+                }
+
+                fetch(`${url}?${path.join('&')}`)
+                    .then(res => {
+                        return res.text()
+                    })
+                    .then(data => {
+                            $('.shop-pagination-partial').html(data)
+                            console.log('test')
+                    })
+            }
+            else if ($(this).hasClass('colorbtn')) {
+                e.preventDefault();
+
+                let url = $(this).attr('href');
+                let clr = url.split('/')[url.split('/').length - 1];
+
+                colorId = clr;
+
+                let path = [];
+
+                if (categoryId > 0) {
+                    path.push(`categoryId=${categoryId}`);
+                }
+
+                if (brandId > 0) {
+                    path.push(`brandId=${brandId}`);
+                }
+
+                if (colorId > 0) {
+                    path.push(`colorId=${colorId}`);
+                }
+
+                if (min > -1) {
+                    path.push(`min=${min}`)
+                }
+
+                if (max > -1) {
+                    path.push(`max=${max}`)
+                }
+
+                var radios = document.querySelectorAll('input[name="sortoffer"]');
+                for (var i = 0; i < radios.length; i++) {
+                    if (radios[i].checked) {
+                        sortby = radios[i].getAttribute('data-id');
+                        break;
+                    }
+                }
+
+                if (sortby > -1) {
+                    path.push(`sortby=${sortby}`)
+                }
+
+                fetch(`${url}?${path.join('&')}`)
+                    .then(res => {
+                        return res.text()
+                    })
+                    .then(data => {
+                        $('.shop-pagination-partial').html(data)
+                        console.log('test')
+                    })
+            }
+            else if ($(this).hasClass('product-filter-btn')) {
+                if($(this).hasClass('data-0')){
+                    var dataId = 0;
+                    var radioElement = document.querySelector('input[type="radio"][data-id="' + dataId + '"]');
+                } else if ($(this).hasClass('data-1')) {
+                    var dataId = 1;
+                    var radioElement = document.querySelector('input[type="radio"][data-id="' + dataId + '"]');
+                } else if ($(this).hasClass('data-2')) {
+                    var dataId = 2;
+                    var radioElement = document.querySelector('input[type="radio"][data-id="' + dataId + '"]');
+                } else if ($(this).hasClass('data-3')) {
+                    var dataId = 3;
+                    var radioElement = document.querySelector('input[type="radio"][data-id="' + dataId + '"]');
+                }
+                
+                radioElement.click();
+            }
+        })
+            .on('change', '.nice-select', function (e) {
+                e.preventDefault();
+
+                let path = [];
+
+                if (categoryId > 0) {
+                    path.push(`categoryId=${categoryId}`);
+                }
+
+                if (brandId > 0) {
+                    path.push(`brandId=${brandId}`);
+                }
+
+                if (colorId > 0) {
+                    path.push(`colorId=${colorId}`);
+                }
+
+                if (min > -1) {
+                    path.push(`min=${min}`)
+                }
+
+                if (max > -1) {
+                    path.push(`max=${max}`)
+                }
+
+                    var radios = document.querySelectorAll('input[name="sortoffer"]');
+                    for (var i = 0; i < radios.length; i++) {
+                        if (radios[i].checked) {
+                            sortby = radios[i].getAttribute('data-id');
+                            break;
+                        }
+                    }
+
+                if (sortby > -1) {
+                    path.push(`sortby=${sortby}`)
+                }
+
+                fetch(`product/filter?${path.join('&')}`)
+                    .then(res => {
+                        return res.text();
+                    })
+                    .then(data => {
+                        $('.shop-pagination-partial').html(data)
+                    })
+
+
+            })
+
+    })
+
+        
+
+</script>
 

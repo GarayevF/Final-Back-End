@@ -1,19 +1,20 @@
 ﻿@model LoginVM
 
-<form class="login-form" method="post" asp-controller="account" asp-action="UpdateProfile">
+<form class="login-form" method="post">
+    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
     <div class="login-email-div">
-        <input id="login-email-input" type="text" placeholder="E-Poçt">
-        <span></span>
+        <input asp-for="Email" id="login-email-input" type="text" placeholder="E-Poçt">
+        <span asp-validation-for="Email"></span>
     </div>
     <div class="login-password-div">
-        <input id="login-password-input" type="password" placeholder="Şifrə">
-        <span></span>
+        <input asp-for="Password" id="login-password-input" type="password" placeholder="Şifrə">
+        <span asp-validation-for="Password"></span>
     </div>
     <div class="login-submit-div">
         <button type="submit">Daxil ol</button>
     </div>
     <div class="login-links">
         <span>Hesabınız yoxdur?</span>
-        <button id="gotoregister">Qeydiyyatdan keç</button>
+        <a asp-controller="account" asp-action="register" id="gotoregister">Qeydiyyatdan keç</a>
     </div>
 </form>

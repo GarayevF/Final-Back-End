@@ -14,7 +14,6 @@ namespace Smartelectronics.Models
         public Category? Parent { get; set; }
         public IEnumerable<Category>? Children { get; set; }
         public IEnumerable<Product>? Products { get; set; }
-        public List<CategoryBrand>? CategoryBrands { get; set; }
         [NotMapped]
         public IEnumerable<int>? BrandIds { get; set; }
     }

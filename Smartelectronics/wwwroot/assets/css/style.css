@@ -2207,7 +2207,7 @@ header .header2 .container .header-bottom-m .mobile-menu .menu-list .menu-item .
   height: max-content;
 }
 .main-shop .container .content .left .filter-list .colorfilter .opened {
-  transform: rotate(90deg);
+  transform: rotate(180deg);
 }
 .main-shop .container .content .left .filter-list .colorfilter .filter-button {
   display: flex;

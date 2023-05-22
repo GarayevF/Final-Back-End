@@ -167,11 +167,11 @@
                                                             </a>
                                                         </div>
                                                         <div class="sub-content d-none">
-                                                            @if (child.CategoryBrands != null && child.CategoryBrands.Count() > 0)
+                                                            @if (child.Products != null && child.Products.Count() > 0)
                                                             {
-                                                                @foreach (CategoryBrand categoryBrand in child.CategoryBrands)
+                                                                @foreach (Brand brand in child.Products.Where(p => p.CategoryId == child.Id).Select(p => p.Brand).Distinct().ToList())
                                                                 {
-                                                                    <a href="" class="link">@categoryBrand.Brand.Name</a>
+                                                                    <a href="" class="link">@brand.Name</a>
                                                                 }
                                                             }
                                                             

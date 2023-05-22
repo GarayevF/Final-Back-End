@@ -36,8 +36,8 @@ namespace Smartelectronics.Areas.Manage.Controllers
         {
             if (id == null) return BadRequest();
 
-            Category category = await _context.Categories.Include(c => c.CategoryBrands.Where(cb => cb.IsDeleted == false))
-                .Include(c => c.Children.Where(ca => ca.IsDeleted == false)).ThenInclude(ch => ch.Products.Where(p => p.IsDeleted == false))
+            Category category = await _context.Categories
+                .Include(c => c.Children.Where(ca => ca.IsDeleted == false)).ThenInclude(c => c.Products.Where(ctb => ctb.IsDeleted == false)).ThenInclude(e => e.Brand)
                 .Include(c => c.Products.Where(p => p.IsDeleted == false))
                 .FirstOrDefaultAsync(c => c.IsDeleted == false && c.Id == id);
 

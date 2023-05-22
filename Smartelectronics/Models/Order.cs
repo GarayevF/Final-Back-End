@@ -8,7 +8,7 @@ namespace Smartelectronics.Models
     {
         public string? UserId { get; set; }
         public AppUser? User { get; set; }
-        public int No { get; set; }
+        public int? No { get; set; }
         [StringLength(500)]
         public string? Comment { get; set; }
         public OrderType Status { get; set; }
@@ -17,16 +17,23 @@ namespace Smartelectronics.Models
         [StringLength(100)]
         public string? SurName { get; set; }
         [StringLength(100)]
+        public string? Patronymic { get; set; }
+        [StringLength(100)]
+        public string? IdSeria { get; set; }
+        public int? Fin { get; set; }
         [EmailAddress]
         public string? Email { get; set; }
-        [StringLength(100)]
-        public string? Country { get; set; }
+        [StringLength(20)]
+        public string? Number { get; set; }
+        [DataType(DataType.Date)]
+        public DateTime? BirthDate { get; set; }
+        public GenderType? Gender { get; set; }
         [StringLength(100)]
         public string? City { get; set; }
-        [StringLength(100)]
-        public string? State { get; set; }
-        [StringLength(100)]
-        public string? PostalCode { get; set; }
+        [StringLength(200)]
+        public string? OrderAddress { get; set; }
+        [StringLength(500)]
+        public string? AdditionalComment { get; set; }
         public List<OrderItem>? OrderItems { get; set; }
     }
 }

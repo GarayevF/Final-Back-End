@@ -1,0 +1,50 @@
+﻿@model AccountVM
+
+<form method="post" asp-controller="account" asp-action="UpdateProfile">
+    <div class="personal-info">
+        <div class="form-group">
+            <input asp-for="Name" type="text" placeholder="Ad">
+            <span asp-validation-for="Name" class="text-danger"></span>
+        </div>
+        <div class="form-group">
+            <input asp-for="SurName" type="text" placeholder="Soyad">
+            <span asp-validation-for="SurName" class="text-danger"></span>
+        </div>
+    </div>
+    <div class="personal-info">
+        <div class="input-wrap">
+            <div class="form-group">
+                <div class="form-align">
+                    <span>Doğum tarixi</span>
+                </div>
+            </div>
+        </div>
+        <div class="form-group">
+            <input asp-for="BirthDate" type="date" id="birthday" name="birthday">
+            <span asp-validation-for="BirthDate" class="text-danger"></span>
+        </div>
+        <div class="form-group">
+            <input asp-for="Number" type="tel" id="phone" formcontrolname="mobilePhone" class="form-control" placeholder="+994 (__) ___ __ __">
+            <span asp-validation-for="Number" class="text-danger"></span>
+        </div>
+        <div class="input-wrap">
+            <div class="form-group ml-auto">
+                <input asp-for="Email" type="email" name="email" placeholder="E-poçt">
+                <span asp-validation-for="Email" class="text-danger"></span>
+            </div>
+        </div>
+        <div class="input-wrap">
+            <div class="form-group ml-auto">
+                <input asp-for="Password" type="password" name="password" placeholder="Şifrə">
+                <span asp-validation-for="Password" class="text-danger"></span>
+            </div>
+        </div>
+        <div class="input-wrap">
+            <div class="form-group ml-auto">
+                <input asp-for="ConfirmPassword" type="password" name="confirmpassword" placeholder="Şifrə təkrarı">
+                <span asp-validation-for="ConfirmPassword" class="text-danger"></span>
+            </div>
+        </div>
+        <button type="submit" class="save-changes">Yadda saxla</button>
+    </div>
+</form>

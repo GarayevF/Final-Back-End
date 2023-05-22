@@ -18,18 +18,25 @@ namespace Smartelectronics.Controllers
             _context = context;
             _userManager = userManager;
         }
-        public async Task<IActionResult> Index()
+        public async Task<IActionResult> Index(int? categoryId, int? brandId, int? colorId, double? min, double? max, int? sortby)
         {
             int pageIndex = 1;
 
-            IQueryable<Product> products = _context.Products.Where(c => c.IsDeleted == false)
+            IQueryable<Product> products = _context.Products.Where(p => p.IsDeleted == false && (!categoryId.HasValue || p.CategoryId == categoryId.Value) &&
+                    (!brandId.HasValue || p.BrandId == brandId.Value) &&
+                    (!colorId.HasValue || p.ProductColors.Any(c => c.ColorId == colorId.Value)) &&
+                    (!min.HasValue || p.Price >= min.Value) &&
+                    (!max.HasValue || p.Price <= max.Value))
                 .Include(cb => cb.Category)
                 .Include(cb => cb.Brand)
+                .Include(p => p.LoanTerms.Where(p => p.IsDeleted == false))
+                .ThenInclude(lt => lt.LoanTermLoanRanges).ThenInclude(ltlr => ltlr.LoanRange)
+                .Include(p => p.LoanTerms).ThenInclude(lt => lt.LoanCompany).Where(p => p.IsDeleted == false)
                 .Include(p => p.ProductColors.Where(a => a.IsDeleted == false))
-                 .ThenInclude(pa => pa.Color).Where(a => a.IsDeleted == false)
+                .ThenInclude(pa => pa.Color).Where(a => a.IsDeleted == false)
                 .Include(p => p.ProductLoanRanges.Where(pl => pl.IsDeleted == false)).ThenInclude(plr => plr.LoanRange);
 
-            IEnumerable<Category> categories = await _context.Categories.Where(c => c.IsDeleted == false && c.IsMain)
+            IEnumerable<Category> categories = await _context.Categories.Where(c => c.IsDeleted == false && c.IsMain == false)
                 .Include(c => c.Children.Where(ct => ct.IsDeleted == false && ct.IsMain == false))
                 .ThenInclude(cb => cb.Products.Where(cb => cb.IsDeleted == false)).ToListAsync();
 
@@ -47,7 +54,11 @@ namespace Smartelectronics.Controllers
                 Products = PageNatedList<Product>.Create(products, pageIndex, 12, 7),
                 Categories = categories,
                 Brands = brands,
-                AllProducts = products/*.ToList()*/,
+                Colors = products.SelectMany(p => p.ProductColors)
+                .Where(c => c != null && !c.IsDeleted)
+                .Select(c => c.Color)
+                .Distinct()
+                .ToList(),
                 SortSelect = 0,
                 MinimumPrice = minValue,
                 MaximumPrice = maxValue
@@ -143,16 +154,41 @@ namespace Smartelectronics.Controllers
         public async Task<IActionResult> Filter(int? categoryId, int? brandId, int? colorId, double? min, double? max, int? sortby, int pageIndex = 1)
         {
             IEnumerable<Product> products = await _context.Products
-        .Where(p => (!categoryId.HasValue || p.CategoryId == categoryId.Value) &&
-                    (!brandId.HasValue || p.BrandId == brandId.Value) &&
-                    (!colorId.HasValue || p.ProductColors.Any(c => c.ColorId == colorId.Value)) &&
-                    (!min.HasValue || p.Price >= min.Value) &&
-                    (!max.HasValue || p.Price <= max.Value))
-        .Include(p => p.Category)
-        .Include(p => p.Brand)
-        .Include(p => p.ProductColors)
-            .ThenInclude(pc => pc.Color)
+        .Where(p => p.IsDeleted == false && (!categoryId.HasValue || p.CategoryId == categoryId) &&
+                    (!brandId.HasValue || p.BrandId == brandId) &&
+                    (!colorId.HasValue || p.ProductColors.Any(c => c.ColorId == colorId)) &&
+                    (!min.HasValue || p.Price >= min) &&
+                    (!max.HasValue || p.Price <= max))
+                .Include(cb => cb.Category)
+                .Include(cb => cb.Brand)
+                .Include(p => p.LoanTerms.Where(p => p.IsDeleted == false))
+                .ThenInclude(lt => lt.LoanTermLoanRanges).ThenInclude(ltlr => ltlr.LoanRange)
+                .Include(p => p.LoanTerms).ThenInclude(lt => lt.LoanCompany).Where(p => p.IsDeleted == false)
+                .Include(p => p.ProductColors.Where(a => a.IsDeleted == false))
+                .ThenInclude(pa => pa.Color).Where(a => a.IsDeleted == false)
+                .Include(p => p.ProductLoanRanges.Where(pl => pl.IsDeleted == false)).ThenInclude(plr => plr.LoanRange)
         .ToListAsync();
+
+            if (sortby != null && sortby > 0)
+            {
+
+                switch (sortby)
+                {
+                    case 1:
+                        products = products?.OrderByDescending(p => p.Id).ToList();
+                        break;
+                    case 2:
+                        products = products?.Where(p => p.DiscountedPrice > 0).ToList();
+                        break;
+                    case 3:
+                        products = products?.OrderByDescending(p => p.Price).ToList();
+                        break;
+                    case 4:
+                        products = products?.OrderBy(p => p.Price).ToList();
+                        break;
+                    
+                }
+            }
 
             ProductVM productVM = new ProductVM
             {
