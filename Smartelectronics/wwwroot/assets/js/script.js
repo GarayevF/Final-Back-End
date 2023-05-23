@@ -30,14 +30,6 @@ $(document).ready(function () {
         })
     }
 
-    $('.owl-category-slider').owlCarousel({
-        loop:false,
-        margin:10,
-        nav:false,
-        items: 8,
-        autoplay: false
-    })
-
     $('.owl-one').owlCarousel({
         loop:true,
         margin:10,

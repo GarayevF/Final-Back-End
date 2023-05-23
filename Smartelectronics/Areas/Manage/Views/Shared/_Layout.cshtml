@@ -1,4 +1,8 @@
-﻿<!DOCTYPE html>
+﻿
+
+
+
+<!DOCTYPE html>
 <html dir="ltr" lang="en">
 
 <head>
@@ -14,6 +18,8 @@
     <title>Xtreme Admin Lite Template by WrapPixel</title>
     <link rel="canonical" href="https://www.wrappixel.com/templates/xtreme-admin-lite/" />
     <!-- Favicon icon -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" integrity="sha512-iecdLmaskl7CVkqkXNQ/ZH/XLlvWZOJyj7Yy7tcenmpD1ypASozpmT/E0iPtmFIB46ZmdtAc9eNBvH0H/ZpiBw==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <link href="https://cdn.jsdelivr.net/npm/sweetalert2@11.7.5/dist/sweetalert2.min.css" rel="stylesheet">
     <link rel="icon" type="image/png" sizes="16x16" href="~/manage/assets/images/favicon.png">
     <!-- Custom CSS -->
     <link href="~/manage/assets/libs/chartist/dist/chartist.min.css" rel="stylesheet">
@@ -108,7 +114,7 @@
                                 <img src="~/manage/assets/images/users/1.jpg" alt="user" class="rounded-circle" width="31">
                             </a>
                             <ul class="dropdown-menu dropdown-menu-end user-dd animated" aria-labelledby="navbarDropdown">
-                                <a class="dropdown-item" href="javascript:void(0)">
+                                <a class="dropdown-item" asp-area="Manage" asp-controller="Account" asp-action="Profile">
                                     <i class="ti-user m-r-5 m-l-5"></i>
                                     My Profile
                                 </a>
@@ -151,24 +157,18 @@
                                                 @User.Identity.Name
                                             }
                                         </h5>
-                                        <span class="op-5 user-email">varun@gmail.com</span>
+                                        @if (User.IsInRole("SuperAdmin"))
+                                            {
+                                            @*<span class="op-5 user-email">@appUser.Email</span>*@
+                                            }
+                                        
                                     </a>
                                     <div class="dropdown-menu dropdown-menu-end" aria-labelledby="Userdd">
-                                        <a class="dropdown-item" href="javascript:void(0)">
+                                        <a class="dropdown-item" asp-area="Manage" asp-controller="Account" asp-action="Profile">
                                             <i class="ti-user m-r-5 m-l-5"></i> My Profile
                                         </a>
-                                        <a class="dropdown-item" href="javascript:void(0)">
-                                            <i class="ti-wallet m-r-5 m-l-5"></i> My Balance
-                                        </a>
-                                        <a class="dropdown-item" href="javascript:void(0)">
-                                            <i class="ti-email m-r-5 m-l-5"></i> Inbox
-                                        </a>
-                                        <div class="dropdown-divider"></div>
-                                        <a class="dropdown-item" href="javascript:void(0)">
-                                            <i class="ti-settings m-r-5 m-l-5"></i> Account Setting
-                                        </a>
-                                        <div class="dropdown-divider"></div>
-                                        <a class="dropdown-item" href="javascript:void(0)">
+                                        
+                                        <a class="dropdown-item"asp-controller="Account" asp-action="Logout">
                                             <i class="fa fa-power-off m-r-5 m-l-5"></i> Logout
                                         </a>
                                     </div>
@@ -206,7 +206,7 @@
                             </a>
                         </li>
                         <li class="sidebar-item">
-                            <a class="nav-link" asp-area="manage" asp-controller="Kredit" asp-action="index">
+                            <a class="nav-link" asp-area="manage" asp-controller="LoanCompany" asp-action="index">
                                 <i class="fas fa-fw fa-tachometer-alt"></i>
                                 <span>Kredit</span>
                             </a>
@@ -214,7 +214,13 @@
                         <li class="sidebar-item">
                             <a class="nav-link" asp-area="manage" asp-controller="Order" asp-action="index">
                                 <i class="fas fa-fw fa-tachometer-alt"></i>
-                                <span>Sifariş</span>
+                                <span>Sifarişlər</span>
+                            </a>
+                        </li>
+                        <li class="sidebar-item">
+                            <a class="nav-link" asp-area="manage" asp-controller="Message" asp-action="index">
+                                <i class="fas fa-fw fa-tachometer-alt"></i>
+                                <span>Müraciətlər</span>
                             </a>
                         </li>
                         <li class="sidebar-item">
@@ -235,7 +241,12 @@
                                 <span>Kateqoriya Özəllik Qrupları</span>
                             </a>
                         </li>
-                        
+                        <li class="sidebar-item">
+                            <a class="nav-link" asp-area="manage" asp-controller="Slider" asp-action="index">
+                                <i class="fas fa-fw fa-tachometer-alt"></i>
+                                <span>Ana səhifə slaydlar</span>
+                            </a>
+                        </li>
                     </ul>
 
                 </nav>
@@ -283,9 +294,10 @@
     <!-- ============================================================== -->
     <!-- All Jquery -->
     @RenderSection("Scripts", false)
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.7.5/dist/sweetalert2.all.min.js"></script>
     <!-- ============================================================== -->
     <script src="~/manage/assets/libs/jquery/dist/jquery.min.js"></script>
-    <script src="~/manage/assets/custom.js"></script>
+    
     <!-- Bootstrap tether Core JavaScript -->
     <script src="~/manage/assets/libs/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
     <script src="~/manage/dist/js/app-style-switcher.js"></script>
@@ -300,6 +312,7 @@
     <script src="~/manage/assets/libs/chartist/dist/chartist.min.js"></script>
     <script src="~/manage/assets/libs/chartist-plugin-tooltips/dist/chartist-plugin-tooltip.min.js"></script>
     <script src="~/manage/dist/js/pages/dashboards/dashboard1.js"></script>
+    <script src="~/manage/assets/custom.js"></script>
 </body>
 
 </html>

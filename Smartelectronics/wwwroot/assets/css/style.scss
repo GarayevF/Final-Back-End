@@ -27,6 +27,20 @@ ul {
     list-style-type: none;
 }
 
+.user-box {
+    .login-links {
+        a {
+            width: unset !important;
+
+            &::after {
+                content: "";
+                height: 0 !important;
+                width: 0 !important;
+            }
+        }
+    }
+}
+
 header {
     .header1 {
         background-color: #3B7EEC;
@@ -774,7 +788,7 @@ header {
                                         padding: 20px 0 0;
                                         margin-bottom: 34px;
 
-                                        a {
+                                        a:first-child {
                                             border-radius: 26px;
                                             padding: 11px 20px;
                                             display: flex;
@@ -793,9 +807,10 @@ header {
                                             line-height: normal;
                                             letter-spacing: normal;
                                             text-align: center;
+                                            height: 45px;
                                         }
 
-                                        button {
+                                        a:last-child {
                                             border-radius: 26px;
                                             padding: 11px 20px;
                                             display: flex;
@@ -814,6 +829,7 @@ header {
                                             outline: none;
                                             background-color: #3b7fec;
                                             color: #fff;
+                                            height: 45px;
                                         }
                                     }
                                 }
@@ -1829,6 +1845,8 @@ header {
 
         .container {
             .category-links {
+                overflow-x: clip;
+
                 .main-category-list {
                     position: relative;
                     display: flex;
@@ -1938,6 +1956,8 @@ header {
                                 }
                             }
                         }
+
+                        border: 1px solid #fff;
 
                         &:hover {
                             border: 1px solid #fff;
@@ -3845,8 +3865,7 @@ header {
                             padding: 45px;
                             display: flex;
                             flex-direction: column;
-                            justify-content: space-between;
-
+                            // justify-content: space-between;
                             .feature-title {
                                 display: flex;
                                 justify-content: space-between;
@@ -3911,6 +3930,8 @@ header {
 
         .container {
             .category-links {
+                overflow-x: clip;
+
                 .main-category-list {
                     position: relative;
                     display: flex;
@@ -3923,6 +3944,7 @@ header {
 
                     .category-item {
                         background: #fff;
+                        border: 1px solid #fff;
                         box-shadow: 0 0 8px 1px rgba(0,0,0,.057583);
                         border-radius: 10px;
                         width: 120px;
@@ -4415,6 +4437,8 @@ header {
 
         .container {
             .category-links {
+                overflow-x: clip;
+
                 .main-category-list {
                     position: relative;
                     display: flex;
@@ -4524,6 +4548,8 @@ header {
                                 }
                             }
                         }
+
+                        border: 1px solid #fff;
 
                         &:hover {
                             border: 1px solid #fff;
@@ -4657,7 +4683,7 @@ header {
                                                 display: flex;
                                                 align-items: center;
 
-                                                a {
+                                                button {
                                                     width: 20px;
                                                     height: 20px;
                                                     border: 1px solid gray;
@@ -4776,6 +4802,8 @@ header {
 
         .container {
             .category-links {
+                overflow-x: clip;
+
                 .main-category-list {
                     position: relative;
                     display: flex;
@@ -4886,6 +4914,8 @@ header {
                             }
                         }
 
+                        border: 1px solid #fff;
+
                         &:hover {
                             border: 1px solid #fff;
                             background-color: #3b7fec;
@@ -4980,6 +5010,80 @@ header {
                     .tab-layout {
                         display: none;
                         width: 100%;
+                    }
+
+                    .orders {
+                        .product-btns {
+                            display: flex;
+                            align-items: center;
+                            justify-content: space-between;
+
+                            .active {
+                                background: #3b7fed !important;
+                                color: #fff !important;
+                            }
+
+                            .product-btn {
+                                width: calc(33.33333% - 5px);
+                                padding: 16px;
+                                border: none;
+                                display: flex;
+                                align-items: center;
+                                justify-content: center;
+                                transition: .3s;
+                                font-weight: 600;
+                                font-size: 18px;
+                                line-height: 20px;
+                                text-align: center;
+                                letter-spacing: .0234783px;
+                                color: #2a304c;
+                                background: #fff;
+                                border-radius: 10px;
+                                margin-bottom: 32px;
+                                box-shadow: 0 0 6px 1px rgba(0,0,0,.0440068);
+
+                                &:hover {
+                                    background: #3b7fed;
+                                    color: #fff;
+                                }
+                            }
+                        }
+
+                        .product-contents {
+                            .active {
+                                display: block !important;
+                            }
+
+                            .product-layout {
+                                display: none;
+                                width: 100%;
+
+                                .cash-orders,
+                                .credit-orders,
+                                .taksit-orders {
+                                    .table-list {
+                                        .list-head {
+                                            display: flex;
+                                            justify-content: space-between;
+                                            align-items: stretch;
+                                            padding-bottom: 28px;
+
+                                            .li-item {
+                                                margin-left: 0;
+                                                width: 20%;
+                                                margin: 0 10px;
+                                                font-size: 16px;
+                                                line-height: 18px;
+                                                font-weight: 600;
+                                                text-align: center;
+                                                color: #2a304c;
+                                                transition: .3s;
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                        }
                     }
 
                     .products {
@@ -5307,6 +5411,8 @@ header {
 
         .container {
             .category-links {
+                overflow-x: clip;
+
                 .main-category-list {
                     position: relative;
                     display: flex;
@@ -5416,6 +5522,8 @@ header {
                                 }
                             }
                         }
+
+                        border: 1px solid #fff;
 
                         &:hover {
                             border: 1px solid #fff;
@@ -6638,6 +6746,8 @@ header {
 
         .container {
             .category-links {
+                overflow-x: clip;
+
                 .main-category-list {
                     position: relative;
                     display: flex;
@@ -6747,6 +6857,8 @@ header {
                                 }
                             }
                         }
+
+                        border: 1px solid #fff;
 
                         &:hover {
                             border: 1px solid #fff;

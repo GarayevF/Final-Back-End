@@ -48,6 +48,24 @@ namespace Smartelectronics.Areas.Manage.Controllers
                 return View(campaign);
             }
 
+            if (campaign.EndDate != null)
+            {
+                ModelState.AddModelError("EndDate", $"{campaign.EndDate} tarix mutleqdir");
+                return View(campaign);
+            }
+
+            if (campaign.Title != null)
+            {
+                ModelState.AddModelError("Title", $"{campaign.Title} basliq mutleqdir");
+                return View(campaign);
+            }
+
+            if (campaign.Desc != null)
+            {
+                ModelState.AddModelError("Title", $"{campaign.Desc} aciqlama mutleqdir");
+                return View(campaign);
+            }
+
             if (campaign.File != null)
             {
                 if (campaign.File.CheckFileContenttype("image/jpeg"))

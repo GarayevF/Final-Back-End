@@ -309,7 +309,6 @@
                     })
                     .then(data => {
                         $('.shop-pagination-partial').html(data)
-                        console.log('data geldi')
                     })
             })
         });
@@ -317,6 +316,8 @@
 
         $(document).on('click', '.paginated-btn, .categorybtn, .brandbtn, .colorbtn, .product-filter-btn', function (e) {
             if ($(this).hasClass('paginated-btn')) {
+                e.stopPropagation();
+                e.stopImmediatePropagation();
                 e.preventDefault();
 
                 let url = $(this).attr('href');
@@ -366,13 +367,27 @@
 
             }
             else if ($(this).hasClass('categorybtn')) {
+                e.stopPropagation();
+                e.stopImmediatePropagation();
                 e.preventDefault();
 
                 let url = $(this).attr('href');
                 let ctId = url.split('/')[url.split('/').length - 1];
-                categoryId = ctId;
+
+                url = url.replace("/" + ctId, "");
 
                 let path = [];
+
+                $('.categorybtn').css('font-weight', '400');
+                
+
+                if (categoryId == ctId) {
+                    $(this).css('font-weight', '400');
+                    categoryId = 0;
+                } else {
+                    categoryId = ctId;
+                    $(this).css('font-weight', 'bold');
+                }
 
                 if (categoryId > 0) {
                     path.push(`categoryId=${categoryId}`);
@@ -415,12 +430,23 @@
                     })
             }
             else if ($(this).hasClass('brandbtn')) {
+                e.stopPropagation();
+                e.stopImmediatePropagation();
                 e.preventDefault();
 
                 let url = $(this).attr('href');
                 let brnd = url.split('/')[url.split('/').length - 1];
 
-                brandId = brnd;
+                url = url.replace("/" + brnd, "");
+
+                if (brandId == brnd) {
+                    $(this).css('font-weight', '400');
+                    brandId = 0;
+                } else {
+                    brandId = brnd;
+                    $(this).css('font-weight', 'bold');
+                }
+
 
                 let path = [];
 
@@ -471,7 +497,13 @@
                 let url = $(this).attr('href');
                 let clr = url.split('/')[url.split('/').length - 1];
 
-                colorId = clr;
+                url = url.replace("/"+clr, "");
+
+                if (colorId == clr) {
+                    colorId = 0;
+                } else {
+                    colorId = clr;
+                }
 
                 let path = [];
 
@@ -535,6 +567,8 @@
             }
         })
             .on('change', '.nice-select', function (e) {
+                e.stopPropagation();
+                e.stopImmediatePropagation();
                 e.preventDefault();
 
                 let path = [];

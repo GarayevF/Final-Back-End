@@ -1,6 +1,10 @@
 ﻿@model IEnumerable<Campaign>
 @{
     ViewData["Title"] = "Index";
+    IEnumerable<Campaign> campaigns = ViewBag.Campaigns;
+    IEnumerable<DateTime> dates = ViewBag.Dates;
+    int count = campaigns.Count();
+    int cscount = 0;
 }
 
 <div class="main-campaign">
@@ -14,12 +18,12 @@
                     <div class="campaign-content">
                         <div class="campaign-info">
                             <div class="info-img">
-                                <img alt="" src="~/assets/images/campaigns/@campaign.Image">
+                                <img alt="" src="~/assets/images/kampaniyalar/@campaign.Image">
                             </div>
                             <div class="info">
                                 <div class="title">
                                     <h6>@campaign.Title</h6>
-                                    <p class="date">@campaign.EndDate</p>
+                                    <p class="date">@campaign.EndDate?.ToString("MM/dd/yyyy HH:mm:ss")</p>
                                     <div class="text">
                                         @Html.Raw(campaign.Desc)
                                     </div>
@@ -35,24 +39,60 @@
                             <div class="timer">
                                 <ul>
                                     <li>
-                                        <span class="days">28</span>
+                                        <span id="day-@cscount" class="days">28</span>
                                         <p>gün </p>
                                     </li>
                                     <li>
-                                        <span class="line hours">8</span>
+                                        <span id="hour-@cscount" class="line hours">8</span>
                                         <p>saat</p>
                                     </li>
                                     <li>
-                                        <span class="minutes">43</span>
+                                        <span id="minute-@cscount" class="minutes">43</span>
                                         <p>dəqiqə</p>
                                     </li>
                                 </ul>
                             </div>
                         </div>
                     </div>
+                    cscount++;
                 }
             }
         </div>
     </div>
 </div>
+
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script>
+    $(document).ready(function () {
+
+        var dates = @Html.Raw(Json.Serialize(ViewBag.Dates));
+        var count = @count;
+
+        for(var i = 0; i < count; i++){
+            var countDownDate = new Date(dates[i]);
+
+            var now = new Date().getTime();
+
+            var distance = countDownDate - now;
+
+            var days = Math.floor(distance / (1000 * 60 * 60 * 24));
+            var hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+            var minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+
+            $(`#day-${i}`).text(days);
+            $(`#hour-${i}`).text(hours);
+            $(`#minute-${i}`).text(minutes);
+
+            if (distance < 0) {
+                clearInterval(x);
+                $(`#day-${i}`).text('0');
+                $(`#hour-${i}`).text('0');
+                $(`#minute-${i}`).text('0');
+            }
+        }
+
+        
+
+    });
+</script>
 

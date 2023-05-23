@@ -28,7 +28,15 @@
 					<ul class="order-details-list">
 						<li>Sifariş nömrəsi: <strong>@Model.No</strong></li>
 						<li>Tarix: <strong>@Model.CreatedAt</strong></li>
-						<li>Qiymət: <strong>@(Model.OrderItems.Sum(a => (a.Product.DiscountedPrice > 0 ? a.Product.DiscountedPrice : a.Product.Price) * a.Count)) AZN</strong></li>
+						@if(Model.OrderMethod != null)
+						{
+							<li>Qiymət: <strong>@Model.OrderItems.FirstOrDefault().Price AZN</strong></li>
+						}
+						else
+						{
+							<li>Qiymət: <strong>@(Model.OrderItems.Sum(a => (a.Product.DiscountedPrice > 0 ? a.Product.DiscountedPrice : a.Product.Price) * a.Count)) AZN</strong></li>
+						}
+						
 					</ul>
 					<h3 class="order-table-title">Sifariş detalları</h3>
 					<div class="table-responsive">
@@ -40,18 +48,40 @@
 								</tr>
 							</thead>
 							<tbody>
+								@if (Model.OrderMethod != null)
+								{
 									@foreach (OrderItem item in Model.OrderItems)
 									{
-									<tr>
-										<td><a asp-action="detail" asp-controller="product" asp-route-id="@item.Product.Id">@item.Product.Title</a> <strong>× @item.Count</strong></td>
-										<td><span>@item.Product.Price AZN</span></td>
-									</tr>
+										<tr>
+											<td><a asp-action="detail" asp-controller="product" asp-route-id="@item.Product.Id">@item.Product.Title</a> <strong>× @item.Count</strong></td>
+											<td><span>@item.Price AZN</span></td>
+										</tr>
 									}
+								}
+								else
+								{
+									@foreach (OrderItem item in Model.OrderItems)
+									{
+										<tr>
+											<td><a asp-action="detail" asp-controller="product" asp-route-id="@item.Product.Id">@item.Product.Title</a> <strong>× @item.Count</strong></td>
+											<td><span>@(item.Product.DiscountedPrice > 0 ? item.Product.DiscountedPrice : item.Product.Price) AZN</span></td>
+										</tr>
+									}
+								}
+								
 							</tbody>
 							<tfoot>
 								<tr>
 									<th>Ümumi qiymət:</th>
-									<th><span>@(Model.OrderItems.Sum(a => (a.Product.DiscountedPrice > 0 ? a.Product.DiscountedPrice : a.Product.Price) * a.Count)) AZN</span></th>
+									@if (Model.OrderMethod != null)
+									{
+										<th><span>@Model.OrderItems.FirstOrDefault().Price AZN</span></th>
+									}
+									else
+									{
+										<td><span>@(Model.OrderItems.Sum(a => (a.Product.DiscountedPrice > 0 ? a.Product.DiscountedPrice : a.Product.Price) * a.Count)) AZN</span></td>
+									}
+
 								</tr>
 							</tfoot>
 						</table>

@@ -1,6 +1,6 @@
 {
   "Version": 1,
-  "Hash": "F371Cyx6/mQEkuoL9Z/CcbgvrqPahr6XteRDgjLHx50=",
+  "Hash": "VMXjouP1hQmAEjHMVXz9to14UbpFVTEmQEHDkX5qDrU=",
   "Source": "Smartelectronics",
   "BasePath": "_content/Smartelectronics",
   "Mode": "Default",
@@ -253,6 +253,40 @@
       "CopyToOutputDirectory": "Never",
       "CopyToPublishDirectory": "PreserveNewest",
       "OriginalItemSpec": "wwwroot\\assets\\images\\kampaniyalar\\20230523023829239_227b700b-1603-4938-904d-87f898762870.jpg"
+    },
+    {
+      "Identity": "C:\\Users\\Farid\\Desktop\\Smartelectronics\\Smartelectronics\\wwwroot\\assets\\images\\kampaniyalar\\20230525134004360_b3789951-6c5c-4e77-a0d2-544055ff09cc.jpg",
+      "SourceId": "Smartelectronics",
+      "SourceType": "Discovered",
+      "ContentRoot": "C:\\Users\\Farid\\Desktop\\Smartelectronics\\Smartelectronics\\wwwroot\\",
+      "BasePath": "_content/Smartelectronics",
+      "RelativePath": "assets/images/kampaniyalar/20230525134004360_b3789951-6c5c-4e77-a0d2-544055ff09cc.jpg",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot\\assets\\images\\kampaniyalar\\20230525134004360_b3789951-6c5c-4e77-a0d2-544055ff09cc.jpg"
+    },
+    {
+      "Identity": "C:\\Users\\Farid\\Desktop\\Smartelectronics\\Smartelectronics\\wwwroot\\assets\\images\\kampaniyalar\\20230525140841999_d16c345c-f3da-4b49-a95d-63d9e9cbc444.jpg",
+      "SourceId": "Smartelectronics",
+      "SourceType": "Discovered",
+      "ContentRoot": "C:\\Users\\Farid\\Desktop\\Smartelectronics\\Smartelectronics\\wwwroot\\",
+      "BasePath": "_content/Smartelectronics",
+      "RelativePath": "assets/images/kampaniyalar/20230525140841999_d16c345c-f3da-4b49-a95d-63d9e9cbc444.jpg",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot\\assets\\images\\kampaniyalar\\20230525140841999_d16c345c-f3da-4b49-a95d-63d9e9cbc444.jpg"
     },
     {
       "Identity": "C:\\Users\\Farid\\Desktop\\Smartelectronics\\Smartelectronics\\wwwroot\\assets\\images\\kampaniyalar\\wish-card-1.png",
@@ -1426,6 +1460,23 @@
       "CopyToOutputDirectory": "Never",
       "CopyToPublishDirectory": "PreserveNewest",
       "OriginalItemSpec": "wwwroot\\assets\\images\\sliders\\1card.png"
+    },
+    {
+      "Identity": "C:\\Users\\Farid\\Desktop\\Smartelectronics\\Smartelectronics\\wwwroot\\assets\\images\\sliders\\20230526022844339_2484236a-6e5f-4ee8-8783-039cf24277af.jpg",
+      "SourceId": "Smartelectronics",
+      "SourceType": "Discovered",
+      "ContentRoot": "C:\\Users\\Farid\\Desktop\\Smartelectronics\\Smartelectronics\\wwwroot\\",
+      "BasePath": "_content/Smartelectronics",
+      "RelativePath": "assets/images/sliders/20230526022844339_2484236a-6e5f-4ee8-8783-039cf24277af.jpg",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot\\assets\\images\\sliders\\20230526022844339_2484236a-6e5f-4ee8-8783-039cf24277af.jpg"
     },
     {
       "Identity": "C:\\Users\\Farid\\Desktop\\Smartelectronics\\Smartelectronics\\wwwroot\\assets\\images\\sliders\\slider-1.jpg",

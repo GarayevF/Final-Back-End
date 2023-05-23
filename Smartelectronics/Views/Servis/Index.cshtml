@@ -1,0 +1,142 @@
+﻿@model Message
+@{
+    ViewData["Title"] = "Index";
+}
+
+@inject ILayoutService layoutService
+
+@{
+    IEnumerable<Category> categories = await layoutService.GetCategories();
+    IDictionary<string, string> settings = await layoutService.GetSettings();
+}
+<style>
+        .form_label{
+            font-weight: 700;
+            font-size: 22px;
+            line-height: 25px;
+            color: #3b7fed;
+            text-align: center;
+            margin: 30px 0;
+        }
+        form{
+            width: 80%;
+            margin: auto;
+            margin-top: 20px;
+        }
+        .about-content form .form-group {
+            margin-bottom: 30px;
+            position: relative;
+        }
+        .about-content form .form-group label {
+            padding-left: 30px;
+            margin-bottom: 12px;
+            font-size: 16px;
+            font-weight: 700;
+            font-stretch: normal;
+            font-style: normal;
+            line-height: normal;
+            letter-spacing: normal;
+            color: #3b7fec;
+        }
+        .about-content form .form-group input {
+            height: unset;
+            padding: 13px 30px;
+            border-radius: 26px;
+            border: 1px solid #9498a4;
+            display: block;
+            width: 100%;
+            font-size: 1rem;
+            font-weight: 400;
+            line-height: 1.5;
+            color: #495057;
+            background-color: #fff;
+            background-clip: padding-box;
+            transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
+        }
+        .about-content form .form-group textarea {
+            height: unset;
+            padding: 13px 30px;
+            border-radius: 26px;
+            border: 1px solid #9498a4;
+            min-height: 220px;
+            margin-top: 80px;
+            display: block;
+            width: 100%;
+            font-size: 1rem;
+            font-weight: 400;
+            line-height: 1.5;
+            color: #495057;
+            background-color: #fff;
+            background-clip: padding-box;
+            transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
+        }
+        .about-content form button {
+            width: 100%;
+            max-width: 265px;
+            margin-top: 50px;
+            padding: 15px;
+            font-size: 20px;
+            line-height: 22px;
+            text-align: center;
+            color: #fff;
+            border-radius: 26px;
+            background-color: #3b7fed;
+            border: none;
+            outline: none;
+        }
+        
+        </style>
+<main class="main-about">
+    <div class="top">
+        <div class="container">
+            <div class="category-links">
+                <ul class="owl-carousel owl-category-slider main-category-list">
+                    @foreach (Category category in categories)
+                    {
+                        <li class="category-item">
+                            <div class="category-title">
+                                @Html.Raw(category.Icon)
+                                <span>@category.Name</span>
+                            </div>
+                            <div class="category-content">
+                                <div class="content-products">
+                                    @if (category.Children != null && category.Children.Count() > 0)
+                                    {
+                                        @foreach (Category child in category.Children)
+                                        {
+                                            <ul class="content-product-list">
+                                                <a href="product/index?CategoryId=@child.Id" class="content-header">@child.Name</a>
+                                                @if (child.Products != null && child.Products.Count() > 0)
+                                                {
+                                                    @foreach (Brand brand in child.Products.Where(p => p.CategoryId == child.Id).Select(p => p.Brand).Distinct().ToList())
+                                                    {
+                                                        <li class="content-body"><a href="product/index?brandId=@brand.Id" class="content-body-link">@brand?.Name</a></li>
+                                                    }
+                                                }
+
+                                            </ul>
+                                        }
+
+                                    }
+
+                                </div>
+                            </div>
+                        </li>
+                    }
+
+                </ul>
+            </div>
+            <h1>Servis</h1>
+        </div>
+    </div>
+        <div class="bottom">
+            <div class="container">
+                <div class="about-content">
+                    <p class="subtitle">Telefon,planşet,komputer,noutbuk bir sözlə hər növ texnika və texnoloji avadanlıqların texniki təmiri və analizi. Təmir zamanı yüksək keyfiyyətli avadanlıq və detallardan istifadə olunur!</p>
+                    <h6 class="form_label">14 gün keyfiyyət zəmanəti!</h6>
+                    @await Html.PartialAsync("_ServisPartial", Model)
+                </div>
+            </div>
+        </div>
+    </main>
+

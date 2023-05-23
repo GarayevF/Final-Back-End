@@ -1,8 +1,13 @@
-﻿@model IEnumerable<Affiliate>
+﻿@model Message
 @{
     ViewData["Title"] = "Index";
+    IEnumerable<Affiliate> affiliates = ViewBag.Affiliates;
 }
-
+<style>
+    .contact-form-wrapper{
+        margin: 80px 0;
+    }
+</style>
 <section class="breadcrumb-section">
    <h2 class="sr-only">Site Breadcrumb</h2>
    <div class="container">
@@ -27,14 +32,14 @@
             <div class="container">
                 <div class="contact-form section_wrapper">
                     <div class="left-content">
-                        @await Html.PartialAsync("_CheckoutPartial")
+                        @await Html.PartialAsync("_MessagePartial", Model)
                     </div>
                     <div id="contact_carousel" class="right-content">
                        <div class="affiliate">
                           <div class="owl-carousel owl-affiliate">
-                                @if(Model != null && Model.Count() > 0)
+                                @if (affiliates != null && affiliates.Count() > 0)
                                 {
-                                    @foreach(Affiliate affiliate in Model)
+                                    @foreach (Affiliate affiliate in affiliates)
                                     {
                                         <div class="item">
                                             <div class="name">

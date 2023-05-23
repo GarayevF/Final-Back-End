@@ -92,8 +92,7 @@ namespace Smartelectronics.Controllers
                     .Include(u => u.Baskets.Where(b => b.IsDeleted == false))
                     .FirstOrDefaultAsync(u => u.UserName == User.Identity.Name);
 
-                if (appUser.Baskets != null && appUser.Baskets.Count() > 0)
-                {
+                
                     if (appUser.Baskets.Any(b => b.ProductId == id))
                     {
                         appUser.Baskets.FirstOrDefault(b => b.ProductId == id).Count = basketVMs.FirstOrDefault(b => b.Id == id).Count;
@@ -108,17 +107,7 @@ namespace Smartelectronics.Controllers
 
                         appUser.Baskets.Add(basket);
                     }
-                }
-                else
-                {
-                    Basket basket = new Basket
-                    {
-                        ProductId = id,
-                        Count = 1
-                    };
-
-                    appUser.Baskets.Add(basket);
-                }
+                
 
                 await _context.SaveChangesAsync();
             }
@@ -246,6 +235,22 @@ namespace Smartelectronics.Controllers
                     return BadRequest();
                 }
             }
+            if (User.Identity.IsAuthenticated && User.IsInRole("Member"))
+            {
+                AppUser appUser = await _userManager.Users
+                    .Include(u => u.Baskets.Where(b => b.IsDeleted == false))
+                    .FirstOrDefaultAsync(u => u.UserName == User.Identity.Name);
+
+                if (appUser.Baskets != null && appUser.Baskets.Count() > 0)
+                {
+                    if (appUser.Baskets.Any(b => b.ProductId == id))
+                    {
+                        appUser.Baskets.FirstOrDefault(b => b.ProductId == id).Count = basketVMs.FirstOrDefault(b => b.Id == id).Count;
+                    }
+                }
+
+                await _context.SaveChangesAsync();
+            }
 
             cookie = JsonConvert.SerializeObject(basketVMs);
             HttpContext.Response.Cookies.Append("basket", cookie);
@@ -299,8 +304,28 @@ namespace Smartelectronics.Controllers
                     return BadRequest();
                 }
             }
+
+            if (User.Identity.IsAuthenticated && User.IsInRole("Member"))
+            {
+                AppUser appUser = await _userManager.Users
+                    .Include(u => u.Baskets.Where(b => b.IsDeleted == false))
+                    .FirstOrDefaultAsync(u => u.UserName == User.Identity.Name);
+
+                if (appUser.Baskets != null && appUser.Baskets.Count() > 0)
+                {
+                    if (appUser.Baskets.Any(b => b.ProductId == id))
+                    {
+                        appUser.Baskets.Remove(appUser.Baskets.FirstOrDefault(b => b.ProductId == id));
+                        await _context.SaveChangesAsync();
+                    }
+                }
+
+            }
+
             cookie = JsonConvert.SerializeObject(basketVMs);
             HttpContext.Response.Cookies.Append("basket", cookie);
+
+
             foreach (BasketVM basketVM in basketVMs)
             {
                 Product product = await _context.Products

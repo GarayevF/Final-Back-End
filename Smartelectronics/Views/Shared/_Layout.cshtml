@@ -18,9 +18,8 @@
     
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" integrity="sha512-iecdLmaskl7CVkqkXNQ/ZH/XLlvWZOJyj7Yy7tcenmpD1ypASozpmT/E0iPtmFIB46ZmdtAc9eNBvH0H/ZpiBw==" crossorigin="anonymous" referrerpolicy="no-referrer" />
     <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.4/css/bootstrap-theme.css">
-    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.4/js/bootstrap.js"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/assets/owl.carousel.css" integrity="sha512-UTNP5BXLIptsaj5WdKFrkFov94lDx+eBvbKyoe1YAfjeRPC+gT5kyZ10kOHCfNZqEui1sxmqvodNUx3KbuYI/A==" crossorigin="anonymous" referrerpolicy="no-referrer" />
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css" integrity="sha512-vKMx8UnXk60zUwyUnUPM3HbQo8QfmNx7+ltw8Pm5zLusl1XIfwcxo8DbWCqMGKaWeNxWA8yrx5v3SaVpMvR3CA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
     <link rel="stylesheet" href="~/assets/css/bootstrap.css">
     <link rel="stylesheet" href="~/assets/css/style.css">
     <title>Document</title>
@@ -41,10 +40,10 @@
                 <div class="header-top">
                     <div class="left">
                         <ul class="header-nav">
-                            <li><a asp-controller="affiliate" asp-action="index">Filiallar</a></li>
-                            <li><a asp-controller="campaign" asp-action="index">Kampaniyalar</a></li>
-                            <li><a asp-controller="affiliate" asp-action="index">Əlaqə</a></li>
-                            <li><a asp-controller="outlet" asp-action="index">Outlet</a></li>
+                            <li><a style="color:#fff" asp-controller="affiliate" asp-action="index">Filiallar</a></li>
+                            <li><a style="color:#fff" asp-controller="campaign" asp-action="index">Kampaniyalar</a></li>
+                            <li><a style="color:#fff" asp-controller="affiliate" asp-action="index">Əlaqə</a></li>
+                            <li><a style="color:#fff" asp-controller="outlet" asp-action="index">Outlet</a></li>
                         </ul>
                         <ul class="header-social-links">
                             <li><i class="fa-brands fa-facebook"></i></li>
@@ -184,7 +183,7 @@
                                                             {
                                                                 @foreach (Brand brand in child.Products.Where(p => p.CategoryId == child.Id).Select(p => p.Brand).Distinct().ToList())
                                                                 {
-                                                                    <a href="" class="link">@brand.Name</a>
+                                                                    <a href="" class="link">@brand?.Name</a>
                                                                 }
                                                             }
                                                             
@@ -302,6 +301,20 @@
                                 </ul>
                             </div>
                             <div class="nav-list">
+                                <p class="ft-menu-btn">DƏSTƏK</p>
+                                <ul class="ft-menu-content">
+                                    <li>
+                                        <a asp-controller="vacancies">Vakansiya</a>
+                                    </li>
+                                    <li>
+                                        <a asp-controller="faq">FAQ</a>
+                                    </li>
+                                    <li>
+                                        <a asp-controller="servis">Servis</a>
+                                    </li>
+                                </ul>
+                            </div>
+                            <div class="nav-list">
                                 <p class="ft-menu-btn">SOSİAL ŞƏBƏKƏLƏR</p>
                                 <ul class="ft-menu-content">
                                     <li>
@@ -379,7 +392,8 @@
     <script src="~/assets/js/jquery.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.inputmask/5.0.8/jquery.inputmask.min.js" integrity="sha512-efAcjYoYT0sXxQRtxGY37CKYmqsFVOIwMApaEbrxJr4RwqVVGw8o+Lfh/+59TU07+suZn1BWq4fDl5fdgyCNkw==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/owl.carousel.min.js" integrity="sha512-bPs7Ae6pVvhOSiIcyUClR7/q2OAsRiovw4vAkX+zJbw3ShAeeqezq50RIIcIURq7Oa20rW2n2q+fyXBNcU9lrw==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js" integrity="sha512-VEd+nq25CkR676O+pLBnDW09R7VQX9Mdiij052gVCp5yVH3jGtH70Ho/UUv4mJDsEdTvqRCFZg0NKGiojGnUCw==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
     <script src="~/assets/js/custom.js"></script>
     <script src="~/assets/js/script.js"></script>
 </body>

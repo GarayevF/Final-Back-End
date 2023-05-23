@@ -9,6 +9,7 @@ namespace Smartelectronics.Models
         [StringLength(100)]
         public string? Surname { get; set; }
         [StringLength(100)]
+        [EmailAddress]
         public string? Mail { get; set; }
         [StringLength(100)]
         public string? Number { get; set; }

@@ -14,39 +14,40 @@
                 <ul class="owl-carousel owl-category-slider main-category-list">
                     @foreach (Category category in categories)
                     {
-                            <li class="category-item">
-                                <div class="category-title">
+                        <li class="category-item">
+                            <div class="category-title">
                                 @Html.Raw(category.Icon)
-                                    <span>@category.Name</span>
-                                </div>
-                                <div class="category-content">
-                                    <div class="content-products">
+                                <span>@category.Name</span>
+                            </div>
+                            <div class="category-content">
+                                <div class="content-products">
                                     @if (category.Children != null && category.Children.Count() > 0)
                                     {
                                         @foreach (Category child in category.Children)
                                         {
-                                                        <ul class="content-product-list">
-                                                            <a class="content-header">Smartfonlar</a>
+                                            <ul class="content-product-list">
+                                                <a href="product/index?CategoryId=@child.Id" class="content-header">@child.Name</a>
                                                 @if (child.Products != null && child.Products.Count() > 0)
                                                 {
                                                     @foreach (Brand brand in child.Products.Where(p => p.CategoryId == child.Id).Select(p => p.Brand).Distinct().ToList())
                                                     {
-                                                                            <li class="content-body"><a class="content-body-link">@brand.Name</a></li>
+                                                        <li class="content-body"><a href="product/index?brandId=@brand.Id" class="content-body-link">@brand?.Name</a></li>
                                                     }
                                                 }
 
-                                                        </ul>
+                                            </ul>
                                         }
 
                                     }
 
-                                    </div>
                                 </div>
-                            </li>
+                            </div>
+                        </li>
                     }
 
                 </ul>
             </div>
+            <h1>Qarantiya</h1>
         </div>
     </div>
         <div class="bottom">

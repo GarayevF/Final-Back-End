@@ -1032,6 +1032,9 @@ namespace Smartelectronics.Migrations
                     b.Property<bool>("IsDeleted")
                         .HasColumnType("bit");
 
+                    b.Property<decimal?>("MonthlyPrice")
+                        .HasColumnType("money");
+
                     b.Property<int?>("OrderId")
                         .HasColumnType("int");
 

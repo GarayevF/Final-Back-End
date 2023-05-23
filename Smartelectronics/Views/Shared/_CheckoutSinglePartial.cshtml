@@ -1,0 +1,84 @@
+﻿@model Order
+
+<form id="checkoutform" method="post" asp-controller="Order" asp-action="checkoutsingle">
+    <div class="personal-info">
+        <div class="form-group">
+            <input asp-for="Name" type="text" placeholder="Ad">
+            <span asp-validation-for="Name" class="text-danger"></span>
+        </div>
+        <div class="form-group">
+            <div class="radio-wrapper">
+                <div class="radio-box">
+                    <input type="radio" asp-for="Gender" name="gender" value="Male" id="Male">
+                    <label for="Male">Kişi</label>
+                </div>
+                <div class="radio-box">
+                    <input type="radio" asp-for="Gender" name="gender" value="Female" id="Female">
+                    <label for="Female">Qadın</label>
+                </div>
+                <span asp-validation-for="Gender" class="text-danger"></span>
+            </div>
+        </div>
+        <div class="form-group">
+            <input asp-for="SurName" type="text" placeholder="Soyad">
+            <span asp-validation-for="SurName" class="text-danger"></span>
+        </div>
+        <div class="form-group"></div>
+        <div class="form-group">
+            <input asp-for="Patronymic" type="text" placeholder="Ata adi">
+            <span asp-validation-for="Patronymic" class="text-danger"></span>
+        </div>
+        <div class="form-group">
+            <div class="form-align">
+                <span>Doğum tarixi</span>
+            </div>
+        </div>
+        <div class="form-group">
+            <input asp-for="IdSeria" type="text" placeholder="Şəxsiyyət vəsiqəsinin seriyası">
+            <span asp-validation-for="IdSeria" class="text-danger"></span>
+        </div>
+        <div class="form-group">
+            <div class="date">
+                <input asp-for="BirthDate" type="date" id="birthday" name="birthday">
+                <span asp-validation-for="BirthDate" class="text-danger"></span>
+            </div>
+        </div>
+        <div class="form-group">
+            <input asp-for="Fin" type="text" placeholder="FİN">
+            <span asp-validation-for="Fin" class="text-danger"></span>
+        </div>
+        <div class="form-group">
+            <input asp-for="Number" type="tel" id="phone3" formcontrolname="mobilePhone" class="form-control" placeholder="+994 (__) ___ __ __">
+            <span asp-validation-for="Number" class="text-danger"></span>
+        </div>
+        <div class="personal-info">
+            <h5 class="section_label">Çatdırılma ünvanı</h5>
+            <div class="form-group">
+                <input asp-for="City" type="text" placeholder="Çatdırılma Şəhəri" name="deliveryCityName">
+                <span asp-validation-for="City" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <input asp-for="OrderAddress" type="text" placeholder="Çatdırılma ünvanı" name="deliveryAddress">
+                <span asp-validation-for="OrderAddress" class="text-danger"></span>
+            </div>
+            <div class="userAddresses">
+                <div class="address-info">
+                    <div class="form-group">
+                        <div class="delivery_lbl">
+                            <img src="/assets/images/truck-white.svg" alt="">
+                            <p>Çatdırılma Pulsuz</p>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <textarea asp-for="AdditionalComment" id="" cols="30" placeholder="Əlavə qeydlər"></textarea>
+                        <span asp-validation-for="AdditionalComment" class="text-danger"></span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <input hidden asp-for="TempProductId">
+    <input hidden asp-for="TempMonthlyPrice">
+    <input hidden asp-for="TempTotalPrice">
+    <input hidden asp-for="OrderMethod">
+</form>

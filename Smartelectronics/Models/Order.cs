@@ -1,6 +1,7 @@
 ﻿using MailKit.Search;
 using Smartelectronics.Enums;
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Smartelectronics.Models
 {
@@ -38,5 +39,11 @@ namespace Smartelectronics.Models
         public List<OrderItem>? OrderItems { get; set; }
         [StringLength(100)]
         public string? OrderMethod { get; set; }
+        [NotMapped]
+        public int? TempProductId { get; set; }
+		[NotMapped]
+		public double? TempMonthlyPrice { get; set; }
+		[NotMapped]
+		public double? TempTotalPrice { get; set; }
     }
 }

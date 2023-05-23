@@ -9,11 +9,11 @@
         <div class="form-group">
             <div class="radio-wrapper">
                 <div class="radio-box">
-                    <input name="Gender" type="radio" value="Male" id="Male">
+                    <input type="radio" asp-for="Gender" name="gender" value="Male" id="Male">
                     <label for="Male">Kişi</label>
                 </div>
                 <div class="radio-box">
-                    <input name="Gender" type="radio" value="Female" id="Female">
+                    <input type="radio" asp-for="Gender" name="gender" value="Female" id="Female">
                     <label for="Female">Qadın</label>
                 </div>
                 <span asp-validation-for="Gender" class="text-danger"></span>
@@ -77,4 +77,8 @@
             </div>
         </div>
     </div>
+    <input hidden asp-for="TempProductId">
+    <input hidden asp-for="TempMonthlyPrice">
+    <input hidden asp-for="TempTotalPrice">
+    <input hidden asp-for="OrderMethod">
 </form>

@@ -26,12 +26,12 @@
                                         @foreach (Category child in category.Children)
                                         {
                                             <ul class="content-product-list">
-                                                <a class="content-header">Smartfonlar</a>
+                                                <a asp-controller="product" asp-action="index" asp-route-categoryId="@child.Id" class="content-header">@child.Name</a>
                                                 @if (child.Products != null && child.Products.Count() > 0)
                                                 {
                                                     @foreach (Brand brand in child.Products.Where(p => p.CategoryId == child.Id).Select(p => p.Brand).Distinct().ToList())
                                                     {
-                                                        <li class="content-body"><a class="content-body-link">@brand.Name</a></li>
+                                                        <li class="content-body"><a asp-controller="product" asp-action="index" asp-route-brandId="@brand.Id" class="content-body-link">@brand?.Name</a></li>
                                                     }
                                                 }
 
@@ -60,24 +60,20 @@
                     </div>
                     <div class="tab-contents">
                     <div class="tab-layout products @(TempData["Tab"]?.ToString() == "Order" ? "active" : "")" data-target="2">
-                            <div class="product-btns">
-                                <button class="product-btn active" data-orgn="1">Nağd alışlarda</button>
-                                <button class="product-btn" data-orgn="2">Kredit</button>
-                                <button class="product-btn" data-orgn="3">Taksit</button>
-                            </div>
+                            
                             <div class="product-contents">
-                                <div class="product-layout active" data-trgt="1">
+                                <div class="product-layout active">
                                     <div class="cash-orders">
                                         
                                     <table class="table table-bordered w-100">
                                         <thead class="thead-light">
                                             <tr>
                                                 <th>No</th>
-                                                <th>Full Name</th>
-                                                <th>Created At</th>
-                                                <th>Total Price</th>
+                                                <th>Ödəniş metodu</th>
+                                                <th>Tarix</th>
+                                                <th>Ümumi Qiymət</th>
                                                 <th>Status</th>
-                                                <th>Comment</th>
+                                                <th>Rəy</th>
                                             </tr>
                                         </thead>
                                         <tbody>
@@ -85,12 +81,12 @@
                                             {
                                                 foreach (Order order in Model.Orders)
                                                 {
-                                                    <tr data-toggle="collapse" data-target="#demo@(order.Id)" class="accordion-toggle">
+                                                    <tr data-bs-toggle="collapse" data-bs-target="#demo@(order.Id)" class="accordion-toggle">
                                                         <td>@order.No</td>
-                                                        <td>@($"{order.Name} {order.SurName}")</td>
+                                                        <td>@(order.OrderMethod == null ? "Nağd" : order.OrderMethod)</td>
                                                         <td>@order.CreatedAt?.ToString("dd MMM yyyy")</td>
-                                                        <td>$@order.OrderItems.Sum(oi => oi.Price * oi.Count)</td>
-                                                        <td>@order.Status</td>
+                                                        <td>@order?.OrderItems?.Sum(oi => oi.Price * oi.Count) AZN</td>
+                                                        <td>@order?.Status</td>
                                                         <td>@order.Comment</td>
                                                     </tr>
                                                     <tr>
@@ -99,10 +95,10 @@
                                                                 <table class="table table-bordered w-100">
                                                                     <thead>
                                                                         <tr>
-                                                                            <th class="name">Name</th>
-                                                                            <th class="status">Price</th>
-                                                                            <th class="total">Count</th>
-                                                                            <th class="action">Total</th>
+                                                                            <th class="name">Ad</th>
+                                                                            <th class="status">Qiymət</th>
+                                                                            <th class="total">Say</th>
+                                                                            <th class="action">Cəmi</th>
                                                                         </tr>
                                                                     </thead>
                                                                     <tbody>
@@ -110,9 +106,9 @@
                                                                         {
                                                                             <tr>
                                                                                 <td>@orderItem.Product.Title</td>
-                                                                                <td>@orderItem.Price</td>
+                                                                                <td>@orderItem.Price AZN</td>
                                                                                 <td>@orderItem.Count</td>
-                                                                                <td>@(orderItem.Count * orderItem.Price)</td>
+                                                                                <td>@(orderItem.Count * orderItem.Price) AZN</td>
                                                                             </tr>
                                                                         }
                                                                     </tbody>
@@ -126,36 +122,12 @@
                                     </table>
                                     </div>
                                 </div>
-                                <div class="product-layout" data-trgt="2">
-                                    <div class="credit-orders">
-                                        <ul class="table-list custom-table">
-                                            <li class="list-head">
-                                               <p class="li-item">Müqavilə Nömrəsi</p>
-                                               <p class="li-item">Məhsul</p>
-                                               <p class="li-item">Vitrin Qiyməti</p>
-                                               <p class="li-item">Satış Qiyməti</p>
-                                               <p class="li-item">Sifariş Tarixi</p>
-                                            </li>
-                                         </ul>
-                                    </div>
-                                </div>
-                                <div class="product-layout" data-trgt="3">
-                                    <div class="taksit-orders">
-                                        <ul class="table-list custom-table">
-                                            <li class="list-head">
-                                               <p class="li-item">Müqavilə Nömrəsi</p>
-                                               <p class="li-item">Məhsul</p>
-                                               <p class="li-item">Vitrin Qiyməti</p>
-                                               <p class="li-item">Satış Qiyməti</p>
-                                               <p class="li-item">Sifariş Tarixi</p>
-                                            </li>
-                                         </ul>
-                                    </div>
-                                </div>
+                                
                             </div>
                         </div>
                         <div class="tab-layout settings @(TempData["Tab"]?.ToString() == "Setting" ? "active" : "")" data-target="3">
                             <div class="content">
+                                <h1 class="personal-title">Tənzimləmələr</h1>
                                 @await Html.PartialAsync("_AccountFormPartial", Model.AccountVM)
                             </div>
                         </div>

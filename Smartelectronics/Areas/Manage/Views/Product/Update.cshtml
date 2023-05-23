@@ -19,7 +19,7 @@
     <div class="col-lg-12">
         <div class="row justify-content-lg-between">
             <div class="col-lg-12">
-                <h1 class="h3 mb-4 text-gray-800">Product Create Page</h1>
+                <h1 class="h3 mb-4 text-gray-800">Məhsul Məlumatlarının Yenilənməsi</h1>
             </div>
         </div>
     </div>
@@ -99,7 +99,7 @@
                             <input type="file" accept="image/jpeg" multiple class="form-control color-input" id="colorImageValue-@colorImageVM.ColorId" name="ColorImageVMs[@count].Files" value="@colorImageVM.Files">
                             <span class="text text-danger">@ViewData.ModelState[$"ColorImageVMs[${@count}].Files"]?.Errors.First().ErrorMessage</span>
                         </div>
-                        <div class="imageContainer d-flex">
+                        <div class="imageContainer d-flex" style="margin-bottom: 20px">
                             @if (productColors.Select(p => p.ProductId == Model.Product.Id && p.ColorId == colorImageVM.ColorId) != null && productColors.Select(p => p.ProductId == Model.Product.Id && p.ColorId == colorImageVM.ColorId).Count() > 0)
                             {
                                 @await Html.PartialAsync("_ProductImagePartial", productColors.Where(p => p.ProductId == Model.Product.Id && p.ColorId == colorImageVM.ColorId).ToList())

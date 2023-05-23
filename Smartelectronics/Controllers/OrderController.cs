@@ -64,7 +64,6 @@ namespace Smartelectronics.Controllers
 					Fin = appUser?.Fin,
 					Number = appUser?.PhoneNumber,
 					Gender = appUser?.Gender,
-                    OrderMethod = "Nağd"
                 };
             }
 
@@ -75,8 +74,13 @@ namespace Smartelectronics.Controllers
                     Name = appUser.Name,
                     SurName = appUser.SurName,
                     Email = appUser.Email,
-                    OrderMethod = "Nağd"
-                };
+					BirthDate = appUser?.BirthDate,
+					IdSeria = appUser?.IdSeria,
+					Patronymic = appUser?.Patronymic,
+					Fin = appUser?.Fin,
+					Number = appUser?.PhoneNumber,
+					Gender = appUser?.Gender,
+				};
                 
             }
 
@@ -197,7 +201,6 @@ namespace Smartelectronics.Controllers
         public async Task<IActionResult> CheckoutSingle(string? method, int? productId)
         {
             AppUser appUser = await _userManager.Users
-                .Include(u => u.Baskets.Where(b => b.IsDeleted == false)).ThenInclude(b => b.Product)
                 .Include(u => u.Address)
                 .FirstOrDefaultAsync(u => u.UserName == User.Identity.Name);
 
@@ -226,7 +229,9 @@ namespace Smartelectronics.Controllers
                     Fin = appUser?.Fin,
                     Number = appUser?.PhoneNumber,
                     Gender = appUser?.Gender,
-                    OrderMethod = Uri.UnescapeDataString(method)
+                    OrderMethod = Uri.UnescapeDataString(method),
+                    TempProductId = productId,
+                    TempTotalPrice = product.DiscountedPrice > 0 ? product.DiscountedPrice : product.Price,
                 };
             }
 
@@ -237,7 +242,15 @@ namespace Smartelectronics.Controllers
                     Name = appUser.Name,
                     SurName = appUser.SurName,
                     Email = appUser.Email,
-                    OrderMethod = Uri.UnescapeDataString(method)
+					BirthDate = appUser?.BirthDate,
+					IdSeria = appUser?.IdSeria,
+					Patronymic = appUser?.Patronymic,
+					Fin = appUser?.Fin,
+					Number = appUser?.PhoneNumber,
+					Gender = appUser?.Gender,
+					OrderMethod = Uri.UnescapeDataString(method),
+                    TempProductId = productId,
+                    TempTotalPrice = product.DiscountedPrice > 0 ? product.DiscountedPrice : product.Price,
                 };
 
             }
@@ -249,17 +262,16 @@ namespace Smartelectronics.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> CheckoutSingle(Order order, int? productId)
+        public async Task<IActionResult> CheckoutSingle(Order order)
         {
-            if(productId == null) return BadRequest();
+            if(order.TempProductId == null) return BadRequest();
 
             Product product = await _context.Products.Where(p => p.IsDeleted == false)
-                .FirstOrDefaultAsync(p => p.Id == productId);
+                .FirstOrDefaultAsync(p => p.Id == order.TempProductId);
 
             if (product == null) return NotFound();
 
             AppUser appUser = await _userManager.Users
-                .Include(u => u.Baskets.Where(b => b.IsDeleted == false)).ThenInclude(b => b.Product)
                 .Include(u => u.Address)
                 .Include(u => u.Orders)
                 .FirstOrDefaultAsync(u => u.UserName == User.Identity.Name);
@@ -289,8 +301,8 @@ namespace Smartelectronics.Controllers
                     CreatedAt = DateTime.UtcNow.AddHours(4),
                     CreatedBy = $"{appUser.Name} {appUser.SurName}",
                     Count = 1,
-                    ProductId = productId,
-                    Price = product.DiscountedPrice > 0 ? product.DiscountedPrice : product.Price,
+                    ProductId = order.TempProductId,
+                    Price = order.TempTotalPrice,
                 };
 
                 order.OrderItems.Add(orderItem);
@@ -302,17 +314,17 @@ namespace Smartelectronics.Controllers
             sb.Append("<div class=\"order-complete-message text-center\"><h1>Təşəkkürlər !</h1><p>Sifarişiniz qeydə alındı.Qısa müddət ərzində sizinlə əlaqə saxlanılacaq</p></div>");
 
             sb.Append($"<ul class=\"order-details-list\"><li>Sifariş nömrəsi: <strong>{order.No}</strong></li><li>Tarix: <strong>{DateTime.UtcNow.AddHours(4)}</strong></li>");
-            sb.Append($"<li>Qiymət: <strong>{order.OrderItems.Sum(a => (a.Product.DiscountedPrice > 0 ? a.Product.DiscountedPrice : a.Product.Price) * a.Count)} AZN</strong></li>");
+            sb.Append($"<li>Qiymət: <strong>{order.TempTotalPrice} AZN</strong></li>");
             sb.Append("</ul>");
             sb.Append("<h3 class=\"order-table-title\">Sifariş detalları</h3><div class=\"table-responsive\"><table style=\"width:100%\" class=\"table\"><thead><tr><th style=\"border: 1px solid #e5e5e5;padding: 8px;text-align: left;\">Məhsul</th><th>Qiymət</th style=\"border: 1px solid #e5e5e5;padding: 8px;text-align: left;\"></tr></thead><tbody>");
 
 
 
                 sb.Append($"<tr><td style=\"border: 1px solid #e5e5e5;padding: 8px;text-align: left;\"><a asp-action=\"detail\" asp-controller=\"product\" asp-route-id=\"{product.Id}\">{product.Title}</a> <strong>× {1}</strong></td>");
-                sb.Append($"<td style=\"border: 1px solid #e5e5e5;padding: 8px;text-align: left;\"><span>{product.Price} AZN</span></td></tr>");
+                sb.Append($"<td style=\"border: 1px solid #e5e5e5;padding: 8px;text-align: left;\"><span>{order.TempTotalPrice} AZN</span></td></tr>");
             
 
-            sb.Append($"</tbody><tfoot><tr><th style=\"border: 1px solid #e5e5e5;padding: 8px;text-align: left;\">Ümumi qiymət:</th><th style=\"border: 1px solid #e5e5e5;padding: 8px;text-align: left;\"><span>{order.OrderItems.Sum(a => (a.Product.DiscountedPrice > 0 ? a.Product.DiscountedPrice : a.Product.Price) * a.Count)} AZN</span></th></tr></tfoot></table></div>");
+            sb.Append($"</tbody><tfoot><tr><th style=\"border: 1px solid #e5e5e5;padding: 8px;text-align: left;\">Ümumi qiymət:</th><th style=\"border: 1px solid #e5e5e5;padding: 8px;text-align: left;\"><span>{order.TempTotalPrice} AZN</span></th></tr></tfoot></table></div>");
 
             string htmlTable = sb.ToString();
 
@@ -347,10 +359,9 @@ namespace Smartelectronics.Controllers
 
 
         [HttpGet]
-        public async Task<IActionResult> CheckoutCredit(string? method, double? price, int? productId)
+        public async Task<IActionResult> CheckoutCredit(string? method, double? price, double? total, int? productId)
         {
             AppUser appUser = await _userManager.Users
-                .Include(u => u.Baskets.Where(b => b.IsDeleted == false)).ThenInclude(b => b.Product)
                 .Include(u => u.Address)
                 .FirstOrDefaultAsync(u => u.UserName == User.Identity.Name);
 
@@ -361,8 +372,6 @@ namespace Smartelectronics.Controllers
 
             if (price == null) return BadRequest();
 
-            if (price != null)
-                product.Price = (double)price;
 
             if (product == null) return NotFound();
 
@@ -384,7 +393,10 @@ namespace Smartelectronics.Controllers
                     Fin = appUser?.Fin,
                     Number = appUser?.PhoneNumber,
                     Gender = appUser?.Gender,
-                    OrderMethod = Uri.UnescapeDataString(method)
+                    OrderMethod = Uri.UnescapeDataString(method),
+                    TempMonthlyPrice = price,
+                    TempTotalPrice = total,
+                    TempProductId = productId
                 };
             }
 
@@ -395,8 +407,17 @@ namespace Smartelectronics.Controllers
                     Name = appUser.Name,
                     SurName = appUser.SurName,
                     Email = appUser.Email,
-                    OrderMethod = Uri.UnescapeDataString(method)
-                };
+					BirthDate = appUser?.BirthDate,
+					IdSeria = appUser?.IdSeria,
+					Patronymic = appUser?.Patronymic,
+					Fin = appUser?.Fin,
+					Number = appUser?.PhoneNumber,
+					Gender = appUser?.Gender,
+					OrderMethod = Uri.UnescapeDataString(method),
+					TempMonthlyPrice = price,
+					TempTotalPrice = total,
+					TempProductId = productId
+				};
 
             }
 
@@ -407,17 +428,16 @@ namespace Smartelectronics.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> CheckoutCredit(Order order, double? price, int? productId)
+        public async Task<IActionResult> CheckoutCredit(Order order)
         {
-            if (productId == null) return BadRequest();
+            if (order.TempProductId == null) return BadRequest();
 
             Product product = await _context.Products.Where(p => p.IsDeleted == false)
-                .FirstOrDefaultAsync(p => p.Id == productId);
+                .FirstOrDefaultAsync(p => p.Id == order.TempProductId);
 
             if (product == null) return NotFound();
 
             AppUser appUser = await _userManager.Users
-                .Include(u => u.Baskets.Where(b => b.IsDeleted == false)).ThenInclude(b => b.Product)
                 .Include(u => u.Address)
                 .Include(u => u.Orders)
                 .FirstOrDefaultAsync(u => u.UserName == User.Identity.Name);
@@ -447,8 +467,9 @@ namespace Smartelectronics.Controllers
                 CreatedAt = DateTime.UtcNow.AddHours(4),
                 CreatedBy = $"{appUser.Name} {appUser.SurName}",
                 Count = 1,
-                ProductId = productId,
-                Price = product.DiscountedPrice > 0 ? product.DiscountedPrice : product.Price,
+                ProductId = order.TempProductId,
+                Price = order.TempTotalPrice,
+                MonthlyPrice = order.TempMonthlyPrice,
             };
 
             order.OrderItems.Add(orderItem);
@@ -460,17 +481,17 @@ namespace Smartelectronics.Controllers
             sb.Append("<div class=\"order-complete-message text-center\"><h1>Təşəkkürlər !</h1><p>Sifarişiniz qeydə alındı.Qısa müddət ərzində sizinlə əlaqə saxlanılacaq</p></div>");
 
             sb.Append($"<ul class=\"order-details-list\"><li>Sifariş nömrəsi: <strong>{order.No}</strong></li><li>Tarix: <strong>{DateTime.UtcNow.AddHours(4)}</strong></li>");
-            sb.Append($"<li>Qiymət: <strong>{order.OrderItems.Sum(a => (a.Product.DiscountedPrice > 0 ? a.Product.DiscountedPrice : a.Product.Price) * a.Count)} AZN</strong></li>");
+            sb.Append($"<li>Qiymət: <strong>{order.TempTotalPrice} AZN</strong></li>");
             sb.Append("</ul>");
             sb.Append("<h3 class=\"order-table-title\">Sifariş detalları</h3><div class=\"table-responsive\"><table style=\"width:100%\" class=\"table\"><thead><tr><th style=\"border: 1px solid #e5e5e5;padding: 8px;text-align: left;\">Məhsul</th><th>Qiymət</th style=\"border: 1px solid #e5e5e5;padding: 8px;text-align: left;\"></tr></thead><tbody>");
 
 
 
             sb.Append($"<tr><td style=\"border: 1px solid #e5e5e5;padding: 8px;text-align: left;\"><a asp-action=\"detail\" asp-controller=\"product\" asp-route-id=\"{product.Id}\">{product.Title}</a> <strong>× {1}</strong></td>");
-            sb.Append($"<td style=\"border: 1px solid #e5e5e5;padding: 8px;text-align: left;\"><span>{product.Price} AZN</span></td></tr>");
+            sb.Append($"<td style=\"border: 1px solid #e5e5e5;padding: 8px;text-align: left;\"><span>{order.TempTotalPrice} AZN</span></td></tr>");
 
 
-            sb.Append($"</tbody><tfoot><tr><th style=\"border: 1px solid #e5e5e5;padding: 8px;text-align: left;\">Ümumi qiymət:</th><th style=\"border: 1px solid #e5e5e5;padding: 8px;text-align: left;\"><span>{order.OrderItems.Sum(a => (a.Product.DiscountedPrice > 0 ? a.Product.DiscountedPrice : a.Product.Price) * a.Count)} AZN</span></th></tr></tfoot></table></div>");
+            sb.Append($"</tbody><tfoot><tr><th style=\"border: 1px solid #e5e5e5;padding: 8px;text-align: left;\">Ümumi qiymət:</th><th style=\"border: 1px solid #e5e5e5;padding: 8px;text-align: left;\"><span>{order.TempTotalPrice} AZN</span></th></tr></tfoot></table></div>");
 
             string htmlTable = sb.ToString();
 

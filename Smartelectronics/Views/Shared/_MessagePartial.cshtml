@@ -1,6 +1,6 @@
 ﻿@model Message
 
-<form method="post" asp-controller="affiliate" asp-action="SendMessage">
+<form method="post" asp-controller="affiliate" asp-action="Index">
     <div class="form-group">
         <label asp-for="Name">Ad</label>
         <input asp-for="Name" placeholder="Ad">
@@ -18,11 +18,11 @@
     </div>
     <div class="form-group">
         <label asp-for="Number">Telefon nömrəsi</label>
-        <input asp-for="Number" placeholder="Telefon nömrəsi" name="phone" prefix="+994" mask="(00) 000 00 00">
+        <input asp-for="Number" placeholder="Telefon nömrəsi">
         <span asp-validation-for="Number" class="text-danger"></span>
     </div>
     <div class="form-group">
-        <textarea asp-for ="YourMessage" placeholder="Message" name="text"></textarea>
+        <textarea asp-for ="YourMessage" placeholder="Message"></textarea>
         <span asp-validation-for="YourMessage" class="text-danger"></span>
     </div>
     <button type="submit" class="btn_blue">Göndər</button>

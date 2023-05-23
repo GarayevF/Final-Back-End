@@ -37,8 +37,7 @@ namespace Smartelectronics.Controllers
                 .Include(p => p.ProductLoanRanges.Where(pl => pl.IsDeleted == false)).ThenInclude(plr => plr.LoanRange);
 
             IEnumerable<Category> categories = await _context.Categories.Where(c => c.IsDeleted == false && c.IsMain == false)
-                .Include(c => c.Children.Where(ct => ct.IsDeleted == false && ct.IsMain == false))
-                .ThenInclude(cb => cb.Products.Where(cb => cb.IsDeleted == false)).ToListAsync();
+                .Include(cb => cb.Products.Where(cb => cb.IsDeleted == false)).ToListAsync();
 
             IEnumerable<Brand> brands = await _context.Brands.Where(c => c.IsDeleted == false)
                 .Include(cb => cb.Products.Where(cb => cb.IsDeleted == false)).ToListAsync();

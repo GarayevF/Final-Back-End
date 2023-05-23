@@ -22,8 +22,11 @@ namespace Smartelectronics.Controllers
 			IEnumerable<Campaign>? campaigns = await _context.Campaigns.Where(b => b.IsDeleted == false)
 				.ToListAsync();
 
+            ViewBag.Campaigns = campaigns;
+            ViewBag.Dates = campaigns.Select(a => a.EndDate).Cast<DateTime>().ToList();
 
-			return View(campaigns);
+
+            return View(campaigns);
 		}
 	}
 }

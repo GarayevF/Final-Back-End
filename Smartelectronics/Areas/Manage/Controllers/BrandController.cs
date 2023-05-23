@@ -46,12 +46,14 @@ namespace Smartelectronics.Areas.Manage.Controllers
         }
 
         [HttpPost]
+        [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create(Brand brand)
         {
             if (!ModelState.IsValid)
             {
                 return View(brand);
             }
+
             if (await _context.Brands.AnyAsync(b => b.IsDeleted == false && b.Name.ToLower() == brand.Name.Trim().ToLower()))
             {
                 ModelState.AddModelError("Name", $"Bu adda {brand.Name} movcuddur");
@@ -82,15 +84,22 @@ namespace Smartelectronics.Areas.Manage.Controllers
         }
 
         [HttpPost]
+        [ValidateAntiForgeryToken]
         public async Task<IActionResult> Update(Brand brand)
         {
             if (!ModelState.IsValid)
             {
                 return View(brand);
             }
+
             if (!await _context.Brands.AnyAsync(b => b.IsDeleted == false))
             {
                 return BadRequest();
+            }
+
+            if (await _context.Brands.AnyAsync(b => b.IsDeleted == false && b.Name.ToLower() == brand.Name.Trim().ToLower()))
+            {
+                ModelState.AddModelError("Name", $"Bu adda {brand.Name} movcuddur");
             }
 
             brand.Name = brand.Name.Trim();

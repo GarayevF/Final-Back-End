@@ -58,7 +58,7 @@ namespace Smartelectronics.Areas.Manage.Controllers
                     return View(slider);
                 }
 
-                slider.Image = await slider.MainFile.CreateFileAsync(_env, "assets", "image", "sliders");
+                slider.Image = await slider.MainFile.CreateFileAsync(_env, "assets", "images", "sliders");
             }
             else
             {

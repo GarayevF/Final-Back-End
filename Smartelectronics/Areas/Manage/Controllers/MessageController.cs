@@ -18,7 +18,6 @@ namespace Smartelectronics.Areas.Manage.Controllers
             _context = context;
         }
 
-        [Authorize(Roles = "SuperAdmin, Admin")]
         public IActionResult Index(int pageIndex = 1)
         {
             IQueryable<Message> messages = _context.Messages
@@ -27,7 +26,6 @@ namespace Smartelectronics.Areas.Manage.Controllers
             return View(PageNatedList<Message>.Create(messages, pageIndex, 5, 5));
         }
 
-        [Authorize(Roles = "SuperAdmin, Admin")]
         public async Task<IActionResult> Detail(int? id)
         {
             if (id == null) return BadRequest();
@@ -40,7 +38,6 @@ namespace Smartelectronics.Areas.Manage.Controllers
             return View(message);
         }
 
-        [Authorize(Roles = "SuperAdmin, Admin")]
         public async Task<IActionResult> Delete(int? id)
         {
             if (id == null) return BadRequest();
@@ -53,6 +50,8 @@ namespace Smartelectronics.Areas.Manage.Controllers
             message.IsDeleted = true;
             message.DeletedAt = DateTime.UtcNow.AddHours(4);
             message.DeletedBy = "System";
+
+            await _context.SaveChangesAsync();
 
             return RedirectToAction(nameof(Index));
         }

@@ -89,13 +89,13 @@ namespace Smartelectronics.Controllers
                 {
                     if (appUser.Wishlists.Any(b => b.ProductId == id))
                     {
-
                         appUser.Wishlists.Remove(appUser.Wishlists.FirstOrDefault(b => b.ProductId == id));
+                        await _context.SaveChangesAsync();
                     }
                 }
                 
 
-                await _context.SaveChangesAsync();
+                
             }
 
             cookie = JsonConvert.SerializeObject(wishlistVMs);

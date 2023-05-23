@@ -38,7 +38,7 @@
                                                     {
                                                         @foreach (Brand brand in child.Products.Where(p => p.CategoryId == child.Id).Select(p => p.Brand).Distinct().ToList())
                                                         {
-                                                            <li class="content-body"><a class="content-body-link">@brand.Name</a></li>
+                                                            <li class="content-body"><a href="product/index?categoryId=@child.Id" class="content-body-link">@brand?.Name</a></li>
                                                         }
                                                     }
 
@@ -61,7 +61,7 @@
                             @foreach(Slider slider in Model.Sliders)
                             {
                                 <div>
-                                    <a href="">
+                                    <a href="@slider.Link">
                                         <img src="~/assets/images/sliders/@slider.Image" alt="">
                                     </a>
                                 </div>

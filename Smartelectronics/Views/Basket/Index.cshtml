@@ -8,12 +8,12 @@
     IEnumerable<Category> categories = await layoutService.GetCategories();
 }
 <main class="main-basket">
-        <div class="top">
-            <div class="container">
-               <div class="category-links">
-                  <ul class="owl-carousel owl-category-slider main-category-list">
-                      @foreach (Category category in categories)
-                      {
+    <div class="top">
+        <div class="container">
+            <div class="category-links">
+                <ul class="owl-carousel owl-category-slider main-category-list">
+                    @foreach (Category category in categories)
+                    {
                         <li class="category-item">
                             <div class="category-title">
                                 @Html.Raw(category.Icon)
@@ -26,29 +26,29 @@
                                         @foreach (Category child in category.Children)
                                         {
                                             <ul class="content-product-list">
-                                                <a class="content-header">Smartfonlar</a>
+                                                <a href="product/index?CategoryId=@child.Id" class="content-header">@child.Name</a>
                                                 @if (child.Products != null && child.Products.Count() > 0)
                                                 {
                                                     @foreach (Brand brand in child.Products.Where(p => p.CategoryId == child.Id).Select(p => p.Brand).Distinct().ToList())
                                                     {
-                                                        <li class="content-body"><a class="content-body-link">@brand.Name</a></li>
+                                                        <li class="content-body"><a href="product/index?brandId=@brand.Id" class="content-body-link">@brand?.Name</a></li>
                                                     }
                                                 }
-                                                
+
                                             </ul>
                                         }
 
                                     }
-                                    
+
                                 </div>
                             </div>
                         </li>
-                      }
-                      
-                   </ul>
-              </div>
+                    }
+
+                </ul>
             </div>
         </div>
+    </div>
     <div class="basket-main-div">
         @await Html.PartialAsync("_BasketMainPartial", Model);
     </div>

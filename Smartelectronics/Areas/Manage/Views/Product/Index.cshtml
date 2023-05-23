@@ -8,7 +8,7 @@
     <div class="col-lg-12">
         <div class="row justify-content-lg-between">
             <div class="col-lg-3">
-                <h1 class="h3 mb-4 text-gray-800">Product Page</h1>
+                <h1 class="h3 mb-4 text-gray-800">Məhsullar</h1>
             </div>
             <div class="col-lg-2" style="text-align: end">
                 <a asp-area="manage" asp-controller="Product" asp-action="create" class="btn btn-primary">Create</a>
@@ -76,35 +76,39 @@
     </div>
 </div>
 
-@*@section Scripts{
-    <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.0/jquery.js" integrity="sha512-8Z5++K1rB3U+USaLKG6oO8uWWBhdYsM3hmdirnOEWp8h2B1aOikj5zBzlXs8QOrvY9OxEnD2QDkbSKKpfqcIWw==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+@section Scripts{
     <script>
         $(document).ready(function () {
-            $(document.on('click', '.deleteIndex', function (e) {
+            $(document).on('click', '.btn-danger', function (e) {
                 e.preventDefault();
-                swal({
-                    title: "Əmin siniz?",
-                    text: "Sildikdən sonra bərpa etmək mümkün olmayacaq!",
-                    icon: "warning",
-                    buttons: true,
-                    dangerMode: true,
+
+                Swal.fire({
+                    title: 'Silmək istədiyinizdən əminsiniz?',
+                    text: "Sildikdən sonra bərpa edilməyəcək!",
+                    icon: 'warning',
+                    showCancelButton: true,
+                    confirmButtonColor: '#3085d6',
+                    cancelButtonColor: '#d33',
+                    confirmButtonText: 'Bəli, silinsin!'
                 })
                     .then((willDelete) => {
                         if (willDelete) {
-                            fetch($(this).attr('href')
+                            fetch($(this).attr('href'))
                                 .then(res => {
                                     return;
                                 })
-                                    swal("Uğurla silindi!", {
-                                    icon: "success",
+                                .then(() => {
+                                    Swal.fire("Uğurla silindi!", {
+                                        icon: "success",
+                                    });
+                                    location.reload();
                                 });
                         } else {
-                            swal("Silinmə əməliyyatı ləğv olundu!");
+                            Swal.fire("Silinmə əməliyyatı ləğv olundu!");
                         }
                     });
-            }))
-        })
-
+            });
+        });
     </script>
 }
-*@

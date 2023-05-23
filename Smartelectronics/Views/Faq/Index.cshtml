@@ -1,0 +1,160 @@
+﻿
+@{
+    ViewData["Title"] = "Index";
+}
+@inject ILayoutService layoutService
+
+@{
+    IEnumerable<Category> categories = await layoutService.GetCategories();
+    IDictionary<string, string> settings = await layoutService.GetSettings();
+}
+
+<main class="main-about">
+    <div class="top">
+        <div class="container">
+            <div class="category-links">
+                <ul class="owl-carousel owl-category-slider main-category-list">
+                    @foreach (Category category in categories)
+                    {
+                        <li class="category-item">
+                            <div class="category-title">
+                                @Html.Raw(category.Icon)
+                                <span>@category.Name</span>
+                            </div>
+                            <div class="category-content">
+                                <div class="content-products">
+                                    @if (category.Children != null && category.Children.Count() > 0)
+                                    {
+                                        @foreach (Category child in category.Children)
+                                        {
+                                            <ul class="content-product-list">
+                                                <a href="product/index?CategoryId=@child.Id" class="content-header">@child.Name</a>
+                                                @if (child.Products != null && child.Products.Count() > 0)
+                                                {
+                                                    @foreach (Brand brand in child.Products.Where(p => p.CategoryId == child.Id).Select(p => p.Brand).Distinct().ToList())
+                                                    {
+                                                        <li class="content-body"><a href="product/index?brandId=@brand.Id" class="content-body-link">@brand?.Name</a></li>
+                                                    }
+                                                }
+
+                                            </ul>
+                                        }
+
+                                    }
+
+                                </div>
+                            </div>
+                        </li>
+                    }
+
+                </ul>
+            </div>
+            <h1>Faq</h1>
+        </div>
+    </div>
+    <div class="bottom">
+        <div class="container">
+            <div class="about-content">
+                <div class="accordion" id="accordionPanelsStayOpenExample">
+                    <div class="accordion-item">
+                        <h2 class="accordion-header" id="panelsStayOpen-headingOne">
+                            <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#panelsStayOpen-collapseOne" aria-expanded="true" aria-controls="panelsStayOpen-collapseOne">
+                                Sizdən kreditlə məhsul almaq mümkündür?
+                            </button>
+                        </h2>
+                        <div id="panelsStayOpen-collapseOne" class="accordion-collapse collapse show" aria-labelledby="panelsStayOpen-headingOne">
+                            <div class="accordion-body">
+                                <p style="line-height: 2;">Smart Electronics mağazalarında kreditlə məhsul almaq mümkündür. Kreditlə məhsul almaq istəyən müştərilər 1 aydan 18 ayadək faizsiz, ilkin ödənişsiz, faizsiz və komissiyasız şərtlərlə daxili kredit və 24 ayadək BirKart, Tam Kart, Albalı Kart, Ucard və BolKartla faizsiz taksit şərtləri ilə məhsul əldə edə bilərlər.</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="accordion-item">
+                        <h2 class="accordion-header" id="panelsStayOpen-headingTwo">
+                            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#panelsStayOpen-collapseTwo" aria-expanded="false" aria-controls="panelsStayOpen-collapseTwo">
+                                Sizdən kredit almaq üçün hansı sənədlər tələb olunur?
+                            </button>
+                        </h2>
+                        <div id="panelsStayOpen-collapseTwo" class="accordion-collapse collapse" aria-labelledby="panelsStayOpen-headingTwo">
+                            <div class="accordion-body">
+                                <p style="line-height: 2;">Smart Electronics şirkətinin  kredit şərtlərindən yararlanmaq üçün Bakı, Sumqayıt, Xırdalan və Quba şəhərlərində yaşayış ilkin mərhələ üçün kifayətdir. Növbəti mərhələdə isə Banklarda problemli kreditinizin olub olmaması araşdırılır.</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="accordion-item">
+                        <h2 class="accordion-header" id="panelsStayOpen-headingThree">
+                            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#panelsStayOpen-collapseThree" aria-expanded="false" aria-controls="panelsStayOpen-collapseThree">
+                                Alınan malın krediti hansı valyuta ilə hesablanır ?
+                            </button>
+                        </h2>
+                        <div id="panelsStayOpen-collapseThree" class="accordion-collapse collapse" aria-labelledby="panelsStayOpen-headingThree">
+                            <div class="accordion-body">
+                                <p style="line-height: 2;">Smart Electronics mağazalarında nağd və ya kreditlə alınan bütün mallara ödənişlər yalnız Azərbaycan Respublikasının milli valyutası manatla həyata keçirilir.</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="accordion-item">
+                        <h2 class="accordion-header" id="panelsStayOpen-headingmid">
+                            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#panelsStayOpen-collapsemid" aria-expanded="false" aria-controls="panelsStayOpen-collapsemid">
+                                Mağazalarınızın iş rejimi necədir ?
+                            </button>
+                        </h2>
+                        <div id="panelsStayOpen-collapsemid" class="accordion-collapse collapse" aria-labelledby="panelsStayOpen-headingmid">
+                            <div class="accordion-body">
+                                <p style="line-height: 2;">Smart Electronics mağazaları hər gün saat 10.00-dan 22.00-a dək müştərilərin üzünə açıqdır. Smart Electronics şirkətinin veb səhifəsi www.smartelectronics.az isə 24 saat 7 gün fəaliyyət göstərir.</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="accordion-item">
+                        <h2 class="accordion-header" id="panelsStayOpen-headingFour">
+                            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#panelsStayOpen-collapseFour" aria-expanded="false" aria-controls="panelsStayOpen-collapseFour">
+                                Alınan mallara zəmanət verilirmi ?
+                            </button>
+                        </h2>
+                        <div id="panelsStayOpen-collapseFour" class="accordion-collapse collapse" aria-labelledby="panelsStayOpen-headingFour">
+                            <div class="accordion-body">
+                                <p style="line-height: 2;">Smart Electronics mağazalarında alınan mallara 1 il müddətinə bütün istehsalçı qüsurlarına rəsmi zəmanət verilir.</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="accordion-item">
+                        <h2 class="accordion-header" id="panelsStayOpen-headingFive">
+                            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#panelsStayOpen-collapseFive" aria-expanded="false" aria-controls="panelsStayOpen-collapseFive">
+                                Çatdırılma və quraşdırılma pulsuzdur ?
+                            </button>
+                        </h2>
+                        <div id="panelsStayOpen-collapseFive" class="accordion-collapse collapse" aria-labelledby="panelsStayOpen-headingFive">
+                            <div class="accordion-body">
+                                <p style="line-height: 2;">Smart Electronics mağazalarından alınan məhsulların Bakı daxilində çatdırılma və quraşdırılması pulsuzdur.</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="accordion-item">
+                        <h2 class="accordion-header" id="panelsStayOpen-headingSix">
+                            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#panelsStayOpen-collapseSix" aria-expanded="false" aria-controls="panelsStayOpen-collapseSix">
+                                Təklif və ya tövsiyyələr üçün necə müraciət edə bilərik ?
+                            </button>
+                        </h2>
+                        <div id="panelsStayOpen-collapseSix" class="accordion-collapse collapse" aria-labelledby="panelsStayOpen-headingSix">
+                            <div class="accordion-body">
+                                <p style="line-height: 2;">Smart Electronics mağazalarına təklif və ya tövsiyyələrinizi *2999 ,  0705982323 və ya 012 598 23 23 əlaqə nömrəsinə zəng etməklə bildirə bilərsiniz. Həmçinin saytımızda “Müştəri Xidmətləri” pəncərəsindən istifadə etmək də mümkündür.</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="accordion-item">
+                        <h2 class="accordion-header" id="panelsStayOpen-headingSeven">
+                            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#panelsStayOpen-collapseSeven" aria-expanded="false" aria-controls="panelsStayOpen-collapseSeven">
+                                Servis xidmətlərinizdən necə yararlanmalı ?
+                            </button>
+                        </h2>
+                        <div id="panelsStayOpen-collapseSeven" class="accordion-collapse collapse" aria-labelledby="panelsStayOpen-headingSeven">
+                            <div class="accordion-body">
+                                <p style="line-height: 2;">office@smartelectronics.az poçt adresindən və ya, *2999,  012 598 23 23 və ya 070 598 23 23 nömrələri vasitəsilə əlaqə saxlaya bilərsiniz</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</main>
+

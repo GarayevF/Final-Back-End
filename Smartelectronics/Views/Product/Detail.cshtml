@@ -245,7 +245,7 @@
                                                     <div id="credit-dropdown" class="dropdown-content">
                                                         @foreach (ProductLoanRange productLoanRange in Model?.LoanRanges?.OrderByDescending(a => a.LoanRange.Range))
                                                         {
-                                                            <a href="#" class="credit-drop-atag">@productLoanRange.LoanRange.Range</a>
+                                                            <a href="#" data-vip="@productLoanRange.InterestForVipUsers" data-standart="@productLoanRange.InterestForStandartUsers" class="credit-drop-atag">@productLoanRange.LoanRange.Range</a>
                                                         }
                                                     </div>
                                                 </div>
@@ -258,7 +258,7 @@
                                         </div>
 
                                         {
-                                            double price = Model.Product.DiscountedPrice > 0 ? Model.Product.DiscountedPrice : Model.Product.Price;
+                                            double price = Model.Product.Price;
                                             int? range = Model?.LoanRanges?.OrderByDescending(a => a.LoanRange.Range).FirstOrDefault().LoanRange.Range;
                                             <div class="price outline">
                                                 <p id="ayliqodenis">
@@ -372,24 +372,93 @@
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <script>
     $(document).ready(function () {
-        let price = parseFloat(@(Model.Product.DiscountedPrice > 0 ? Model.Product.DiscountedPrice : Model.Product.Price));
-        let standart = parseFloat(@Model?.Product?.ProductLoanRanges?.FirstOrDefault(a => a.ProductId == Model.Product.Id).InterestForStandartUsers);
-        let vip = parseFloat(@Model?.Product?.ProductLoanRanges?.FirstOrDefault(a => a.ProductId == Model.Product.Id).InterestForVipUsers);
+        let price = parseFloat(@Model.Product.Price);
+        let standart = parseFloat($('.credit-drop-atag').data('standart'))
+        let vip = parseFloat($('.credit-drop-atag').data('vip'))
+        let range = parseInt($('#kreditspantag').text())
+
+        console.log(standart);
+        console.log(vip);
+        console.log(range);
         $(document).on('change', '.pristine', function (e) {
-            let range = parseInt($('#kreditspantag').text())
-            let initial = parseFloat($('.pristine').text())
+            
+            let initial = parseFloat($('.pristine').val())
             let month = $('#ayliqodenis');
             let total = $('#kredit-ptag');
-            console.log("initial :" + inital + "\nmonth :" + (price / range) * (1 + standart / 100) + "\ntotal :" + price / range) * (1 + standart / 100)) * range)
-            price = price - initial;
+            let lastprice = price - initial;
+            let faiz;
+
+            if($('#edit_work_place').prop('checked')){
+                faiz = standart;
+            }
+            else{
+                faiz = vip
+            }
             if(initial > price) {
                 $(initial).text(price)
             }else{
-                $('#ayliqodenis').text((price / range) * (1 + standart / 100));
-                $('#kredit-ptag').text((price/range) * (1+standart/100))*range;
+                $('#ayliqodenis').text(((lastprice / range) * (1 + faiz / 100)).toFixed(2) + " azn");
+                $('#kredit-ptag').text(((lastprice / range) * (1 + faiz / 100) * range).toFixed(2) + " azn");
+            }
+        })
+
+        $(document).on('change', '#edit_work_place', function (e) {
+            let initial = parseFloat($('.pristine').val())
+            let lastprice = price - initial;
+            let faiz;
+
+            if ($('#edit_work_place').prop('checked')) {
+                faiz = standart;
+            }
+            else {
+                faiz = vip
+            }
+            if (initial > price) {
+                $(initial).text(price)
+            } else {
+                $('#ayliqodenis').text(((lastprice / range) * (1 + faiz / 100)).toFixed(2) + " azn");
+                $('#kredit-ptag').text(((lastprice / range) * (1 + faiz / 100) * range).toFixed(2) + " azn");
+            }
+            
+        })
+
+        $(document).on('click', '.credit-drop-atag', function (e) {
+            
+            e.preventDefault();
+            var dataStandart = $(this).data('standart');
+            var dataVip = $(this).data('vip');
+            standart = parseFloat(dataStandart);
+            vip = parseFloat(dataVip);
+            
+            range = parseInt($(this).text())
+            let initial = parseFloat($('.pristine').val())
+            let lastprice = price - initial;
+            let faiz;
+
+            if ($('#edit_work_place').prop('checked')) {
+                faiz = standart;
+            }
+            else {
+                faiz = vip
+            }
+            if (initial > price) {
+                $(initial).text(price)
+            } else {
+                $('#ayliqodenis').text(((lastprice / range) * (1 + faiz / 100)).toFixed(2) + " azn");
+                $('#kredit-ptag').text(((lastprice / range) * (1 + faiz / 100) * range).toFixed(2) + " azn");
             }
 
-            
+            $('.dropbtn > span').text(range)
+
+            let dropbtn = document.querySelector('.main-detail .item-info .container .content .item-content .right .credit-calculator .wrapper .li-body .price .dropdown .dropbtn');
+            let dropbtnicon = document.querySelector('.main-detail .item-info .container .content .item-content .right .credit-calculator .wrapper .li-body .price .dropdown .dropbtn i');
+            let dropdown = document.querySelector("#credit-dropdown")
+
+            dropdown.classList.remove("show");
+            dropbtnicon.style.transform = "rotate(0deg)"
+                dropdown.style.height = '0px';
+
         })
     });
 </script>
+

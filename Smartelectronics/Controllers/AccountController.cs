@@ -11,13 +11,15 @@ using Smartelectronics.ViewModels.AccountViewModels;
 using Smartelectronics.ViewModels.BasketViewModels;
 using System.Data;
 using MailKit.Net.Smtp;
+using Smartelectronics.ViewModels.WishlistViewModels;
+using Microsoft.AspNetCore.Authorization;
 
 namespace Smartelectronics.Controllers
 {
     public class AccountController : Controller
     {
-        private readonly UserManager<AppUser> _userManager;
-        private readonly SignInManager<AppUser> _signInManager;
+		private readonly UserManager<AppUser> _userManager;
+		private readonly SignInManager<AppUser> _signInManager;
         private readonly AppDbContext _context;
         private readonly IConfiguration _con;
         private readonly SmtpSetting _smtpSetting;
@@ -116,6 +118,7 @@ namespace Smartelectronics.Controllers
 
             AppUser appUser = await _userManager.Users
                 .Include(u => u.Baskets.Where(b => b.IsDeleted == false))
+                .Include(u => u.Wishlists.Where(b => b.IsDeleted == false))
                 .FirstOrDefaultAsync(u => u.NormalizedEmail == loginVM.Email.Trim().ToUpperInvariant());
 
             if (appUser == null)
@@ -175,6 +178,31 @@ namespace Smartelectronics.Controllers
                 HttpContext.Response.Cookies.Append("basket", "");
             }
 
+            cookie = HttpContext.Request.Cookies["wishlist"];
+
+            if (appUser.Wishlists != null && appUser.Wishlists.Count() > 0)
+            {
+                List<WishlistVM> wishlistVMs = new List<WishlistVM>();
+
+                foreach (Wishlist wishlist in appUser.Wishlists)
+                {
+                    WishlistVM wishlistVM = new WishlistVM
+                    {
+                        Id = (int)wishlist.ProductId,
+                    };
+
+                    wishlistVMs.Add(wishlistVM);
+                }
+
+                cookie = JsonConvert.SerializeObject(wishlistVMs);
+
+                HttpContext.Response.Cookies.Append("wishlist", cookie);
+            }
+            else
+            {
+                HttpContext.Response.Cookies.Append("basket", "");
+            }
+
 
             return RedirectToAction("index", "home");
         }
@@ -188,6 +216,7 @@ namespace Smartelectronics.Controllers
         }
 
         [HttpGet]
+        [Authorize(Roles = "Member")]
         public async Task<IActionResult> Profile()
         {
             AppUser appUser = await _userManager.Users
@@ -224,6 +253,7 @@ namespace Smartelectronics.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
+        [Authorize(Roles = "Member")]
         public async Task<IActionResult> AddAddress(Address address)
         {
             AppUser appUser = await _userManager.Users
@@ -252,6 +282,7 @@ namespace Smartelectronics.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
+        [Authorize(Roles = "Member")]
         public async Task<IActionResult> UpdateProfile(AccountVM accountVM)
         {
             TempData["Tab"] = "Setting";
@@ -350,7 +381,7 @@ namespace Smartelectronics.Controllers
 
             return RedirectToAction(nameof(Profile));
         }
-
+        [Authorize(Roles = "Member")]
         public async Task<IActionResult> UpdateSetting(SettingVM settingVM)
         {
             TempData["Tab"] = "Account";
