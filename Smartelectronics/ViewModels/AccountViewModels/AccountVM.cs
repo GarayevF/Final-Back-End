@@ -13,7 +13,7 @@ namespace Smartelectronics.ViewModels.AccountViewModels
         [EmailAddress]
         public string? Email { get; set; }
         [DataType(DataType.Date)]
-        public DateTime BirthDate { get; set; }
+        public DateTime? BirthDate { get; set; }
         [StringLength(100)]
         public string? Number { get; set; }
         [DataType(DataType.Password)]
@@ -21,7 +21,7 @@ namespace Smartelectronics.ViewModels.AccountViewModels
         [DataType(DataType.Password)]
         public string? Password { get; set; }
         [DataType(DataType.Password)]
-        [Compare(nameof(Password))]
+        [Compare(nameof(CurrentPassword))]
         public string? ConfirmPassword { get; set; }
     }
 }

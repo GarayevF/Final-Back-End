@@ -1,5 +1,82 @@
 ﻿$(document).ready(function () {
-    $(document).on('click', '.color, .colorSlider, .productLoanRange, .addtobasket, .basket-card-delete-btn, .subbasket, .addtowish, .addtocompare, .deletewish', function (e) {
+
+    $(document).on('keyup', '#search, #search-m', function () {
+        let search = $(this).val();
+
+        if (search.length >= 3) {
+            fetch('/product/search?search=' + search)
+                .then(res => {
+                    return res.text()
+                })
+                .then(data => {
+                    $('.searchBody').html(data)
+                })
+        } else {
+            $('.searchBody').html('')
+        }
+    })
+
+    toastr.options = {
+        "closeButton": false,
+        "debug": false,
+        "newestOnTop": false,
+        "progressBar": false,
+        "positionClass": "toast-top-right",
+        "preventDuplicates": false,
+        "onclick": null,
+        "showDuration": "300",
+        "hideDuration": "1000",
+        "timeOut": "5000",
+        "extendedTimeOut": "1000",
+        "showEasing": "swing",
+        "hideEasing": "linear",
+        "showMethod": "fadeIn",
+        "hideMethod": "fadeOut"
+    }
+
+    let successInput = $("input[name='success']");
+    if (successInput.val()?.length > 0) {
+        toastr["success"](successInput.val())
+        console.log(successInput.val())
+    }
+
+    let errorInput = $("input[name='error']");
+    if (errorInput.val()?.length > 0) {
+        toastr["error"](errorInput.val())
+    }
+
+    $(function () {
+        $(".collapse").on('show.bs.collapse', function (e) {
+            if ($(this).is(e.target)) {
+                snippet.log(this.id)
+            }
+        })
+    });
+
+    $(document).on('click', '.color, .buy-credit-btn, .credit-drop-atag, .colorSlider, .productLoanRange, .addtobasket, .basket-card-delete-btn, .subbasket, .addtowish, .addtocompare, .deletewish', function (e) {
+
+        if ($(this).hasClass('credit-drop-atag')) {
+            e.preventDefault();
+            $('.dropbtn').html(`<span>${$(this).text() }</span>`)
+        }
+
+        if ($(this).hasClass('buy-credit-btn')) {
+            e.preventDefault();
+            if ($('input[name="creditCondition"]:checked').length > 0) {
+                var selectedRange = $('input[name="creditCondition"]:checked').data('range');
+                var selectedPrice = $('input[name="creditCondition"]:checked').data('price');
+                if ($('input[name="creditCondition"]:checked').attr('id') !== 'creditCondition-0') {
+                    var newUrl = window.location.href.replace("product/detail/", `order/checkoutcredit?method=Kredit%20${selectedRange}&price=${selectedPrice}&productId=`);
+                    window.location.href = newUrl;
+                } else {
+                    selectedPrice = $('kredit-ptag').text()
+                    selectedRange = $('kreditspantag').text()
+                    var newUrl = window.location.href.replace("product/detail/", `order/checkoutcredit?method=Kredit%20${selectedRange}&price=${selectedPrice}&productId=`);
+                    window.location.href = newUrl;
+                }
+            }
+            
+        }
 
         if ($(this).hasClass('color')) {
             e.preventDefault();
@@ -119,15 +196,6 @@
                 })
                 .then(data => {
                     $('.wishlist-box').html(data)
-                    if (window.location.pathname.split('/')[1].toLowerCase() == 'wishlist') {
-                        fetch(url.replace("wishlist/" + url.split('/')[url.split('/').length - 1], 'mainwishlist'))
-                            .then(res2 => {
-                                return res2.text()
-                            })
-                            .then(data2 => {
-                                $('.wishlist-main-div').html(data2)
-                            })
-                    }
                 })
 
         }
@@ -148,6 +216,7 @@
                             })
                             .then(data2 => {
                                 $('.wishlist-main-div').html(data2)
+                                console.log('true')
                             })
                     }
                 })
@@ -164,6 +233,26 @@
                 })
                 .then(data => {
                     $('.compare-main-div').html(data)
+                    $('.owl-compare').owlCarousel({
+                        loop: false,
+                        margin: 10,
+                        infinity: false,
+                        nav: true,
+                        navText: ["<img src='/assets/images/more.png'>", "<img src='/assets/images/more.png'>"],
+                        items: 3,
+                        autoplay: false,
+                        responsive: {
+                            0: {
+                                items: 1
+                            },
+                            767.98: {
+                                items: 2
+                            },
+                            991.98: {
+                                items: 3
+                            }
+                        }
+                    });
                     fetch('compare/GetBasketCount')
                             .then(res2 => {
                                 return res2.text()
@@ -208,5 +297,6 @@
 
             } 
         })
+        
     
 })

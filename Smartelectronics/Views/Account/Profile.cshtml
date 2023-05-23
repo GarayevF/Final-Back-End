@@ -2,885 +2,53 @@
 @{
     ViewData["Title"] = "Profile";
 }
+@inject ILayoutService layoutService
 
+@{
+    IEnumerable<Category> categories = await layoutService.GetCategories();
+}
 <main class="main-profile">
-        <div class="top">
-            <div class="container">
-               <div class="category-links">
-                  <ul class="owl-carousel owl-category-slider main-category-list">
-                      <li class="category-item">
-                         <div class="category-title">
-                            <i class="fa-solid fa-mobile-screen-button"></i>
-                            <span>Smartfon və Planşetlər</span>
-                         </div>
-                         <div class="category-content">
-                            <div class="content-products">
-                               <ul class="content-product-list">
-                                  <a class="content-header">Smartfonlar</a>
-                                  <li class="content-body"><a class="content-body-link">Apple</a></li>
-                                  <li class="content-body"><a class="content-body-link">Honor</a></li>
-                                  <li class="content-body"><a class="content-body-link">Huawei</a></li>
-                                  <li class="content-body"><a class="content-body-link">Realme</a></li>
-                                  <li class="content-body"><a class="content-body-link">Samsung</a></li>
-                                  <li class="content-body"><a class="content-body-link">Xiaomi</a></li>
-                               </ul>
-                               <ul class="content-product-list">
-                                  <a class="content-header">Mobil Telefonlar</a>
-                                  <li class="content-body"><a class="content-body-link">Nokia</a></li>
-                               </ul>
-                               <ul class="content-product-list">
-                                  <a class="content-header">Planşet və Elektron kitab</a>
-                                  <li class="content-body"><a class="content-body-link">Honor</a></li>
-                                  <li class="content-body"><a class="content-body-link">Lenovo</a></li>
-                                  <li class="content-body"><a class="content-body-link">Microsoft</a></li>
-                                  <li class="content-body"><a class="content-body-link">PocketBook</a></li>
-                                  <li class="content-body"><a class="content-body-link">Samsung</a></li>
-                                  <li class="content-body"><a class="content-body-link">Xiaomi</a></li>
-                               </ul>
-                               <ul class="content-product-list">
-                                  <a class="content-header">İkinci əl smartfonlar</a>
-                                  <li class="content-body"><a class="content-body-link">Apple</a></li>
-                                  <li class="content-body"><a class="content-body-link">Samsung</a></li>
-                                  <li class="content-body"><a class="content-body-link">Xiaomi</a></li>
-                               </ul>
-                               <ul class="content-product-list">
-                                  <a class="content-header">Ev və ofis telefonları</a>
-                                  <li class="content-body"><a class="content-body-link">Panasonic</a></li>
-                               </ul>
-                               <ul class="content-product-list">
-                                  <a class="content-header">Powerbank</a>
-                                  <li class="content-body"><a class="content-body-link">Akekiko</a></li>
-                                  <li class="content-body"><a class="content-body-link">Anker</a></li>
-                                  <li class="content-body"><a class="content-body-link">Aspor</a></li>
-                                  <li class="content-body"><a class="content-body-link">Baseus</a></li>
-                                  <li class="content-body"><a class="content-body-link">Gelius</a></li>
-                                  <li class="content-body"><a class="content-body-link">Remax</a></li>
-                                  <li class="content-body"><a class="content-body-link">Xiaomi</a></li>
-                               </ul>
-                               <ul class="content-product-list">
-                                  <a class="content-header">Adapter</a>
-                                  <li class="content-body"><a class="content-body-link">Adapter (Simsiz)</a></li>
-                                  <li class="content-body"><a class="content-body-link">Anker</a></li>
-                                  <li class="content-body"><a class="content-body-link">Ansty</a></li>
-                                  <li class="content-body"><a class="content-body-link">Baseus</a></li>
-                                  <li class="content-body"><a class="content-body-link">Borofone</a></li>
-                                  <li class="content-body"><a class="content-body-link">Gelius</a></li>
-                                  <li class="content-body"><a class="content-body-link">Mycandy</a></li>
-                                  <li class="content-body"><a class="content-body-link">Powerology</a></li>
-                                  <li class="content-body"><a class="content-body-link">Samsung</a></li>
-                                  <li class="content-body"><a class="content-body-link">USB Başlıq</a></li>
-                               </ul>
-                               <ul class="content-product-list">
-                                  <a class="content-header">Telefon qabları</a>
-                                  <li class="content-body"><a class="content-body-link">Apple</a></li>
-                                  <li class="content-body"><a class="content-body-link">Planşet qabları</a></li>
-                                  <li class="content-body"><a class="content-body-link">Samsung</a></li>
-                               </ul>
-                               <ul class="content-product-list">
-                                  <a class="content-header">Ekran Qoruyucuları</a>
-                                  <li class="content-body"><a class="content-body-link">Apple</a></li>
-                               </ul>
-                               <ul class="content-product-list">
-                                  <a class="content-header">Qələm</a>
-                                  <li class="content-body"><a class="content-body-link">Apple</a></li>
-                               </ul>
+    <div class="top">
+        <div class="container">
+            <div class="category-links">
+                <ul class="owl-carousel owl-category-slider main-category-list">
+                    @foreach (Category category in categories)
+                    {
+                        <li class="category-item">
+                            <div class="category-title">
+                                @Html.Raw(category.Icon)
+                                <span>@category.Name</span>
                             </div>
-                         </div>
-                      </li>
-                      <li class="category-item">
-                         <div class="category-title">
-                            <i class="fa-solid fa-mobile-screen-button"></i>
-                            <span>Smartfon və Planşetlər</span>
-                         </div>
-                         <div class="category-content">
-                            <div class="content-products">
-                               <ul class="content-product-list">
-                                  <a class="content-header">Smartfonlar</a>
-                                  <li class="content-body"><a class="content-body-link">Apple</a></li>
-                                  <li class="content-body"><a class="content-body-link">Honor</a></li>
-                                  <li class="content-body"><a class="content-body-link">Huawei</a></li>
-                                  <li class="content-body"><a class="content-body-link">Realme</a></li>
-                                  <li class="content-body"><a class="content-body-link">Samsung</a></li>
-                                  <li class="content-body"><a class="content-body-link">Xiaomi</a></li>
-                               </ul>
-                               <ul class="content-product-list">
-                                  <a class="content-header">Mobil Telefonlar</a>
-                                  <li class="content-body"><a class="content-body-link">Nokia</a></li>
-                               </ul>
-                               <ul class="content-product-list">
-                                  <a class="content-header">Planşet və Elektron kitab</a>
-                                  <li class="content-body"><a class="content-body-link">Honor</a></li>
-                                  <li class="content-body"><a class="content-body-link">Lenovo</a></li>
-                                  <li class="content-body"><a class="content-body-link">Microsoft</a></li>
-                                  <li class="content-body"><a class="content-body-link">PocketBook</a></li>
-                                  <li class="content-body"><a class="content-body-link">Samsung</a></li>
-                                  <li class="content-body"><a class="content-body-link">Xiaomi</a></li>
-                               </ul>
-                               <ul class="content-product-list">
-                                  <a class="content-header">İkinci əl smartfonlar</a>
-                                  <li class="content-body"><a class="content-body-link">Apple</a></li>
-                                  <li class="content-body"><a class="content-body-link">Samsung</a></li>
-                                  <li class="content-body"><a class="content-body-link">Xiaomi</a></li>
-                               </ul>
-                               <ul class="content-product-list">
-                                  <a class="content-header">Ev və ofis telefonları</a>
-                                  <li class="content-body"><a class="content-body-link">Panasonic</a></li>
-                               </ul>
-                               <ul class="content-product-list">
-                                  <a class="content-header">Powerbank</a>
-                                  <li class="content-body"><a class="content-body-link">Akekiko</a></li>
-                                  <li class="content-body"><a class="content-body-link">Anker</a></li>
-                                  <li class="content-body"><a class="content-body-link">Aspor</a></li>
-                                  <li class="content-body"><a class="content-body-link">Baseus</a></li>
-                                  <li class="content-body"><a class="content-body-link">Gelius</a></li>
-                                  <li class="content-body"><a class="content-body-link">Remax</a></li>
-                                  <li class="content-body"><a class="content-body-link">Xiaomi</a></li>
-                               </ul>
-                               <ul class="content-product-list">
-                                  <a class="content-header">Adapter</a>
-                                  <li class="content-body"><a class="content-body-link">Adapter (Simsiz)</a></li>
-                                  <li class="content-body"><a class="content-body-link">Anker</a></li>
-                                  <li class="content-body"><a class="content-body-link">Ansty</a></li>
-                                  <li class="content-body"><a class="content-body-link">Baseus</a></li>
-                                  <li class="content-body"><a class="content-body-link">Borofone</a></li>
-                                  <li class="content-body"><a class="content-body-link">Gelius</a></li>
-                                  <li class="content-body"><a class="content-body-link">Mycandy</a></li>
-                                  <li class="content-body"><a class="content-body-link">Powerology</a></li>
-                                  <li class="content-body"><a class="content-body-link">Samsung</a></li>
-                                  <li class="content-body"><a class="content-body-link">USB Başlıq</a></li>
-                               </ul>
-                               <ul class="content-product-list">
-                                  <a class="content-header">Telefon qabları</a>
-                                  <li class="content-body"><a class="content-body-link">Apple</a></li>
-                                  <li class="content-body"><a class="content-body-link">Planşet qabları</a></li>
-                                  <li class="content-body"><a class="content-body-link">Samsung</a></li>
-                               </ul>
-                               <ul class="content-product-list">
-                                  <a class="content-header">Ekran Qoruyucuları</a>
-                                  <li class="content-body"><a class="content-body-link">Apple</a></li>
-                               </ul>
-                               <ul class="content-product-list">
-                                  <a class="content-header">Qələm</a>
-                                  <li class="content-body"><a class="content-body-link">Apple</a></li>
-                               </ul>
+                            <div class="category-content">
+                                <div class="content-products">
+                                    @if (category.Children != null && category.Children.Count() > 0)
+                                    {
+                                        @foreach (Category child in category.Children)
+                                        {
+                                            <ul class="content-product-list">
+                                                <a class="content-header">Smartfonlar</a>
+                                                @if (child.Products != null && child.Products.Count() > 0)
+                                                {
+                                                    @foreach (Brand brand in child.Products.Where(p => p.CategoryId == child.Id).Select(p => p.Brand).Distinct().ToList())
+                                                    {
+                                                        <li class="content-body"><a class="content-body-link">@brand.Name</a></li>
+                                                    }
+                                                }
+
+                                            </ul>
+                                        }
+
+                                    }
+
+                                </div>
                             </div>
-                         </div>
-                      </li>
-                      <li class="category-item">
-                         <div class="category-title">
-                            <i class="fa-solid fa-mobile-screen-button"></i>
-                            <span>Smartfon və Planşetlər</span>
-                         </div>
-                         <div class="category-content">
-                            <div class="content-products">
-                               <ul class="content-product-list">
-                                  <a class="content-header">Smartfonlar</a>
-                                  <li class="content-body"><a class="content-body-link">Apple</a></li>
-                                  <li class="content-body"><a class="content-body-link">Honor</a></li>
-                                  <li class="content-body"><a class="content-body-link">Huawei</a></li>
-                                  <li class="content-body"><a class="content-body-link">Realme</a></li>
-                                  <li class="content-body"><a class="content-body-link">Samsung</a></li>
-                                  <li class="content-body"><a class="content-body-link">Xiaomi</a></li>
-                               </ul>
-                               <ul class="content-product-list">
-                                  <a class="content-header">Mobil Telefonlar</a>
-                                  <li class="content-body"><a class="content-body-link">Nokia</a></li>
-                               </ul>
-                               <ul class="content-product-list">
-                                  <a class="content-header">Planşet və Elektron kitab</a>
-                                  <li class="content-body"><a class="content-body-link">Honor</a></li>
-                                  <li class="content-body"><a class="content-body-link">Lenovo</a></li>
-                                  <li class="content-body"><a class="content-body-link">Microsoft</a></li>
-                                  <li class="content-body"><a class="content-body-link">PocketBook</a></li>
-                                  <li class="content-body"><a class="content-body-link">Samsung</a></li>
-                                  <li class="content-body"><a class="content-body-link">Xiaomi</a></li>
-                               </ul>
-                               <ul class="content-product-list">
-                                  <a class="content-header">İkinci əl smartfonlar</a>
-                                  <li class="content-body"><a class="content-body-link">Apple</a></li>
-                                  <li class="content-body"><a class="content-body-link">Samsung</a></li>
-                                  <li class="content-body"><a class="content-body-link">Xiaomi</a></li>
-                               </ul>
-                               <ul class="content-product-list">
-                                  <a class="content-header">Ev və ofis telefonları</a>
-                                  <li class="content-body"><a class="content-body-link">Panasonic</a></li>
-                               </ul>
-                               <ul class="content-product-list">
-                                  <a class="content-header">Powerbank</a>
-                                  <li class="content-body"><a class="content-body-link">Akekiko</a></li>
-                                  <li class="content-body"><a class="content-body-link">Anker</a></li>
-                                  <li class="content-body"><a class="content-body-link">Aspor</a></li>
-                                  <li class="content-body"><a class="content-body-link">Baseus</a></li>
-                                  <li class="content-body"><a class="content-body-link">Gelius</a></li>
-                                  <li class="content-body"><a class="content-body-link">Remax</a></li>
-                                  <li class="content-body"><a class="content-body-link">Xiaomi</a></li>
-                               </ul>
-                               <ul class="content-product-list">
-                                  <a class="content-header">Adapter</a>
-                                  <li class="content-body"><a class="content-body-link">Adapter (Simsiz)</a></li>
-                                  <li class="content-body"><a class="content-body-link">Anker</a></li>
-                                  <li class="content-body"><a class="content-body-link">Ansty</a></li>
-                                  <li class="content-body"><a class="content-body-link">Baseus</a></li>
-                                  <li class="content-body"><a class="content-body-link">Borofone</a></li>
-                                  <li class="content-body"><a class="content-body-link">Gelius</a></li>
-                                  <li class="content-body"><a class="content-body-link">Mycandy</a></li>
-                                  <li class="content-body"><a class="content-body-link">Powerology</a></li>
-                                  <li class="content-body"><a class="content-body-link">Samsung</a></li>
-                                  <li class="content-body"><a class="content-body-link">USB Başlıq</a></li>
-                               </ul>
-                               <ul class="content-product-list">
-                                  <a class="content-header">Telefon qabları</a>
-                                  <li class="content-body"><a class="content-body-link">Apple</a></li>
-                                  <li class="content-body"><a class="content-body-link">Planşet qabları</a></li>
-                                  <li class="content-body"><a class="content-body-link">Samsung</a></li>
-                               </ul>
-                               <ul class="content-product-list">
-                                  <a class="content-header">Ekran Qoruyucuları</a>
-                                  <li class="content-body"><a class="content-body-link">Apple</a></li>
-                               </ul>
-                               <ul class="content-product-list">
-                                  <a class="content-header">Qələm</a>
-                                  <li class="content-body"><a class="content-body-link">Apple</a></li>
-                               </ul>
-                            </div>
-                         </div>
-                      </li>
-                      <li class="category-item">
-                         <div class="category-title">
-                            <i class="fa-solid fa-mobile-screen-button"></i>
-                            <span>Smartfon və Planşetlər</span>
-                         </div>
-                         <div class="category-content">
-                            <div class="content-products">
-                               <ul class="content-product-list">
-                                  <a class="content-header">Smartfonlar</a>
-                                  <li class="content-body"><a class="content-body-link">Apple</a></li>
-                                  <li class="content-body"><a class="content-body-link">Honor</a></li>
-                                  <li class="content-body"><a class="content-body-link">Huawei</a></li>
-                                  <li class="content-body"><a class="content-body-link">Realme</a></li>
-                                  <li class="content-body"><a class="content-body-link">Samsung</a></li>
-                                  <li class="content-body"><a class="content-body-link">Xiaomi</a></li>
-                               </ul>
-                               <ul class="content-product-list">
-                                  <a class="content-header">Mobil Telefonlar</a>
-                                  <li class="content-body"><a class="content-body-link">Nokia</a></li>
-                               </ul>
-                               <ul class="content-product-list">
-                                  <a class="content-header">Planşet və Elektron kitab</a>
-                                  <li class="content-body"><a class="content-body-link">Honor</a></li>
-                                  <li class="content-body"><a class="content-body-link">Lenovo</a></li>
-                                  <li class="content-body"><a class="content-body-link">Microsoft</a></li>
-                                  <li class="content-body"><a class="content-body-link">PocketBook</a></li>
-                                  <li class="content-body"><a class="content-body-link">Samsung</a></li>
-                                  <li class="content-body"><a class="content-body-link">Xiaomi</a></li>
-                               </ul>
-                               <ul class="content-product-list">
-                                  <a class="content-header">İkinci əl smartfonlar</a>
-                                  <li class="content-body"><a class="content-body-link">Apple</a></li>
-                                  <li class="content-body"><a class="content-body-link">Samsung</a></li>
-                                  <li class="content-body"><a class="content-body-link">Xiaomi</a></li>
-                               </ul>
-                               <ul class="content-product-list">
-                                  <a class="content-header">Ev və ofis telefonları</a>
-                                  <li class="content-body"><a class="content-body-link">Panasonic</a></li>
-                               </ul>
-                               <ul class="content-product-list">
-                                  <a class="content-header">Powerbank</a>
-                                  <li class="content-body"><a class="content-body-link">Akekiko</a></li>
-                                  <li class="content-body"><a class="content-body-link">Anker</a></li>
-                                  <li class="content-body"><a class="content-body-link">Aspor</a></li>
-                                  <li class="content-body"><a class="content-body-link">Baseus</a></li>
-                                  <li class="content-body"><a class="content-body-link">Gelius</a></li>
-                                  <li class="content-body"><a class="content-body-link">Remax</a></li>
-                                  <li class="content-body"><a class="content-body-link">Xiaomi</a></li>
-                               </ul>
-                               <ul class="content-product-list">
-                                  <a class="content-header">Adapter</a>
-                                  <li class="content-body"><a class="content-body-link">Adapter (Simsiz)</a></li>
-                                  <li class="content-body"><a class="content-body-link">Anker</a></li>
-                                  <li class="content-body"><a class="content-body-link">Ansty</a></li>
-                                  <li class="content-body"><a class="content-body-link">Baseus</a></li>
-                                  <li class="content-body"><a class="content-body-link">Borofone</a></li>
-                                  <li class="content-body"><a class="content-body-link">Gelius</a></li>
-                                  <li class="content-body"><a class="content-body-link">Mycandy</a></li>
-                                  <li class="content-body"><a class="content-body-link">Powerology</a></li>
-                                  <li class="content-body"><a class="content-body-link">Samsung</a></li>
-                                  <li class="content-body"><a class="content-body-link">USB Başlıq</a></li>
-                               </ul>
-                               <ul class="content-product-list">
-                                  <a class="content-header">Telefon qabları</a>
-                                  <li class="content-body"><a class="content-body-link">Apple</a></li>
-                                  <li class="content-body"><a class="content-body-link">Planşet qabları</a></li>
-                                  <li class="content-body"><a class="content-body-link">Samsung</a></li>
-                               </ul>
-                               <ul class="content-product-list">
-                                  <a class="content-header">Ekran Qoruyucuları</a>
-                                  <li class="content-body"><a class="content-body-link">Apple</a></li>
-                               </ul>
-                               <ul class="content-product-list">
-                                  <a class="content-header">Qələm</a>
-                                  <li class="content-body"><a class="content-body-link">Apple</a></li>
-                               </ul>
-                            </div>
-                         </div>
-                      </li>
-                      <li class="category-item">
-                         <div class="category-title">
-                            <i class="fa-solid fa-mobile-screen-button"></i>
-                            <span>Smartfon və Planşetlər</span>
-                         </div>
-                         <div class="category-content">
-                            <div class="content-products">
-                               <ul class="content-product-list">
-                                  <a class="content-header">Smartfonlar</a>
-                                  <li class="content-body"><a class="content-body-link">Apple</a></li>
-                                  <li class="content-body"><a class="content-body-link">Honor</a></li>
-                                  <li class="content-body"><a class="content-body-link">Huawei</a></li>
-                                  <li class="content-body"><a class="content-body-link">Realme</a></li>
-                                  <li class="content-body"><a class="content-body-link">Samsung</a></li>
-                                  <li class="content-body"><a class="content-body-link">Xiaomi</a></li>
-                               </ul>
-                               <ul class="content-product-list">
-                                  <a class="content-header">Mobil Telefonlar</a>
-                                  <li class="content-body"><a class="content-body-link">Nokia</a></li>
-                               </ul>
-                               <ul class="content-product-list">
-                                  <a class="content-header">Planşet və Elektron kitab</a>
-                                  <li class="content-body"><a class="content-body-link">Honor</a></li>
-                                  <li class="content-body"><a class="content-body-link">Lenovo</a></li>
-                                  <li class="content-body"><a class="content-body-link">Microsoft</a></li>
-                                  <li class="content-body"><a class="content-body-link">PocketBook</a></li>
-                                  <li class="content-body"><a class="content-body-link">Samsung</a></li>
-                                  <li class="content-body"><a class="content-body-link">Xiaomi</a></li>
-                               </ul>
-                               <ul class="content-product-list">
-                                  <a class="content-header">İkinci əl smartfonlar</a>
-                                  <li class="content-body"><a class="content-body-link">Apple</a></li>
-                                  <li class="content-body"><a class="content-body-link">Samsung</a></li>
-                                  <li class="content-body"><a class="content-body-link">Xiaomi</a></li>
-                               </ul>
-                               <ul class="content-product-list">
-                                  <a class="content-header">Ev və ofis telefonları</a>
-                                  <li class="content-body"><a class="content-body-link">Panasonic</a></li>
-                               </ul>
-                               <ul class="content-product-list">
-                                  <a class="content-header">Powerbank</a>
-                                  <li class="content-body"><a class="content-body-link">Akekiko</a></li>
-                                  <li class="content-body"><a class="content-body-link">Anker</a></li>
-                                  <li class="content-body"><a class="content-body-link">Aspor</a></li>
-                                  <li class="content-body"><a class="content-body-link">Baseus</a></li>
-                                  <li class="content-body"><a class="content-body-link">Gelius</a></li>
-                                  <li class="content-body"><a class="content-body-link">Remax</a></li>
-                                  <li class="content-body"><a class="content-body-link">Xiaomi</a></li>
-                               </ul>
-                               <ul class="content-product-list">
-                                  <a class="content-header">Adapter</a>
-                                  <li class="content-body"><a class="content-body-link">Adapter (Simsiz)</a></li>
-                                  <li class="content-body"><a class="content-body-link">Anker</a></li>
-                                  <li class="content-body"><a class="content-body-link">Ansty</a></li>
-                                  <li class="content-body"><a class="content-body-link">Baseus</a></li>
-                                  <li class="content-body"><a class="content-body-link">Borofone</a></li>
-                                  <li class="content-body"><a class="content-body-link">Gelius</a></li>
-                                  <li class="content-body"><a class="content-body-link">Mycandy</a></li>
-                                  <li class="content-body"><a class="content-body-link">Powerology</a></li>
-                                  <li class="content-body"><a class="content-body-link">Samsung</a></li>
-                                  <li class="content-body"><a class="content-body-link">USB Başlıq</a></li>
-                               </ul>
-                               <ul class="content-product-list">
-                                  <a class="content-header">Telefon qabları</a>
-                                  <li class="content-body"><a class="content-body-link">Apple</a></li>
-                                  <li class="content-body"><a class="content-body-link">Planşet qabları</a></li>
-                                  <li class="content-body"><a class="content-body-link">Samsung</a></li>
-                               </ul>
-                               <ul class="content-product-list">
-                                  <a class="content-header">Ekran Qoruyucuları</a>
-                                  <li class="content-body"><a class="content-body-link">Apple</a></li>
-                               </ul>
-                               <ul class="content-product-list">
-                                  <a class="content-header">Qələm</a>
-                                  <li class="content-body"><a class="content-body-link">Apple</a></li>
-                               </ul>
-                            </div>
-                         </div>
-                      </li>
-                      <li class="category-item">
-                         <div class="category-title">
-                            <i class="fa-solid fa-mobile-screen-button"></i>
-                            <span>Smartfon və Planşetlər</span>
-                         </div>
-                         <div class="category-content">
-                            <div class="content-products">
-                               <ul class="content-product-list">
-                                  <a class="content-header">Smartfonlar</a>
-                                  <li class="content-body"><a class="content-body-link">Apple</a></li>
-                                  <li class="content-body"><a class="content-body-link">Honor</a></li>
-                                  <li class="content-body"><a class="content-body-link">Huawei</a></li>
-                                  <li class="content-body"><a class="content-body-link">Realme</a></li>
-                                  <li class="content-body"><a class="content-body-link">Samsung</a></li>
-                                  <li class="content-body"><a class="content-body-link">Xiaomi</a></li>
-                               </ul>
-                               <ul class="content-product-list">
-                                  <a class="content-header">Mobil Telefonlar</a>
-                                  <li class="content-body"><a class="content-body-link">Nokia</a></li>
-                               </ul>
-                               <ul class="content-product-list">
-                                  <a class="content-header">Planşet və Elektron kitab</a>
-                                  <li class="content-body"><a class="content-body-link">Honor</a></li>
-                                  <li class="content-body"><a class="content-body-link">Lenovo</a></li>
-                                  <li class="content-body"><a class="content-body-link">Microsoft</a></li>
-                                  <li class="content-body"><a class="content-body-link">PocketBook</a></li>
-                                  <li class="content-body"><a class="content-body-link">Samsung</a></li>
-                                  <li class="content-body"><a class="content-body-link">Xiaomi</a></li>
-                               </ul>
-                               <ul class="content-product-list">
-                                  <a class="content-header">İkinci əl smartfonlar</a>
-                                  <li class="content-body"><a class="content-body-link">Apple</a></li>
-                                  <li class="content-body"><a class="content-body-link">Samsung</a></li>
-                                  <li class="content-body"><a class="content-body-link">Xiaomi</a></li>
-                               </ul>
-                               <ul class="content-product-list">
-                                  <a class="content-header">Ev və ofis telefonları</a>
-                                  <li class="content-body"><a class="content-body-link">Panasonic</a></li>
-                               </ul>
-                               <ul class="content-product-list">
-                                  <a class="content-header">Powerbank</a>
-                                  <li class="content-body"><a class="content-body-link">Akekiko</a></li>
-                                  <li class="content-body"><a class="content-body-link">Anker</a></li>
-                                  <li class="content-body"><a class="content-body-link">Aspor</a></li>
-                                  <li class="content-body"><a class="content-body-link">Baseus</a></li>
-                                  <li class="content-body"><a class="content-body-link">Gelius</a></li>
-                                  <li class="content-body"><a class="content-body-link">Remax</a></li>
-                                  <li class="content-body"><a class="content-body-link">Xiaomi</a></li>
-                               </ul>
-                               <ul class="content-product-list">
-                                  <a class="content-header">Adapter</a>
-                                  <li class="content-body"><a class="content-body-link">Adapter (Simsiz)</a></li>
-                                  <li class="content-body"><a class="content-body-link">Anker</a></li>
-                                  <li class="content-body"><a class="content-body-link">Ansty</a></li>
-                                  <li class="content-body"><a class="content-body-link">Baseus</a></li>
-                                  <li class="content-body"><a class="content-body-link">Borofone</a></li>
-                                  <li class="content-body"><a class="content-body-link">Gelius</a></li>
-                                  <li class="content-body"><a class="content-body-link">Mycandy</a></li>
-                                  <li class="content-body"><a class="content-body-link">Powerology</a></li>
-                                  <li class="content-body"><a class="content-body-link">Samsung</a></li>
-                                  <li class="content-body"><a class="content-body-link">USB Başlıq</a></li>
-                               </ul>
-                               <ul class="content-product-list">
-                                  <a class="content-header">Telefon qabları</a>
-                                  <li class="content-body"><a class="content-body-link">Apple</a></li>
-                                  <li class="content-body"><a class="content-body-link">Planşet qabları</a></li>
-                                  <li class="content-body"><a class="content-body-link">Samsung</a></li>
-                               </ul>
-                               <ul class="content-product-list">
-                                  <a class="content-header">Ekran Qoruyucuları</a>
-                                  <li class="content-body"><a class="content-body-link">Apple</a></li>
-                               </ul>
-                               <ul class="content-product-list">
-                                  <a class="content-header">Qələm</a>
-                                  <li class="content-body"><a class="content-body-link">Apple</a></li>
-                               </ul>
-                            </div>
-                         </div>
-                      </li>
-                      <li class="category-item">
-                         <div class="category-title">
-                            <i class="fa-solid fa-mobile-screen-button"></i>
-                            <span>Smartfon və Planşetlər</span>
-                         </div>
-                         <div class="category-content">
-                            <div class="content-products">
-                               <ul class="content-product-list">
-                                  <a class="content-header">Smartfonlar</a>
-                                  <li class="content-body"><a class="content-body-link">Apple</a></li>
-                                  <li class="content-body"><a class="content-body-link">Honor</a></li>
-                                  <li class="content-body"><a class="content-body-link">Huawei</a></li>
-                                  <li class="content-body"><a class="content-body-link">Realme</a></li>
-                                  <li class="content-body"><a class="content-body-link">Samsung</a></li>
-                                  <li class="content-body"><a class="content-body-link">Xiaomi</a></li>
-                               </ul>
-                               <ul class="content-product-list">
-                                  <a class="content-header">Mobil Telefonlar</a>
-                                  <li class="content-body"><a class="content-body-link">Nokia</a></li>
-                               </ul>
-                               <ul class="content-product-list">
-                                  <a class="content-header">Planşet və Elektron kitab</a>
-                                  <li class="content-body"><a class="content-body-link">Honor</a></li>
-                                  <li class="content-body"><a class="content-body-link">Lenovo</a></li>
-                                  <li class="content-body"><a class="content-body-link">Microsoft</a></li>
-                                  <li class="content-body"><a class="content-body-link">PocketBook</a></li>
-                                  <li class="content-body"><a class="content-body-link">Samsung</a></li>
-                                  <li class="content-body"><a class="content-body-link">Xiaomi</a></li>
-                               </ul>
-                               <ul class="content-product-list">
-                                  <a class="content-header">İkinci əl smartfonlar</a>
-                                  <li class="content-body"><a class="content-body-link">Apple</a></li>
-                                  <li class="content-body"><a class="content-body-link">Samsung</a></li>
-                                  <li class="content-body"><a class="content-body-link">Xiaomi</a></li>
-                               </ul>
-                               <ul class="content-product-list">
-                                  <a class="content-header">Ev və ofis telefonları</a>
-                                  <li class="content-body"><a class="content-body-link">Panasonic</a></li>
-                               </ul>
-                               <ul class="content-product-list">
-                                  <a class="content-header">Powerbank</a>
-                                  <li class="content-body"><a class="content-body-link">Akekiko</a></li>
-                                  <li class="content-body"><a class="content-body-link">Anker</a></li>
-                                  <li class="content-body"><a class="content-body-link">Aspor</a></li>
-                                  <li class="content-body"><a class="content-body-link">Baseus</a></li>
-                                  <li class="content-body"><a class="content-body-link">Gelius</a></li>
-                                  <li class="content-body"><a class="content-body-link">Remax</a></li>
-                                  <li class="content-body"><a class="content-body-link">Xiaomi</a></li>
-                               </ul>
-                               <ul class="content-product-list">
-                                  <a class="content-header">Adapter</a>
-                                  <li class="content-body"><a class="content-body-link">Adapter (Simsiz)</a></li>
-                                  <li class="content-body"><a class="content-body-link">Anker</a></li>
-                                  <li class="content-body"><a class="content-body-link">Ansty</a></li>
-                                  <li class="content-body"><a class="content-body-link">Baseus</a></li>
-                                  <li class="content-body"><a class="content-body-link">Borofone</a></li>
-                                  <li class="content-body"><a class="content-body-link">Gelius</a></li>
-                                  <li class="content-body"><a class="content-body-link">Mycandy</a></li>
-                                  <li class="content-body"><a class="content-body-link">Powerology</a></li>
-                                  <li class="content-body"><a class="content-body-link">Samsung</a></li>
-                                  <li class="content-body"><a class="content-body-link">USB Başlıq</a></li>
-                               </ul>
-                               <ul class="content-product-list">
-                                  <a class="content-header">Telefon qabları</a>
-                                  <li class="content-body"><a class="content-body-link">Apple</a></li>
-                                  <li class="content-body"><a class="content-body-link">Planşet qabları</a></li>
-                                  <li class="content-body"><a class="content-body-link">Samsung</a></li>
-                               </ul>
-                               <ul class="content-product-list">
-                                  <a class="content-header">Ekran Qoruyucuları</a>
-                                  <li class="content-body"><a class="content-body-link">Apple</a></li>
-                               </ul>
-                               <ul class="content-product-list">
-                                  <a class="content-header">Qələm</a>
-                                  <li class="content-body"><a class="content-body-link">Apple</a></li>
-                               </ul>
-                            </div>
-                         </div>
-                      </li>
-                      <li class="category-item">
-                         <div class="category-title">
-                            <i class="fa-solid fa-mobile-screen-button"></i>
-                            <span>Smartfon və Planşetlər</span>
-                         </div>
-                         <div class="category-content">
-                            <div class="content-products">
-                               <ul class="content-product-list">
-                                  <a class="content-header">Smartfonlar</a>
-                                  <li class="content-body"><a class="content-body-link">Apple</a></li>
-                                  <li class="content-body"><a class="content-body-link">Honor</a></li>
-                                  <li class="content-body"><a class="content-body-link">Huawei</a></li>
-                                  <li class="content-body"><a class="content-body-link">Realme</a></li>
-                                  <li class="content-body"><a class="content-body-link">Samsung</a></li>
-                                  <li class="content-body"><a class="content-body-link">Xiaomi</a></li>
-                               </ul>
-                               <ul class="content-product-list">
-                                  <a class="content-header">Mobil Telefonlar</a>
-                                  <li class="content-body"><a class="content-body-link">Nokia</a></li>
-                               </ul>
-                               <ul class="content-product-list">
-                                  <a class="content-header">Planşet və Elektron kitab</a>
-                                  <li class="content-body"><a class="content-body-link">Honor</a></li>
-                                  <li class="content-body"><a class="content-body-link">Lenovo</a></li>
-                                  <li class="content-body"><a class="content-body-link">Microsoft</a></li>
-                                  <li class="content-body"><a class="content-body-link">PocketBook</a></li>
-                                  <li class="content-body"><a class="content-body-link">Samsung</a></li>
-                                  <li class="content-body"><a class="content-body-link">Xiaomi</a></li>
-                               </ul>
-                               <ul class="content-product-list">
-                                  <a class="content-header">İkinci əl smartfonlar</a>
-                                  <li class="content-body"><a class="content-body-link">Apple</a></li>
-                                  <li class="content-body"><a class="content-body-link">Samsung</a></li>
-                                  <li class="content-body"><a class="content-body-link">Xiaomi</a></li>
-                               </ul>
-                               <ul class="content-product-list">
-                                  <a class="content-header">Ev və ofis telefonları</a>
-                                  <li class="content-body"><a class="content-body-link">Panasonic</a></li>
-                               </ul>
-                               <ul class="content-product-list">
-                                  <a class="content-header">Powerbank</a>
-                                  <li class="content-body"><a class="content-body-link">Akekiko</a></li>
-                                  <li class="content-body"><a class="content-body-link">Anker</a></li>
-                                  <li class="content-body"><a class="content-body-link">Aspor</a></li>
-                                  <li class="content-body"><a class="content-body-link">Baseus</a></li>
-                                  <li class="content-body"><a class="content-body-link">Gelius</a></li>
-                                  <li class="content-body"><a class="content-body-link">Remax</a></li>
-                                  <li class="content-body"><a class="content-body-link">Xiaomi</a></li>
-                               </ul>
-                               <ul class="content-product-list">
-                                  <a class="content-header">Adapter</a>
-                                  <li class="content-body"><a class="content-body-link">Adapter (Simsiz)</a></li>
-                                  <li class="content-body"><a class="content-body-link">Anker</a></li>
-                                  <li class="content-body"><a class="content-body-link">Ansty</a></li>
-                                  <li class="content-body"><a class="content-body-link">Baseus</a></li>
-                                  <li class="content-body"><a class="content-body-link">Borofone</a></li>
-                                  <li class="content-body"><a class="content-body-link">Gelius</a></li>
-                                  <li class="content-body"><a class="content-body-link">Mycandy</a></li>
-                                  <li class="content-body"><a class="content-body-link">Powerology</a></li>
-                                  <li class="content-body"><a class="content-body-link">Samsung</a></li>
-                                  <li class="content-body"><a class="content-body-link">USB Başlıq</a></li>
-                               </ul>
-                               <ul class="content-product-list">
-                                  <a class="content-header">Telefon qabları</a>
-                                  <li class="content-body"><a class="content-body-link">Apple</a></li>
-                                  <li class="content-body"><a class="content-body-link">Planşet qabları</a></li>
-                                  <li class="content-body"><a class="content-body-link">Samsung</a></li>
-                               </ul>
-                               <ul class="content-product-list">
-                                  <a class="content-header">Ekran Qoruyucuları</a>
-                                  <li class="content-body"><a class="content-body-link">Apple</a></li>
-                               </ul>
-                               <ul class="content-product-list">
-                                  <a class="content-header">Qələm</a>
-                                  <li class="content-body"><a class="content-body-link">Apple</a></li>
-                               </ul>
-                            </div>
-                         </div>
-                      </li>
-                      <li class="category-item">
-                         <div class="category-title">
-                            <i class="fa-solid fa-mobile-screen-button"></i>
-                            <span>Smartfon və Planşetlər</span>
-                         </div>
-                         <div class="category-content">
-                            <div class="content-products">
-                               <ul class="content-product-list">
-                                  <a class="content-header">Smartfonlar</a>
-                                  <li class="content-body"><a class="content-body-link">Apple</a></li>
-                                  <li class="content-body"><a class="content-body-link">Honor</a></li>
-                                  <li class="content-body"><a class="content-body-link">Huawei</a></li>
-                                  <li class="content-body"><a class="content-body-link">Realme</a></li>
-                                  <li class="content-body"><a class="content-body-link">Samsung</a></li>
-                                  <li class="content-body"><a class="content-body-link">Xiaomi</a></li>
-                               </ul>
-                               <ul class="content-product-list">
-                                  <a class="content-header">Mobil Telefonlar</a>
-                                  <li class="content-body"><a class="content-body-link">Nokia</a></li>
-                               </ul>
-                               <ul class="content-product-list">
-                                  <a class="content-header">Planşet və Elektron kitab</a>
-                                  <li class="content-body"><a class="content-body-link">Honor</a></li>
-                                  <li class="content-body"><a class="content-body-link">Lenovo</a></li>
-                                  <li class="content-body"><a class="content-body-link">Microsoft</a></li>
-                                  <li class="content-body"><a class="content-body-link">PocketBook</a></li>
-                                  <li class="content-body"><a class="content-body-link">Samsung</a></li>
-                                  <li class="content-body"><a class="content-body-link">Xiaomi</a></li>
-                               </ul>
-                               <ul class="content-product-list">
-                                  <a class="content-header">İkinci əl smartfonlar</a>
-                                  <li class="content-body"><a class="content-body-link">Apple</a></li>
-                                  <li class="content-body"><a class="content-body-link">Samsung</a></li>
-                                  <li class="content-body"><a class="content-body-link">Xiaomi</a></li>
-                               </ul>
-                               <ul class="content-product-list">
-                                  <a class="content-header">Ev və ofis telefonları</a>
-                                  <li class="content-body"><a class="content-body-link">Panasonic</a></li>
-                               </ul>
-                               <ul class="content-product-list">
-                                  <a class="content-header">Powerbank</a>
-                                  <li class="content-body"><a class="content-body-link">Akekiko</a></li>
-                                  <li class="content-body"><a class="content-body-link">Anker</a></li>
-                                  <li class="content-body"><a class="content-body-link">Aspor</a></li>
-                                  <li class="content-body"><a class="content-body-link">Baseus</a></li>
-                                  <li class="content-body"><a class="content-body-link">Gelius</a></li>
-                                  <li class="content-body"><a class="content-body-link">Remax</a></li>
-                                  <li class="content-body"><a class="content-body-link">Xiaomi</a></li>
-                               </ul>
-                               <ul class="content-product-list">
-                                  <a class="content-header">Adapter</a>
-                                  <li class="content-body"><a class="content-body-link">Adapter (Simsiz)</a></li>
-                                  <li class="content-body"><a class="content-body-link">Anker</a></li>
-                                  <li class="content-body"><a class="content-body-link">Ansty</a></li>
-                                  <li class="content-body"><a class="content-body-link">Baseus</a></li>
-                                  <li class="content-body"><a class="content-body-link">Borofone</a></li>
-                                  <li class="content-body"><a class="content-body-link">Gelius</a></li>
-                                  <li class="content-body"><a class="content-body-link">Mycandy</a></li>
-                                  <li class="content-body"><a class="content-body-link">Powerology</a></li>
-                                  <li class="content-body"><a class="content-body-link">Samsung</a></li>
-                                  <li class="content-body"><a class="content-body-link">USB Başlıq</a></li>
-                               </ul>
-                               <ul class="content-product-list">
-                                  <a class="content-header">Telefon qabları</a>
-                                  <li class="content-body"><a class="content-body-link">Apple</a></li>
-                                  <li class="content-body"><a class="content-body-link">Planşet qabları</a></li>
-                                  <li class="content-body"><a class="content-body-link">Samsung</a></li>
-                               </ul>
-                               <ul class="content-product-list">
-                                  <a class="content-header">Ekran Qoruyucuları</a>
-                                  <li class="content-body"><a class="content-body-link">Apple</a></li>
-                               </ul>
-                               <ul class="content-product-list">
-                                  <a class="content-header">Qələm</a>
-                                  <li class="content-body"><a class="content-body-link">Apple</a></li>
-                               </ul>
-                            </div>
-                         </div>
-                      </li>
-                      <li class="category-item">
-                         <div class="category-title">
-                            <i class="fa-solid fa-mobile-screen-button"></i>
-                            <span>Smartfon və Planşetlər</span>
-                         </div>
-                         <div class="category-content">
-                            <div class="content-products">
-                               <ul class="content-product-list">
-                                  <a class="content-header">Smartfonlar</a>
-                                  <li class="content-body"><a class="content-body-link">Apple</a></li>
-                                  <li class="content-body"><a class="content-body-link">Honor</a></li>
-                                  <li class="content-body"><a class="content-body-link">Huawei</a></li>
-                                  <li class="content-body"><a class="content-body-link">Realme</a></li>
-                                  <li class="content-body"><a class="content-body-link">Samsung</a></li>
-                                  <li class="content-body"><a class="content-body-link">Xiaomi</a></li>
-                               </ul>
-                               <ul class="content-product-list">
-                                  <a class="content-header">Mobil Telefonlar</a>
-                                  <li class="content-body"><a class="content-body-link">Nokia</a></li>
-                               </ul>
-                               <ul class="content-product-list">
-                                  <a class="content-header">Planşet və Elektron kitab</a>
-                                  <li class="content-body"><a class="content-body-link">Honor</a></li>
-                                  <li class="content-body"><a class="content-body-link">Lenovo</a></li>
-                                  <li class="content-body"><a class="content-body-link">Microsoft</a></li>
-                                  <li class="content-body"><a class="content-body-link">PocketBook</a></li>
-                                  <li class="content-body"><a class="content-body-link">Samsung</a></li>
-                                  <li class="content-body"><a class="content-body-link">Xiaomi</a></li>
-                               </ul>
-                               <ul class="content-product-list">
-                                  <a class="content-header">İkinci əl smartfonlar</a>
-                                  <li class="content-body"><a class="content-body-link">Apple</a></li>
-                                  <li class="content-body"><a class="content-body-link">Samsung</a></li>
-                                  <li class="content-body"><a class="content-body-link">Xiaomi</a></li>
-                               </ul>
-                               <ul class="content-product-list">
-                                  <a class="content-header">Ev və ofis telefonları</a>
-                                  <li class="content-body"><a class="content-body-link">Panasonic</a></li>
-                               </ul>
-                               <ul class="content-product-list">
-                                  <a class="content-header">Powerbank</a>
-                                  <li class="content-body"><a class="content-body-link">Akekiko</a></li>
-                                  <li class="content-body"><a class="content-body-link">Anker</a></li>
-                                  <li class="content-body"><a class="content-body-link">Aspor</a></li>
-                                  <li class="content-body"><a class="content-body-link">Baseus</a></li>
-                                  <li class="content-body"><a class="content-body-link">Gelius</a></li>
-                                  <li class="content-body"><a class="content-body-link">Remax</a></li>
-                                  <li class="content-body"><a class="content-body-link">Xiaomi</a></li>
-                               </ul>
-                               <ul class="content-product-list">
-                                  <a class="content-header">Adapter</a>
-                                  <li class="content-body"><a class="content-body-link">Adapter (Simsiz)</a></li>
-                                  <li class="content-body"><a class="content-body-link">Anker</a></li>
-                                  <li class="content-body"><a class="content-body-link">Ansty</a></li>
-                                  <li class="content-body"><a class="content-body-link">Baseus</a></li>
-                                  <li class="content-body"><a class="content-body-link">Borofone</a></li>
-                                  <li class="content-body"><a class="content-body-link">Gelius</a></li>
-                                  <li class="content-body"><a class="content-body-link">Mycandy</a></li>
-                                  <li class="content-body"><a class="content-body-link">Powerology</a></li>
-                                  <li class="content-body"><a class="content-body-link">Samsung</a></li>
-                                  <li class="content-body"><a class="content-body-link">USB Başlıq</a></li>
-                               </ul>
-                               <ul class="content-product-list">
-                                  <a class="content-header">Telefon qabları</a>
-                                  <li class="content-body"><a class="content-body-link">Apple</a></li>
-                                  <li class="content-body"><a class="content-body-link">Planşet qabları</a></li>
-                                  <li class="content-body"><a class="content-body-link">Samsung</a></li>
-                               </ul>
-                               <ul class="content-product-list">
-                                  <a class="content-header">Ekran Qoruyucuları</a>
-                                  <li class="content-body"><a class="content-body-link">Apple</a></li>
-                               </ul>
-                               <ul class="content-product-list">
-                                  <a class="content-header">Qələm</a>
-                                  <li class="content-body"><a class="content-body-link">Apple</a></li>
-                               </ul>
-                            </div>
-                         </div>
-                      </li>
-                      <li class="category-item">
-                         <div class="category-title">
-                            <i class="fa-solid fa-mobile-screen-button"></i>
-                            <span>Smartfon və Planşetlər</span>
-                         </div>
-                         <div class="category-content">
-                            <div class="content-products">
-                               <ul class="content-product-list">
-                                  <a class="content-header">Smartfonlar</a>
-                                  <li class="content-body"><a class="content-body-link">Apple</a></li>
-                                  <li class="content-body"><a class="content-body-link">Honor</a></li>
-                                  <li class="content-body"><a class="content-body-link">Huawei</a></li>
-                                  <li class="content-body"><a class="content-body-link">Realme</a></li>
-                                  <li class="content-body"><a class="content-body-link">Samsung</a></li>
-                                  <li class="content-body"><a class="content-body-link">Xiaomi</a></li>
-                               </ul>
-                               <ul class="content-product-list">
-                                  <a class="content-header">Mobil Telefonlar</a>
-                                  <li class="content-body"><a class="content-body-link">Nokia</a></li>
-                               </ul>
-                               <ul class="content-product-list">
-                                  <a class="content-header">Planşet və Elektron kitab</a>
-                                  <li class="content-body"><a class="content-body-link">Honor</a></li>
-                                  <li class="content-body"><a class="content-body-link">Lenovo</a></li>
-                                  <li class="content-body"><a class="content-body-link">Microsoft</a></li>
-                                  <li class="content-body"><a class="content-body-link">PocketBook</a></li>
-                                  <li class="content-body"><a class="content-body-link">Samsung</a></li>
-                                  <li class="content-body"><a class="content-body-link">Xiaomi</a></li>
-                               </ul>
-                               <ul class="content-product-list">
-                                  <a class="content-header">İkinci əl smartfonlar</a>
-                                  <li class="content-body"><a class="content-body-link">Apple</a></li>
-                                  <li class="content-body"><a class="content-body-link">Samsung</a></li>
-                                  <li class="content-body"><a class="content-body-link">Xiaomi</a></li>
-                               </ul>
-                               <ul class="content-product-list">
-                                  <a class="content-header">Ev və ofis telefonları</a>
-                                  <li class="content-body"><a class="content-body-link">Panasonic</a></li>
-                               </ul>
-                               <ul class="content-product-list">
-                                  <a class="content-header">Powerbank</a>
-                                  <li class="content-body"><a class="content-body-link">Akekiko</a></li>
-                                  <li class="content-body"><a class="content-body-link">Anker</a></li>
-                                  <li class="content-body"><a class="content-body-link">Aspor</a></li>
-                                  <li class="content-body"><a class="content-body-link">Baseus</a></li>
-                                  <li class="content-body"><a class="content-body-link">Gelius</a></li>
-                                  <li class="content-body"><a class="content-body-link">Remax</a></li>
-                                  <li class="content-body"><a class="content-body-link">Xiaomi</a></li>
-                               </ul>
-                               <ul class="content-product-list">
-                                  <a class="content-header">Adapter</a>
-                                  <li class="content-body"><a class="content-body-link">Adapter (Simsiz)</a></li>
-                                  <li class="content-body"><a class="content-body-link">Anker</a></li>
-                                  <li class="content-body"><a class="content-body-link">Ansty</a></li>
-                                  <li class="content-body"><a class="content-body-link">Baseus</a></li>
-                                  <li class="content-body"><a class="content-body-link">Borofone</a></li>
-                                  <li class="content-body"><a class="content-body-link">Gelius</a></li>
-                                  <li class="content-body"><a class="content-body-link">Mycandy</a></li>
-                                  <li class="content-body"><a class="content-body-link">Powerology</a></li>
-                                  <li class="content-body"><a class="content-body-link">Samsung</a></li>
-                                  <li class="content-body"><a class="content-body-link">USB Başlıq</a></li>
-                               </ul>
-                               <ul class="content-product-list">
-                                  <a class="content-header">Telefon qabları</a>
-                                  <li class="content-body"><a class="content-body-link">Apple</a></li>
-                                  <li class="content-body"><a class="content-body-link">Planşet qabları</a></li>
-                                  <li class="content-body"><a class="content-body-link">Samsung</a></li>
-                               </ul>
-                               <ul class="content-product-list">
-                                  <a class="content-header">Ekran Qoruyucuları</a>
-                                  <li class="content-body"><a class="content-body-link">Apple</a></li>
-                               </ul>
-                               <ul class="content-product-list">
-                                  <a class="content-header">Qələm</a>
-                                  <li class="content-body"><a class="content-body-link">Apple</a></li>
-                               </ul>
-                            </div>
-                         </div>
-                      </li>
-                   </ul>
-              </div>
+                        </li>
+                    }
+
+                </ul>
             </div>
         </div>
+    </div>
         <div class="bottom">
             <div class="container">
                 <h1>Profil səhifəm</h1>
@@ -900,15 +68,62 @@
                             <div class="product-contents">
                                 <div class="product-layout active" data-trgt="1">
                                     <div class="cash-orders">
-                                        <ul class="table-list custom-table">
-                                            <li class="list-head">
-                                               <p class="li-item">Müqavilə Nömrəsi</p>
-                                               <p class="li-item">Məhsul</p>
-                                               <p class="li-item">Vitrin Qiyməti</p>
-                                               <p class="li-item">Satış Qiyməti</p>
-                                               <p class="li-item">Sifariş Tarixi</p>
-                                            </li>
-                                         </ul>
+                                        
+                                    <table class="table table-bordered w-100">
+                                        <thead class="thead-light">
+                                            <tr>
+                                                <th>No</th>
+                                                <th>Full Name</th>
+                                                <th>Created At</th>
+                                                <th>Total Price</th>
+                                                <th>Status</th>
+                                                <th>Comment</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            @if (Model.Orders != null && Model.Orders.Count() > 0)
+                                            {
+                                                foreach (Order order in Model.Orders)
+                                                {
+                                                    <tr data-toggle="collapse" data-target="#demo@(order.Id)" class="accordion-toggle">
+                                                        <td>@order.No</td>
+                                                        <td>@($"{order.Name} {order.SurName}")</td>
+                                                        <td>@order.CreatedAt?.ToString("dd MMM yyyy")</td>
+                                                        <td>$@order.OrderItems.Sum(oi => oi.Price * oi.Count)</td>
+                                                        <td>@order.Status</td>
+                                                        <td>@order.Comment</td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td colspan="6" class="hiddenRow">
+                                                            <div class="accordian-body collapse" id="demo@(order.Id)">
+                                                                <table class="table table-bordered w-100">
+                                                                    <thead>
+                                                                        <tr>
+                                                                            <th class="name">Name</th>
+                                                                            <th class="status">Price</th>
+                                                                            <th class="total">Count</th>
+                                                                            <th class="action">Total</th>
+                                                                        </tr>
+                                                                    </thead>
+                                                                    <tbody>
+                                                                        @foreach (OrderItem orderItem in order.OrderItems)
+                                                                        {
+                                                                            <tr>
+                                                                                <td>@orderItem.Product.Title</td>
+                                                                                <td>@orderItem.Price</td>
+                                                                                <td>@orderItem.Count</td>
+                                                                                <td>@(orderItem.Count * orderItem.Price)</td>
+                                                                            </tr>
+                                                                        }
+                                                                    </tbody>
+                                                                </table>
+                                                            </div>
+                                                        </td>
+                                                    </tr>
+                                                }
+                                            }
+                                        </tbody>
+                                    </table>
                                     </div>
                                 </div>
                                 <div class="product-layout" data-trgt="2">
@@ -925,7 +140,7 @@
                                     </div>
                                 </div>
                                 <div class="product-layout" data-trgt="3">
-                                    <div class="taksir-orders">
+                                    <div class="taksit-orders">
                                         <ul class="table-list custom-table">
                                             <li class="list-head">
                                                <p class="li-item">Müqavilə Nömrəsi</p>
@@ -947,7 +162,7 @@
                     <div class="tab-layout personalinfo @(TempData["Tab"]?.ToString() == "Account" ? "active" : "")" data-target="4">
                             <div class="content">
                                 <h1 class="personal-title">Şəxsi Məlumatlar</h1>
-                                @await Html.PartialAsync("_SettingFormPartial", Model.AccountVM)
+                                @await Html.PartialAsync("_SettingFormPartial", Model.SettingVM)
                             </div>
                         </div>
                     </div>

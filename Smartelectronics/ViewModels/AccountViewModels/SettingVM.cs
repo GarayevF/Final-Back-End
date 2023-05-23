@@ -11,13 +11,14 @@ namespace Smartelectronics.ViewModels.AccountViewModels
         public string? SurName { get; set; }
         [StringLength(100)]
         public string? Patronymic { get; set; }
-        [StringLength(100)]
+        [StringLength(10)]
         public string? IdSeria { get; set; }
-        public int? Fin { get; set; }
+        [StringLength(10)]
+        public string? Fin { get; set; }
         [StringLength(100)]
         public string? Number { get; set; }
         [DataType(DataType.Date)]
-        public DateTime BirthDate { get; set; }
-        public GenderType Gender { get; set; }
+        public DateTime? BirthDate { get; set; }
+        public GenderType? Gender { get; set; }
     }
 }

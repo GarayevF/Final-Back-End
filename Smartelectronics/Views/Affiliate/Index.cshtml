@@ -1,0 +1,143 @@
+﻿@model IEnumerable<Affiliate>
+@{
+    ViewData["Title"] = "Index";
+}
+
+<section class="breadcrumb-section">
+   <h2 class="sr-only">Site Breadcrumb</h2>
+   <div class="container">
+      <div class="breadcrumb-contents">
+         <nav aria-label="breadcrumb">
+            <ol class="breadcrumb">
+               <li class="breadcrumb-item">
+                  <a href="index.html">Smart Electronics</a>
+               </li>
+
+               <li class="breadcrumb-item active">
+                  Əlaqə məlumatları və filiallarımız</li>
+            </ol>
+         </nav>
+      </div>
+   </div>
+</section>
+
+<div class="main-affiliate">
+    <div class="content">
+        <div class="contact-form-wrapper">
+            <div class="container">
+                <div class="contact-form section_wrapper">
+                    <div class="left-content">
+                        @await Html.PartialAsync("_CheckoutPartial")
+                    </div>
+                    <div id="contact_carousel" class="right-content">
+                       <div class="affiliate">
+                          <div class="owl-carousel owl-affiliate">
+                                @if(Model != null && Model.Count() > 0)
+                                {
+                                    @foreach(Affiliate affiliate in Model)
+                                    {
+                                        <div class="item">
+                                            <div class="name">
+                                                <p class="title">@affiliate.Name</p>
+                                                <span>Növbəti filial</span>
+                                            </div>
+                                            <div class="ctc_wrapper">
+                                                <a href="" class="ctc_block">
+                                                    <div class="icon">
+                                                        <svg id="Layer_1" enable-background="new 0 0 512 512" height="50" viewBox="0 0 512 512" width="56" xmlns="http://www.w3.org/2000/svg">
+                                                            <path d="m464 226.03c0-25.534 2.286-72.844-30.39-126.33-36.809-60.278-102.69-99.7-177.61-99.7-115.005 0-208 93.272-208 208v18.03c-27.58 7.12-48 32.2-48 61.97v80c0 35.29 28.71 64 64 64h32c0 8.84 7.16 16 16 16s16-7.16 16-16c0-1.89 0-181.613 0-208 0-8.84-7.16-16-16-16s-16 7.16-16 16h-16c0-23.669-1.217-54.059 17.62-92.84 21.746 10.1 48.685 6.066 66.6-12.37 51.77-53.261 135.555-50.192 183.61.05 18.228 18.76 45.285 22.204 66.56 12.32 18.85 38.842 17.61 69.963 17.61 92.84h-16c0-8.84-7.16-16-16-16s-16 7.16-16 16v208c0 8.84 7.16 16 16 16s16-7.16 16-16h13.97c-7.12 27.58-32.2 48-61.97 48h-64c0-17.645-14.355-32-32-32s-32 14.355-32 32 14.355 32 32 32h96c48.1 0 88.05-35.56 94.94-81.77 28.11-6.74 49.06-32.09 49.06-62.23v-80c0-29.77-20.42-54.85-48-61.97z"></path>
+                                                        </svg>
+                                                    </div>
+                                                    <div class="text">
+                                                        <p>@affiliate.Hotline</p>
+                                                    </div>
+                                                </a>
+                                                <a href="" class="ctc_block">
+                                                    <div class="icon">
+                                                        <svg version="1.1" id="Capa_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" width="56px" height="56px" viewBox="0 0 30.055 30.056" xml:space="preserve" style="enable-background: new 0 0 30.055 30.056;">
+                                                        <g>
+                                                        <g>
+                                                        <path d="M25.839,25.996l-3.5-4.338c-0.292-0.36-0.908-0.648-1.371-0.642l-1.478,0.028c-1.267,0.729-3.747,1.804-7.177-4.139
+                c-3.43-5.941-1.26-7.552,0.006-8.283l0.762-1.266c0.239-0.398,0.297-1.076,0.131-1.509l-2.006-5.2
+                c-0.167-0.434-0.677-0.718-1.132-0.634L7.611,0.466C2.835,3.225,2.796,11.481,7.525,19.67c4.729,8.191,11.898,12.287,16.675,9.529
+                l1.623-1.908C26.123,26.939,26.13,26.355,25.839,25.996z"></path>
+                                                        <path d="M17.933,6.439c4.736,1.27,7.557,6.154,6.287,10.891c-0.091,0.339,0.111,0.687,0.45,0.777
+                c0.339,0.09,0.688-0.109,0.778-0.451c1.45-5.412-1.773-10.992-7.186-12.443c-0.339-0.09-0.688,0.109-0.777,0.448
+                C17.395,6.001,17.595,6.349,17.933,6.439z"></path>
+                                                        <path d="M17.277,8.894c3.382,0.904,5.396,4.395,4.491,7.777c-0.092,0.339,0.108,0.687,0.448,0.778
+                c0.339,0.09,0.688-0.11,0.777-0.451c1.088-4.059-1.329-8.244-5.388-9.333c-0.34-0.092-0.687,0.11-0.778,0.449
+                C16.737,8.456,16.938,8.804,17.277,8.894z"></path>
+                                                        <path d="M16.62,11.347c2.029,0.543,3.237,2.638,2.694,4.666c-0.092,0.341,0.109,0.688,0.448,0.778
+                c0.339,0.091,0.688-0.109,0.778-0.45c0.725-2.705-0.887-5.497-3.593-6.221c-0.339-0.092-0.687,0.11-0.778,0.448
+                C16.08,10.908,16.28,11.257,16.62,11.347z"></path>
+                                                        <path d="M15.962,13.801c0.676,0.181,1.08,0.88,0.898,1.555c-0.091,0.342,0.11,0.688,0.448,0.778
+                c0.341,0.093,0.688-0.108,0.778-0.448c0.363-1.352-0.442-2.748-1.795-3.11c-0.339-0.091-0.688,0.108-0.778,0.448
+                C15.422,13.36,15.623,13.709,15.962,13.801z"></path>
+                                                        </g>
+                                                     </g>
+                                                  </svg>
+                                                    </div>
+                                                    <div class="text">
+                                                        <p>@affiliate.Number</p>
+                                                    </div>
+                                                </a>
+                                                <a href="" class="email ctc_block">
+                                                    <div class="icon">
+                                                        <svg version="1.1" id="Capa_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" viewBox="0 0 512 512" xml:space="preserve" style="enable-background: new 0 0 512 512;">
+                                                        <g>
+                                                        <g>
+                                                        <polygon points="339.392,258.624 512,367.744 512,144.896 		"></polygon>
+                                                        </g>
+                                                     </g>
+                                                        <g>
+                                                        <g>
+                                                        <polygon points="0,144.896 0,367.744 172.608,258.624 		"></polygon>
+                                                        </g>
+                                                     </g>
+                                                        <g>
+                                                        <g>
+                                                        <path d="M480,80H32C16.032,80,3.36,91.904,0.96,107.232L256,275.264l255.04-168.032C508.64,91.904,495.968,80,480,80z"></path>
+                                                        </g>
+                                                     </g>
+                                                        <g>
+                                                        <g>
+                                                        <path d="M310.08,277.952l-45.28,29.824c-2.688,1.76-5.728,2.624-8.8,2.624c-3.072,0-6.112-0.864-8.8-2.624l-45.28-29.856
+                L1.024,404.992C3.488,420.192,16.096,432,32,432h448c15.904,0,28.512-11.808,30.976-27.008L310.08,277.952z"></path>
+                                                        </g>
+                                                     </g>
+                                                  </svg>
+                                                    </div>
+                                                    <div class="text">
+                                                        <p>@affiliate.Mail</p>
+                                                    </div>
+                                                </a>
+                                                <a href="" class="ctc_block">
+                                                    <div class="icon">
+                                                        <svg version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" viewBox="0 0 512 512" xml:space="preserve" style="enable-background: new 0 0 512 512;">
+                                                        <g>
+                                                        <g>
+                                                        <path d="M256,0C161.896,0,85.333,76.563,85.333,170.667c0,28.25,7.063,56.26,20.49,81.104L246.667,506.5
+                c1.875,3.396,5.448,5.5,9.333,5.5s7.458-2.104,9.333-5.5l140.896-254.813c13.375-24.76,20.438-52.771,20.438-81.021
+                C426.667,76.563,350.104,0,256,0z M256,256c-47.052,0-85.333-38.281-85.333-85.333c0-47.052,38.281-85.333,85.333-85.333
+                s85.333,38.281,85.333,85.333C341.333,217.719,303.052,256,256,256z"></path>
+                                                        </g>
+                                                     </g>
+                                                  </svg>
+                                                    </div>
+                                                    <div class="text">
+                                                        <p>@affiliate.Address</p>
+                                                    </div>
+                                                </a>
+                                            </div>
+                                        </div>
+                                    }
+                                }
+                            </div>
+                       </div>
+                    </div>
+                 </div>
+            </div>
+         </div>
+    </div>
+</div>
+

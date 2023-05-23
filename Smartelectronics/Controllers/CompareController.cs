@@ -32,7 +32,9 @@ namespace Smartelectronics.Controllers
                     Product product = await _context.Products
                         .Include(p => p.Category)
                         .Include(p => p.ProductColors.Where(a => a.IsDeleted == false && a.ProductId == compareVM.Id))
-                        .Include(p => p.LoanTerms).ThenInclude(lt => lt.LoanCompany).Where(p => p.IsDeleted == false)
+                        .Include(p => p.LoanTerms.Where(p => p.IsDeleted == false))
+                .ThenInclude(lt => lt.LoanTermLoanRanges).ThenInclude(ltlr => ltlr.LoanRange)
+                .Include(p => p.LoanTerms).ThenInclude(lt => lt.LoanCompany).Where(p => p.IsDeleted == false)
                         .Include(p => p.ProductCategorySpecifications.Where(p => p.IsDeleted == false && p.ProductId == compareVM.Id))
                         .ThenInclude(pcs => pcs.CategorySpecification).ThenInclude(cs => cs.Specification).ThenInclude(s => s.SpecificationGroup)
                         .Include(p => p.ProductCategorySpecifications).ThenInclude(pcs => pcs.CategorySpecification)
@@ -97,7 +99,9 @@ namespace Smartelectronics.Controllers
                 Product product = await _context.Products
                     .Include(cb => cb.Category)
                     .Include(p => p.ProductColors.Where(a => a.IsDeleted == false && a.ProductId == compareVM.Id))
-                    .Include(p => p.LoanTerms).ThenInclude(lt => lt.LoanCompany).Where(p => p.IsDeleted == false)
+                    .Include(p => p.LoanTerms.Where(p => p.IsDeleted == false))
+                .ThenInclude(lt => lt.LoanTermLoanRanges).ThenInclude(ltlr => ltlr.LoanRange)
+                .Include(p => p.LoanTerms).ThenInclude(lt => lt.LoanCompany).Where(p => p.IsDeleted == false)
                     .Include(p => p.ProductCategorySpecifications.Where(p => p.IsDeleted == false && p.ProductId == compareVM.Id))
                     .ThenInclude(pcs => pcs.CategorySpecification).ThenInclude(cs => cs.Specification).ThenInclude(s => s.SpecificationGroup)
                     .Include(p => p.ProductCategorySpecifications).ThenInclude(pcs => pcs.CategorySpecification)

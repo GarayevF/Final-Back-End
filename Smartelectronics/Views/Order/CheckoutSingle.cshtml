@@ -1,0 +1,88 @@
+﻿@model OrderVM
+@{
+    ViewData["Title"] = "Checkout";
+}
+@inject ILayoutService layoutService
+
+@{
+    IEnumerable<Category> categories = await layoutService.GetCategories();
+}
+<main class="main-checkout">
+    <div class="top">
+        <div class="container">
+            <div class="category-links">
+                <ul class="owl-carousel owl-category-slider main-category-list">
+                    @foreach (Category category in categories)
+                    {
+                        <li class="category-item">
+                            <div class="category-title">
+                                @Html.Raw(category.Icon)
+                                <span>@category.Name</span>
+                            </div>
+                            <div class="category-content">
+                                <div class="content-products">
+                                    @if (category.Children != null && category.Children.Count() > 0)
+                                    {
+                                        @foreach (Category child in category.Children)
+                                        {
+                                            <ul class="content-product-list">
+                                                <a class="content-header">Smartfonlar</a>
+                                                @if (child.Products != null && child.Products.Count() > 0)
+                                                {
+                                                    @foreach (Brand brand in child.Products.Where(p => p.CategoryId == child.Id).Select(p => p.Brand).Distinct().ToList())
+                                                    {
+                                                        <li class="content-body"><a class="content-body-link">@brand.Name</a></li>
+                                                    }
+                                                }
+
+                                            </ul>
+                                        }
+
+                                    }
+
+                                </div>
+                            </div>
+                        </li>
+                    }
+
+                </ul>
+            </div>
+        </div>
+    </div>
+    <div class="bottom">
+        <div class="container">
+            <div class="row">
+                <div class="left col-lg-7">
+                    <div class="content">
+                        <h1 class="personal-title">Şəxsi Məlumatlar</h1>
+                        @await Html.PartialAsync("_CheckoutPartial", Model.Order)
+                    </div>
+                </div>
+                <div class="right col-lg-5">
+                    <div class="checkout-cart-total">
+                        <h2 class="checkout-title">Sifarişiniz</h2>
+                        <h4>Məhsul <span>Qiymət</span></h4>
+                        <ul>
+                            <li>
+                                    <span class="left">@Model.Product.Title X 1</span>
+                                    <span class="right">@((Model.Product.DiscountedPrice > 0 ? Model.Product.DiscountedPrice : Model.Product.Price)) AZN</span>
+                                </li>
+
+                        </ul>
+                        <h4>Ödəniş <span>@Model.Order.OrderMethod</span></h4>
+                        <h4>Ümumi qiymət <span>@((Model.Product.DiscountedPrice > 0 ? Model.Product.DiscountedPrice : Model.Product.Price)) AZN</span></h4>
+                        <div class="method-notice mt--25">
+                            <article>
+                                <h3 class="d-none sr-only">blog-article</h3>
+                                Xahiş edirik müraciət anketini tam və doğru məlumatlarla doldurasınız. Sifarişiniz tamamlandığı zaman əməkdaşlarımız 15 dəqiqə ərzində sizinlə əlaqə saxlayaraq sifarişinizin statusu ilə bağlı ilkin məlumatları sizə ötürəcəkdir və sifarişinizlə bağlı məlumat dəqiqləşdirəcəkdir. <br><br>Müraciət anketini göndərməklə siz şirkətimizin online alış şərtlərinə razılıq bildirirsiz.
+                            </article>
+                        </div>
+
+                        <button type="submit" form="checkoutform" class="place-order w-100">Sifarişi Tamamla</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</main>
+

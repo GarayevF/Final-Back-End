@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Smartelectronics.DataAccessLayer;
 using Smartelectronics.Models;
@@ -7,6 +8,7 @@ using Smartelectronics.ViewModels;
 namespace Smartelectronics.Areas.Manage.Controllers
 {
     [Area("Manage")]
+    [Authorize(Roles = "SuperAdmin, Admin")]
     public class BrandController : Controller
     {
         private readonly AppDbContext _context;

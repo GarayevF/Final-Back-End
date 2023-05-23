@@ -1,6 +1,6 @@
 ﻿@model IEnumerable<CompareVM>
 @{
-    int categoryId = ViewBag.CategoryFilter;
+    int? categoryId = ViewBag.CategoryFilter;
 }
     <style>
     .owl-stage {
@@ -14,7 +14,7 @@
         <select id="compare-category-select">
             @if(Model != null && Model.Count() > 0)
             {
-                @foreach (Category category in Model.Select(p => p.Category).ToList())
+                @foreach (Category category in Model.Select(p => p.Category).Distinct().ToList())
                 {
                     @if (category.Id == categoryId)
                     {
@@ -79,7 +79,7 @@
                             {
                                 @foreach (LoanTerm loanTerm in compareVM.LoanTerms)
                                 {
-                                    <li class="circle label-red" style="background-image: url(/assets/images/@loanTerm.LoanCompany?.LabelImage);">
+                                    <li class="circle label-red" style="background-image: url(~/assets/images/loancompanies/@loanTerm.LoanCompany?.LabelImage);">
                                         <div class="label">
                                             <p class="text-lg">@loanTerm.LoanTermLoanRanges?.Max(t => t.LoanRange.Range) ay</p>
                                             <p class="text-sm">Faizsiz Kredit</p>
@@ -88,7 +88,7 @@
                                 }
                             }
                         </ul>
-                        <a class="image-link" href="">
+                        <a class="image-link" asp-controller="product" asp-action="detail" asp-route-id="@compareVM.Id">
                             <img src="~/assets/images/products/@compareVM.Image" alt="">
                         </a>
                         <p class="item-name">@compareVM.Title <br></p>
@@ -104,9 +104,9 @@
                                         @foreach (CategorySpecification categorySpecification in compareVM.ProductCategorySpecifications.Where(p => p.Id == productCategorySpecification.Id).Select(p => p.CategorySpecification))
                                         {
                                             <div class="sub_feature">
-                                                <p>@productCategorySpecification.CategorySpecification.Specification.Name</p>
+                                                <p>@productCategorySpecification?.CategorySpecification?.Specification?.Name</p>
                                                 <div>
-                                                    <p>@productCategorySpecification.Value</p>
+                                                    <p>@productCategorySpecification?.Value</p>
                                                 </div>
                                             </div>
                                         }

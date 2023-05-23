@@ -20,6 +20,7 @@
             <thead>
                 <tr>
                     <th>%</th>
+                    <th>Logo</th>
                     <th>Name</th>
                     <th>Created At</th>
                     <th>Created By</th>
@@ -32,6 +33,7 @@
                     count++;
                     <tr>
                         <td>@count</td>
+                        <td><img src="~/assets/images/loancompanies/@loanCompany.Logo" style="width:100px"> </td>
                         <td>@loanCompany.Name</td>
                         <td>@loanCompany.CreatedAt?.ToString("dd-MMM-yyyy")</td>
                         <td>@loanCompany.CreatedBy</td>

@@ -14,24 +14,37 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script type="text/javascript" src="//code.jquery.com/jquery-1.10.1.js"></script>
+    
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" integrity="sha512-iecdLmaskl7CVkqkXNQ/ZH/XLlvWZOJyj7Yy7tcenmpD1ypASozpmT/E0iPtmFIB46ZmdtAc9eNBvH0H/ZpiBw==" crossorigin="anonymous" referrerpolicy="no-referrer" />
-    <link rel="stylesheet" href="assets/css/bootstrap.css">
+    <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.4/css/bootstrap-theme.css">
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.4/js/bootstrap.js"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/assets/owl.carousel.css" integrity="sha512-UTNP5BXLIptsaj5WdKFrkFov94lDx+eBvbKyoe1YAfjeRPC+gT5kyZ10kOHCfNZqEui1sxmqvodNUx3KbuYI/A==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css" />
+    <link rel="stylesheet" href="~/assets/css/bootstrap.css">
     <link rel="stylesheet" href="~/assets/css/style.css">
     <title>Document</title>
 </head>
 <body>
+    @if (TempData["Success"] != null)
+    {
+        <input type="hidden" name="success" value="@TempData["Success"]" />
+    }
 
+    @if (TempData["Error"] != null)
+    {
+        <input type="hidden" name="error" value="@TempData["Error"]" />
+    }
     <header>
         <div class="header1">
             <div class="container">
                 <div class="header-top">
                     <div class="left">
                         <ul class="header-nav">
-                            <li>Filiallar</li>
-                            <li>Kampaniyalar</li>
-                            <li>Əlaqə</li>
-                            <li>Outlet</li>
+                            <li><a asp-controller="affiliate" asp-action="index">Filiallar</a></li>
+                            <li><a asp-controller="campaign" asp-action="index">Kampaniyalar</a></li>
+                            <li><a asp-controller="affiliate" asp-action="index">Əlaqə</a></li>
+                            <li><a asp-controller="outlet" asp-action="index">Outlet</a></li>
                         </ul>
                         <ul class="header-social-links">
                             <li><i class="fa-brands fa-facebook"></i></li>
@@ -43,30 +56,22 @@
                         </ul>
                     </div>
                     <div class="right">
-                        <div class="profile-drop-div">
-                            <div class="profile-list">
-                                <i class="fa-solid fa-circle-user"></i>
-                                <span>Fərid Qarayev</span>
-                                <i class="fa-solid fa-chevron-down"></i>
+                        @if (User.Identity.IsAuthenticated && !User.IsInRole("SuperAdmin"))
+                        {
+                            <div class="profile-drop-div">
+                                <div class="profile-list">
+                                    <i class="fa-solid fa-circle-user"></i>
+                                    <span>Fərid Qarayev</span>
+                                    <i class="fa-solid fa-chevron-down"></i>
+                                </div>
+                                <ul id="profile-drop">
+                                    <li><a asp-controller="account" asp-action="profile">Profil səhifəm</a></li>
+                                    <li><a asp-controller="account" asp-action="logout">Hesabdan çıxış</a></li>
+                                </ul>
                             </div>
-                            <ul id="profile-drop">
-                                <li>Profil səhifəm</li>
-                                <li>Sifarişlərim</li>
-                                <li>Məhsullarım</li>
-                                <li>Tənzimləmələr</li>
-                                <li>Hesabdan çıxış</li>
-                            </ul>
-                        </div>
-                        <div class="lang-drop-div">
-                            <div class="lang-list">
-                                <span>AZ</span>
-                                <i class="fa-solid fa-chevron-down"></i>
-                            </div>
-                            <ul id="lang-drop">
-                                <li>Azərbaycanca</li>
-                                <li>English</li>
-                            </ul>
-                        </div>
+                        }
+                        
+                        
                     </div>
                 </div>
             </div>
@@ -86,21 +91,25 @@
                             </div>
                         </a>
                     </div>
-                    <div class="middle">
+                    <div class="middle" style="position:relative">
                         <div class="search-input-div">
-                            <input type="text" class="search-input" placeholder="Axtarış">
+                            <input type="text" class="search-input" id="search" placeholder="Axtarış">
                             <button class="search-btn">
                                 <i class="fa-solid fa-magnifying-glass"></i>
                             </button>
                         </div>
+                        <ul class="searchBody" style="width: calc(100% - 70px);z-index: 9999;box-shadow: 0px 0px 4px 0px gray;background-color: #fff; border-radius: 5px; position:absolute; top: 100%">
+                        </ul>
                     </div>
                     <div class="right">
                         <ul class="header-right-nav">
                             <li class="call-box">
                                 <i class="fa-solid fa-phone"></i>
-                                <span>*@settings.FirstOrDefault(s=>s.Key == "Hotline").Value</span>
+                                <span>@settings.FirstOrDefault(s=>s.Key == "Hotline").Value</span>
                             </li>
-                            <li class="user-box">
+                            @if (!User.Identity.IsAuthenticated || (User.Identity.IsAuthenticated && User.IsInRole("SuperAdmin")))
+                            {
+                                <li class="user-box">
                                 <a href="#" class="user-drop">
                                     <svg style="pointer-events:none" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns:svgjs="http://svgjs.com/svgjs" version="1.1" width="512" height="512" x="0" y="0" viewBox="0 0 513.323 513.323" xml:space="preserve" style="enable-background: new 0 0 512 512;"><title _ngcontent-serverApp-c47="">Şəxsi Kabinet</title><g _ngcontent-serverApp-c47="" transform="matrix(1,0,0,1,0,0)"><g _ngcontent-serverApp-c47="" xmlns="http://www.w3.org/2000/svg"><g _ngcontent-serverApp-c47=""><path _ngcontent-serverApp-c47="" d="M256.661,257.323c-135.275,0-245.333,110.059-245.333,245.333c0,5.888,4.779,10.667,10.667,10.667    s10.667-4.779,10.667-10.667c0-123.52,100.48-224,224-224s224,100.48,224,224c0,5.888,4.779,10.667,10.667,10.667    c5.888,0,10.667-4.779,10.667-10.667C501.995,367.36,391.936,257.323,256.661,257.323z" fill="#555970" data-original="#000000"></path></g></g><g _ngcontent-serverApp-c47="" xmlns="http://www.w3.org/2000/svg"><g _ngcontent-serverApp-c47=""><path _ngcontent-serverApp-c47="" d="M256.661,0c-64.683,0-117.333,52.629-117.333,117.333s52.651,117.333,117.333,117.333s117.333-52.629,117.333-117.333    S321.344,0,256.661,0z M256.661,213.333c-52.928,0-96-43.072-96-96s43.072-96,96-96c52.928,0,96,43.072,96,96    S309.589,213.333,256.661,213.333z" fill="#555970" data-original="#000000"></path></g></g><g _ngcontent-serverApp-c47="" xmlns="http://www.w3.org/2000/svg"></g><g _ngcontent-serverApp-c47="" xmlns="http://www.w3.org/2000/svg"></g><g _ngcontent-serverApp-c47="" xmlns="http://www.w3.org/2000/svg"></g><g _ngcontent-serverApp-c47="" xmlns="http://www.w3.org/2000/svg"></g><g _ngcontent-serverApp-c47="" xmlns="http://www.w3.org/2000/svg"></g><g _ngcontent-serverApp-c47="" xmlns="http://www.w3.org/2000/svg"></g><g _ngcontent-serverApp-c47="" xmlns="http://www.w3.org/2000/svg"></g><g _ngcontent-serverApp-c47="" xmlns="http://www.w3.org/2000/svg"></g><g _ngcontent-serverApp-c47="" xmlns="http://www.w3.org/2000/svg"></g><g _ngcontent-serverApp-c47="" xmlns="http://www.w3.org/2000/svg"></g><g _ngcontent-serverApp-c47="" xmlns="http://www.w3.org/2000/svg"></g><g _ngcontent-serverApp-c47="" xmlns="http://www.w3.org/2000/svg"></g><g _ngcontent-serverApp-c47="" xmlns="http://www.w3.org/2000/svg"></g><g _ngcontent-serverApp-c47="" xmlns="http://www.w3.org/2000/svg"></g><g _ngcontent-serverApp-c47="" xmlns="http://www.w3.org/2000/svg"></g></g></svg>
                                 </a>
@@ -111,8 +120,10 @@
                                     </div>
                                 </div>
                             </li>
+                            }
+                            
                             <li class="compare-box">
-                                <a href="#">
+                                <a asp-controller="compare" asp-action="index">
                                     <svg style="pointer-events:none" version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" viewBox="0 0 512 512" xml:space="preserve" style="enable-background: new 0 0 512 512;"><title _ngcontent-serverApp-c47="">Müqayisə</title><style _ngcontent-serverApp-c47="" type="text/css">
                                                                                                                                                                                                                                                                                                                                             .st0 {
                                                                                                                                                                                                                                                                                                                                                 fill: none;
@@ -135,13 +146,15 @@
                     </div>
                 </div>
                 <div class="header-bottom-m">
-                    <div class="middle-m">
+                    <div class="middle-m" style="position:relative">
                         <div class="search-input-div">
-                            <input type="text" class="search-input" placeholder="Axtarış">
+                            <input type="text" class="search-input" id="search-m" placeholder="Axtarış">
                             <button class="search-btn">
                                 <i class="fa-solid fa-magnifying-glass"></i>
                             </button>
                         </div>
+                        <ul class="searchBody" style="width: calc(100% - 70px);z-index: 9999;box-shadow: 0px 0px 4px 0px gray;background-color: #fff; border-radius: 5px; position:absolute; top: 100%">
+                        </ul>
                     </div>
                     <div class="mobile-menu">
                         <ul class="menu-list">
@@ -264,13 +277,13 @@
                                 <p class="ft-menu-btn">Məlumat</p>
                                 <ul class="ft-menu-content">
                                     <li>
-                                        <a href="/az/haqqimizda">Haqqımızda</a>
+                                        <a asp-controller="about">Haqqımızda</a>
                                     </li>
                                     <li>
-                                        <a href="/az/bizimle-elaqe/filiallar">Filiallar</a>
+                                        <a asp-controller="affiliates">Filiallar</a>
                                     </li>
                                     <li>
-                                        <a href="/az/bizimle-elaqe/elaqe-melumatlari">Əlaqə</a>
+                                        <a asp-controller="affiliates">Əlaqə</a>
                                     </li>
                                 </ul>
                             </div>
@@ -278,27 +291,13 @@
                                 <p class="ft-menu-btn">FƏALİYYƏT</p>
                                 <ul class="ft-menu-content">
                                     <li>
-                                        <a href="/az/kampanyalar">Kampaniyalar</a>
+                                        <a asp-controller="campaigns">Kampaniyalar</a>
                                     </li>
                                     <li>
-                                        <a href="/az/catdirilma">Çatdırılma</a>
+                                        <a asp-controller="delivery">Çatdırılma</a>
                                     </li>
                                     <li>
-                                        <a href="/az/zemanet">Zəmanət</a>
-                                    </li>
-                                </ul>
-                            </div>
-                            <div class="nav-list">
-                                <p class="ft-menu-btn">DƏSTƏK</p>
-                                <ul class="ft-menu-content">
-                                    <li>
-                                        <a href="/az/vakansiyalar">Vakansiya</a>
-                                    </li>
-                                    <li>
-                                        <a href="/az/tez-tez-verilen-suallar">FAQ</a>
-                                    </li>
-                                    <li>
-                                        <a href="/az/smart-servis">Servis</a>
+                                        <a asp-controller="guarantee">Zəmanət</a>
                                     </li>
                                 </ul>
                             </div>
@@ -347,8 +346,7 @@
                                 <img src="~/assets/images/location-f.png" alt="">
                             </div>
                             <div class="cnt">
-                                <p>Bakı şəhər.,</p>
-                                <p>28 May ray., Dilarə Əliyeva 212 küçəsi</p>
+                                <p>@settings.FirstOrDefault(s=>s.Key == "Address").Value</p>
                             </div>
                         </div>
                     </div>
@@ -369,10 +367,7 @@
             </div>
             <div class="footer-lang">
                 <div class="section-wrapper">
-                    <div class="lang-content">
-                        <a class="lang link active">az</a>
-                        <a class="lang link">ru</a>
-                    </div>
+                    
                     <div class="owner">
                         <p>© 2023 Smart Electronics</p>
                     </div>
@@ -382,7 +377,9 @@
     </footer>
 
     <script src="~/assets/js/jquery.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.inputmask/5.0.8/jquery.inputmask.min.js" integrity="sha512-efAcjYoYT0sXxQRtxGY37CKYmqsFVOIwMApaEbrxJr4RwqVVGw8o+Lfh/+59TU07+suZn1BWq4fDl5fdgyCNkw==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/owl.carousel.min.js" integrity="sha512-bPs7Ae6pVvhOSiIcyUClR7/q2OAsRiovw4vAkX+zJbw3ShAeeqezq50RIIcIURq7Oa20rW2n2q+fyXBNcU9lrw==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
     <script src="~/assets/js/custom.js"></script>
     <script src="~/assets/js/script.js"></script>
 </body>

@@ -2,7 +2,20 @@
 @{
     ViewData["Title"] = "OrderCompleted";
 }
-
+<style>
+	th, td{
+		border: 1px solid #e5e5e5;
+		padding: 8px;
+		text-align: left;
+	}
+	th a, td a{
+		color : blue;
+	}
+	table{
+		width:100%;
+		border-collapse: collapse;
+	}
+</style>
 <div class="main-order-completed">
 	<div class="content">
 		<div class="container">
@@ -19,7 +32,7 @@
 					</ul>
 					<h3 class="order-table-title">Sifariş detalları</h3>
 					<div class="table-responsive">
-						<table class="table order-details-table">
+						<table class="table order-details-table w-100">
 							<thead>
 								<tr>
 									<th>Məhsul</th>
@@ -27,26 +40,18 @@
 								</tr>
 							</thead>
 							<tbody>
-							<tbody>
 									@foreach (OrderItem item in Model.OrderItems)
 									{
 									<tr>
-										<td><a href="#">@item.Product.Title</a> <strong>× @item.Count</strong></td>
+										<td><a asp-action="detail" asp-controller="product" asp-route-id="@item.Product.Id">@item.Product.Title</a> <strong>× @item.Count</strong></td>
 										<td><span>@item.Product.Price AZN</span></td>
 									</tr>
 									}
 							</tbody>
 							<tfoot>
 								<tr>
-									<th>Total:</th>
-									<td><span>$@(Model.OrderItems.Sum(a => (a.Product.DiscountedPrice > 0 ? a.Product.DiscountedPrice : a.Product.Price) * a.Count))</span></td>
-								</tr>
-							</tfoot>
-							</tbody>
-							<tfoot>
-								<tr>
-									<th>Ümumi Qiymət:</th>
-									<td><span>$117.00</span></td>
+									<th>Ümumi qiymət:</th>
+									<th><span>@(Model.OrderItems.Sum(a => (a.Product.DiscountedPrice > 0 ? a.Product.DiscountedPrice : a.Product.Price) * a.Count)) AZN</span></th>
 								</tr>
 							</tfoot>
 						</table>

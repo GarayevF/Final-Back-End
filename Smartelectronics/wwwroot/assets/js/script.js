@@ -1,11 +1,33 @@
-$(document).ready(function() {
-    if (window.location.pathname.split('/')[1].toLowerCase() == 'profile'){
+$(document).ready(function () {
+    
+    var pathParts = window.location.pathname.split('/');
+    var thirdPart = pathParts.length >= 3;
+
+    if (
+        (thirdPart && window.location.pathname.split('/')[2].toLowerCase() == 'profile')) {
         $('#phone').inputmask("\\+\\9\\9\\4 (99) 999 99 99", { "escapeChar": "\\" });
         $('#phone2').inputmask("\\+\\9\\9\\4 (99) 999 99 99", { "escapeChar": "\\" });
     }
-    
-    if (window.location.pathname.split('/')[1].toLowerCase() == 'checkout'){
+
+    if (
+        (thirdPart && window.location.pathname.split('/')[2].toLowerCase() == 'checkout')) {
         $('#phone3').inputmask("\\+\\9\\9\\4 (99) 999 99 99", { "escapeChar": "\\" });
+    }
+
+    console.log(window.location.pathname.split('/')[1].toLowerCase())
+
+    console.log((thirdPart && window.location.pathname.split('/')[1].toLowerCase() == 'product') &&
+        (thirdPart && window.location.pathname.split('/')[2].toLowerCase() == 'detail'))
+
+    if ((thirdPart && window.location.pathname.split('/')[1].toLowerCase() == 'product') &&
+        (thirdPart && window.location.pathname.split('/')[2].toLowerCase() == 'detail')) {
+        $('.buy-taksit-btn').on('click', function () {
+            $('.main-modal-dialog').removeClass('d-none')
+        })
+
+        $('.close-modal').on('click', function () {
+            $('.main-modal-dialog').addClass('d-none')
+        })
     }
 
     $('.owl-category-slider').owlCarousel({
@@ -191,7 +213,7 @@ $(document).ready(function() {
         }
 
         if ($(this).hasClass('type-box')){
-            if(!$(this).hasClass('selected-box')){
+            if (!$(this).hasClass('selected-box') && !$(this).hasClass('kampaniyalar')){
                 $('.type-box').removeClass('selected-box')
                 $(this).addClass('selected-box')
 

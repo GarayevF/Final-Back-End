@@ -56,16 +56,18 @@
                 </div>
                 <div class="right col-xxl-9 col-xl-8-5 col-lg-8-5 col-md-12">
                     <div class="owl-carousel owl-one">
-                        <div>
-                            <a href="">
-                                <img src="~/assets/images/sliders/slider-1.jpg" alt="">
-                            </a>
-                        </div>
-                        <div>
-                            <a href="">
-                                <img src="~/assets/images/sliders/slider-2.jpg" alt="">
-                            </a>
-                        </div>
+                        @if(Model.Sliders != null && Model.Sliders.Count() > 0)
+                        {
+                            @foreach(Slider slider in Model.Sliders)
+                            {
+                                <div>
+                                    <a href="">
+                                        <img src="~/assets/images/sliders/@slider.Image" alt="">
+                                    </a>
+                                </div>
+                        
+                            }
+                        }
                     </div>
                     <div class="wish-container">
                         <a class="wish-box" href="">
@@ -108,12 +110,12 @@
                     </button>
                 </div>
                 <div class="col-lg-3 col-md-3 col-6">
-                    <button class="type-box">
+                    <a asp-controller="campaign" class="type-box kampaniyalar">
                         <div class="type-box-content">
                             <img src="~/assets/images/product-types/bulb-blue.png" alt="">
                             <span>Kampaniyalar</span>
                         </div>
-                    </button>
+                    </a>
                 </div>
             </div>
         </div>
@@ -129,7 +131,7 @@
                         <div class="col-lg-3 col-md-4 col-sm-6 col-12">
                             <div class="product-card">
                                 <div class="buttons-div">
-                                    <a href="#" class="addtocompare">
+                                    <a asp-controller="Compare" asp-action="AddCompare" asp-route-id="@product.Id" class="addtocompare">
                                         <svg style="pointer-events:none" version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" viewBox="0 0 512 512" xml:space="preserve" style="enable-background: new 0 0 512 512;"><title _ngcontent-serverApp-c47="">Müqayisə</title><style _ngcontent-serverApp-c47="" type="text/css">
                                                                                                                                                                                                                                                                                                                                                 .st0 {
                                                                                                                                                                                                                                                                                                                                                     fill: none;
@@ -166,9 +168,9 @@
                                     {
                                         @foreach (LoanTerm loanTerm in product.LoanTerms)
                                         {
-                                            <li class="circle label-red" style="background-image: url(/assets/images/@loanTerm.LoanCompany?.LabelImage);">
+                                            <li class="circle label-red" style="background-image: url(~/assets/images/loancompanies/@loanTerm.LoanCompany?.LabelImage);">
                                                 <div class="label">
-                                                    <p class="text-lg">@loanTerm.LoanTermLoanRanges?.Max(t => t.LoanRange) ay</p>
+                                                    <p class="text-lg">@loanTerm.LoanTermLoanRanges?.Max(t => t.LoanRange.Range) ay</p>
                                                     <p class="text-sm">Faizsiz Kredit</p>
                                                 </div>
                                             </li>
@@ -176,10 +178,10 @@
                                     }
 
                                 </ul>
-                                <a class="image-link" href="">
+                                <a class="image-link" asp-controller="product" asp-action="detail" asp-route-id="@product.Id">
                                     <img src="~/assets/images/products/@product.ProductColors?.FirstOrDefault()?.Image" alt="">
                                 </a>
-                                <a href="" class="product-title">@product.Title</a>
+                                <a asp-controller="product" asp-action="detail" asp-route-id="@product.Id" class="product-title">@product.Title</a>
                                 <div class="color-and-credit">
                                     <div class="color-div">
                                         <div class="item-colors">
@@ -197,24 +199,62 @@
                                         </div>
                                         <p class="product-price"><strong>@product.Price</strong> <small>AZN</small></p>
                                     </div>
-                                    <div class="credit-options">
-                                        <div class="months">
-                                            <ul class="d-flex">
-                                                <li class="credit-item">
-                                                    <a class="p-0 m-0" data-id="@(Math.Ceiling((product.DiscountedPrice > 0 ? product.DiscountedPrice : product.Price) / 6))">6 ay</a>
-                                                </li>
-                                                <li class="credit-item selected-credit">
-                                                    <a class="p-0 m-0" data-id="@(Math.Ceiling((product.DiscountedPrice > 0 ? product.DiscountedPrice : product.Price) / 12))">12 ay</a>
-                                                </li>
-                                            </ul>
-                                        </div>
-                                        <div class="prices-for-months">
-                                            <span><strong>@(Math.Ceiling((product.DiscountedPrice > 0 ? product.DiscountedPrice : product.Price) / 12))</strong> <small>AZN</small></span>
-                                        </div>
-                                    </div>
+                                    @if (product.ProductLoanRanges != null && product.ProductLoanRanges.Count() > 0)
+                                    {
+                                        @if (product.ProductLoanRanges.Count() > 1)
+                                        {
+                                            <div class="credit-options">
+                                                <div class="months">
+                                                    <ul class="d-flex">
+                                                        <li class="credit-item">
+                                                            @{
+                                                                double interest1 = @product.ProductLoanRanges.MinBy(p => p.LoanRange.Range).InterestForStandartUsers;
+                                                                double price1 = (product.DiscountedPrice > 0 ? product.DiscountedPrice : product.Price);
+                                                                double range1 = @product.ProductLoanRanges.Min(p => p.LoanRange.Range);
+                                                            }
+
+                                                            <a class="productLoanRange p-0 m-0" data-id="@(Math.Ceiling((price1 + (price1*interest1/100)) / range1))">@range1 ay</a>
+                                                        </li>
+                                                        <li class="credit-item selected-credit">
+                                                            @{
+                                                                double interest = @product.ProductLoanRanges.MaxBy(p => p.LoanRange.Range).InterestForStandartUsers;
+                                                                double price = (product.DiscountedPrice > 0 ? product.DiscountedPrice : product.Price);
+                                                                double range = @product.ProductLoanRanges.Max(p => p.LoanRange.Range);
+                                                            }
+                                                            <a class="productLoanRange p-0 m-0" data-id="@(Math.Ceiling((price + (price*interest/100)) / range))">@range ay</a>
+                                                        </li>
+                                                    </ul>
+                                                </div>
+                                                <div class="prices-for-months">
+                                                    <span><strong>@(Math.Ceiling((product.DiscountedPrice > 0 ? product.DiscountedPrice : product.Price) / 12))</strong> <small>AZN</small></span>
+                                                </div>
+                                            </div>
+                                        }
+                                        else
+                                        {
+                                            <div class="credit-options">
+                                                <div class="months">
+                                                    <ul class="d-flex">
+                                                        <li class="credit-item selected-credit">
+                                                            @{
+                                                                double interest2 = @product.ProductLoanRanges.First().InterestForStandartUsers;
+                                                                double price2 = (product.DiscountedPrice > 0 ? product.DiscountedPrice : product.Price);
+                                                                double range2 = @product.ProductLoanRanges.First().LoanRange.Range;
+                                                            }
+                                                            <a class="productLoanRange p-0 m-0" data-id="@(Math.Ceiling((price2 + (price2*interest2/100)) / range2))">@range2 ay</a>
+                                                        </li>
+                                                    </ul>
+                                                </div>
+                                                <div class="prices-for-months">
+                                                    <span><strong>@(Math.Ceiling((product.DiscountedPrice > 0 ? product.DiscountedPrice : product.Price) / 12))</strong> <small>AZN</small></span>
+                                                </div>
+                                            </div>
+                                        }
+                                    }
+
                                 </div>
-                                <a href="" class="buy buyoneclick">1 kliklə al</a>
-                                <a href="" class="buy buycredit">Kredit</a>
+                                <a asp-controller="product" asp-action="detail" asp-route-id="@product.Id" class="buy buyoneclick">1 kliklə al</a>
+                                <a asp-controller="product" asp-action="detail" asp-route-id="@product.Id" class="buy buycredit">Kredit</a>
                             </div>
                         </div>
                     }
@@ -234,7 +274,7 @@
                         <div class="col-lg-3 col-md-4 col-sm-6 col-12">
                             <div class="product-card">
                                 <div class="buttons-div">
-                                    <a href="#" class="addtocompare">
+                                    <a asp-controller="Compare" asp-action="AddCompare" asp-route-id="@product.Id" class="addtocompare">
                                         <svg style="pointer-events:none" version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" viewBox="0 0 512 512" xml:space="preserve" style="enable-background: new 0 0 512 512;"><title _ngcontent-serverApp-c47="">Müqayisə</title><style _ngcontent-serverApp-c47="" type="text/css">
                                                                                                                                                                                                                                                                                                                                                 .st0 {
                                                                                                                                                                                                                                                                                                                                                     fill: none;
@@ -271,9 +311,9 @@
                                     {
                                         @foreach (LoanTerm loanTerm in product.LoanTerms)
                                         {
-                                            <li class="circle label-red" style="background-image: url(~/assets/images/@loanTerm.LoanCompany?.LabelImage);">
+                                            <li class="circle label-red" style="background-image: url(~/assets/images/loancompanies/@loanTerm.LoanCompany?.LabelImage);">
                                                 <div class="label">
-                                                    <p class="text-lg">@loanTerm.LoanTermLoanRanges?.Max(t => t.LoanRange) ay</p>
+                                                    <p class="text-lg">@loanTerm.LoanTermLoanRanges?.Max(t => t.LoanRange.Range) ay</p>
                                                     <p class="text-sm">Faizsiz Kredit</p>
                                                 </div>
                                             </li>
@@ -281,10 +321,10 @@
                                     }
 
                                 </ul>
-                                <a class="image-link" href="">
+                                <a class="image-link" asp-controller="product" asp-action="detail" asp-route-id="@product.Id">
                                     <img src="~/assets/images/products/@product.ProductColors?.FirstOrDefault()?.Image" alt="">
                                 </a>
-                                <a href="" class="product-title">@product.Title</a>
+                                <a asp-controller="product" asp-action="detail" asp-route-id="@product.Id" class="product-title">@product.Title</a>
                                 <div class="color-and-credit">
                                     <div class="color-div">
                                         <div class="item-colors">
@@ -302,24 +342,62 @@
                                         </div>
                                         <p class="product-price"><strong>@product.Price</strong> <small>AZN</small></p>
                                     </div>
-                                    <div class="credit-options">
-                                        <div class="months">
-                                            <ul class="d-flex">
-                                                <li class="credit-item">
-                                                    <a class="p-0 m-0" data-id="@(Math.Ceiling((product.DiscountedPrice > 0 ? product.DiscountedPrice : product.Price) / 6))">6 ay</a>
-                                                </li>
-                                                <li class="credit-item selected-credit">
-                                                    <a class="p-0 m-0" data-id="@(Math.Ceiling((product.DiscountedPrice > 0 ? product.DiscountedPrice : product.Price) / 12))">12 ay</a>
-                                                </li>
-                                            </ul>
-                                        </div>
-                                        <div class="prices-for-months">
-                                            <span><strong>@(Math.Ceiling((product.DiscountedPrice > 0 ? product.DiscountedPrice : product.Price) / 12))</strong> <small>AZN</small></span>
-                                        </div>
-                                    </div>
+                                    @if (product.ProductLoanRanges != null && product.ProductLoanRanges.Count() > 0)
+                                    {
+                                        @if (product.ProductLoanRanges.Count() > 1)
+                                        {
+                                            <div class="credit-options">
+                                                <div class="months">
+                                                    <ul class="d-flex">
+                                                        <li class="credit-item">
+                                                            @{
+                                                                double interest1 = @product.ProductLoanRanges.MinBy(p => p.LoanRange.Range).InterestForStandartUsers;
+                                                                double price1 = (product.DiscountedPrice > 0 ? product.DiscountedPrice : product.Price);
+                                                                double range1 = @product.ProductLoanRanges.Min(p => p.LoanRange.Range);
+                                                            }
+
+                                                            <a class="productLoanRange p-0 m-0" data-id="@(Math.Ceiling((price1 + (price1*interest1/100)) / range1))">@range1 ay</a>
+                                                        </li>
+                                                        <li class="credit-item selected-credit">
+                                                            @{
+                                                                double interest = @product.ProductLoanRanges.MaxBy(p => p.LoanRange.Range).InterestForStandartUsers;
+                                                                double price = (product.DiscountedPrice > 0 ? product.DiscountedPrice : product.Price);
+                                                                double range = @product.ProductLoanRanges.Max(p => p.LoanRange.Range);
+                                                            }
+                                                            <a class="productLoanRange p-0 m-0" data-id="@(Math.Ceiling((price + (price*interest/100)) / range))">@range ay</a>
+                                                        </li>
+                                                    </ul>
+                                                </div>
+                                                <div class="prices-for-months">
+                                                    <span><strong>@(Math.Ceiling((product.DiscountedPrice > 0 ? product.DiscountedPrice : product.Price) / 12))</strong> <small>AZN</small></span>
+                                                </div>
+                                            </div>
+                                        }
+                                        else
+                                        {
+                                            <div class="credit-options">
+                                                <div class="months">
+                                                    <ul class="d-flex">
+                                                        <li class="credit-item selected-credit">
+                                                            @{
+                                                                double interest2 = @product.ProductLoanRanges.First().InterestForStandartUsers;
+                                                                double price2 = (product.DiscountedPrice > 0 ? product.DiscountedPrice : product.Price);
+                                                                double range2 = @product.ProductLoanRanges.First().LoanRange.Range;
+                                                            }
+                                                            <a class="productLoanRange p-0 m-0" data-id="@(Math.Ceiling((price2 + (price2*interest2/100)) / range2))">@range2 ay</a>
+                                                        </li>
+                                                    </ul>
+                                                </div>
+                                                <div class="prices-for-months">
+                                                    <span><strong>@(Math.Ceiling((product.DiscountedPrice > 0 ? product.DiscountedPrice : product.Price) / 12))</strong> <small>AZN</small></span>
+                                                </div>
+                                            </div>
+                                        }
+                                    }
+
                                 </div>
-                                <a href="" class="buy buyoneclick">1 kliklə al</a>
-                                <a href="" class="buy buycredit">Kredit</a>
+                                <a asp-controller="product" asp-action="detail" asp-route-id="@product.Id" class="buy buyoneclick">1 kliklə al</a>
+                                <a asp-controller="product" asp-action="detail" asp-route-id="@product.Id" class="buy buycredit">Kredit</a>
                             </div>
                         </div>
                     }
@@ -375,7 +453,7 @@
                                     {
                                         @foreach (LoanTerm loanTerm in product.LoanTerms)
                                         {
-                                            <li class="circle label-red" style="background-image: url(/assets/images/@loanTerm.LoanCompany?.LabelImage);">
+                                            <li class="circle label-red" style="background-image: url(~/assets/images/loancompanies/@loanTerm.LoanCompany?.LabelImage);">
                                                 <div class="label">
                                                     <p class="text-lg">@loanTerm.LoanTermLoanRanges?.Max(t => t.LoanRange.Range) ay</p>
                                                     <p class="text-sm">Faizsiz Kredit</p>
@@ -385,10 +463,10 @@
                                     }
 
                                 </ul>
-                                <a class="image-link" href="">
+                                <a class="image-link" asp-controller="product" asp-action="detail" asp-route-id="@product.Id">
                                     <img src="~/assets/images/products/@product.ProductColors?.FirstOrDefault()?.Image" alt="">
                                 </a>
-                                <a href="" class="product-title">@product.Title</a>
+                                <a asp-controller="product" asp-action="detail" asp-route-id="@product.Id" class="product-title">@product.Title</a>
                                 <div class="color-and-credit">
                                     <div class="color-div">
                                         <div class="item-colors">
@@ -460,8 +538,8 @@
                                     }
                                     
                                 </div>
-                                <a href="" class="buy buyoneclick">1 kliklə al</a>
-                                <a href="" class="buy buycredit">Kredit</a>
+                                <a asp-controller="product" asp-action="detail" asp-route-id="@product.Id" class="buy buyoneclick">1 kliklə al</a>
+                                <a asp-controller="product" asp-action="detail" asp-route-id="@product.Id" class="buy buycredit">Kredit</a>
                             </div>
                         </div>
                     }

@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Smartelectronics.DataAccessLayer;
 using Smartelectronics.Extensions;
@@ -9,6 +10,7 @@ using Smartelectronics.ViewModels;
 namespace Smartelectronics.Areas.Manage.Controllers
 {
     [Area("Manage")]
+    [Authorize(Roles = "SuperAdmin, Admin")]
     public class LoanCompanyController : Controller
     {
         private readonly AppDbContext _context;
@@ -64,13 +66,13 @@ namespace Smartelectronics.Areas.Manage.Controllers
             {
                 if (loanCompany.LogoFile.CheckFileContenttype("image/jpeg"))
                 {
-                    ModelState.AddModelError("MainFile", $"{loanCompany.LogoFile.FileName} adli fayl novu duzgun deyil");
+                    ModelState.AddModelError("LogoFile", $"{loanCompany.LogoFile.FileName} adli fayl novu duzgun deyil");
                     return View(loanCompany);
                 }
 
-                if (loanCompany.LogoFile.CheckFileLength(300))
+                if (loanCompany.LogoFile.CheckFileLength(5000))
                 {
-                    ModelState.AddModelError("MainFile", $"{loanCompany.LogoFile.FileName} adli fayl hecmi coxdur");
+                    ModelState.AddModelError("LogoFile", $"{loanCompany.LogoFile.FileName} adli fayl hecmi coxdur");
                     return View(loanCompany);
                 }
 
@@ -90,7 +92,7 @@ namespace Smartelectronics.Areas.Manage.Controllers
                     return View(loanCompany);
                 }
 
-                if (loanCompany.LabelFile.CheckFileLength(300))
+                if (loanCompany.LabelFile.CheckFileLength(5000))
                 {
                     ModelState.AddModelError("LabelFile", $"{loanCompany.LabelFile.FileName} adli fayl hecmi coxdur");
                     return View(loanCompany);
@@ -145,7 +147,7 @@ namespace Smartelectronics.Areas.Manage.Controllers
 
             if (dbloanCompany == null) return NotFound();
 
-            if (await _context.LoanCompanies.AnyAsync(b => b.IsDeleted == false && b.Name.ToLower() == loanCompany.Name.Trim().ToLower()))
+            if (await _context.LoanCompanies.AnyAsync(b => b.IsDeleted == false && b.Name.ToLower() == loanCompany.Name.Trim().ToLower() && b.Id != loanCompany.Id))
             {
                 ModelState.AddModelError("Name", $"Bu adda {loanCompany.Name} movcuddur");
             }
@@ -154,22 +156,18 @@ namespace Smartelectronics.Areas.Manage.Controllers
             {
                 if (loanCompany.LogoFile.CheckFileContenttype("image/jpeg"))
                 {
-                    ModelState.AddModelError("MainFile", $"{loanCompany.LogoFile.FileName} adli fayl novu duzgun deyil");
+                    ModelState.AddModelError("LogoFile", $"{loanCompany.LogoFile.FileName} adli fayl novu duzgun deyil");
                     return View(loanCompany);
                 }
 
-                if (loanCompany.LogoFile.CheckFileLength(300))
+                if (loanCompany.LogoFile.CheckFileLength(5000))
                 {
-                    ModelState.AddModelError("MainFile", $"{loanCompany.LogoFile.FileName} adli fayl hecmi coxdur");
+                    ModelState.AddModelError("LogoFile", $"{loanCompany.LogoFile.FileName} adli fayl hecmi coxdur");
                     return View(loanCompany);
                 }
 
-                loanCompany.Logo = await loanCompany.LogoFile.CreateFileAsync(_env, "assets", "images", "loancompanies");
-            }
-            else
-            {
-                ModelState.AddModelError("LogoFile", "Logo mutleqdir");
-                return View(loanCompany);
+                FileHelper.DeleteFile(dbloanCompany.Logo, _env, "assets", "images", "loancompanies");
+                dbloanCompany.Logo = await loanCompany.LogoFile.CreateFileAsync(_env, "assets", "images", "loancompanies");
             }
 
             if (loanCompany.LabelFile != null)
@@ -180,25 +178,19 @@ namespace Smartelectronics.Areas.Manage.Controllers
                     return View(loanCompany);
                 }
 
-                if (loanCompany.LabelFile.CheckFileLength(300))
+                if (loanCompany.LabelFile.CheckFileLength(5000))
                 {
                     ModelState.AddModelError("LabelFile", $"{loanCompany.LabelFile.FileName} adli fayl hecmi coxdur");
                     return View(loanCompany);
                 }
 
-                loanCompany.LabelImage = await loanCompany.LabelFile.CreateFileAsync(_env, "assets", "images", "loancompanies");
-            }
-            else
-            {
-                ModelState.AddModelError("LabelFile", "Label şəkli mutleqdir");
-                return View(loanCompany);
+                FileHelper.DeleteFile(dbloanCompany.LabelImage, _env, "assets", "images", "loancompanies");
+                dbloanCompany.LabelImage = await loanCompany.LabelFile.CreateFileAsync(_env, "assets", "images", "loancompanies");
             }
 
-            FileHelper.DeleteFile(dbloanCompany.Logo, _env, "assets", "images", "loancompanies");
-            dbloanCompany.Logo = await dbloanCompany.LogoFile.CreateFileAsync(_env, "assets", "images", "loancompanies");
+            
 
-            FileHelper.DeleteFile(dbloanCompany.LabelImage, _env, "assets", "images", "loancompanies");
-            dbloanCompany.LabelImage = await dbloanCompany.LabelFile.CreateFileAsync(_env, "assets", "images", "loancompanies");
+            
 
             dbloanCompany.Name = loanCompany.Name.Trim();
             dbloanCompany.UpdatedAt = DateTime.UtcNow.AddHours(4);

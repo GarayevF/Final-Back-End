@@ -197,5 +197,20 @@ namespace Smartelectronics.Controllers
 
             return PartialView("_ShopPaginationPartial", productVM);
         }
+
+        public async Task<IActionResult> Search(string search)
+        {
+            IEnumerable<Product> products = await _context.Products
+                .Where(p => !p.IsDeleted &&
+                (p.Brand != null && p.Brand.Name.ToLower().Contains(search.Trim().ToLower())) ||
+                (p.Category != null && p.Category.Name.ToLower().Contains(search.Trim().ToLower())) ||
+                p.Title.ToLower().Contains(search.Trim().ToLower())).OrderByDescending(p => p.Id)
+                .Include(p => p.ProductColors.Where(a => a.IsDeleted == false)).Take(5).ToListAsync();
+
+
+            return PartialView("_SearchPartial", products);
+
+
+        }
     }
 }

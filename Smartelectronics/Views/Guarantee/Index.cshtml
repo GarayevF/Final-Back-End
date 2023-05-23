@@ -1,0 +1,79 @@
+﻿@{
+    ViewData["Title"] = "Index";
+}
+@inject ILayoutService layoutService
+
+@{
+    IEnumerable<Category> categories = await layoutService.GetCategories();
+    IDictionary<string, string> settings = await layoutService.GetSettings();
+}
+<main class="main-about">
+    <div class="top">
+        <div class="container">
+            <div class="category-links">
+                <ul class="owl-carousel owl-category-slider main-category-list">
+                    @foreach (Category category in categories)
+                    {
+                            <li class="category-item">
+                                <div class="category-title">
+                                @Html.Raw(category.Icon)
+                                    <span>@category.Name</span>
+                                </div>
+                                <div class="category-content">
+                                    <div class="content-products">
+                                    @if (category.Children != null && category.Children.Count() > 0)
+                                    {
+                                        @foreach (Category child in category.Children)
+                                        {
+                                                        <ul class="content-product-list">
+                                                            <a class="content-header">Smartfonlar</a>
+                                                @if (child.Products != null && child.Products.Count() > 0)
+                                                {
+                                                    @foreach (Brand brand in child.Products.Where(p => p.CategoryId == child.Id).Select(p => p.Brand).Distinct().ToList())
+                                                    {
+                                                                            <li class="content-body"><a class="content-body-link">@brand.Name</a></li>
+                                                    }
+                                                }
+
+                                                        </ul>
+                                        }
+
+                                    }
+
+                                    </div>
+                                </div>
+                            </li>
+                    }
+
+                </ul>
+            </div>
+        </div>
+    </div>
+        <div class="bottom">
+            <div class="container">
+                <div class="about-content">
+                <p>
+                    <span>
+                        <span>Zəmanət blankı əsasında təmir yalız istehsalçı günahından meydana gəlmiş qüsurlara şamil edilir.</span><span> Qüsurun istehsalçı tərfindən baş verib-vermədiyini yalnız Smart </span><span>Electronics</span> <span>şirkəti və digər rəsmi şirkətlərin texniki servis mütəxəssisləri tərəfindən müəyyənləşdirilə bilər.</span><br>
+                        <span>
+                            Zəmanət müddəti məhsulun satıldığı gündən hesablanır.<br>
+                            Hər hansı xarici zədə almamış (korpus və ekranda cızıq, batıq, əzik və s.) məhsul 14 gün ərzində müştərinin istəyi ilə qaytarıla və ya dəyişdirilə bilər.<br>
+                            Əgər məhsulun zəmanət müddəti bitib və ya zəmanət şərtlərində göstərilən qüsurlar təyin edilməyibsə, bu zaman məhsul Smart <span>Electronics</span> <span>şirkətinin uyğun, ödənişli tarifləri ilə təmir olunur.</span>
+                        </span><span> &nbsp;Təmirə təqdim olunmuş məhsul müayinə və təmir məqsədilə 2-14 iş günü ərzində texniki servis mərkəzində saxlanıla bilər. Təmir üçün lazım olan ehtiyyat hissə və ya detal tapılmadıqda, onun sifarişi və gətirilməsi müəyyən vaxt tələb etdiyindən göstərilən müddət tərəflərin razılığı ilə müəyyən qədər uzadıla bilər. Zəmanət müddəti bitməmiş məhsulun texniki baxış və təmir xidməti onun rəsmi nümayəndiliyi tərəfindən, daxili təlimatlara uyğun olaraq aparılır.</span><br>
+                        &nbsp;&nbsp;<strong>&nbsp;Satılmış məhsullar yalnız aşağıdakı şərtlər daxilində təmirə qəbul olunur:</strong><br>
+                        -Təmiri üçün müraciət edilmiş məhsulun yalnız bu blankda adı və soyadı qeyd olunan şəxsin şəxsiyyət vəsiqəsi ilə təqdim olunması;<br>
+                        -Zəmanət müddətinin bitməməsi.<br>
+                        &nbsp;&nbsp;<strong>&nbsp;Məhsullar bu hallarda zəmanətli təmirə qəbul edilmir:</strong><br>
+                        -Əgər məhsul Smart <span>Electronics</span> <span>şirkəti</span> <span>və digər rəsmi şirkətlərin servis mütəxəssislərinə təqdim olunmazdan əvvəl hansısa kənar şəxs tərəfindən təmir edilər, təmir haqqında lazımi sənədlər verilməz və bu təmirin keyfiyyəsizliyi nəticəsində cihaz zədələnərsə;</span><br>
+                        <span>
+                            -Daxili və xarici zədələnməcihazın daxilindəyad cisim və ya maye düşməsi, yaxud digər xarici zərbə və təsilər nəticəsində yaranarsa;<br>
+                            -Sıçrayışlar və gərginliyin həddən artıq yuxarı və ya olması nəticəsindəcihazda gərginlik və digər qüsurlar əmələ gələrsə.<br>
+                            <strong><em>Qeyd: Təmir zamanı cihazın yaddaşında olan informasiyaların itməsinə görə servis mərkəzi məsuliyyət daşımır. Müştəri aldığı məhsul haqqında tam məlumatlandırılır, mövcud nasazlıqlar (əgər nasazlıq varsa) barəsində xəbərdarlıq edilir</em></strong>
+                        </span>
+                    </span>
+                </p>
+                </div>
+            </div>
+        </div>
+    </main>
+

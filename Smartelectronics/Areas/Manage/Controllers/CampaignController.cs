@@ -10,6 +10,7 @@ using Smartelectronics.ViewModels;
 namespace Smartelectronics.Areas.Manage.Controllers
 {
     [Area("Manage")]
+    [Authorize(Roles = "SuperAdmin, Admin")]
     public class CampaignController : Controller
     {
         private readonly AppDbContext _context;
@@ -21,7 +22,6 @@ namespace Smartelectronics.Areas.Manage.Controllers
             _env = env;
         }
 
-        [Authorize(Roles = "SuperAdmin,Admin")]
         public async Task<IActionResult> Index(int pageIndex = 1)
         {
 
@@ -32,7 +32,6 @@ namespace Smartelectronics.Areas.Manage.Controllers
         }
 
         [HttpGet]
-        [Authorize(Roles = "SuperAdmin,Admin")]
         public async Task<IActionResult> Create()
         {
 
@@ -41,7 +40,6 @@ namespace Smartelectronics.Areas.Manage.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        [Authorize(Roles = "SuperAdmin,Admin")]
         public async Task<IActionResult> Create(Campaign campaign)
         {
 
@@ -54,17 +52,17 @@ namespace Smartelectronics.Areas.Manage.Controllers
             {
                 if (campaign.File.CheckFileContenttype("image/jpeg"))
                 {
-                    ModelState.AddModelError("MainFile", $"{campaign.File.FileName} adli fayl novu duzgun deyil");
+                    ModelState.AddModelError("File", $"{campaign.File.FileName} adli fayl novu duzgun deyil");
                     return View(campaign);
                 }
 
-                if (campaign.File.CheckFileLength(300))
+                if (campaign.File.CheckFileLength(5000))
                 {
-                    ModelState.AddModelError("MainFile", $"{campaign.File.FileName} adli fayl hecmi coxdur");
+                    ModelState.AddModelError("File", $"{campaign.File.FileName} adli fayl hecmi coxdur");
                     return View(campaign);
                 }
 
-                campaign.Image = await campaign.File.CreateFileAsync(_env, "assets", "images", "campaigns");
+                campaign.Image = await campaign.File.CreateFileAsync(_env, "assets", "images", "kampaniyalar");
             }
             else
             {
@@ -83,7 +81,6 @@ namespace Smartelectronics.Areas.Manage.Controllers
         }
 
         [HttpGet]
-        [Authorize(Roles = "SuperAdmin,Admin")]
         public async Task<IActionResult> Update(int? id)
         {
             if (id == null) return BadRequest();
@@ -99,7 +96,6 @@ namespace Smartelectronics.Areas.Manage.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        [Authorize(Roles = "SuperAdmin,Admin")]
         public async Task<IActionResult> Update(int? id, Campaign campaign)
         {
 
@@ -125,15 +121,15 @@ namespace Smartelectronics.Areas.Manage.Controllers
                     return View(campaign);
                 }
 
-                if (campaign.File.CheckFileLength(300))
+                if (campaign.File.CheckFileLength(5000))
                 {
                     ModelState.AddModelError("File", $"{campaign.File.FileName} adli fayl hecmi coxdur");
                     return View(campaign);
                 }
 
-                FileHelper.DeleteFile(dbcampaign.Image, _env, "assets", "images", "campaigns");
+                FileHelper.DeleteFile(dbcampaign.Image, _env, "assets", "images", "kampaniyalar");
 
-                dbcampaign.Image = await campaign.File.CreateFileAsync(_env, "assets", "images", "campaigns");
+                dbcampaign.Image = await campaign.File.CreateFileAsync(_env, "assets", "images", "kampaniyalar");
             }
 
             dbcampaign.Title = campaign.Title;
@@ -149,7 +145,6 @@ namespace Smartelectronics.Areas.Manage.Controllers
         }
 
         [HttpGet]
-        [Authorize(Roles = "SuperAdmin,Admin")]
         public async Task<IActionResult> Delete(int? id)
         {
             if (id == null) return BadRequest();

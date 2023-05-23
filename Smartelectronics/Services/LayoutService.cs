@@ -32,6 +32,8 @@ namespace Smartelectronics.Services
             {
                 appUser = await _userManager.Users
                     .Include(u => u.Baskets.Where(b => b.IsDeleted == false)).ThenInclude(b => b.Product)
+                    .ThenInclude(p => p.ProductColors.Where(a => a.IsDeleted == false))
+                         .ThenInclude(pa => pa.Color)
                     .FirstOrDefaultAsync(u => u.UserName == _httpContextAccessor.HttpContext.User.Identity.Name);
 
                 baskets = appUser.Baskets;
@@ -57,7 +59,7 @@ namespace Smartelectronics.Services
                             basketVM.Count = basket.Count;
                             basketVM.Title = product.Title;
                             basketVM.Price = product.DiscountedPrice > 0 ? product.DiscountedPrice : product.Price;
-                            basketVM.Image = product.MainImage;
+                            basketVM.Image = product?.ProductColors?.FirstOrDefault()?.Image;
 
                             basketVMs.Add(basketVM);
                         }
@@ -74,7 +76,7 @@ namespace Smartelectronics.Services
                         {
                             basketVM1.Title = product.Title;
                             basketVM1.Price = product.DiscountedPrice > 0 ? product.DiscountedPrice : product.Price;
-                            basketVM1.Image = product.MainImage;
+                            basketVM1.Image = product?.ProductColors?.FirstOrDefault()?.Image;
                         }
                     }
                 }
@@ -94,6 +96,8 @@ namespace Smartelectronics.Services
             {
                 appUser = await _userManager.Users
                     .Include(u => u.Wishlists.Where(b => b.IsDeleted == false)).ThenInclude(b => b.Product)
+                    .ThenInclude(p => p.ProductColors.Where(a => a.IsDeleted == false))
+                         .ThenInclude(pa => pa.Color) 
                     .FirstOrDefaultAsync(u => u.UserName == _httpContextAccessor.HttpContext.User.Identity.Name);
 
                 wishlists = appUser.Wishlists;
@@ -116,7 +120,9 @@ namespace Smartelectronics.Services
                             WishlistVM wishlistVM = new WishlistVM();
 
                             wishlistVM.Id = product.Id;
-                            wishlistVM.Product = product;
+                            wishlistVM.Title = product.Title;
+                            wishlistVM.Price = product.DiscountedPrice > 0 ? product.DiscountedPrice : product.Price;
+                            wishlistVM.ProductColors = product.ProductColors.Where(a => a.IsDeleted == false && a.ProductId == product.Id).ToList();
 
                             wishlistVMs.Add(wishlistVM);
                         }

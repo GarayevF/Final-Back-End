@@ -16,7 +16,7 @@
                 {
                     <div class="basket-card">
                         <div class="basket-image-div">
-                            <img class="basket-image" src="~/assets/images/@basketVM.Image" alt="">
+                            <img class="basket-image" src="~/assets/images/products/@basketVM.Image" alt="">
                         </div>
                         <div class="basket-card-info">
                             <div class="basket-card-top">
@@ -42,8 +42,8 @@
             <p>@(Model.Sum(b => b.Price * b.Count)) <small>AZN</small></p>
         </div>
         <div class="content-direction">
-            <a href="#" class="basket-go-summary">Səbətə get</a>
-            <button class="basket-checkout">Sifarişi Tamamla</button>
+            <a asp-controller="basket" asp-action="index" class="basket-go-summary">Səbətə get</a>
+            <a asp-controller="order" asp-action="checkout" class="basket-checkout">Sifarişi Tamamla</a>
         </div>
     </div>
 </div>

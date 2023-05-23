@@ -1,5 +1,6 @@
 ﻿@model IEnumerable<WishlistVM>
 
+<div class="row">
 @if(Model != null && Model.Count() > 0)
 {
     @foreach (WishlistVM wishlistVM in Model)
@@ -7,7 +8,7 @@
         <div class="col-lg-3 col-md-4 col-sm-6 col-12">
             <div class="product-card">
                 <div class="buttons-div">
-                    <a href="#" class="addtocompare">
+                        <a asp-controller="compare" asp-action="addcompare" asp-route-id="@wishlistVM.Id" class="addtocompare">
                         <svg style="pointer-events:none" version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" viewBox="0 0 512 512" xml:space="preserve" style="enable-background: new 0 0 512 512;"><title _ngcontent-serverApp-c47="">Müqayisə</title><style _ngcontent-serverApp-c47="" type="text/css">
                                                                                                                                                                                                                                                                                                                                 .st0 {
                                                                                                                                                                                                                                                                                                                                     fill: none;
@@ -44,7 +45,7 @@
                     {
                         @foreach (LoanTerm loanTerm in wishlistVM.LoanTerms)
                         {
-                            <li class="circle label-red" style="background-image: url(~/assets/images/@loanTerm.LoanCompany?.LabelImage);">
+                            <li class="circle label-red" style="background-image: url(~/assets/images/loancompanies/@loanTerm.LoanCompany?.LabelImage);">
                                 <div class="label">
                                     <p class="text-lg">@loanTerm.LoanTermLoanRanges?.Max(t => t.LoanRange.Range) ay</p>
                                     <p class="text-sm">Faizsiz Kredit</p>
@@ -129,9 +130,10 @@
                     }
 
                 </div>
-                <a href="" class="buy buyoneclick">1 kliklə al</a>
-                <a href="" class="buy buycredit">Kredit</a>
+                <a asp-controller="product" asp-action="detail" asp-route-id="@wishlistVM.Id" class="buy buyoneclick">1 kliklə al</a>
+                    <a asp-controller="product" asp-action="detail" asp-route-id="@wishlistVM.Id" class="buy buycredit">Kredit</a>
             </div>
         </div>
     }
 }
+    </div>

@@ -38,7 +38,7 @@
                             <img style="width: 100px" src="~/assets/images/products/@product.ProductColors?.FirstOrDefault()?.Image">
                         </th>
                         <td>@product.Title</td>
-                        <td>@product.Category.Name</td>
+                        <td>@product?.Category?.Name</td>
                         <td>@product.CreatedAt?.ToString("dd-MMM-yyyy")</td>
                         <td>@product.CreatedBy</td>
                         <td>

@@ -103,7 +103,7 @@ namespace Smartelectronics.Controllers
                         Basket basket = new Basket
                         {
                             ProductId = id,
-                            Count = 1
+                            Count = 1,
                         };
 
                         appUser.Baskets.Add(basket);
@@ -256,6 +256,8 @@ namespace Smartelectronics.Controllers
                     .Include(p => p.ProductColors).ThenInclude(pc => pc.Color)
                     .Include(p => p.Category)
                     .Include(p => p.Brand)
+                    .Include(p => p.ProductColors.Where(a => a.IsDeleted == false))
+                         .ThenInclude(pa => pa.Color).Where(a => a.IsDeleted == false)
                     .FirstOrDefaultAsync(p => p.IsDeleted == false && p.Id == basketVM.Id);
 
                 if (product != null)
@@ -297,26 +299,28 @@ namespace Smartelectronics.Controllers
                     return BadRequest();
                 }
             }
-
+            cookie = JsonConvert.SerializeObject(basketVMs);
+            HttpContext.Response.Cookies.Append("basket", cookie);
             foreach (BasketVM basketVM in basketVMs)
             {
                 Product product = await _context.Products
                     .Include(p => p.Category)
                     .Include(p => p.Brand)
+                    .Include(p => p.ProductColors.Where(a => a.IsDeleted == false))
+                         .ThenInclude(pa => pa.Color).Where(a => a.IsDeleted == false)
                     .FirstOrDefaultAsync(p => p.IsDeleted == false && p.Id == basketVM.Id);
 
                 if (product != null)
                 {
                     basketVM.Title = product.Title;
                     basketVM.Price = product.DiscountedPrice > 0 ? product.DiscountedPrice : product.Price;
-                    basketVM.Image = product.ProductColors.FirstOrDefault().Image;
+                    basketVM.Image = product?.ProductColors?.FirstOrDefault()?.Image;
                     basketVM.Category = product.Category;
                     basketVM.Brand = product.Brand;
                 }
             }
 
-            cookie = JsonConvert.SerializeObject(basketVMs);
-            HttpContext.Response.Cookies.Append("basket", cookie);
+            
 
             return PartialView("_BasketCartPartial", basketVMs);
         }

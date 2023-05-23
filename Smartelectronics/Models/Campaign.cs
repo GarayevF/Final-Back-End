@@ -8,7 +8,8 @@ namespace Smartelectronics.Models
 		[StringLength(255)]
 		public string? Title { get; set; }
 		public string? Desc { get; set; }
-        public Nullable<DateTime> EndDate { get; set; }
+        [DataType(DataType.Date)]
+        public DateTime? EndDate { get; set; }
         public string? Image { get; set; }
 		[NotMapped]
 		public IFormFile? File { get; set; }

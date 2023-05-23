@@ -8,12 +8,12 @@ namespace Smartelectronics.Models
         [StringLength(50)]
         public string Name { get; set; }
         [StringLength(255)]
-        public string Logo { get; set; }
+        public string? Logo { get; set; }
 
         [NotMapped]
         public IFormFile? LogoFile { get; set; }
         [StringLength(255)]
-        public string LabelImage { get; set; }
+        public string? LabelImage { get; set; }
 
         [NotMapped]
         public IFormFile? LabelFile { get; set; }

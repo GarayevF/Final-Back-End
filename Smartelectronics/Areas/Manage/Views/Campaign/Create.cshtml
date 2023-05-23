@@ -13,25 +13,24 @@
     </div>
     <div class="col-lg-12">
         <form method="post" enctype="multipart/form-data">
-            
             <div class="form-group">
-                <label asp-for="Title"></label>
+                <label asp-for="Title">Başlıq</label>
                 <input asp-for="Title" class="form-control" />
                 <span asp-validation-for="Title" class="text text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="Desc"></label>
+                <label asp-for="Desc">Açıqlama</label>
                 <textarea asp-for="Desc" class="form-control"></textarea>
                 <span asp-validation-for="Desc" class="text text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="File"></label>
+                <label asp-for="File">Şəkil</label>
                 <input asp-for="File" accept="image/jpeg" class="form-control-file" />
                 <span asp-validation-for="File" class="text text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="EndDate"></label>
-                <textarea asp-for="EndDate" class="form-control"></textarea>
+                <label asp-for="EndDate">Bitmə tarixi</label>
+                <input asp-for="EndDate" class="form-control">
                 <span asp-validation-for="EndDate" class="text text-danger"></span>
             </div>
             <button type="submit" class="btn btn-primary">Submit</button>

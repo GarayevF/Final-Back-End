@@ -35,6 +35,8 @@ namespace Smartelectronics.DataAccessLayer
         public DbSet<Color> Colors { get; set; }
         public DbSet<ProductColor> ProductColors { get; set; }
         public DbSet<Campaign> Campaigns { get; set; }
+        public DbSet<Affiliate> Affiliates { get; set; }
+        public DbSet<Message> Messages { get; set; }
         
     }
 }

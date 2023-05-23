@@ -1,0 +1,65 @@
+﻿@{
+    ViewData["Title"] = "Index";
+}
+@inject ILayoutService layoutService
+
+@{
+    IEnumerable<Category> categories = await layoutService.GetCategories();
+    IDictionary<string, string> settings = await layoutService.GetSettings();
+}
+<main class="main-about">
+    <div class="top">
+        <div class="container">
+            <div class="category-links">
+                <ul class="owl-carousel owl-category-slider main-category-list">
+                    @foreach (Category category in categories)
+                    {
+                        <li class="category-item">
+                            <div class="category-title">
+                                @Html.Raw(category.Icon)
+                                <span>@category.Name</span>
+                            </div>
+                            <div class="category-content">
+                                <div class="content-products">
+                                    @if (category.Children != null && category.Children.Count() > 0)
+                                    {
+                                        @foreach (Category child in category.Children)
+                                        {
+                                            <ul class="content-product-list">
+                                                <a class="content-header">Smartfonlar</a>
+                                                @if (child.Products != null && child.Products.Count() > 0)
+                                                {
+                                                    @foreach (Brand brand in child.Products.Where(p => p.CategoryId == child.Id).Select(p => p.Brand).Distinct().ToList())
+                                                    {
+                                                        <li class="content-body"><a class="content-body-link">@brand.Name</a></li>
+                                                    }
+                                                }
+
+                                            </ul>
+                                        }
+
+                                    }
+
+                                </div>
+                            </div>
+                        </li>
+                    }
+
+                </ul>
+            </div>
+        </div>
+    </div>
+    <div class="bottom">
+        <div class="container">
+            <div class="about-content">
+                <p>
+                    Smart Electronics şirkəti müştərilərinin rahatlığını nəzərə alaraq, ölkə daxilində bütün məhsulların təhlükəsiz və sürətli bir şəkildə çatdırılmasını və ödənişlərin nəğd üsulla alışını həyata keçirməkdədir.<br>
+                    Çatdırılma Smart Electronics şirkətinin əməkdaşları tərəfindən həyata keçirilir və alqı-satqı müqavilələri və digər sənədlər müştəriyə imzalatdırılaraq bütün məhsulların 1 il müddətinə bütün istehsalçı qüsurlarına şamil olunan zəmanət şərtlərini özündə əks etdirən zəmanət talonları müştəriyə tətbiq olunur. <span><strong>Bütün şəhəriçi çatdırılmalar zamanı müştərilərin şəxsiyyət vəsiqələrinin əsli müştərilərdən tələb olunur.</strong></span> Çatdırılmalar Bakı şəhəri (yalnız şəhər daxili) daxilində <strong>ödənişsizdir</strong>. <span><strong>Regionlar üçün ödənişlər isə məsafədən asılı olaraq dəyişir</strong></span>. Çatdırılma müddəti <strong>24 saat</strong> olaraq təyin olunur. Çatdırılma şərtləri və ödənişlərlə bağlı ətraflı məlumat almaq üçün Smart Electronics şirkətinin 0705982323 WhatsApp nömrəsinə ( https://bit.ly/3qS08CU ) yaza, *2999 nömrəsinə zəng edə və ya office@smartelectronics.az ünvanına müraciət edə bilərsiniz.
+                </p>
+                <p>İnfo : @settings.FirstOrDefault(s=>s.Key == "Hotline").Value</p>
+                <p>Ünvan : @settings.FirstOrDefault(s=>s.Key == "Address").Value</p>
+            </div>
+        </div>
+    </div>
+</main>
+

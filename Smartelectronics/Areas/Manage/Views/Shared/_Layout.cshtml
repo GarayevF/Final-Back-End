@@ -112,14 +112,7 @@
                                     <i class="ti-user m-r-5 m-l-5"></i>
                                     My Profile
                                 </a>
-                                <a class="dropdown-item" href="javascript:void(0)">
-                                    <i class="ti-wallet m-r-5 m-l-5"></i>
-                                    My Balance
-                                </a>
-                                <a class="dropdown-item" href="javascript:void(0)">
-                                    <i class="ti-email m-r-5 m-l-5"></i>
-                                    Inbox
-                                </a>
+                                
                             </ul>
                         </li>
                         <!-- ============================================================== -->
@@ -153,7 +146,10 @@
                                     <a href="#" class="" id="Userdd" role="button"
                                        data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                         <h5 class="m-b-0 user-name font-medium">
-                                            Steave Jobs <i class="fa fa-angle-down"></i>
+                                            @if (User.IsInRole("SuperAdmin"))
+                                            {
+                                                @User.Identity.Name
+                                            }
                                         </h5>
                                         <span class="op-5 user-email">varun@gmail.com</span>
                                     </a>
@@ -180,53 +176,66 @@
                             </div>
                             <!-- End User Profile-->
                         </li>
-                        <li class="p-15 m-t-10">
-                            <a href="javascript:void(0)"
-                               class="btn d-block w-100 create-btn text-white no-block d-flex align-items-center">
-                                <i class="fa fa-plus-square"></i> <span class="hide-menu m-l-5">Create New</span>
-                            </a>
-                        </li>
+                        @if (User.IsInRole("SuperAdmin"))
+                        {
+                            <li class="sidebar-item">
+                                <a class="nav-link" asp-area="manage" asp-controller="User" asp-action="index">
+                                    <i class="fas fa-fw fa-tachometer-alt"></i>
+                                    <span>Users</span>
+                                </a>
+                            </li>
+                        }
                         <!-- User Profile-->
+                        
                         <li class="sidebar-item">
-                            <a class="sidebar-link waves-effect waves-dark sidebar-link"
-                               href="index.html" aria-expanded="false">
-                                <i class="mdi mdi-view-dashboard"></i><span class="hide-menu">Dashboard</span>
+                            <a class="nav-link" asp-area="manage" asp-controller="Brand" asp-action="index">
+                                <i class="fas fa-fw fa-tachometer-alt"></i>
+                                <span>Brend</span>
                             </a>
                         </li>
                         <li class="sidebar-item">
-                            <a class="sidebar-link waves-effect waves-dark sidebar-link"
-                               href="pages-profile.html" aria-expanded="false">
-                                <i class="mdi mdi-account-network"></i><span class="hide-menu">Profile</span>
+                            <a class="nav-link" asp-area="manage" asp-controller="Campaign" asp-action="index">
+                                <i class="fas fa-fw fa-tachometer-alt"></i>
+                                <span>Kampaniyalar</span>
                             </a>
                         </li>
                         <li class="sidebar-item">
-                            <a class="sidebar-link waves-effect waves-dark sidebar-link"
-                               href="table-basic.html" aria-expanded="false">
-                                <i class="mdi mdi-border-all"></i><span class="hide-menu">Table</span>
+                            <a class="nav-link" asp-area="manage" asp-controller="Category" asp-action="index">
+                                <i class="fas fa-fw fa-tachometer-alt"></i>
+                                <span>Kateqoriyalar</span>
                             </a>
                         </li>
                         <li class="sidebar-item">
-                            <a class="sidebar-link waves-effect waves-dark sidebar-link"
-                               href="icon-material.html" aria-expanded="false">
-                                <i class="mdi mdi-face"></i><span class="hide-menu">Icon</span>
+                            <a class="nav-link" asp-area="manage" asp-controller="Kredit" asp-action="index">
+                                <i class="fas fa-fw fa-tachometer-alt"></i>
+                                <span>Kredit</span>
                             </a>
                         </li>
                         <li class="sidebar-item">
-                            <a class="sidebar-link waves-effect waves-dark sidebar-link"
-                               href="starter-kit.html" aria-expanded="false">
-                                <i class="mdi mdi-file"></i><span class="hide-menu">Blank</span>
+                            <a class="nav-link" asp-area="manage" asp-controller="Order" asp-action="index">
+                                <i class="fas fa-fw fa-tachometer-alt"></i>
+                                <span>Sifariş</span>
                             </a>
                         </li>
                         <li class="sidebar-item">
-                            <a class="sidebar-link waves-effect waves-dark sidebar-link"
-                               href="error-404.html" aria-expanded="false">
-                                <i class="mdi mdi-alert-outline"></i><span class="hide-menu">404</span>
+                            <a class="nav-link" asp-area="manage" asp-controller="Product" asp-action="index">
+                                <i class="fas fa-fw fa-tachometer-alt"></i>
+                                <span>Məhsullar</span>
                             </a>
                         </li>
-                        <li class="text-center p-40 upgrade-btn">
-                            <a href="https://www.wrappixel.com/templates/xtremeadmin/"
-                               class="btn d-block w-100 btn-danger text-white" target="_blank">Upgrade to Pro</a>
+                        <li class="sidebar-item">
+                            <a class="nav-link" asp-area="manage" asp-controller="Specification" asp-action="index">
+                                <i class="fas fa-fw fa-tachometer-alt"></i>
+                                <span>Kateqoriya Özəllikləri</span>
+                            </a>
                         </li>
+                        <li class="sidebar-item">
+                            <a class="nav-link" asp-area="manage" asp-controller="SpecificationGroup" asp-action="index">
+                                <i class="fas fa-fw fa-tachometer-alt"></i>
+                                <span>Kateqoriya Özəllik Qrupları</span>
+                            </a>
+                        </li>
+                        
                     </ul>
 
                 </nav>
@@ -244,44 +253,22 @@
             <!-- ============================================================== -->
             <!-- Bread crumb and right sidebar toggle -->
             <!-- ============================================================== -->
-            <div class="page-breadcrumb">
-                <div class="row align-items-center">
-                    <div class="col-5">
-                        <h4 class="page-title">Dashboard</h4>
-                        <div class="d-flex align-items-center">
-                            <nav aria-label="breadcrumb">
-                                <ol class="breadcrumb">
-                                    <li class="breadcrumb-item"><a href="#">Home</a></li>
-                                    <li class="breadcrumb-item active" aria-current="page">Library</li>
-                                </ol>
-                            </nav>
-                        </div>
-                    </div>
-                    <div class="col-7">
-                        <div class="text-end upgrade-btn">
-                            <a href="https://www.wrappixel.com/templates/xtremeadmin/" class="btn btn-danger text-white"
-                               target="_blank">Upgrade to Pro</a>
-                        </div>
-                    </div>
-                </div>
-            </div>
+            
             <!-- ============================================================== -->
             <!-- End Bread crumb and right sidebar toggle -->
             <!-- ============================================================== -->
             <!-- ============================================================== -->
             <!-- Container fluid  -->
             <!-- ============================================================== -->
+            <div class="container-fluid">
         @RenderBody()
+        </div>
         <!-- ============================================================== -->
             <!-- End Container fluid  -->
             <!-- ============================================================== -->
             <!-- ============================================================== -->
             <!-- footer -->
             <!-- ============================================================== -->
-            <footer class="footer text-center">
-                All Rights Reserved by Xtreme Admin. Designed and Developed by <a
-                    href="https://www.wrappixel.com">WrapPixel</a>.
-            </footer>
             <!-- ============================================================== -->
             <!-- End footer -->
             <!-- ============================================================== -->
@@ -295,6 +282,7 @@
     <!-- ============================================================== -->
     <!-- ============================================================== -->
     <!-- All Jquery -->
+    @RenderSection("Scripts", false)
     <!-- ============================================================== -->
     <script src="~/manage/assets/libs/jquery/dist/jquery.min.js"></script>
     <script src="~/manage/assets/custom.js"></script>

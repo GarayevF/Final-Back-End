@@ -13,6 +13,7 @@ using System.Drawing;
 namespace Smartelectronics.Areas.Manage.Controllers
 {
     [Area("Manage")]
+    [Authorize(Roles = "SuperAdmin, Admin")]
     public class ProductController : Controller
     {
         private readonly AppDbContext _context;
@@ -115,25 +116,6 @@ namespace Smartelectronics.Areas.Manage.Controllers
                 return View(productVM);
             }
 
-            //CategoryBrand categoryBrand;
-
-            //if(await _context.CategoryBrands.AnyAsync(c => c.CategoryId == productVM.CategoryId && c.BrandId == productVM.BrandId))
-            //{
-            //    categoryBrand = await _context.CategoryBrands.FirstOrDefaultAsync(c => c.CategoryId == productVM.CategoryId && c.BrandId == productVM.BrandId);
-            //}
-            //else
-            //{
-            //    categoryBrand = new CategoryBrand
-            //    {
-            //        CategoryId = productVM.CategoryId,
-            //        BrandId = productVM.BrandId,
-            //        IsDeleted = false,
-            //        CreatedAt = DateTime.UtcNow.AddHours(4),
-            //        CreatedBy = "System"
-            //    };
-            //}
-
-            //productVM.Product.CategoryBrand = categoryBrand;
 
             if (productVM.SpecificationVMs != null && productVM.SpecificationVMs.Count() > 0)
             {
@@ -417,7 +399,7 @@ namespace Smartelectronics.Areas.Manage.Controllers
             await _context.Products.AddAsync(productVM.Product);
             await _context.SaveChangesAsync();
 
-            return View();
+            return RedirectToAction(nameof(Index));
         }
 
         [HttpGet]
@@ -593,7 +575,7 @@ namespace Smartelectronics.Areas.Manage.Controllers
 
             if (!await _context.Brands.AnyAsync(c => c.IsDeleted == false && c.Id == productVM.Product.BrandId))
             {
-                ModelState.AddModelError("Product.BrandId", "Duzgun category secin");
+                ModelState.AddModelError("Product.BrandId", "Duzgun brand secin");
                 return View(productVM);
             }
 
@@ -602,44 +584,6 @@ namespace Smartelectronics.Areas.Manage.Controllers
                 ModelState.AddModelError("Product.DiscountedPrice", "Endirimli qiymət əsl qiymətdən yuxarı ola bilməz");
                 return View(productVM);
             }
-
-            //CategoryBrand categoryBrand;
-
-            //if (await _context.CategoryBrands.AnyAsync(c => c.CategoryId == productVM.CategoryId && c.BrandId == productVM.BrandId))
-            //{
-            //    categoryBrand = await _context.CategoryBrands.FirstOrDefaultAsync(c => c.CategoryId == productVM.CategoryId && c.BrandId == productVM.BrandId);
-
-            //    if(dbproduct.CategoryBrand.Id != categoryBrand.Id)
-            //    {
-            //        dbproduct.CategoryBrand.IsDeleted = true;
-            //        dbproduct.CategoryBrand.DeletedAt = DateTime.UtcNow.AddHours(4);
-            //        dbproduct.CategoryBrand.DeletedBy = "System";
-            //    }
-
-            //    ////teze ile kohnenin idleri tutusmursa kohnenin isdeleted true
-            //}
-            //else
-            //{
-            //    categoryBrand = new CategoryBrand
-            //    {
-            //        CategoryId = productVM.CategoryId,
-            //        BrandId = productVM.BrandId,
-            //        IsDeleted = false,
-            //        CreatedAt = DateTime.UtcNow.AddHours(4),
-            //        CreatedBy = "System"
-            //    };
-
-            //    dbproduct.CategoryBrand.IsDeleted = true;
-            //    dbproduct.CategoryBrand.DeletedAt = DateTime.UtcNow.AddHours(4);
-            //    dbproduct.CategoryBrand.DeletedBy = "System";
-
-            //    ////kohnenin isdeleted true
-            //}
-
-            //productVM.Product.Category = categoryBrand;
-
-
-
 
             if (productVM.SpecificationVMs != null && productVM.SpecificationVMs.Count() > 0)
             {
@@ -970,7 +914,7 @@ namespace Smartelectronics.Areas.Manage.Controllers
 
             await _context.SaveChangesAsync();
 
-            return View();
+            return RedirectToAction(nameof(Index));
 
         }
 

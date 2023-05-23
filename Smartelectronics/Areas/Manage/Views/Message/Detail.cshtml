@@ -1,0 +1,42 @@
+﻿@model Message
+@{
+    ViewData["Title"] = "Detail";
+    int count = 0;
+    int childCount = 0;
+}
+
+<div class="row">
+    
+    <div class="col-lg-12">
+        <div class="card" style="width: 18rem;">
+            <div class="card-body">
+                <h5 class="card-title">Ad Soyad: @Model.Name + " " + @Model.Surname</h5>
+            </div>
+        </div>
+    </div>
+<div class="col-lg-12">
+        <div class="card" style="width: 18rem;">
+            <div class="card-body">
+                <h5 class="card-title">Mail: @Model.Mail</h5>
+            </div>
+        </div>
+    </div>
+    <div class="col-lg-12">
+        <div class="card" style="width: 18rem;">
+            <div class="card-body">
+                <h5 class="card-title">Telefon Nömrəsi: @Model.Number</h5>
+            </div>
+        </div>
+    </div>
+    <div class="col-lg-12">
+        <div class="card" style="width: 18rem;">
+            <div class="card-body">
+                <h5 class="card-title">Mesaj: @Model.YourMessage</h5>
+            </div>
+        </div>
+    </div>
+
+</div>
+
+
+

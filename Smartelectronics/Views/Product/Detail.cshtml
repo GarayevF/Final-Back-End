@@ -94,29 +94,33 @@
                     <div class="left">
                         <div class="product-card">
                             <ul class="label-set">
-                                <li class="circle label-blue">
-                                    <div class="label">
-                                        <p>Nağd alışlarda</p>
-                                        <h6>Endirim</h6>
-                                        <div class="price">
-                                            <p>
-                                                <span>200</span>AZN
-                                            </p>
+                                @if (Model.Product.DiscountedPrice > 0)
+                                {
+                                    <li class="circle label-blue">
+                                        <div class="label">
+                                            <p>Nağd alışlarda</p>
+                                            <h6>Endirim</h6>
+                                            <div class="price">
+                                                <p>
+                                                    <span>@(Model.Product.Price - Model.Product.DiscountedPrice)</span>AZN
+                                                </p>
+                                            </div>
                                         </div>
-                                    </div>
-                                </li>
-                                <li class="circle label-red">
-                                    <div class="label">
-                                        <p class="text-lg">24 ay</p>
-                                        <p class="text-sm">Faizsiz Kredit</p>
-                                    </div>
-                                </li>
-                                <li class="circle label-orange">
-                                    <div class="label">
-                                        <p class="text-lg">24 ay</p>
-                                        <p class="text-sm">Faizsiz Kredit</p>
-                                    </div>
-                                </li>
+                                    </li>
+                                }
+                                @if (Model.Product.LoanTerms != null && Model.Product.LoanTerms.Count() > 0)
+                                {
+                                    @foreach (LoanTerm loanTerm in Model.Product.LoanTerms)
+                                    {
+                                        <li class="circle label-red" style="background-image: url(~/assets/images/@loanTerm.LoanCompany?.LabelImage);">
+                                            <div class="label">
+                                                <p class="text-lg">@loanTerm.LoanTermLoanRanges?.Max(t => t.LoanRange.Range) ay</p>
+                                                <p class="text-sm">Faizsiz Kredit</p>
+                                            </div>
+                                        </li>
+                                    }
+                                }
+
                             </ul>
                             <div class="image-link-slider">
                                 <div class="owl-carousel product-detail-slider">
@@ -174,31 +178,35 @@
                                         <p class="title">Aylıq Ödəniş</p>
                                         <p class="title">Toplam Ödəniş</p>
                                     </li>
-                                    @if (Model.IFLoanRanges != null && Model.IFLoanRanges.Count() > 0)
+                                    @if( (Model.Product.DiscountedPrice > 0 ? Model.Product.DiscountedPrice : Model.Product.Price) > 50)
                                     {
-                                        @foreach (ProductIFLoanRange productLoanRange in Model.IFLoanRanges.Where(a => a.LoanRange != null).OrderByDescending(a => a.LoanRange.Range))
+                                        @if (Model.IFLoanRanges != null && Model.IFLoanRanges.Count() > 0)
                                         {
-                                            <li style="position: relative;">
-                                                <div class="block radio-wrapper">
-                                                    <input type="radio" name="creditCondition" id="creditCondition-@count">
-                                                    <label for="creditCondition-@count"></label>
-                                                </div>
-                                                <div class="price outline">
-                                                    <p style="padding-left: 24px;">@productLoanRange.LoanRange.Range ay</p>
-                                                </div>
-                                                <div class="price">
-                                                    <p>@productLoanRange.InitialPayment azn</p>
-                                                </div>
-                                                <div class="price">
-                                                    <p>@productLoanRange.MonthlyPayment azn</p>
-                                                </div>
-                                                <div class="price">
-                                                    <p>@productLoanRange.TotalPayment azn</p>
-                                                </div>
-                                            </li>
-                                            count++;
+                                            @foreach (ProductIFLoanRange productLoanRange in Model.IFLoanRanges.Where(a => a.LoanRange != null).OrderByDescending(a => a.LoanRange.Range))
+                                            {
+                                                <li style="position: relative;">
+                                                    <div class="block radio-wrapper">
+                                                        <input type="radio" name="creditCondition" data-price="@productLoanRange.TotalPayment" data-range="@productLoanRange.LoanRange.Range" id="creditCondition-@count">
+                                                        <label for="creditCondition-@count"></label>
+                                                    </div>
+                                                    <div class="price outline">
+                                                        <p style="padding-left: 24px;">@productLoanRange.LoanRange.Range ay</p>
+                                                    </div>
+                                                    <div class="price">
+                                                        <p>@productLoanRange.InitialPayment azn</p>
+                                                    </div>
+                                                    <div class="price">
+                                                        <p>@productLoanRange.MonthlyPayment azn</p>
+                                                    </div>
+                                                    <div class="price">
+                                                        <p>@productLoanRange.TotalPayment azn</p>
+                                                    </div>
+                                                </li>
+                                                count++;
+                                            }
                                         }
                                     }
+                                    
                                     
                                     
                                 </ul>
@@ -233,11 +241,11 @@
                                         <div class="price d-block">
                                             <div class="credit-month-select">
                                                 <div class="dropdown">
-                                                    <button class="dropbtn"><span>@Model?.LoanRanges?.OrderByDescending(a => a.LoanRange.Range).FirstOrDefault().LoanRange.Range</span> <i class="fa-solid fa-chevron-left"></i></button>
+                                                    <button class="dropbtn"><span id="kreditspantag">@Model?.LoanRanges?.OrderByDescending(a => a.LoanRange.Range).FirstOrDefault().LoanRange.Range</span> <i class="fa-solid fa-chevron-left"></i></button>
                                                     <div id="credit-dropdown" class="dropdown-content">
                                                         @foreach (ProductLoanRange productLoanRange in Model?.LoanRanges?.OrderByDescending(a => a.LoanRange.Range))
                                                         {
-                                                            <a href="#">@productLoanRange.LoanRange.Range</a>
+                                                            <a href="#" class="credit-drop-atag">@productLoanRange.LoanRange.Range</a>
                                                         }
                                                     </div>
                                                 </div>
@@ -248,18 +256,22 @@
                                         <div class="price">
                                             <input type="number" class="pristine" value="0">
                                         </div>
-                                        
-                                            {
-                                                double price = Model.Product.DiscountedPrice > 0 ? Model.Product.DiscountedPrice : Model.Product.Price;
+
+                                        {
+                                            double price = Model.Product.DiscountedPrice > 0 ? Model.Product.DiscountedPrice : Model.Product.Price;
+                                            int? range = Model?.LoanRanges?.OrderByDescending(a => a.LoanRange.Range).FirstOrDefault().LoanRange.Range;
                                             <div class="price outline">
-                                                <p>
+                                                <p id="ayliqodenis">
                                                     @(
-                                                        (price / Model?.LoanRanges?.OrderByDescending(a => a.LoanRange.Range).FirstOrDefault().LoanRange.Range) + (price * Model?.Product?.ProductLoanRanges?.FirstOrDefault(a => a.ProductId == Model.Product.Id).LoanRange.Range) / Model?.LoanRanges?.OrderByDescending(a => a.LoanRange.Range).FirstOrDefault().LoanRange.Range) azn
+                                                        ((price / range) * (1 + Model?.Product?.ProductLoanRanges?.FirstOrDefault(a => a.ProductId == Model.Product.Id).InterestForVipUsers / 100))?.ToString("N2")) azn
                                                 </p>
                                             </div>
                                             <div class="price outline">
                                                 <span class="mob-title">Toplam Ödəniş</span>
-                                                <p>@(price * Model?.LoanRanges?.OrderByDescending(a => a.LoanRange.Range).FirstOrDefault().LoanRange.Range) azn</p>
+                                                <p id="kredit-ptag">
+                                                    @(
+                                                        (((price / range) * (1 + Model?.Product?.ProductLoanRanges?.FirstOrDefault(a => a.ProductId == Model.Product.Id).InterestForVipUsers / 100)) * range)?.ToString("N2")) azn
+                                                </p>
                                             </div>
                                             }
                                     }
@@ -268,7 +280,11 @@
                         </div>
                         <div class="payment-btns">
                             <button class="payment-btn buy-cash-btn">Nağd al</button>
-                            <button class="payment-btn buy-taksit-btn">Taksitlə al</button>
+                            @if (Model.Product.LoanTerms != null && Model.Product.LoanTerms.Count() > 0)
+                            {
+                                <button class="payment-btn buy-taksit-btn">Taksitlə al</button>
+                            }
+                            
                             @if( (Model.Product.DiscountedPrice > 0 ? Model.Product.DiscountedPrice : Model.Product.Price) > 50)
                             {
                                 <button class="payment-btn buy-credit-btn">Kreditlə al</button>
@@ -315,3 +331,65 @@
     </div>
 </main>
 
+<div class="main-modal-dialog d-none">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 class="title">Sifarişiniz !</h3>
+                <p class="text">@Model.Product.Title</p>
+                <button type="button" data-dismiss="modal" aria-label="Close" class="close-modal">
+                    <i class="fa-solid fa-circle-xmark"></i>
+            </div>
+            <div class="modal-body">
+                <h3 class="title">Taksit Seçənəkləri</h3>
+                @if (Model.Product.LoanTerms != null && Model.Product.LoanTerms.Count() > 0)
+                {
+                    @foreach (LoanTerm loanTerm in Model.Product.LoanTerms)
+                    {
+                        <div class="payment_option ng-star-inserted">
+                            <div class="img_desc">
+                                <div class="icon">
+                                    <img src="~/assets/images/loancompanies/@loanTerm.LoanCompany?.Logo" alt="" class="ng-star-inserted"><!----><!----><!---->
+                                </div>
+                                <p class="desc">@loanTerm.LoanTermLoanRanges?.MaxBy(a => a.LoanRange.Range)?.LoanRange.Range ay x @((Model.Product.Price / (double)@loanTerm?.LoanTermLoanRanges?.MaxBy(a => a.LoanRange.Range)?.LoanRange.Range).ToString("N2")) AZN</p>
+                            </div>
+                            @{
+                                string encodedValue = Uri.EscapeDataString("Taksit " + (loanTerm.LoanTermLoanRanges?.MaxBy(a => a.LoanRange.Range)?.LoanRange.Range) + " ay");
+                            }
+                            <a asp-controller="order" asp-action="checkoutsingle" asp-route-method="@encodedValue" asp-route-productId="@Model.Product.Id" class="btn_blue">Təsdiq Et</a>
+                        </div>
+                    }
+                }
+
+                <!---->
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script>
+    $(document).ready(function () {
+        let price = parseFloat(@(Model.Product.DiscountedPrice > 0 ? Model.Product.DiscountedPrice : Model.Product.Price));
+        let standart = parseFloat(@Model?.Product?.ProductLoanRanges?.FirstOrDefault(a => a.ProductId == Model.Product.Id).InterestForStandartUsers);
+        let vip = parseFloat(@Model?.Product?.ProductLoanRanges?.FirstOrDefault(a => a.ProductId == Model.Product.Id).InterestForVipUsers);
+        $(document).on('change', '.pristine', function (e) {
+            let range = parseInt($('#kreditspantag').text())
+            let initial = parseFloat($('.pristine').text())
+            let month = $('#ayliqodenis');
+            let total = $('#kredit-ptag');
+            console.log("initial :" + inital + "\nmonth :" + (price / range) * (1 + standart / 100) + "\ntotal :" + price / range) * (1 + standart / 100)) * range)
+            price = price - initial;
+            if(initial > price) {
+                $(initial).text(price)
+            }else{
+                $('#ayliqodenis').text((price / range) * (1 + standart / 100));
+                $('#kredit-ptag').text((price/range) * (1+standart/100))*range;
+            }
+
+            
+        })
+    });
+</script>

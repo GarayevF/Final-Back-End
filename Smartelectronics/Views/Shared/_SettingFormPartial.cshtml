@@ -3,7 +3,7 @@
 <form method="post" asp-controller="account" asp-action="UpdateSetting">
     <div class="personal-info">
         <div class="form-group">
-            <input asp-for="Name" type="text" placeholder="Ad">
+            <input id="name1" asp-for="Name" type="text" placeholder="Ad">
         </div>
         <div class="form-group">
             <div class="radio-wrapper">
@@ -19,7 +19,7 @@
             </div>
         </div>
         <div class="form-group">
-            <input asp-for="SurName" type="text" placeholder="Soyad">
+            <input id="surname1" asp-for="SurName" type="text" placeholder="Soyad">
         </div>
         <div class="form-group"></div>
         <div class="form-group">
@@ -35,7 +35,7 @@
         </div>
         <div class="form-group">
             <div class="date">
-                <input asp-for ="BirthDate" type="date" id="birthday" name="birthday">
+                <input id="birthdate" asp-for="BirthDate" type="date" id="birthday" name="birthday">
             </div>
         </div>
         <div class="form-group">
@@ -44,5 +44,6 @@
         <div class="form-group">
             <input asp-for="Number" type="tel" id="phone2" formcontrolname="mobilePhone" class="form-control" placeholder="+994 (__) ___ __ __">
         </div>
+        <button type="submit" class="save-changes">Yadda saxla</button>
     </div>
 </form>

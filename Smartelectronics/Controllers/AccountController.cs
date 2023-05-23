@@ -191,19 +191,31 @@ namespace Smartelectronics.Controllers
         public async Task<IActionResult> Profile()
         {
             AppUser appUser = await _userManager.Users
+                .Include(u => u.Address)
                 .Include(u => u.Orders.Where(o => o.IsDeleted == false)).ThenInclude(o => o.OrderItems.Where(oi => oi.IsDeleted == false)).ThenInclude(oi => oi.Product)
                 .FirstOrDefaultAsync(u => u.UserName == User.Identity.Name);
 
             ProfileVM profileVM = new ProfileVM
             {
-                Address = new Address(),
                 Orders = appUser.Orders,
                 AccountVM = new AccountVM
                 {
                     Name = appUser.Name,
                     SurName = appUser.SurName,
                     Email = appUser.Email,
-                    UserName = appUser.UserName,
+                    BirthDate = appUser?.BirthDate,
+                    Number = appUser?.PhoneNumber,
+                },
+                SettingVM = new SettingVM
+                {
+                    Name = appUser.Name,
+                    SurName = appUser.SurName,
+                    BirthDate = appUser?.BirthDate,
+                    Fin = appUser?.Fin,
+                    Gender = appUser?.Gender,
+                    IdSeria = appUser?.IdSeria,
+                    Number = appUser?.PhoneNumber,
+                    Patronymic = appUser?.Patronymic
                 }
             };
 
@@ -242,7 +254,7 @@ namespace Smartelectronics.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> UpdateProfile(AccountVM accountVM)
         {
-            TempData["Tab"] = "Account";
+            TempData["Tab"] = "Setting";
 
             AppUser appUser = await _userManager.Users
                 .Include(u => u.Orders.Where(o => o.IsDeleted == false)).ThenInclude(o => o.OrderItems.Where(oi => oi.IsDeleted == false)).ThenInclude(oi => oi.Product)
@@ -260,24 +272,17 @@ namespace Smartelectronics.Controllers
                 return View("Profile", profileVM);
             }
 
-
-            appUser.Name = accountVM.Name;
-            appUser.SurName = accountVM.SurName;
-
-            if (appUser.NormalizedUserName != accountVM.UserName.Trim().ToUpperInvariant())
+            if (accountVM.Name != null)
             {
-                if (await _userManager.Users.AnyAsync(u => u.NormalizedUserName == accountVM.UserName.Trim().ToUpperInvariant() && u.Id != appUser.Id))
-                {
-                    ModelState.AddModelError("UserName", $"UserName {accountVM.UserName} already exists.");
-                    return View("Profile", profileVM);
-                }
-                else
-                {
-                    appUser.UserName = accountVM.UserName.Trim();
-                }
+                appUser.Name = accountVM.Name;
             }
 
-            if (appUser.NormalizedEmail != accountVM.Email.Trim().ToUpperInvariant())
+            if (accountVM.SurName != null)
+            {
+                appUser.SurName = accountVM.SurName;
+            }
+
+            if (accountVM.Email != null && appUser.NormalizedEmail != accountVM.Email.Trim().ToUpperInvariant())
             {
                 if (await _userManager.Users.AnyAsync(u => u.NormalizedEmail == accountVM.Email.Trim().ToUpperInvariant() && u.Id != appUser.Id))
                 {
@@ -291,7 +296,16 @@ namespace Smartelectronics.Controllers
             }
 
             appUser.Email = accountVM.Email;
-            appUser.UserName = accountVM.UserName;
+
+            if (accountVM.BirthDate != null)
+            {
+                appUser.BirthDate = accountVM.BirthDate;
+            }
+
+            if (accountVM.Number != null)
+            {
+                appUser.PhoneNumber = accountVM.Number;
+            }
 
             IdentityResult identityResult = await _userManager.UpdateAsync(appUser);
 
@@ -327,6 +341,85 @@ namespace Smartelectronics.Controllers
                     ModelState.AddModelError("CurrentPassword", "CurrentPassword yanlisdir");
                     return View("Profile", profileVM);
                 }
+            }
+
+
+            await _signInManager.SignInAsync(appUser, true);
+
+            TempData["Success"] = "Hesabiniz ugurla yenilendi";
+
+            return RedirectToAction(nameof(Profile));
+        }
+
+        public async Task<IActionResult> UpdateSetting(SettingVM settingVM)
+        {
+            TempData["Tab"] = "Account";
+
+            AppUser appUser = await _userManager.Users
+                .Include(u => u.Orders.Where(o => o.IsDeleted == false)).ThenInclude(o => o.OrderItems.Where(oi => oi.IsDeleted == false)).ThenInclude(oi => oi.Product)
+                .FirstOrDefaultAsync(u => u.UserName == User.Identity.Name);
+
+            ProfileVM profileVM = new ProfileVM
+            {
+                Orders = appUser.Orders,
+                SettingVM = settingVM
+            };
+
+            if (!ModelState.IsValid)
+            {
+                return View("Profile", settingVM);
+            }
+
+
+            if (settingVM.Name != null)
+            {
+                appUser.Name = settingVM.Name;
+            }
+
+            if (settingVM.SurName != null)
+            {
+                appUser.SurName = settingVM.SurName;
+            }
+
+            if (settingVM.Patronymic != null)
+            {
+                appUser.Patronymic = settingVM.Patronymic;
+            }
+
+            if (settingVM.IdSeria != null)
+            {
+                appUser.IdSeria = settingVM.IdSeria;
+            }
+
+            if (settingVM.Gender != null)
+            {
+                appUser.Gender = settingVM.Gender;
+            }
+
+            if (settingVM.Fin != null)
+            {
+                appUser.Fin = settingVM.Fin;
+            }
+
+            if (settingVM.BirthDate != null)
+            {
+                appUser.BirthDate = settingVM.BirthDate;
+            }
+
+            if (settingVM.Number != null)
+            {
+                appUser.PhoneNumber = settingVM.Number;
+            }
+
+            IdentityResult identityResult = await _userManager.UpdateAsync(appUser);
+
+            if (!identityResult.Succeeded)
+            {
+                foreach (IdentityError identityError in identityResult.Errors)
+                {
+                    ModelState.AddModelError("", identityError.Description);
+                }
+                return View("Profile", profileVM);
             }
 
 

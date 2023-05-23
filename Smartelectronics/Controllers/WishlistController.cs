@@ -79,6 +79,27 @@ namespace Smartelectronics.Controllers
                     return BadRequest();
                 }
             }
+            if (User.Identity.IsAuthenticated && User.IsInRole("Member"))
+            {
+                AppUser appUser = await _userManager.Users
+                    .Include(u => u.Wishlists.Where(b => b.IsDeleted == false))
+                    .FirstOrDefaultAsync(u => u.UserName == User.Identity.Name);
+
+                if (appUser.Wishlists != null && appUser.Wishlists.Count() > 0)
+                {
+                    if (appUser.Wishlists.Any(b => b.ProductId == id))
+                    {
+
+                        appUser.Wishlists.Remove(appUser.Wishlists.FirstOrDefault(b => b.ProductId == id));
+                    }
+                }
+                
+
+                await _context.SaveChangesAsync();
+            }
+
+            cookie = JsonConvert.SerializeObject(wishlistVMs);
+            HttpContext.Response.Cookies.Append("wishlist", cookie);
 
             foreach (WishlistVM wishlistVM in wishlistVMs)
             {
@@ -103,8 +124,7 @@ namespace Smartelectronics.Controllers
                 }
             }
 
-            cookie = JsonConvert.SerializeObject(wishlistVMs);
-            HttpContext.Response.Cookies.Append("wishlist", cookie);
+            
 
             return PartialView("_WishlistCartPartial", wishlistVMs);
         }

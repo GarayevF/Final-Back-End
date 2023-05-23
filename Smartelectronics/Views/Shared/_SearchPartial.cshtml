@@ -1,0 +1,15 @@
+﻿@model IEnumerable<Product>
+
+@if(Model != null && Model.Count() > 0)
+{
+    @foreach (Product product in Model)
+    {
+        <li class="list-group-item" style="padding: 10px;border-bottom: 1px solid gray;border-top: 1px solid gray">
+                    <a style="display: flex; justify-content: space-between; align-items: center" asp-controller="product" asp-action="detail" asp-route-id="@product.Id">
+                        <img style="width: 100px;" src="~/assets/images/products/@product?.ProductColors?.FirstOrDefault()?.Image" />
+                        <p>@product?.Title</p>
+                        <span class="price-sale">@(product.DiscountedPrice > 0 ? product.DiscountedPrice : product.Price) AZN</span>
+                    </a>
+                </li>
+    }
+}

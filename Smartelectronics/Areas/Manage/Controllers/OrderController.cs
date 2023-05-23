@@ -8,6 +8,7 @@ using Smartelectronics.ViewModels;
 namespace Smartelectronics.Areas.Manage.Controllers
 {
     [Area("Manage")]
+    [Authorize(Roles = "SuperAdmin, Admin")]
 
     public class OrderController : Controller
     {
@@ -35,7 +36,7 @@ namespace Smartelectronics.Areas.Manage.Controllers
 
             Order order = await _context.Orders
                 .Include(o => o.OrderItems.Where(oi => oi.IsDeleted == false)).ThenInclude(oi => oi.Product)
-                .FirstOrDefaultAsync(o => o.IsDeleted == false);
+                .FirstOrDefaultAsync(o => o.IsDeleted == false && o.Id == id);
 
             if (order == null) return NotFound();
 

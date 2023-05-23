@@ -9,6 +9,7 @@ using Microsoft.EntityFrameworkCore;
 namespace Smartelectronics.Areas.Manage.Controllers
 {
     [Area("Manage")]
+    [Authorize(Roles = "SuperAdmin, Admin")]
     public class AccountController : Controller
     {
         private readonly RoleManager<IdentityRole> _roleManager;

@@ -18,9 +18,10 @@ namespace Smartelectronics.Models
         public string? SurName { get; set; }
         [StringLength(100)]
         public string? Patronymic { get; set; }
-        [StringLength(100)]
+        [StringLength(10)]
         public string? IdSeria { get; set; }
-        public int? Fin { get; set; }
+        [StringLength(10)]
+        public string? Fin { get; set; }
         [EmailAddress]
         public string? Email { get; set; }
         [StringLength(20)]
@@ -35,5 +36,7 @@ namespace Smartelectronics.Models
         [StringLength(500)]
         public string? AdditionalComment { get; set; }
         public List<OrderItem>? OrderItems { get; set; }
+        [StringLength(100)]
+        public string? OrderMethod { get; set; }
     }
 }
