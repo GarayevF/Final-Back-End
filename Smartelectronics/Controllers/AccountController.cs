@@ -13,6 +13,7 @@ using System.Data;
 using MailKit.Net.Smtp;
 using Smartelectronics.ViewModels.WishlistViewModels;
 using Microsoft.AspNetCore.Authorization;
+using System.Text;
 
 namespace Smartelectronics.Controllers
 {
@@ -48,14 +49,18 @@ namespace Smartelectronics.Controllers
                 return View(registerVM);
             }
 
+
             AppUser appUser = new AppUser
             {
                 UserName = registerVM.UserName,
                 Email = registerVM.Email,
                 Name = registerVM.Name,
                 SurName = registerVM.SurName,
-                IsActive = true
+                IsActive = true,
+                
             };
+
+            
 
             IdentityResult identityResult = await _userManager.CreateAsync(appUser, registerVM.Password);
 
@@ -74,25 +79,74 @@ namespace Smartelectronics.Controllers
 
             string url = Url.Action("EmailConfirm", "Account", new { id = appUser.Id, token = token }, HttpContext.Request.Scheme, HttpContext.Request.Host.ToString());
 
-            string templatePath = Path.Combine(Directory.GetCurrentDirectory(), "Views", "Shared", "_EmailConfirm.cshtml");
-            string templateContent = await System.IO.File.ReadAllTextAsync(templatePath);
-            templateContent = templateContent.Replace("{{email}}", appUser.Email);
-            templateContent = templateContent.Replace("{{url}}", url);
+            //string templatePath = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot", "Templates", "_EmailConfirm.cshtml");
+            //string templateContent = await System.IO.File.ReadAllTextAsync(templatePath);
+            //templateContent = templateContent.Replace("{{email}}", appUser.Email);
+            //templateContent = templateContent.Replace("{{url}}", url);
 
-            MimeMessage mimeMessage = new MimeMessage();
-            mimeMessage.From.Add(MailboxAddress.Parse(_smtpSetting.Email));
-            mimeMessage.To.Add(MailboxAddress.Parse(appUser.Email));
-            mimeMessage.Subject = "Email Confirmation";
-            mimeMessage.Body = new TextPart(MimeKit.Text.TextFormat.Html)
+            //MimeMessage mimeMessage = new MimeMessage();
+            //mimeMessage.From.Add(MailboxAddress.Parse(_smtpSetting.Email));
+            //mimeMessage.To.Add(MailboxAddress.Parse(appUser.Email));
+            //mimeMessage.Subject = "Email Confirmation";
+            //mimeMessage.Body = new TextPart(MimeKit.Text.TextFormat.Html)
+            //{
+            //    Text = templateContent
+            //};
+
+            //using (SmtpClient smtpClient = new SmtpClient())
+            //{
+            //    await smtpClient.ConnectAsync(_smtpSetting.Host, _smtpSetting.Port, MailKit.Security.SecureSocketOptions.StartTls);
+            //    await smtpClient.AuthenticateAsync(_smtpSetting.Email, _smtpSetting.Password);
+            //    await smtpClient.SendAsync(mimeMessage);
+            //    await smtpClient.DisconnectAsync(true);
+            //    smtpClient.Dispose();
+            //}
+
+
+            StringBuilder sb = new StringBuilder();
+
+            sb.Append(@$"<div class=""app font-sans min-w-screen min-h-screen bg-grey-lighter py-8 px-4"">
+                <div class=""mail__wrapper max-w-md mx-auto"">
+                    <div class=""mail__content bg-white p-8 shadow-md"">
+                        <div class=""content__header text-center tracking-wide border-b"">
+                            <div class=""text-red text-sm font-bold"">SmartElectronics.az</div>
+                            <h1 class=""text-3xl h-48 flex items-center justify-center"">SmartElectronics E-mail Təsdiqləmə</h1>
+                        </div>
+                        <div class=""content__body py-8 border-b"">
+                            <p>Zəhmət olmazsa aşağıdakı linkdən emailinizi təsdiqləyin.</p>
+                            <a href=""{url}"" class=""text-white text-sm tracking-wide bg-red rounded w-full my-8 p-4"">EMAİLİ TƏSDİQLƏ</a>
+                        </div>
+                        <div class=""content__footer mt-8 text-center text-grey-darker"">
+                            <h3 class=""text-base sm:text-lg mb-4"">Thanks for using The App!</h3>
+                            <p>www.smartelectronics.az</p>
+                        </div>
+                    </div>
+                </div>
+            </div>");
+
+
+            string htmlTable = sb.ToString();
+
+            MimeMessage message = new MimeMessage();
+            message.From.Add(MailboxAddress.Parse(_smtpSetting.Email));
+            message.To.Add(MailboxAddress.Parse(appUser.Email));
+            message.Subject = "Hesab təsdiqləmə";
+            var bodyBuilder = new BodyBuilder();
+
+            bodyBuilder.HtmlBody = htmlTable;
+
+            var body = new TextPart("html")
             {
-                Text = templateContent
+                Text = bodyBuilder.HtmlBody
             };
+
+            message.Body = body;
 
             using (SmtpClient smtpClient = new SmtpClient())
             {
                 await smtpClient.ConnectAsync(_smtpSetting.Host, _smtpSetting.Port, MailKit.Security.SecureSocketOptions.StartTls);
                 await smtpClient.AuthenticateAsync(_smtpSetting.Email, _smtpSetting.Password);
-                await smtpClient.SendAsync(mimeMessage);
+                await smtpClient.SendAsync(message);
                 await smtpClient.DisconnectAsync(true);
                 smtpClient.Dispose();
             }
@@ -175,6 +229,7 @@ namespace Smartelectronics.Controllers
             }
             else
             {
+                if(cookie == null || cookie == "")
                 HttpContext.Response.Cookies.Append("basket", "");
             }
 
@@ -200,7 +255,8 @@ namespace Smartelectronics.Controllers
             }
             else
             {
-                HttpContext.Response.Cookies.Append("basket", "");
+                if (cookie == null || cookie == "")
+                    HttpContext.Response.Cookies.Append("wishlist", "");
             }
 
 

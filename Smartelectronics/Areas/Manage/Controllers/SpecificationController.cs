@@ -51,7 +51,7 @@ namespace Smartelectronics.Areas.Manage.Controllers
 
             if (await _context.Specifications.AnyAsync(c => c.IsDeleted == false && c.Name.ToLower() == specification.Name.Trim().ToLower()))
             {
-                ModelState.AddModelError("Name", $"Bu adda {specification.Name} category movcuddu");
+                ModelState.AddModelError("Name", $"Bu adda {specification.Name} specification movcuddu");
                 return View(specification);
             }
 

@@ -265,10 +265,11 @@
                                                 <input type="hidden" id="specId-${spec.id}" name="SpecificationVMs[${count}].SpecificationId" value="${spec.id}"/>
                                                 <input type="text" class="form-control spec-input" id="specValue-${spec.id}" name="SpecificationVMs[${count}].Value">
                                                 </div>`;
+                        count++;
                     });
                     specificationInputsDiv.innerHTML = html;
                     let form = document.querySelector('#product-form');
-                    count++;
+                    
                 });
 
         } else {

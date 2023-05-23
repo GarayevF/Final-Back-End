@@ -71,7 +71,7 @@
                                     {
                                         @foreach (LoanTerm loanTerm in product.LoanTerms)
                                         {
-                                            <li class="circle label-red" style="background-image: url(~/assets/images/loancompanies/@loanTerm.LoanCompany?.LabelImage);">
+                                            <li class="circle label-red" style="background-image: url(/assets/images/loancompanies/@loanTerm.LoanCompany?.LabelImage);">
                                                 <div class="label">
                                                     <p class="text-lg">@loanTerm.LoanTermLoanRanges?.Max(t => t.LoanRange.Range) ay</p>
                                                     <p class="text-sm">Faizsiz Kredit</p>

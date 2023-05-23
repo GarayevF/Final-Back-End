@@ -52,6 +52,7 @@ namespace Smartelectronics.Areas.Manage.Controllers
         public async Task<IActionResult> Create()
         {
             ViewBag.MainCategories = await _context.Categories.Where(c => c.IsDeleted == false && c.IsMain).ToListAsync();
+            ViewBag.Specifications = await _context.Specifications.Where(c => c.IsDeleted == false).ToListAsync();
 
             return View();
         }
@@ -61,6 +62,7 @@ namespace Smartelectronics.Areas.Manage.Controllers
         public async Task<IActionResult> Create(Category category)
         {
             ViewBag.MainCategories = await _context.Categories.Where(c => c.IsDeleted == false && c.IsMain).ToListAsync();
+            ViewBag.Specifications = await _context.Specifications.Where(c => c.IsDeleted == false).ToListAsync();
 
             if (!ModelState.IsValid) return View();
 
@@ -87,6 +89,33 @@ namespace Smartelectronics.Areas.Manage.Controllers
                     ModelState.AddModelError("ParentId", "Parent mutleq secilmelidir");
                     return View(category);
                 }
+
+                if (category.SpecificationIds != null && category.SpecificationIds.Count() > 0)
+                {
+                    List<CategorySpecification> categorySpecifications = new List<CategorySpecification>();
+
+                    foreach (int specificationId in category.SpecificationIds)
+                    {
+                        if (!await _context.Specifications.AnyAsync(c => c.IsDeleted == false && c.Id == specificationId))
+                        {
+                            ModelState.AddModelError("SpecificationIds", $"{specificationId} id deyeri yanlisdir");
+                            return View(category);
+                        }
+
+                        CategorySpecification categorySpecification = new CategorySpecification
+                        {
+                            SpecificationId = specificationId,
+                            CategoryId = category.Id,
+                            CreatedAt = DateTime.UtcNow.AddHours(4),
+                            CreatedBy = "System"
+                        };
+
+                        categorySpecifications.Add(categorySpecification);
+                    }
+
+                    category.CategorySpecifications = categorySpecifications;
+                }
+
             }
 
             category.Name = category.Name.Trim();
@@ -105,11 +134,16 @@ namespace Smartelectronics.Areas.Manage.Controllers
 
             if (id == null) return BadRequest();
 
-            Category category = await _context.Categories.FirstOrDefaultAsync(c => c.Id == id && c.IsDeleted == false);
+            Category category = await _context.Categories
+                .Include(c => c.CategorySpecifications.Where(pt => pt.IsDeleted == false))
+                .FirstOrDefaultAsync(c => c.Id == id && c.IsDeleted == false);
 
             if (category == null) return NotFound();
 
             ViewBag.MainCategories = await _context.Categories.Where(c => c.IsDeleted == false && c.IsMain).ToListAsync();
+            ViewBag.Specifications = await _context.Specifications.Where(c => c.IsDeleted == false).ToListAsync();
+
+            category.SpecificationIds = category.CategorySpecifications?.Select(x => x.SpecificationId);
 
             return View(category);
         }
@@ -118,13 +152,18 @@ namespace Smartelectronics.Areas.Manage.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Update(int? id, Category category)
         {
+            ViewBag.MainCategories = await _context.Categories.Where(c => c.IsDeleted == false && c.IsMain).ToListAsync();
+            ViewBag.Specifications = await _context.Specifications.Where(c => c.IsDeleted == false).ToListAsync();
+
             if (!ModelState.IsValid) return View(category);
 
             if (id == null) return BadRequest();
 
             if (id != category.Id) return BadRequest();
 
-            Category dbCategory = await _context.Categories.FirstOrDefaultAsync(c => c.Id == id && c.IsDeleted == false);
+            Category dbCategory = await _context.Categories
+                .Include(c => c.CategorySpecifications.Where(pt => pt.IsDeleted == false))
+                .FirstOrDefaultAsync(c => c.Id == id && c.IsDeleted == false);
 
             if (category == null) return NotFound();
 
@@ -134,7 +173,7 @@ namespace Smartelectronics.Areas.Manage.Controllers
                 return View(category);
             }
 
-            if (dbCategory.IsMain == category.IsMain)
+            if (dbCategory.IsMain != category.IsMain)
             {
                 ModelState.AddModelError("IsMain", "Categorynin veziyyeti deyisdirile bilmez");
                 return View(dbCategory);
@@ -158,11 +197,184 @@ namespace Smartelectronics.Areas.Manage.Controllers
 
                     dbCategory.ParentId = category.ParentId;
                 }
+
+                //if (category.SpecificationIds != null && category.SpecificationIds.Count() > 0)
+                //{
+                //    //List<CategorySpecification> oldcategorySpecifications = category.CategorySpecifications;
+                //    //List<CategorySpecification> categorySpecifications = dbCategory.CategorySpecifications;
+
+                //    List<CategorySpecification> oldcategorySpecifications = new List<CategorySpecification>();
+                //    List<CategorySpecification> categorySpecifications = new List<CategorySpecification>();
+
+                //    if (category.SpecificationIds != null && category.SpecificationIds.Count() > 0)
+                //    {
+                //        foreach (int specificationId in category.SpecificationIds)
+                //        {
+                //            if (await _context.Specifications.AnyAsync(c => c.IsDeleted == false && c.Id == specificationId))
+                //            {
+                //                CategorySpecification categorySpecification = new CategorySpecification
+                //                {
+                //                    SpecificationId = specificationId,
+                //                    CategoryId = category.Id,
+                //                    CreatedAt = DateTime.UtcNow.AddHours(4),
+                //                    CreatedBy = "System"
+                //                };
+
+                //                categorySpecifications.Add(categorySpecification);
+                //            }
+                //            else
+                //            {
+                //                ModelState.AddModelError("SpecificationIds", $"{specificationId} id deyeri yanlisdir");
+                //                return View(category);
+                //            }
+                //        }
+                //    }
+
+                //    if (dbCategory.SpecificationIds != null && dbCategory.SpecificationIds.Count() > 0)
+                //    {
+                //        foreach (int specificationId in dbCategory.SpecificationIds)
+                //        {
+                //            if (await _context.Specifications.AnyAsync(c => c.IsDeleted == false && c.Id == specificationId))
+                //            {
+                //                CategorySpecification categorySpecification = new CategorySpecification
+                //                {
+                //                    SpecificationId = specificationId,
+                //                    CategoryId = dbCategory.Id,
+                //                    CreatedAt = DateTime.UtcNow.AddHours(4),
+                //                    CreatedBy = "System"
+                //                };
+
+                //                oldcategorySpecifications.Add(categorySpecification);
+                //            }
+                            
+                //        }
+                //    }
+
+
+
+                //    foreach (int specificationId in category.SpecificationIds)
+                //    {
+
+                //        if (categorySpecifications != null && categorySpecifications.Count() > 0 && categorySpecifications.Any(c => c.SpecificationId == specificationId) &&
+                //            (oldcategorySpecifications != null && oldcategorySpecifications.Count() > 0 && !oldcategorySpecifications.Any(c => c.SpecificationId == specificationId) ||
+                //            oldcategorySpecifications != null || oldcategorySpecifications.Count() == 0)
+                //            )
+                //        {
+                //            CategorySpecification categorySpecification = new CategorySpecification
+                //            {
+                //                SpecificationId = specificationId,
+                //                CategoryId = category.Id,
+                //                CreatedAt = DateTime.UtcNow.AddHours(4),
+                //                CreatedBy = "System"
+                //            };
+
+                //            categorySpecifications.Add(categorySpecification);
+
+                //            //IEnumerable<ProductCategorySpecification> temp = await _context.ProductCategorySpecifications
+                //            //    .Where(a => a.IsDeleted == false && a.CategorySpecification.CategoryId == category.Id).ToListAsync();
+
+                //            //if(temp != null && temp.Count() > 0)
+                //            //{
+                //            //    foreach (ProductCategorySpecification item in temp)
+                //            //    {
+                //            //        int? tempId = item.ProductId;
+                //            //        Product product = await _context.Products.FirstOrDefaultAsync(p => p.IsDeleted == false && p.Id == tempId);
+
+                //            //        ProductCategorySpecification tempProduct = new ProductCategorySpecification
+                //            //        {
+                //            //            ProductId = tempId,
+                //            //            CategorySpecification = categorySpecification,
+                //            //        };
+
+                //            //        if(product != null) product.ProductCategorySpecifications.Add(tempProduct);
+                //            //    }
+                //            //}
+
+                //        }
+                //        else if(categorySpecifications != null && categorySpecifications.Count() > 0 && !categorySpecifications.Any(c => c.SpecificationId == specificationId) &&
+                //            (oldcategorySpecifications != null && oldcategorySpecifications.Count() > 0 && !oldcategorySpecifications.Any(c => c.SpecificationId == specificationId) ||
+                //            oldcategorySpecifications != null || oldcategorySpecifications.Count() == 0)
+                //            )
+                //        {
+                //            //IEnumerable<ProductCategorySpecification> temp = await _context.ProductCategorySpecifications
+                //            //    .Where(a => a.CategorySpecification.SpecificationId == specificationId && a.CategorySpecification.CategoryId == category.Id).ToListAsync();
+
+                //            //foreach (ProductCategorySpecification item in temp)
+                //            //{
+                //            //    item.CategorySpecification = null;
+                //            //    item.CategorySpecificationId = null;
+                //            //}
+
+                //            categorySpecifications.Remove(oldcategorySpecifications.FirstOrDefault(c => c.SpecificationId == specificationId));
+                //        }
+                //    }
+                //    dbCategory.CategorySpecifications = categorySpecifications;
+                //}
+
+
+
+                if (category.SpecificationIds != null && category.SpecificationIds.Count() > 0)
+                {
+                    //category.CategorySpecifications.RemoveRange(dbCategory.CategorySpecifications);
+
+                    List<CategorySpecification> categorySpecifications = new List<CategorySpecification>();
+
+                    foreach (int specificationId in category.SpecificationIds)
+                    {
+                        if (!dbCategory.CategorySpecifications.Any(a => a.SpecificationId == specificationId))
+                        {
+                            if (!await _context.Specifications.AnyAsync(c => c.IsDeleted == false && c.Id == specificationId))
+                            {
+                                ModelState.AddModelError("SpecificationIds", $"{specificationId} id deyeri yanlisdir");
+                                return View(category);
+                            }
+
+                            CategorySpecification categorySpecification = new CategorySpecification
+                            {
+                                SpecificationId = specificationId,
+                                CategoryId = category.Id,
+                                CreatedAt = DateTime.UtcNow.AddHours(4),
+                                CreatedBy = "System"
+                            };
+
+                            categorySpecifications.Add(categorySpecification);
+
+                            IEnumerable<Product> temp = await _context.Products
+                                .Include(p => p.ProductCategorySpecifications.Where(pc => pc.IsDeleted == false))
+                                            .Where(a => a.IsDeleted == false && a.CategoryId == category.Id).ToListAsync();
+
+                            if (temp != null && temp.Count() > 0)
+                            {
+                                foreach (Product item in temp)
+                                {
+
+                                    ProductCategorySpecification tempProduct = new ProductCategorySpecification
+                                    {
+                                        ProductId = item.Id,
+                                        CategorySpecification = categorySpecification,
+                                        Value = ""
+                                    };
+
+                                    if (item != null) item.ProductCategorySpecifications.Add(tempProduct);
+                                }
+                            }
+
+                        }
+
+                    }
+
+                    dbCategory.CategorySpecifications.AddRange(categorySpecifications);
+
+                }
+
             }
+
+
 
             dbCategory.Name = category.Name.Trim();
             dbCategory.UpdatedAt = DateTime.UtcNow.AddHours(4);
             dbCategory.UpdatedBy = "System";
+            dbCategory.Icon = category.Icon;
 
             await _context.SaveChangesAsync();
 

@@ -578,7 +578,7 @@ namespace Smartelectronics.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
 
-                    b.Property<int?>("CategoryId")
+                    b.Property<int>("CategoryId")
                         .HasColumnType("int");
 
                     b.Property<DateTime?>("CreatedAt")
@@ -598,7 +598,7 @@ namespace Smartelectronics.Migrations
                     b.Property<bool>("IsDeleted")
                         .HasColumnType("bit");
 
-                    b.Property<int?>("SpecificationId")
+                    b.Property<int>("SpecificationId")
                         .HasColumnType("int");
 
                     b.Property<DateTime?>("UpdatedAt")
@@ -1177,7 +1177,6 @@ namespace Smartelectronics.Migrations
                         .HasColumnType("nvarchar(255)");
 
                     b.Property<string>("Value")
-                        .IsRequired()
                         .HasMaxLength(1000)
                         .HasColumnType("nvarchar(1000)");
 
@@ -1703,12 +1702,16 @@ namespace Smartelectronics.Migrations
             modelBuilder.Entity("Smartelectronics.Models.CategorySpecification", b =>
                 {
                     b.HasOne("Smartelectronics.Models.Category", "Category")
-                        .WithMany()
-                        .HasForeignKey("CategoryId");
+                        .WithMany("CategorySpecifications")
+                        .HasForeignKey("CategoryId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.HasOne("Smartelectronics.Models.Specification", "Specification")
                         .WithMany()
-                        .HasForeignKey("SpecificationId");
+                        .HasForeignKey("SpecificationId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.Navigation("Category");
 
@@ -1909,6 +1912,8 @@ namespace Smartelectronics.Migrations
 
             modelBuilder.Entity("Smartelectronics.Models.Category", b =>
                 {
+                    b.Navigation("CategorySpecifications");
+
                     b.Navigation("Children");
 
                     b.Navigation("Products");

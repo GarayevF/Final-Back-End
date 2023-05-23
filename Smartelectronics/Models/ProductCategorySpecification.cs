@@ -9,6 +9,6 @@ namespace Smartelectronics.Models
         public int? CategorySpecificationId { get; set; }
         public CategorySpecification? CategorySpecification { get; set; }
         [StringLength(1000)]
-        public string Value { get; set; }
+        public string? Value { get; set; }
     }
 }

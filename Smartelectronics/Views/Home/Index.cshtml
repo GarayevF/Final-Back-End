@@ -168,7 +168,7 @@
                                     {
                                         @foreach (LoanTerm loanTerm in product.LoanTerms)
                                         {
-                                            <li class="circle label-red" style="background-image: url(~/assets/images/loancompanies/@loanTerm.LoanCompany?.LabelImage);">
+                                            <li class="circle label-red" style="background-image: url(/assets/images/loancompanies/@loanTerm.LoanCompany?.LabelImage);">
                                                 <div class="label">
                                                     <p class="text-lg">@loanTerm.LoanTermLoanRanges?.Max(t => t.LoanRange.Range) ay</p>
                                                     <p class="text-sm">Faizsiz Kredit</p>
@@ -226,7 +226,7 @@
                                                     </ul>
                                                 </div>
                                                 <div class="prices-for-months">
-                                                    <span><strong>@(Math.Ceiling((product.DiscountedPrice > 0 ? product.DiscountedPrice : product.Price) / 12))</strong> <small>AZN</small></span>
+                                                    <span><strong>@(Math.Ceiling((price + (price * interest / 100)) / range))</strong> <small>AZN</small></span>
                                                 </div>
                                             </div>
                                         }
@@ -246,7 +246,7 @@
                                                     </ul>
                                                 </div>
                                                 <div class="prices-for-months">
-                                                    <span><strong>@(Math.Ceiling((product.DiscountedPrice > 0 ? product.DiscountedPrice : product.Price) / 12))</strong> <small>AZN</small></span>
+                                                    <span><strong>@(Math.Ceiling((price2 + (price2 * interest2 / 100)) / range2))</strong> <small>AZN</small></span>
                                                 </div>
                                             </div>
                                         }
@@ -311,7 +311,7 @@
                                     {
                                         @foreach (LoanTerm loanTerm in product.LoanTerms)
                                         {
-                                            <li class="circle label-red" style="background-image: url(~/assets/images/loancompanies/@loanTerm.LoanCompany?.LabelImage);">
+                                            <li class="circle label-red" style="background-image: url(/assets/images/loancompanies/@loanTerm.LoanCompany?.LabelImage);">
                                                 <div class="label">
                                                     <p class="text-lg">@loanTerm.LoanTermLoanRanges?.Max(t => t.LoanRange.Range) ay</p>
                                                     <p class="text-sm">Faizsiz Kredit</p>
@@ -453,7 +453,7 @@
                                     {
                                         @foreach (LoanTerm loanTerm in product.LoanTerms)
                                         {
-                                            <li class="circle label-red" style="background-image: url(~/assets/images/loancompanies/@loanTerm.LoanCompany?.LabelImage);">
+                                            <li class="circle label-red" style="background-image: url(/assets/images/loancompanies/@loanTerm.LoanCompany?.LabelImage);">
                                                 <div class="label">
                                                     <p class="text-lg">@loanTerm.LoanTermLoanRanges?.Max(t => t.LoanRange.Range) ay</p>
                                                     <p class="text-sm">Faizsiz Kredit</p>

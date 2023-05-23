@@ -49,6 +49,10 @@
       "PackagePath": "staticwebassets\\assets\\font\\fa-solid-900.1551f4f60c37af51121f.woff2"
     },
     {
+      "Id": "C:\\Users\\Farid\\Desktop\\Smartelectronics\\Smartelectronics\\wwwroot\\assets\\images\\1card.png",
+      "PackagePath": "staticwebassets\\assets\\images\\1card.png"
+    },
+    {
       "Id": "C:\\Users\\Farid\\Desktop\\Smartelectronics\\Smartelectronics\\wwwroot\\assets\\images\\iphone-14-pro-max.jpeg",
       "PackagePath": "staticwebassets\\assets\\images\\iphone-14-pro-max.jpeg"
     },
@@ -81,6 +85,10 @@
       "PackagePath": "staticwebassets\\assets\\images\\label-red.svg"
     },
     {
+      "Id": "C:\\Users\\Farid\\Desktop\\Smartelectronics\\Smartelectronics\\wwwroot\\assets\\images\\loancompanies\\1card.png",
+      "PackagePath": "staticwebassets\\assets\\images\\loancompanies\\1card.png"
+    },
+    {
       "Id": "C:\\Users\\Farid\\Desktop\\Smartelectronics\\Smartelectronics\\wwwroot\\assets\\images\\loancompanies\\20230523032557058_498e297d-26b0-4e66-8fa1-82b61026660f.jpg",
       "PackagePath": "staticwebassets\\assets\\images\\loancompanies\\20230523032557058_498e297d-26b0-4e66-8fa1-82b61026660f.jpg"
     },
@@ -89,12 +97,36 @@
       "PackagePath": "staticwebassets\\assets\\images\\loancompanies\\20230523033359813_310a264f-a00e-4921-a1d4-57b37ba92db3.jpg"
     },
     {
+      "Id": "C:\\Users\\Farid\\Desktop\\Smartelectronics\\Smartelectronics\\wwwroot\\assets\\images\\loancompanies\\bolkart-logo.png",
+      "PackagePath": "staticwebassets\\assets\\images\\loancompanies\\bolkart-logo.png"
+    },
+    {
+      "Id": "C:\\Users\\Farid\\Desktop\\Smartelectronics\\Smartelectronics\\wwwroot\\assets\\images\\loancompanies\\label-red.svg",
+      "PackagePath": "staticwebassets\\assets\\images\\loancompanies\\label-red.svg"
+    },
+    {
+      "Id": "C:\\Users\\Farid\\Desktop\\Smartelectronics\\Smartelectronics\\wwwroot\\assets\\images\\loancompanies\\tam.png",
+      "PackagePath": "staticwebassets\\assets\\images\\loancompanies\\tam.png"
+    },
+    {
+      "Id": "C:\\Users\\Farid\\Desktop\\Smartelectronics\\Smartelectronics\\wwwroot\\assets\\images\\loancompanies\\ucard-logo.png",
+      "PackagePath": "staticwebassets\\assets\\images\\loancompanies\\ucard-logo.png"
+    },
+    {
+      "Id": "C:\\Users\\Farid\\Desktop\\Smartelectronics\\Smartelectronics\\wwwroot\\assets\\images\\loancompanies\\ucard-sticker.png",
+      "PackagePath": "staticwebassets\\assets\\images\\loancompanies\\ucard-sticker.png"
+    },
+    {
       "Id": "C:\\Users\\Farid\\Desktop\\Smartelectronics\\Smartelectronics\\wwwroot\\assets\\images\\location-f.png",
       "PackagePath": "staticwebassets\\assets\\images\\location-f.png"
     },
     {
       "Id": "C:\\Users\\Farid\\Desktop\\Smartelectronics\\Smartelectronics\\wwwroot\\assets\\images\\logo.svg",
       "PackagePath": "staticwebassets\\assets\\images\\logo.svg"
+    },
+    {
+      "Id": "C:\\Users\\Farid\\Desktop\\Smartelectronics\\Smartelectronics\\wwwroot\\assets\\images\\logoinvert.png",
+      "PackagePath": "staticwebassets\\assets\\images\\logoinvert.png"
     },
     {
       "Id": "C:\\Users\\Farid\\Desktop\\Smartelectronics\\Smartelectronics\\wwwroot\\assets\\images\\mail-f.png",
@@ -335,6 +367,34 @@
     {
       "Id": "C:\\Users\\Farid\\Desktop\\Smartelectronics\\Smartelectronics\\wwwroot\\assets\\images\\products\\20230523110518562_72492e94-9ecf-49ff-b729-ea33c1547573.jpg",
       "PackagePath": "staticwebassets\\assets\\images\\products\\20230523110518562_72492e94-9ecf-49ff-b729-ea33c1547573.jpg"
+    },
+    {
+      "Id": "C:\\Users\\Farid\\Desktop\\Smartelectronics\\Smartelectronics\\wwwroot\\assets\\images\\products\\20230531141255403_a80de856-7c01-492c-b316-a754539a9e3a.jpg",
+      "PackagePath": "staticwebassets\\assets\\images\\products\\20230531141255403_a80de856-7c01-492c-b316-a754539a9e3a.jpg"
+    },
+    {
+      "Id": "C:\\Users\\Farid\\Desktop\\Smartelectronics\\Smartelectronics\\wwwroot\\assets\\images\\products\\20230531145225033_79e33736-ebea-4254-856e-b91762a7e419.jpg",
+      "PackagePath": "staticwebassets\\assets\\images\\products\\20230531145225033_79e33736-ebea-4254-856e-b91762a7e419.jpg"
+    },
+    {
+      "Id": "C:\\Users\\Farid\\Desktop\\Smartelectronics\\Smartelectronics\\wwwroot\\assets\\images\\products\\20230531150341646_6fdf8336-263b-453a-a9d9-550bba214bd6.jpg",
+      "PackagePath": "staticwebassets\\assets\\images\\products\\20230531150341646_6fdf8336-263b-453a-a9d9-550bba214bd6.jpg"
+    },
+    {
+      "Id": "C:\\Users\\Farid\\Desktop\\Smartelectronics\\Smartelectronics\\wwwroot\\assets\\images\\products\\20230531232153242_abe4cfda-3c79-4c45-a8f4-faa74c7c1720.jpg",
+      "PackagePath": "staticwebassets\\assets\\images\\products\\20230531232153242_abe4cfda-3c79-4c45-a8f4-faa74c7c1720.jpg"
+    },
+    {
+      "Id": "C:\\Users\\Farid\\Desktop\\Smartelectronics\\Smartelectronics\\wwwroot\\assets\\images\\products\\20230531232153674_491d863a-9430-4bd5-b574-19f1b3e4c258.jpg",
+      "PackagePath": "staticwebassets\\assets\\images\\products\\20230531232153674_491d863a-9430-4bd5-b574-19f1b3e4c258.jpg"
+    },
+    {
+      "Id": "C:\\Users\\Farid\\Desktop\\Smartelectronics\\Smartelectronics\\wwwroot\\assets\\images\\products\\20230531232154042_4295face-4e65-45a7-8e47-d13bf1f55d42.jpg",
+      "PackagePath": "staticwebassets\\assets\\images\\products\\20230531232154042_4295face-4e65-45a7-8e47-d13bf1f55d42.jpg"
+    },
+    {
+      "Id": "C:\\Users\\Farid\\Desktop\\Smartelectronics\\Smartelectronics\\wwwroot\\assets\\images\\products\\20230531232154252_f697da6d-ba01-41bc-94b7-9b38b0ee45a7.jpg",
+      "PackagePath": "staticwebassets\\assets\\images\\products\\20230531232154252_f697da6d-ba01-41bc-94b7-9b38b0ee45a7.jpg"
     },
     {
       "Id": "C:\\Users\\Farid\\Desktop\\Smartelectronics\\Smartelectronics\\wwwroot\\assets\\images\\sliders\\1card.png",

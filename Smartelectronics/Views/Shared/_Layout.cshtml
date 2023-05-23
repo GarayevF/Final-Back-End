@@ -60,7 +60,7 @@
                             <div class="profile-drop-div">
                                 <div class="profile-list">
                                     <i class="fa-solid fa-circle-user"></i>
-                                    <span>Fərid Qarayev</span>
+                                    <span>@User.Identity.Name</span>
                                     <i class="fa-solid fa-chevron-down"></i>
                                 </div>
                                 <ul id="profile-drop">
@@ -84,7 +84,7 @@
                                 <i class="fa-solid fa-bars"></i>
                             </button>
                         </div>
-                        <a href="" class="logo-link">
+                        <a asp-controller="home" asp-action="index" class="logo-link">
                             <div class="logo-div">
                                 <img src="~/assets/images/@settings.FirstOrDefault(s=>s.Key == "Logo").Value" alt="">
                             </div>
@@ -345,21 +345,21 @@
                                 <img src="~/assets/images/phone-f.png" alt="">
                             </div>
                             <div class="cnt">
-                                <h4>*2999</h4>
+                                <h4>@settings.FirstOrDefault(s=>s.Key == "Hotline").Value</h4>
                             </div>
                         </a>
                         <a href="mailto:#" class="contact">
                             <div class="contact-img">
                                 <img src="~/assets/images/mail-f.png" alt="">
                             </div>
-                            <p class="cnt">office@smartelectronics.az</p>
+                            <p class="cnt">@settings.FirstOrDefault(s=>s.Key == "Mail").Value</p>
                         </a>
                         <div class="contact">
                             <div class="contact-img">
                                 <img src="~/assets/images/location-f.png" alt="">
                             </div>
                             <div class="cnt">
-                                <p>@settings.FirstOrDefault(s=>s.Key == "Address").Value</p>
+                                <p>@Html.Raw(settings.FirstOrDefault(s=>s.Key == "Address").Value)</p>
                             </div>
                         </div>
                     </div>

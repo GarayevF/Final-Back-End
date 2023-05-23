@@ -6,6 +6,6 @@ namespace Smartelectronics.Areas.Manage.ViewModels.ProductViewModels
     {
         public int SpecificationId { get; set; }
         public string Name { get; set; }
-        public string Value { get; set; }
+        public string? Value { get; set; }
     }
 }

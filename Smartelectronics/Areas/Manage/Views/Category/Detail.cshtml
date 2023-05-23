@@ -23,14 +23,14 @@
                 @Html.Raw(Model.Icon)
             }
             <div class="card-body">
-                <h5 class="card-title">Brand Name: @Model.Name</h5>
+                <h5 class="card-title">Kateqoriya Adı: @Model.Name</h5>
             </div>
         </div>
     </div>
     @if (Model.Products != null && Model.Children.Count() > 0)
     {
         <div class="col-lg-12">
-            <h4>Children Categories</h4>
+            <h4>Alt Kateqoriyalar</h4>
             <table class="table table-bordered table-striped">
                 <thead>
                     <tr>
@@ -38,7 +38,7 @@
                         <th>Ad</th>
                         <th>Tarix</th>
                         <th>Created By</th>
-                        <th>Product Count</th>
+                        <th>Məhsul sayı</th>
                         <th>Settings</th>
                     </tr>
                 </thead>

@@ -57,6 +57,7 @@ namespace Smartelectronics.Areas.Manage.Controllers
             if (await _context.Brands.AnyAsync(b => b.IsDeleted == false && b.Name.ToLower() == brand.Name.Trim().ToLower()))
             {
                 ModelState.AddModelError("Name", $"Bu adda {brand.Name} movcuddur");
+                return View(brand);
             }
 
             brand.Name = brand.Name.Trim();

@@ -226,6 +226,8 @@
                     path.push(`sortby=${sortby}`)
                 }
 
+                let url = $(this).attr('href');
+
                 fetch(`product/filter?${path.join('&')}`)
                     .then(res => {
                         
@@ -302,9 +304,9 @@
                     path.push(`sortby=${sortby}`)
                 }
 
+                //fetch(`${url}/filter?${path.join('&')}`)
                 fetch(`product/filter?${path.join('&')}`)
                     .then(res => {
-                        console.log(`product/filter?${path.join('&')}`)
                         return res.text()
                     })
                     .then(data => {
@@ -421,7 +423,7 @@
                     path.push(`sortby=${sortby}`)
                 }
 
-                fetch(`${url}?${path.join('&')}`)
+                fetch(`product/filter?${path.join('&')}`)
                     .then(res => {
                         return res.text()
                     })
@@ -482,7 +484,7 @@
                     path.push(`sortby=${sortby}`)
                 }
 
-                fetch(`${url}?${path.join('&')}`)
+                fetch(`product/filter?${path.join('&')}`)
                     .then(res => {
                         return res.text()
                     })
@@ -539,13 +541,12 @@
                     path.push(`sortby=${sortby}`)
                 }
 
-                fetch(`${url}?${path.join('&')}`)
+                fetch(`product/filter?${path.join('&')}`)
                     .then(res => {
                         return res.text()
                     })
                     .then(data => {
                         $('.shop-pagination-partial').html(data)
-                        console.log('test')
                     })
             }
             else if ($(this).hasClass('product-filter-btn')) {

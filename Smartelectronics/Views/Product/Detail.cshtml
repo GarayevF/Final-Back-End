@@ -50,7 +50,7 @@
                                 <div class="owl-three-item" style="width: 450px;">
                                     <div class="item">
                                         <div class="icon">
-                                            <img src="~/assets/images/@loanTerm.LoanCompany?.Logo" alt="">
+                                            <img src="~/assets/images/loancompanies/@loanTerm.LoanCompany?.Logo" alt="">
                                         </div>
                                         <div class="content">
                                             <p>@loanTerm.LoanTermLoanRanges?.MaxBy(a => a.LoanRange.Range)?.LoanRange.Range ay x @((Model.Product.Price / (double)@loanTerm?.LoanTermLoanRanges?.MaxBy(a => a.LoanRange.Range)?.LoanRange.Range).ToString("N2")) AZN</p>
@@ -112,7 +112,7 @@
                                 {
                                     @foreach (LoanTerm loanTerm in Model.Product.LoanTerms)
                                     {
-                                        <li class="circle label-red" style="background-image: url(~/assets/images/@loanTerm.LoanCompany?.LabelImage);">
+                                        <li class="circle label-red" style="background-image: url(/assets/images/loancompanies/@loanTerm.LoanCompany?.LabelImage);">
                                             <div class="label">
                                                 <p class="text-lg">@loanTerm.LoanTermLoanRanges?.Max(t => t.LoanRange.Range) ay</p>
                                                 <p class="text-sm">Faizsiz Kredit</p>

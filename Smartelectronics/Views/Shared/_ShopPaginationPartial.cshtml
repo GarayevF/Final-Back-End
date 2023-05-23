@@ -51,7 +51,7 @@
                         {
                             @foreach (LoanTerm loanTerm in product.LoanTerms)
                             {
-                                <li class="circle label-red" style="background-image: url(/assets/images/@loanTerm.LoanCompany?.LabelImage);">
+                                <li class="circle label-red" style="background-image: url(/assets/images/loancompanies/@loanTerm.LoanCompany?.LabelImage);">
                                     <div class="label">
                                         <p class="text-lg">@loanTerm.LoanTermLoanRanges?.Max(t => t.LoanRange.Range) ay</p>
                                         <p class="text-sm">Faizsiz Kredit</p>
@@ -61,10 +61,10 @@
                         }
 
                     </ul>
-                    <a class="image-link" href="">
+                    <a class="image-link" asp-controller="product" asp-action="detail" asp-route-id="@product.Id">
                         <img src="~/assets/images/products/@product.ProductColors?.FirstOrDefault()?.Image" alt="">
                     </a>
-                    <a href="" class="product-title">@product.Title</a>
+                    <a asp-controller="product" asp-action="detail" asp-route-id="@product.Id" class="product-title">@product.Title</a>
                     <div class="color-and-credit">
                         <div class="color-div">
                             <div class="item-colors">

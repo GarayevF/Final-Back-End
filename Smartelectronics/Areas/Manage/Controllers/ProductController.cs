@@ -139,7 +139,7 @@ namespace Smartelectronics.Areas.Manage.Controllers
                     {
                         ProductId = productVM.Product.Id,
                         CategorySpecificationId = categorySpecification?.Id,
-                        Value = specificationVM.Value.Trim(),
+                        Value = (specificationVM.Value == null ? "" : specificationVM.Value.Trim()),
                         IsDeleted = false,
                         CreatedAt = DateTime.UtcNow.AddHours(4),
                         CreatedBy = "System"
@@ -597,33 +597,19 @@ namespace Smartelectronics.Areas.Manage.Controllers
                         return View(productVM);
                     }
 
-                    Specification specification = await _context.Specifications.Where(s => s.IsDeleted == false)
+                    if(dbproduct.CategoryId == productVM.Product.CategoryId)
+                    {
+                        Specification specification = await _context.Specifications.Where(s => s.IsDeleted == false)
                         .Include(s => s.SpecificationGroup).FirstOrDefaultAsync(a => a.Id == specificationVM.SpecificationId);
 
-                    CategorySpecification categorySpecification = await _context.CategorySpecifications.Where(c => c.IsDeleted == false)
-                        .FirstOrDefaultAsync(c => c.CategoryId == productVM.Product.CategoryId && c.SpecificationId == specificationVM.SpecificationId);
-
-                    ////kohneni product id ile tap isdeleted true ele
-
-                    if(dbproduct.ProductCategorySpecifications
-                        .FirstOrDefault(p => p.CategorySpecification.Id == categorySpecification.Id).Value != specificationVM.Value.Trim())
-                    {
-                        
-
-                        dbproduct.ProductCategorySpecifications
-                        .FirstOrDefault(p => p.CategorySpecification.Id == categorySpecification.Id).DeletedAt = DateTime.UtcNow.AddHours(4);
-
-                        dbproduct.ProductCategorySpecifications
-                        .FirstOrDefault(p => p.CategorySpecification.Id == categorySpecification.Id).DeletedBy = "System";
-
-                        dbproduct.ProductCategorySpecifications
-                        .FirstOrDefault(p => p.CategorySpecification.Id == categorySpecification.Id).IsDeleted = true;
+                        CategorySpecification categorySpecification = await _context.CategorySpecifications.Where(c => c.IsDeleted == false)
+                            .FirstOrDefaultAsync(c => c.CategoryId == productVM.Product.CategoryId && c.SpecificationId == specificationVM.SpecificationId);
 
                         ProductCategorySpecification productCategorySpecification = new ProductCategorySpecification
                         {
                             ProductId = productVM.Product.Id,
                             CategorySpecificationId = categorySpecification?.Id,
-                            Value = specificationVM.Value.Trim(),
+                            Value = (specificationVM.Value == null ? "" : specificationVM.Value.Trim()),
                             IsDeleted = false,
                             CreatedAt = DateTime.UtcNow.AddHours(4),
                             CreatedBy = "System"
@@ -632,12 +618,47 @@ namespace Smartelectronics.Areas.Manage.Controllers
 
                         productCategorySpecifications.Add(productCategorySpecification);
                     }
-                    else
-                    {
-                        productCategorySpecifications.Add(dbproduct.ProductCategorySpecifications
-                        .FirstOrDefault(p => p.CategorySpecification.Id == categorySpecification.Id));
-                    }
+
                     
+
+                    //Specification specification = await _context.Specifications.Where(s => s.IsDeleted == false)
+                    //    .Include(s => s.SpecificationGroup).FirstOrDefaultAsync(a => a.Id == specificationVM.SpecificationId);
+
+                    //CategorySpecification categorySpecification = await _context.CategorySpecifications.Where(c => c.IsDeleted == false)
+                    //    .FirstOrDefaultAsync(c => c.CategoryId == productVM.Product.CategoryId && c.SpecificationId == specificationVM.SpecificationId);
+
+                    ////kohneni product id ile tap isdeleted true ele
+                    //if(dbproduct.ProductCategorySpecifications
+                    //    .FirstOrDefault(p => p.CategorySpecification.Id == categorySpecification.Id).Value != specificationVM.Value.Trim())
+                    //{
+                    //    dbproduct.ProductCategorySpecifications
+                    //    .FirstOrDefault(p => p.CategorySpecification.Id == categorySpecification.Id).DeletedAt = DateTime.UtcNow.AddHours(4);
+
+                    //    dbproduct.ProductCategorySpecifications
+                    //    .FirstOrDefault(p => p.CategorySpecification.Id == categorySpecification.Id).DeletedBy = "System";
+
+                    //    dbproduct.ProductCategorySpecifications
+                    //    .FirstOrDefault(p => p.CategorySpecification.Id == categorySpecification.Id).IsDeleted = true;
+
+                    //    ProductCategorySpecification productCategorySpecification = new ProductCategorySpecification
+                    //    {
+                    //        ProductId = productVM.Product.Id,
+                    //        CategorySpecificationId = categorySpecification?.Id,
+                    //        Value = specificationVM.Value.Trim(),
+                    //        IsDeleted = false,
+                    //        CreatedAt = DateTime.UtcNow.AddHours(4),
+                    //        CreatedBy = "System"
+
+                    //    };
+
+                    //    productCategorySpecifications.Add(productCategorySpecification);
+                    //}
+                    //else
+                    //{
+                    //    productCategorySpecifications.Add(dbproduct.ProductCategorySpecifications
+                    //    .FirstOrDefault(p => p.CategorySpecification.Id == categorySpecification.Id));
+                    //}
+
                 }
 
                 dbproduct.ProductCategorySpecifications = productCategorySpecifications;

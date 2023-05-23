@@ -168,7 +168,7 @@ namespace Smartelectronics.Controllers
                 .Include(p => p.ProductLoanRanges.Where(pl => pl.IsDeleted == false)).ThenInclude(plr => plr.LoanRange)
         .ToListAsync();
 
-            if (sortby != null && sortby > 0)
+            if (sortby != null && sortby >= 0)
             {
 
                 switch (sortby)

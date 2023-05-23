@@ -56,8 +56,8 @@
                                 <span>@(Model.Sum(b => b.Price * b.Count)) azn</span>
                             </div>
                         </div>
-                        <a class="direct" href="">Alış verişə davam et</a>
-                        <a class="direct link" href="">Sifarişi Tamamla</a>
+                        <a class="direct" asp-controller="product" asp-action="index">Alış verişə davam et</a>
+                        <a class="direct link" asp-controller="order" asp-action="checkout">Sifarişi Tamamla</a>
                     </div>
                 </div>
             </div>

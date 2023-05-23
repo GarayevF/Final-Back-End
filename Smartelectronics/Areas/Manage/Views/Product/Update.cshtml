@@ -26,39 +26,39 @@
     <div class="col-lg-12">
         <form method="post" enctype="multipart/form-data" id="product-form">
             <div class="form-check">
-                <input class="form-check-input" asp-for="@Model.Product.IsMostViewed" />
-                <label class="form-check-label" asp-for="@Model.Product.IsMostViewed">Çox baxılan</label>
+                <input class="form-check-input" asp-for="Product.IsMostViewed" />
+                <label class="form-check-label" asp-for="Product.IsMostViewed">Çox baxılan</label>
             </div>
             <div class="form-check">
-                <input class="form-check-input" asp-for="@Model.Product.IsNewArrival" />
-                <label class="form-check-label" asp-for="@Model.Product.IsNewArrival">Yeni məhsul</label>
+                <input class="form-check-input" asp-for="Product.IsNewArrival" />
+                <label class="form-check-label" asp-for="Product.IsNewArrival">Yeni məhsul</label>
             </div>
             <div class="form-group">
-                <label asp-for="@Model.Product.Title">Məhsul adı</label>
-                <input asp-for="@Model.Product.Title" class="form-control title-input" />
+                <label asp-for="Product.Title">Məhsul adı</label>
+                <input asp-for="Product.Title" class="form-control title-input" />
             </div>
-            <input type="hidden" asp-for="@Model.Product.Id" class="form-control title-input" />
+            <input type="hidden" asp-for="Product.Id" class="form-control title-input" />
             <div class="form-group">
-                <label asp-for="@Model.Product.Count">Say</label>
-                <input asp-for="@Model.Product.Count" class="form-control" />
-            </div>
-            <div class="form-group">
-                <label asp-for="@Model.Product.Price">Qiymət</label>
-                <input asp-for="@Model.Product.Price" class="form-control" />
+                <label asp-for="Product.Count">Say</label>
+                <input asp-for="Product.Count" class="form-control" />
             </div>
             <div class="form-group">
-                <label asp-for="@Model.Product.DiscountedPrice">Endirimli qiymət</label>
-                <input asp-for="@Model.Product.DiscountedPrice" class="form-control" value="0" />
+                <label asp-for="Product.Price">Qiymət</label>
+                <input asp-for="Product.Price" class="form-control" />
             </div>
             <div class="form-group">
-                <label asp-for="@Model.Product.BrandId">Brend</label>
-                <select asp-for="@Model.Product.BrandId" class="form-control" id="brand" asp-items="@brandSelectList">
+                <label asp-for="Product.DiscountedPrice">Endirimli qiymət</label>
+                <input asp-for="Product.DiscountedPrice" class="form-control" />
+            </div>
+            <div class="form-group">
+                <label asp-for="Product.BrandId">Brend</label>
+                <select asp-for="Product.BrandId" class="form-control" id="brand" asp-items="@brandSelectList">
                     <option value="">--Brend Seçin--</option>
                 </select>
             </div>
             <div class="form-group">
-                <label asp-for="@Model.Product.CategoryId">Kateqoriya</label>
-                <select asp-for="@Model.Product.CategoryId" class="form-control" id="category" asp-items="@categorySelectList">
+                <label asp-for="Product.CategoryId">Kateqoriya</label>
+                <select asp-for="Product.CategoryId" class="form-control" id="category" asp-items="@categorySelectList">
                     <option value="">--Kateqoriya Seçin--</option>
                 </select>
             </div>
@@ -263,10 +263,11 @@
                                                     <input type="hidden" id="specId-${spec.id}" name="SpecificationVMs[${count}].SpecificationId" value="${spec.id}"/>
                                                     <input type="text" class="form-control spec-input" id="specValue-${spec.id}" name="SpecificationVMs[${count}].Value">
                                                     </div>`;
+                        count++;
                     });
                     specificationInputsDiv.innerHTML = html;
                     let form = document.querySelector('#product-form');
-                    count++;
+                    
                 });
 
         } else {
